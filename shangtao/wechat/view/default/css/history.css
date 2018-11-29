@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+.goods-item{margin:5px 0;padding: 0.05rem 0.1rem;background:#ffffff;}
+.wst-info{padding-left:0.1rem;}
+.goodsTitle{font-size: 0.15rem;height:0.42rem;line-height:0.21rem;}
+.goods-info{color:#989292;font-size: 0.12rem;}
+.price{color: #de0202;font-size: 0.16rem;}
+.price span{font-size: 0.13rem;}

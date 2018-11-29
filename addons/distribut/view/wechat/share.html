@@ -1,0 +1,56 @@
+<div class="wst-cart-box" id="frame-shareTips">
+	<div class="title" style="min-height: 30px;">
+     	<i class="ui-icon-close-page" onclick="javascript:shareTipsHide();"></i>
+		
+		<div class="wst-clear"></div>
+	</div>
+	<div style="padding:10px 20px;">
+		<div>
+			<div style="font-weight:bold;margin-bottom:5px">分佣比例说明</div>
+			<div>购买者分成：{$addonConfig['buyerRate']}%</div>
+			<div>第二级分成：{$addonConfig['secondRate']}%</div>
+			<div>第三级分成：{$addonConfig['thirdRate']}%</div>
+		</div>
+	</div>
+</div>
+<script>
+wx.config({
+    debug: false,
+    appId: '<?php echo WSTConf('CONF.wxAppId'); ?>', //公众号的唯一标识
+    timestamp: '<?php echo $datawx['timestamp'];?>', //生成签名的时间戳
+    nonceStr: '<?php echo $datawx['noncestr'];?>', //生成签名的随机串
+    signature: '<?php echo $datawx['signature'];?>',//签名
+    jsApiList: [ //需要使用的JS接口
+       	'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'onMenuShareQZone'
+    ]
+});
+
+wx.ready(function(){
+	var shareData = {
+			title: '{$shareInfo["title"]}',
+			desc: '{$shareInfo["desc"]}',
+			link: '{$shareInfo["link"]}',
+			imgUrl: '{$shareInfo["imgUrl"]}'
+		};
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareTimeline(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
+	wx.onMenuShareQZone(shareData);
+});
+
+//弹框
+function shareTips(){
+	jQuery('#cover').attr("onclick","javascript:shareHide();").show();
+	jQuery('#frame-shareTips').animate({"bottom": 0}, 500);
+}
+function shareTipsHide(){
+	var cartHeight = parseInt($("#frame-shareTips").css('height'))+52+'px';
+	jQuery('#frame-shareTips').animate({'bottom': '-'+cartHeight}, 500);
+	jQuery('#cover').hide();
+}
+</script>

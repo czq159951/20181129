@@ -1,0 +1,121 @@
+/* pages/chatWindow/chatWindow.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background: #F0F2F5;
+}
+.wst-container{
+  width: 100%;
+  height: auto;
+}
+.wst-button{
+  width: 25%;
+  height: 60rpx;
+  text-align: center;
+  margin: 0rpx auto;
+  margin-top: 10rpx;
+}
+button{
+  width: 100%;
+  height:90%;
+  line-height: 1.8;
+  border-radius: 10rpx;
+  background: #E00102;
+  color: white;
+  font-size: 30rpx;
+  margin-top: 20rpx;
+}
+.wst-remind{
+  width: 100%;
+  height: 300rpx;
+  text-align: center;
+  line-height: 100rpx;
+}
+
+.wst-remind .wst-button{
+  width: 25%;
+  height: 60rpx;
+  text-align: center;
+  margin: 0rpx auto;
+  margin-top: 10rpx;
+}
+.wst-remind button{
+  width: 100%;
+  height:100%;
+  line-height: 1.8;
+  border-radius: 10rpx;
+  background: F6F6F8;
+  color: black;
+  font-size: 30rpx;
+}
+
+.wst-content{
+  width: 100%;
+  border-top: 1rpx solid #E8E8E8;
+  border-bottom: 1rpx solid #E8E8E8;
+  background: white;
+  height: auto;
+}
+.wst-content .wst-border{
+  width: 90%;
+  min-height:  100rpx;
+  margin: 15rpx 0 10rpx 37rpx;
+}
+.wst-content .wst-border .wst-top{
+  width: 100%;
+  height: 40rpx;
+  font-size: 25rpx;
+}
+.wst-content .wst-border .wst-top .wst-name{
+  width: auto;
+  height: 100%;
+  float: left;
+}
+.wst-content .wst-border .wst-top .wst-time{
+  width: auto;
+  height: 100%;
+  float:right;
+}
+.wst-content .wst-border .wst-bottom{
+  width: 100%;
+  height: auto;
+  margin-top: 5rpx;
+  font-size: 28rpx;
+  color: #848689;
+  overflow: hidden;
+}
+.wst-content .wst-border .wst-bottom .wst-img{
+  width: 36rpx;
+  height: 36rpx;
+  float: left;
+}
+.wst-content .wst-border .wst-bottom image{
+  width: 100%;
+  height: 100%;
+}
+.wst-content .wst-border .wst-bottom .wst-text{
+  width: 600rpx;
+  height: 80%;
+  float: left;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-left: 25rpx;
+  overflow: hidden;
+}
+.remind-model .button button {
+  width:300rpx;
+  height:70rpx;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background-color:#fff;
+  color:#df0202;
+  border-radius:6rpx;
+  font-size:30rpx;
+  border:2rpx solid #df0202;
+}

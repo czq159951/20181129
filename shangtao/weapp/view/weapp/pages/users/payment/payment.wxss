@@ -1,0 +1,45 @@
+page{
+  width: 100%;
+  height: 90%;
+  background: #F6F6F8;
+}
+.container{
+  width: 100%;
+  height: auto;
+  margin-top: 20rpx;
+}
+.main-model{
+  width: 100%;
+  height: 46rpx;
+  line-height:46rpx;
+  padding:25rpx 20rpx;
+  background: white;
+  border-bottom: 1rpx solid #edebeb;
+}
+.left{
+  width: 46rpx;
+  height: 46rpx;
+  float: left;
+}
+.left image{
+  width: 100%;
+  height:100%;
+}
+.between{
+  width: auto;
+  float: left;
+  margin-left: 10rpx;
+  font-size: 28rpx;
+}
+.right{
+  width: 60rpx;
+  float: right;
+}
+.right .arrow{
+  width: 20rpx;
+  height: 20rpx;
+  border-right: 5rpx solid #CCC7C7;
+  border-bottom: 5rpx solid #CCC7C7; 
+  transform: rotate(-45deg);
+  margin-top: 10rpx;
+}

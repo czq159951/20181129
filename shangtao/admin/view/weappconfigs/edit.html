@@ -1,0 +1,44 @@
+{extend name="base" /}
+{block name="css"}
+<style>
+body{overflow:hidden}
+</style>
+{/block}
+{block name="js"}
+<script src="__ADMIN__/weappconfigs/weappconfigs.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<style>
+input[type="text"]{width:70%}
+textarea{width:70%;height:100px;}
+#wst-tab-5 input[type="text"]{width:50%}
+</style>
+<div id='alertTips' class='alert alert-success alert-tips fade in'>
+	<div id='headTip' class='head'><i class='fa fa-lightbulb-o'></i>操作说明</div>
+	<ul class='body'>
+		<li>本功能主要用于设置与小程序认证平台交互的认证信息。</li>
+	</ul>
+</div>
+<form autocomplete='off'>
+<div class='wst-tab layui-form' style='margin-top:20px'>
+     <table class='wst-form wst-box-top'>
+	  <tr>
+	     <th width='150'>小程序 APP ID：</th>
+	     <td><input type="text" id='weAppId' class='ipt' value="{$object['weAppId']}" maxLength='100'/></td>
+	  </tr>
+	  <tr>
+	     <th>小程序 APP SECRET：</th>
+	     <td><input type="text" id='weAppKey' class='ipt' value="{$object['weAppKey']}" maxLength='100'/></td>
+	  </tr>
+	  {if WSTGrant('WX_XCXSZ_04')}
+	  <tr>
+	     <td colspan='2' style='padding-left:300px;padding-top:30px'>
+	     	<button type="button"  class='btn btn-primary btn-mright' onclick='javascript:edit()'><i class="fa fa-check"></i>保存</button>
+	     	<button type="reset"  class='btn'><i class="fa fa-refresh"></i>重置</button>
+	     </td>
+	  </tr>
+	  {/if}
+	 </table>
+</div>
+</form>
+{/block}

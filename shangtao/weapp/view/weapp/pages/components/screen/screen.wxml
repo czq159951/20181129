@@ -1,0 +1,13 @@
+
+  <view class="screen-mol2">
+   <view class="title">{{screenData.attrName}}
+   <block wx:if="{{screenData.attrVal.length >3}}">
+     <view class="arrow-box" bindtap='showAll'>
+       <view class="arrow3 {{status == 1?'arrow3-1':''}}"  ></view>
+     </view>
+   </block>
+   </view>
+   <view class="option-box  {{status == 1?'option-box2':''}}">
+       <view class='mix-box' bindtap="selectAttr2" data-id="{{screenData.attrId}}" wx:for="{{screenData.attrVal}}" wx:for-item="attr"  data-attr="{{attr}}" data-type="{{screenData.attrName}}">{{attr}}</view>
+   </view>
+  </view>

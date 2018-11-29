@@ -1,0 +1,159 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}优惠券设置 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<link href="__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+<link href="__ROOT__/addons/coupon/view/home/shops/shops.css?v={$v}" rel="stylesheet">
+<style>
+input[type=text]{width:150px;}
+label{display: inline-block}
+</style>
+<div class="wst-body"> 
+<div class="wst-shop-head"><span>优惠券设置</span></div>
+<div class="wst-clear"></div>
+   <div class="wst-shop-content">
+      <form id='couponform' name='couponform' autocomplete="off">
+        <input type='hidden' id='couponId' class='ipt' value='{$object["couponId"]}'/>
+        <table class="wst-form">         
+           <tr>
+             <th width='120' align='right'>优惠券面值<font color='red'>*</font>：</th>
+             <td>
+             	<input type='text' id='couponValue' name='couponValue'class='ipt' maxLength='10' value='{$object["couponValue"]}' data-rule='优惠券面值:required;integer[+]'/>
+             </td>
+           </tr>
+           <tr>
+               <th width='120'>使用条件<font color='red'>*</font>：</th>
+	             <td colspan='3'>
+	                 <label style='width:70px;'>
+                     <input type='radio' name='useCondition' class='ipt' value='0' {if $object['useCondition']==0}checked{/if} onclick='checkUseCondition(0)'>无条件
+                   </label>
+                   <label>
+                     <input type='radio' name='useCondition' class='ipt' value='1' {if $object['useCondition']==1}checked{/if} onclick='checkUseCondition(1)'>满<input type='text' id='useMoney' class='ipt' style='width:40px' value='{$object["useMoney"]}' {if $object['useCondition']==0}disabled{/if}/>元使用
+                   </label>
+	             </td>
+           </tr>
+           <tr>
+               <th width='120'>发行量<font color='red'>*</font>：</th>
+	           <td colspan='3'>
+	               <input type='text' id='couponNum' name='couponNum' class='ipt' maxLength='6' data-rule='发行量:required;integer[+]' value='{$object["couponNum"]}' data-target="#msg_couponNum"/>
+                 <span class='tip'>（发行量只能增加不能减少，请慎重填写）</span>
+                 <span class='msg-box' id='msg_couponNum'></span>
+	           </td>
+           </tr>
+           <tr>
+               <th width='120'>每人限领<font color='red'>*</font>：</th>
+             <td colspan='3'>
+                 <input type='text' id='limitNum' name='limitNum' class='ipt' maxLength='6' data-rule='每人限领:required;integer[+0]' value='{$object["limitNum"]}'/>
+                 <span class='tip'>（为0表示不限制）</span>
+             </td>
+           </tr>
+           <tr>
+               <th width='120'>有效时间<font color='red'>*</font>：</th>
+	           <td colspan='3'>
+	               <input type='text' id='startDate' name='startDate' class='ipt laydate-icon' value='{$object["startDate"]}' onclick="laydate({format: 'YYYY-MM-DD',istime:false})"  data-rule="有效日期: required;date;" data-target="#msg_endDate"/>
+	               至
+                   <input type='text' id='endDate' name='endDate' class='ipt laydate-icon' value='{$object["endDate"]}' onclick="laydate({format: 'YYYY-MM-DD',istime:false})" data-rule="有效日期: required;date;match(gt, startDate, date)" data-target="#msg_endDate"/>
+                   <span class='msg-box' id='msg_endDate'></span>
+ 	           </td>
+           </tr>
+           <tr>
+               <th width='120'>适用范围<font color='red'>*</font>：</th>
+	           <td colspan='3'>
+	               <label style='width:70px;'>
+                     <input type='radio' name='useObjects' class='ipt' value='0' {if $object['useObjects']==0}checked{/if} onclick='javascript:WST.showHide(0,"#goodsBox")'>全店通用
+                 </label>
+                 <label>
+                     <input type='radio' name='useObjects' class='ipt' value='1' {if $object['useObjects']==1}checked{/if} onclick='javascript:WST.showHide(1,"#goodsBox")'>指定商品
+                 </label>
+	           </td>
+           </tr>
+           <tr id='goodsBox'  {if $object['useObjects']==0}style='display:none'{/if}>
+             <th>选择商品<font color='red'>*</font>：</th>
+             <td>
+               <table>
+                 <tr>
+                   <td colspan="3">
+                     商品分类：<select id="shopCatId1" class='s-ipt' onchange="WST.shopsCats('shopCatId2',this.value,'');">
+                       <option value="">-请选择-</option>
+                       {volist name=":WSTShopCats(0)" id="vo"}
+                       <option value="{$vo['catId']}">{$vo['catName']}</option>
+                       {/volist}
+                    </select>
+                    <select id='shopCatId2' class='s-ipt'>
+                       <option value=''>请选择</option>
+                    </select>
+                    <input type='text' id='goodsName' class='s-ipt' placeholder='商品编号/商品名称'/>
+                    <a class='s-btn' onclick="searchGoods()">搜&nbsp;索</a>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td>
+                     <div class='goods-seach-tr'>
+                         <div class='head'>
+                             <div class='h-chk'><input type='checkbox' onclick='WST.checkChks(this,".lchk")'></div>
+                             <div class='h-name'>商品信息</div>
+                         </div>
+                         <div id='goodsSearchBox' class='body-tr'></div>
+                         <script id="tblist" type="text/html">
+                         {{#
+                          var ids = document.getElementById('useObjectIds').value;
+                          ids = (ids.length>0)?ids.split(','):[];
+                          for(var i = 0; i < d.length; i++){
+                              if($.inArray(String(d[i].goodsId),ids)>-1)continue;
+                          }}
+                         <div class='body'>
+                             <div class='b-chk'><input type='checkbox' class='lchk' value='{{d[i].goodsId}}'></div>
+                             <div class='b-img'><img width='30' src='{{WST.conf.ROOT+"/"+WST.replaceImg(d[i].goodsImg,"_thumb")}}'></div>
+                             <div class='b-name'>{{d[i].goodsName}}</div>
+                         </div>
+                         {{# } }}
+                         </script>
+                     </div>
+                   </td>
+                   <td>
+                       <a href='javascript:moveRight()' class='s-btn' style='margin-right:0px'>》》</a><br/><br/>
+                       <a href='javascript:moveLeft()' class='s-btn' style='margin-right:0px'>《《</a>
+                       <input type='hidden' id='useObjectIds' class='ipt' value='{$object["useObjectIds"]}'>
+                   </td>
+                   <td>
+                     <div class='goods-result-tr'>
+                       <div class='head'>
+                          <div class='h-chk'><input type='checkbox' onclick='WST.checkChks(this,".rchk")'></div>
+                          <div class='h-name'>已选商品</div>
+                      </div>
+                      <div id='goodsResultBox' class='body-tr'>
+                        {volist name="object['goods']" id='vo'}
+                        <div class='body'>
+                             <div class='b-chk'><input type='checkbox' class='rchk' value='{$vo.goodsId}'></div>
+                             <div class='b-img'><img width='30' src='__ROOT__/{:WSTImg($vo.goodsImg,"_thumb")}'></div>
+                             <div class='b-name'>{$vo.goodsName}</div>
+                         </div>
+                        {/volist}
+                      </div>
+                     </div>
+                   </td>
+                 </tr>
+               </table>
+             </td>
+           </tr>
+           <tr>
+             <td colspan='2' style='text-align:center;padding:20px;'>
+                 <a class='s-btn' onclick="save()">保&nbsp;存</a>&nbsp;&nbsp;
+                 <a class='s-btn' onclick='javascript:location.reload();'>重&nbsp;置</a>
+             </td>
+           </tr>
+        </table>
+        </form>
+   </div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script src="__STATIC__/plugins/layer/laydate.js"></script>
+<script type="text/javascript" src="__STATIC__/plugins/validator/jquery.validator.min.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/addons/coupon/view/home/shops/shop.js?v={$v}"></script>
+{/block}

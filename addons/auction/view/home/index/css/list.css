@@ -1,0 +1,26 @@
+.auction-head{width:1200px;margin-left: auto;margin-right: auto;margin-top:10px;color:#999;}
+.auction-head div.item{float:left;margin-right:6px;position:relative;}
+.auction-head .arrow{float:left;position: relative;top:5px;padding-right:12px;font-style: normal;}
+.auction-head .item .link{color:#666;float:left;border:0px;margin-right:5px;height:22px;line-height: 22px;}
+.auction-selector{border-bottom:1px solid #ccc;padding-top:20px;padding-bottom:10px;width:1200px;margin-left: auto;margin-right: auto;margin-top:10px;}
+.selector-head{width:100px;float:left;text-align: right;}
+.selector-item{width:1100px;float:left;}
+.selector-item li{float:left;margin-right:10px;margin-bottom:10px;width:140px;}
+.selector-item .curr{background:#DF2003;border-radius: 0.25em;color: #fff;padding:5px;}
+.goods-main, .goods-list{width:100%;}
+.goods-list .goods{width:287px;margin:5px 4px 5px 6px;border:1px solid #e5e5e5;float:left;height:395px;}
+.goods-list .goods:hover{border:1px solid #ccc;box-shadow:0px 0px 6px #ccc;}
+.goods-list .goods .img{width:287px;height:260px;overflow:hidden;margin:0 auto;text-align:center;vertical-align:middle;display:block;position:relative; display:table-cell; padding:4px;}
+.goods-list .goods .img a{display:table-cell;vertical-align:middle;width:287px; height:260px;} 
+.goods-list .goods .img a img{max-width:260px;max-height:260px;} 
+.goods-list .goods .goods-txt{height:115px;}
+.goods-list .goods .p-name{height: 40px;line-height: 20px;overflow: hidden;width:275px;padding:0px 10px 10px 10px;}
+.goods .price-box{width:275px;padding:0px 0px 10px 10px;}
+.goods .price-box .price-txt{float:left;line-height:35px;}
+.goods .price-box .price{float:left;width:140px;}
+.goods .price-box .font{font-size:30px;color:#d23030;}
+.goods .price-box .num{background-color: #d23030;float: right;width: 82px;height: 25px;line-height: 25px;font-size: 16px;color: #fff;text-align: center;margin-right: -3px;}
+.goods-list .out .num{background:#ccc;}
+.goods .time-box{line-height:30px;height:40px;border-top:1px dotted #dddddd;padding:0px 0px 0px 10px;font-weight:bold:color:#000000;}
+.goods .time-box .img{background:url('../img/icon_tgtime.png') no-repeat;float:left;width:30px;height:30px;margin-top:5px;}
+.goods .time-box .countDown{float:left;line-height:40px;}

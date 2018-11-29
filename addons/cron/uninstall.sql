@@ -1,0 +1,1 @@
+update `wst_crons` set isEnable=0;

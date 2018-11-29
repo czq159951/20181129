@@ -1,0 +1,35 @@
+{extend name="base" /}
+{block name="js"}
+<script src="__ADMIN__/wxpassivereplys/text.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<form id="replyForm" autocomplete="off">
+<table class='wst-form wst-box-top'>
+      <tr>
+      <th width='150'>关键字<font color='red'>*</font>：</th>
+          <td>
+            <input type="text" class="ipt" id="keyword" name="keyword" value="{$data['keyword']}" />
+          </td>
+       </tr>
+          <th>回复内容<font color='red'>*</font>：</th>
+          <td>
+              <textarea  id="content" name="content" class="ipt" style="width:300px;height:150px;">{$data['content']}</textarea>
+          </td>
+       </tr>
+  <tr>
+     <td colspan='2' align='center' class='wst-bottombar'>
+       <input type="hidden" name="id" id="id" class="ipt" value="{$data['id']}" />
+       <input type="hidden" name="msgType" id="msgType" class="ipt" value="text" />
+       <button type="submit"  class='btn btn-primary btn-mright'><i class="fa fa-check"></i>提交</button>
+       <button type="button"  class='btn' onclick="javascript:history.go(-1)"><i class="fa fa-angle-double-left"></i>返回</button>
+     </td>
+  </tr>
+</table>
+</form>
+<script>
+$(function(){textEditInit()});
+</script>
+
+{/block}
+

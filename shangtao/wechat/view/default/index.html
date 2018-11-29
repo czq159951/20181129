@@ -1,0 +1,168 @@
+{extend name="default/base" /}
+{block name="title"}首页 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/swiper.min.css">
+<link rel="stylesheet"  href="__WECHAT__/css/index.css?v={$v}">
+{/block}
+{block name="header"}
+    <header class="ui-header ui-header-positive {if($subscribe==1)} wst-in-change{/if} wst-in-header" id="j-header">
+    </header>
+    <div class="wst-in-search {if($subscribe==1)} wst-in-change{/if}">
+    	<div class="classify"><a href="{:url('wechat/goodscats/index')}"><i></i></a></div>
+    	<div class="searchs" id="j-searchs" onclick="javascript:WST.searchPage('goods',1);">
+		    <i class="ui-icon-search" onclick="javascript:WST.searchPage('goods',1);"></i>
+		    <form action＝"" class="input-form">
+		    <input type="search" placeholder="按关键字搜索商品" onsearch="WST.search(0)" autocomplete="off" disabled="disabled">
+			</form>
+			<div class="wst-clear"></div>
+		</div>
+		<div class="user"><a href="{:url('wechat/messages/index')}">{if condition="session('WST_USER.userId') >0"}<i>{if($news['message']['num']>0)}<span class="number">{$news['message']['num']}</span>{/if}</i>{else}登录{/if}</a></div>
+	</div>
+    {if($subscribe==1)}
+    <div class="wst-in-public">
+        <div class="back"></div>
+        <div class="public"><div class="public2">
+        	<i class="ui-icon-close-page" onclick="javascript:closeFollow();"></i>
+    		<div class="logo"><a><img src="__ROOT__/{:WSTConf('CONF.mallLogo')}"></a></div>
+    		<div class="prompt"><p>您尚未关注公众号</p><p>点击右边按钮立即关注</p></div>
+			<button class="button" onclick="javascript:forFollow();">立即关注</button>
+			<div class="wst-clear"></div>
+    	</div></div>
+    </div>
+   	{/if}
+{/block}
+{block name="main"}
+<input type="hidden" name="" value="-1" id="currPage" autocomplete="off">
+<section class="ui-container">
+        <div class="ui-slider" style="padding-top:50%;">
+		    <ul class="ui-slider-content" style="{if($ads['count']>0)}{$ads['width']}{/if}">
+		    	{wst:ads code="wx-ads-index" cache='86400'}
+		        <li class="advert1"><span><a href="{$vo.adURL}"><img style="width:100%; height:100%; display:block;" src="__ROOT__/{:WSTImg($vo.adFile,2)}"></a></span></li>
+		        {/wst:ads}
+		    </ul>
+		</div>
+		<div class="ui-row wst-in-choose">
+		    {volist name=':WSTMobileBtns(1)' id='btn'}
+		    <div class="ui-col ui-col-20">
+		    <a href="{:url($btn['btnUrl'])}">
+		    <p><img src="__ROOT__/{$btn['btnImg']}" style='margin-top:7px;'/></p>
+		    <span>{$btn['btnName']}</span>
+		    </a></div>
+		    {/volist}
+		</div>
+		
+		<div class="wst-in-activity">
+			{wst:ads code="wx-index-long" cache='86400' num='4'}<a class="advert4" href="{$vo.adURL}"><div class="img"><img src="__ROOT__/{:WSTImg($vo.adFile,2)}"/></div></a>{/wst:ads}
+			<div class="wst-in-news">
+			<span class="new">商城&nbsp;<p>快讯</p></span>
+			<div class="article">
+			<div class="swiper-container swiper-container1">
+	          <div class="swiper-wrapper">
+	          		{wst:article cat="new" num='6' cache='86400'}
+	                <div class="swiper-slide" style="width:100%;">
+	                	<a class="words" href="{:url('wechat/news/view',['articleId'=>$vo['articleId']])}"><p class="ui-nowrap-flex">{$vo['articleTitle']}</p></a>
+	                </div>
+	                {/wst:article}
+	          </div>
+	        </div>
+			</div>
+			<span class="more" onclick="location.href='{:url('wechat/news/view')}'">更多</span>
+			<div class="wst-clear"></div>
+			</div>
+		</div>
+		
+		<div class="wst-in-adst">
+			{wst:ads code="wx-index-left" cache='86400' num='1'}
+			<a class="advert2" href="{$vo.adURL}"><img src="__ROOT__/{:WSTImg($vo.adFile,2)}" style="height:2rem;"/></a>
+			{/wst:ads}
+			{wst:ads code="wx-index-right" cache='86400' num='2'}
+			<a class="advert2" href="{$vo.adURL}"><img src="__ROOT__/{:WSTImg($vo.adFile,2)}" style="height:0.995rem;"/></a>
+			{/wst:ads}
+			<div class="wst-clear"></div>
+		</div>
+		<div class="wst-in-adsb">
+		<div class="swiper-container swiper-container2">
+          <div class="swiper-wrapper">
+          	{wst:ads code="wx-index-small" cache='86400' num='10'}
+                <div class="swiper-slide" style="width:33.333333%;">
+                  <div class="goodsinfo-container">
+                    <a class="advert3" href="{$vo.adURL}"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($vo.adFile,2)}"></a>
+                  </div>
+                </div>
+            {/wst:ads}
+          </div>
+        </div>
+        </div>
+		<div id="goods-list"></div>
+</section>
+<script id="list" type="text/html">
+<div class="wst-in-title colour{{ d.currPage }}" onclick="javascript:getGoodsList({{ d.catId }});">
+	<div class="line"></div><div class="name"><p><span><i class="icon"></i>{{ d.catName }}</span></p></div>
+</div>
+	{{# if(d.ads && d.ads.length>0){ }}
+		<div class="wst-in-adscats"><a href="{{ d.ads[0].adURL }}"><img src="__ROOT__/{{ d.ads[0].adFile }}"/></a></div>
+	{{# } }}
+	{{# if(d.goods.length>0){ }}
+		{{# for(var i=0; i<d.goods.length; i++){ }}
+			<div class="wst-in-goods {{# if((i)%2==0){ }}left{{# }else{ }}right{{# } }}">
+				<div class="img j-imgAdapt"><a href="javascript:void(0);" onclick="javascript:WST.intoGoods({{ d.goods[i].goodsId }});"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d.goods[i].goodsImg }}" title="{{ d.goods[i].goodsName }}"/></a></div>
+				<div class="name ui-nowrap-multi" onclick="javascript:WST.intoGoods({{ d.goods[i].goodsId }});">{{ d.goods[i].goodsName }}</div>
+				<div class="info"><span class="price">¥ <span>{{ d.goods[i].shopPrice }}</span></span></div>
+				<div class="info2"><span class="price">好评率{{ d.goods[i].praiseRate }}</span><span class="deal">成交数:{{ d.goods[i].saleNum }}</span></div>
+			</div>
+		{{# } }}
+	{{# } }}
+<div class="wst-clear"></div>
+</script>
+{/block}
+{block name="include"}
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 二维码对话框*/}
+<div class="ui-dialog" id="wst-di-weixincode" onclick="javascript:WST.dialogHide('weixincode');">
+    <div class="ui-dialog-cnt wst-di-weixincode">
+        <div class="wst-dialog-bd">
+        	<p class="title">长按识别二维码</p>
+            <div><img src="__ROOT__/{:WSTConf('CONF.wxAppLogo')}" style="width: 100%;"></div>
+            <p class="prompt">请长按上图并选择识别关注图中二维码</p>
+        </div>
+    </div>
+</div>
+{include file="default/goods_search" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/swiper.jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/js/index.js?v={$v}'></script>
+{if(!empty($datawx))}
+<script src="{:request()->scheme()}://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+    debug: false,
+    appId: '<?php echo WSTConf('CONF.wxAppId'); ?>', //公众号的唯一标识
+    timestamp: '<?php echo $datawx['timestamp'];?>', //生成签名的时间戳
+    nonceStr: '<?php echo $datawx['noncestr'];?>', //生成签名的随机串
+    signature: '<?php echo $datawx['signature'];?>',//签名
+    jsApiList: [ //需要使用的JS接口
+       	'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'onMenuShareQZone'
+    ]
+});
+wx.ready(function(){
+	var shareData = {
+			title: "{:WSTConf('CONF.mallName')}",
+			desc: "{:WSTConf('CONF.mallSlogan')}",
+			link: "{:url('wechat/index/index','',true,true)}",
+			imgUrl: "{:WSTDomain()}/{:WSTConf('CONF.mallLogo')}"
+	};
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareTimeline(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
+	wx.onMenuShareQZone(shareData);
+});
+</script>
+{/if}
+{/block}

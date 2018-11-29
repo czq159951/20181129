@@ -1,0 +1,25 @@
+<!--pages/user/userIntegral/userIntegral.wxml-->
+<view class='container'>
+ <block wx:if="{{!animationStatus}}">
+ <view class='top-show'>
+  <image src='/image/icon_userscores.png' mode='aspectFill'></image>
+  <view class='number1'>我的积分</view>
+  <view class='number'>{{userScore}}个</view>
+ </view>
+ <view class='record'>
+  <view class='title'>积分明细</view>
+    <view  class='remind-model' wx:if="{{list.length == 0}}" >
+      <view class='image' ><image src='/image/nothing-relevant.png' class="img"></image></view>
+      <view class='content'>暂无相关记录 ~ </view>
+    </view>
+   <view class='content'wx:if="{{list.length != 0}}"  wx:for="{{list}}">
+      <view class='left'>
+        <view class='text'>{{item.dataRemarks}}</view>
+        <view class='time'>{{item.createTime}}</view>
+      </view> 
+        <view class='right' wx:if="{{item.scoreType == 1}}">+{{item.score}}</view>
+        <view class='right right2' wx:if="{{item.scoreType == 0}}">-{{item.score}}</view>
+   </view>
+ </view>
+ </block>
+</view>

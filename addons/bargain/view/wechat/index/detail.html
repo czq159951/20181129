@@ -1,0 +1,267 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}商品详情 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/bargain/view/wechat/index/css/detail.css?v={$v}">
+<link rel="stylesheet"  href="__ROOT__/addons/bargain/view/wechat/index/css/ns-default.css?v={$v}">
+<link rel="stylesheet"  href="__ROOT__/addons/bargain/view/wechat/index/css/ns-style-growl.css?v={$v}">
+{/block}
+{block name="header"}
+	<div class="wst-head-left"><a href="{:addon_url('bargain://goods/wxlists')}"><i></i></a></div>
+{/block}
+{block name="footer"}
+{if($info)}
+	<input type="hidden" name="" value="{$info['goodsId']}" id="goodsId" autocomplete="off">
+	<input type="hidden" name="" value="{$info['goodsType']}" id="goodsType" autocomplete="off">
+    <footer class="ui-footer wst-footer-btns" style="height:42px; border-top: 1px solid #e8e8e8;" id="footer">
+        <div class="wst-toTop" id="toTop">
+	  	<i class="wst-toTopimg"><span>顶部</span></i>
+		</div>
+		<div class="ui-row-flex">
+		{if($signType==0)}
+			<div class="ui-col ui-col wst-goods_buy">
+				<button id="buyBtn1" class="wst-goods_buym active" type="button" onclick="javascript:forFollow();">立即参与</button>
+		    </div>
+		{else}
+		    {if($user['userType']==0)}
+				{if($user['bargainType']==0)}
+			    <div class="ui-col ui-col wst-goods_buy">
+					<button id="buyBtn1" class="wst-goods_buym active" type="button" onclick="javascript:forFirst();" disabled>参与第一刀</button>
+			    </div>
+			    {else}
+				    {if(empty($user['bargain']['orderId']))}
+				    <div class="ui-col ui-col wst-goods_buy">
+						<button id="buyBtn1" class="wst-goods_buym active" type="button" onclick="javascript:WST.share();" disabled>找亲友帮忙砍刀</button>
+				    </div>
+				    {else}
+				    <div class="ui-col ui-col wst-goods_buy">
+						<button id="buyBtn1" class="wst-goods_buym2 active" type="button" disabled>找亲友帮忙砍刀</button>
+				    </div>
+				    {/if}
+			    {if(empty($user['bargain']['orderId']))}
+			    <div class="ui-col ui-col wst-goods_buy">
+					<button id="buyBtn2" class="wst-goods_buym active" type="button" onclick="javascript:addOrder();" disabled>立即下单</button>
+				</div>
+				{else}
+				<div class="ui-col ui-col wst-goods_buy">
+					<button class="wst-goods_buym2 active" type="button" disabled>已下单</button>
+				</div>
+				{/if}
+				{/if}
+			{else}
+				<div class="ui-col ui-col wst-goods_buy">
+					<button id="buyBtn1" class="wst-goods_buym active" type="button" onclick="javascript:forAdd();" disabled>帮砍一刀</button>
+				</div>
+				<div class="ui-col ui-col wst-goods_buy">
+					<button id="buyBtn2" class="wst-goods_buym active" type="button" onclick="javascript:toPartake({$info['bargainId']});" disabled>我也参与</button>
+				</div>
+			{/if}
+		{/if}
+	    </div>
+    </footer>
+{/if}
+{/block}
+{block name="main"}
+{if($info)}
+	 {/* 商品  */}
+     <section class="ui-container">
+        <div class="ui-slider" style="padding-top:100%;position: relative;" id="bargain-time" sc="{:date("Y-m-d H:i:s")}" sv="{$info['startTime']}" ev="{$info['endTime']}">
+		    <ul class="ui-slider-content" style="{if($info['imgcount']>0)}{$info['imgwidth']}{/if}">
+		        {volist name="info['gallery']" id="ga"}
+		        <li><div class="wst-go-img"><a><img src="__ROOT__/{:WSTImg($ga,2)}"></a></div></li>
+		        {/volist}
+		    </ul>
+		    <div class="wst-de-bj"></div>
+		    <div class="wst-de-time" id="bargaintime">{if $info['status']==-1}砍价活动已结束{else}正在计算砍价时间...{/if}</div>
+		</div>
+		<div class="ui-nowrap-multi ui-whitespace wst-go-name">{if $info['isFreeShipping']==1}<span class='wst-red'>【包邮】</span>{/if}{$info['goodsName']}</div>
+		<div class="ui-row-flex wst-go-price">
+		    <div class="ui-col ui-col-2">
+		    	<p class="num">库存数：{$info['goodsStock']}{$info['goodsUnit']}&nbsp;&nbsp;成交数：{$info['orderNum']}<span>{$info['joinNum']}人参与</span></p>
+		    </div>
+		</div>
+		<div class="wst-de-price">
+			<div class="price"><p class="original">原价：<span>¥{$info['startPrice']}</span></p><p class="floor">底价：<span>¥{$info['floorPrice']}</span></p><div class="wst-clear"></div></div>
+		</div>
+		{if($user['userType']==1)}
+		<div class="ui-row-flex ui-whitespace wst-de-info">
+		    <div class="ui-col ui-col"><div class="price"><span class="ucurrPrice">¥{:$user['bargain']['currPrice']?$user['bargain']['currPrice']:$info['startPrice']}</span><p class="name">当前价格</p><div class="wst-clear"></div></div></div>
+		    <div class="ui-col ui-col"><div class="portrait"><img src="{:WSTUserPhoto($user['userPhoto'])}" class="img"><p class="name">{:$user['userName']?$user['userName']:$user['loginName']}</p></div></div>
+		    <div class="ui-col ui-col"><div class="price2"><span class="uhelpNum">{:$user['bargain']['helpNum']?$user['bargain']['helpNum']:0}</span><p class="name">支持人数</p><div class="wst-clear"></div></div></div>
+		</div>
+		{/if}
+		{if($user['bargainType']==1 && $user['userType']==0)}
+		<div class="wst-de-users">
+			<p class="greetings">亲爱的<span>{:$user['userName']?$user['userName']:$user['loginName']}</span>：</p>
+			<p class="content">已经有<span class="uhelpNum">{$user['bargain']['helpNum']}</span>位亲友帮你砍价了，你当前的价格为<span class="ucurrPrice">{$user['bargain']['currPrice']}</span>元，
+			{if(empty($user['bargain']['orderId']))}
+				{if($info['floorPrice']>=$user['bargain']['currPrice'])}
+				恭喜你已砍价达到最低价，请及时下单！</p>
+				{else}
+				继续加油吧！</p>
+				{/if}
+			{else}
+				你已经下单，不能再砍了！</p>
+			{/if}
+		</div>
+		{/if}
+		{if($info['article'])}
+		<div class="wst-de-rule">
+			<p>活动规则：</p>
+			<p>{$info['article']|htmlspecialchars_decode}</p>
+		</div>
+		{/if}
+		<div class="wst-de-introduce">
+			<span class="active" onclick="javascript:pageSwitch(this,1);">商品介绍</span>
+			{if !empty($info['attrs']) }<span onclick="javascript:pageSwitch(this,2);">商品参数</span>{/if}
+			{if!empty($info['spec'])}<span onclick="javascript:pageSwitch(this,3);">商品规格</span>{/if}
+			<span onclick="javascript:pageSwitch(this,4);">亲友团出刀</span>
+			<div class="wst-clear"></div>
+		</div>
+		{/* 商品介绍  */}
+		<div class="wst-de-contents" id="goods1">
+			<div class="wst-go-details">{$info['goodsDesc']}</div>
+		</div>
+		{/* 商品参数  */}
+		{if !empty($info['attrs']) }
+		<div class="wst-de-contents" id="goods2" style="display: none;">
+			<div class="content">
+				{volist name="$info['attrs']" id="at"}
+					{$at['attrName']}：{$at['attrVal']}<br/>
+				{/volist}
+			</div>
+		</div>
+		{/if}
+		{/* 商品规格  */}
+		{if!empty($info['spec'])}
+		<div class="wst-de-contents" id="goods3" style="display: none;">
+		    <div class="wst-go-spec">
+				{volist name="$info['spec']" id="sp"}
+				<div class="spec">
+					{volist name="sp['list']" id="sp2"}
+					{if $sp2['itemImg']!=''}
+						<span class="introduce">{$sp['name']}：</span><img class="j-option img active" data-val="{$sp2['itemId']}" src="__ROOT__/{$sp2['itemImg']}" title="{$sp2['itemName']}">
+					{else}
+						<span class="introduce">{$sp['name']}：</span><span class="j-option words active" data-val="{$sp2['itemId']}">{$sp2['itemName']}</span>
+					{/if}
+					{/volist}
+					<div class="wst-clear"></div>
+				</div>
+				{/volist}
+			</div>
+		</div>
+		{/if}
+		{/* 亲友团出刀  */}
+		<div class="wst-de-contents" id="goods4" style="display: none;">
+		<input type="hidden" name="" value="" id="currPage" autocomplete="off">
+        <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+			<div id="record-list"></div>
+		</div>
+		<script id="list" type="text/html">
+		{{# for(var i=0; i<d.data.length; i++){ }}
+			<ul class="ui-row wst-de-helps">		    
+			    <li class="ui-col ui-col-67">
+			    	<img src="{{ d.data[i].userPhoto }}" class="img">
+			    	<div class="info"><p class="name">{{ d.data[i].userName }}</p><p>{{ d.data[i].createTime }}</p></div>
+			    </li>
+			    <li class="ui-col ui-col-33"><p class="price">帮砍：<span>¥{{ d.data[i].minusMoney }}</span></p></li>
+			</ul>
+		{{# } }}
+		{{# if(d.last_page > 0 && d.current_page < d.last_page){ }}
+			<div class="wst-go-top" onclick="javascript:friendsList();">更多</div>
+		{{# } }}
+		</script>
+     </section>
+{else}
+ <ul class="ui-row-flex wst-flexslp">
+	<li class="ui-col ui-flex ui-flex-pack-center">
+	<p>对不起，没有找到商品。</p>
+	</li>
+</ul>
+{/if}
+{/block}
+{block name="include"}
+{/* 提示分享对话框 share */}
+<div class="ui-dialog" id="wst-di-share" onclick="WST.dialogHide('share');">
+     <div class="wst-prompt"></div>
+</div>
+{if($info)}
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 小加载 */}
+<div class="ui-loading-wrap wst-Load" id="Load">
+    <i class="ui-loading"></i>
+</div>
+{/* 二维码对话框*/}
+<div class="ui-dialog" id="wst-di-weixincode" onclick="WST.dialogHide('weixincode');">
+    <div class="ui-dialog-cnt wst-di-weixincode">
+        <div class="wst-dialog-bd">
+        	<p class="title">长按识别二维码</p>
+            <div><img src="__ROOT__/{$weixinCode}" style="width: 100%;"></div>
+            <p class="prompt">请长按上图并选择识别图中二维码参与活动</p>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="js"}
+{if(!empty($datawx))}
+<script src="{:request()->scheme()}://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+    debug: false,
+    appId: '<?php echo WSTConf('CONF.wxAppId'); ?>', //公众号的唯一标识
+    timestamp: '<?php echo $datawx['timestamp'];?>', //生成签名的时间戳
+    nonceStr: '<?php echo $datawx['noncestr'];?>', //生成签名的随机串
+    signature: '<?php echo $datawx['signature'];?>',//签名
+    jsApiList: [ //需要使用的JS接口
+       	'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'onMenuShareQZone'
+    ]
+});
+
+wx.ready(function(){
+	var shareData = {
+			title: '{$shareInfo["title"]}',
+			desc: '{$shareInfo["goodsName"]}',
+			link: '{$shareInfo["url"]}',
+			imgUrl: '{$shareInfo["goodsImg"]}'
+		};
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareTimeline(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
+	wx.onMenuShareQZone(shareData);
+});
+</script>
+{/if}
+<script>
+var goodsInfo = {
+	id:{$info['goodsId']},
+	bargainId:{$info['bargainId']},
+	bargainUserId:'{$bargainUserId}',
+	isSpec:{$info['isSpec']},
+	goodsStock:{$info['goodsStock']},
+	marketPrice:{$info['marketPrice']},
+	goodsPrice:{$info['shopPrice']}
+	{if isset($info['saleSpec'])}
+	,sku:{:json_encode($info['saleSpec'])}
+	{/if}
+	{if !empty($userinfo['openid'])}
+	,signType:{$signType},
+	openId:'{$userinfo['openid']}',
+	userName:'{$userinfo['nickname']}',
+	userPhoto:'{$userinfo['headimgurl']}'
+	{/if}
+}
+</script>
+{/if}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__ROOT__/addons/bargain/view/wechat/index/js/modernizr.custom.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/bargain/view/wechat/index/js/classie.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/bargain/view/wechat/index/js/notificationFx.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/bargain/view/wechat/index/js/detail.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/bargain/view/wechat/index/js/time.js?v={$v}'></script>
+{/block}

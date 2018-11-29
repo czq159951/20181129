@@ -1,0 +1,18 @@
+  <view class='wst-search'>
+    <view class="wst-gs-header">
+      <view class="input">
+        <icon class="icon" type="search" size="13" color="#666" bindtap="onSearch"/>
+        <input placeholder='按关键字搜索商品' placeholder-style='color:#666;' bindinput="nameInput"></input>
+      </view>
+      <view class="btn" bindtap="onSearch">搜索</view>
+    </view>
+    <view class='interim-box'>
+      <view class='wst-top'>
+        <image src='../../image/hot.png'></image>
+        <text>热门搜索</text>
+      </view>
+      <view class='mix-box' >
+        <text wx:for="{{hots}}" wx:for-index="id" bindtap="onSearch" data-key="{{item}}">{{item}}</text>
+      </view>
+    </view>
+  </view>

@@ -1,0 +1,100 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+<style>
+body{overflow: hidden}
+</style>
+{/block}
+{block name="js"}
+<script src="__STATIC__/plugins/webuploader/webuploader.js?v={$v}" type="text/javascript" ></script>
+<script src="__ADMIN__/wxmenus/wxmenus.js?v={$v}" type="text/javascript"></script>
+<script>
+$(function () {
+	   {if condition="$object['menuId'] !=0 "}
+			WST.setValues({$object});
+	   {/if}
+		$('#menuForm').validator({
+		    fields: {
+		    	menuName: {
+		    		tip: "请输入菜单名称",
+		    		rule: '菜单名称:required;length[~16];'
+		    	}
+		    },
+		    valid: function(form){
+		    	var menuId = $('#menuId').val();
+		    	toEdits(menuId);
+		    }
+		})
+});
+</script>
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<form id="menuForm" autocomplete="off">
+<input type='hidden' id='menuId' name="menuId" value="{$menuId}" class='ipt'/>
+<input type='hidden' id='parentId' name="parentId" value="{$parentId}" class='ipt'/>
+<table class='wst-form wst-box-top'>
+  <tr>
+     <th width='150'>菜单名称<font color='red'>*</font>：</th>
+     <td><input type="text" id='menuName' name='menuName' maxLength='20' style='width:300px;' class='ipt'/></td>
+  </tr>
+  <tr style="display:none;">
+  <th>子菜单内容<font color='red'>*</font>：</th>
+     <td>
+        <label>
+           <input type='radio' id="content" name='content' value='0' class='ipt' checked onclick="javascript:wayChange(1)">跳转网页
+        </label>
+        <label>
+           <input type='radio' id="content" name='content' value='1' class='ipt' onclick="javascript:wayChange(0)">发送消息
+        </label>
+     </td>
+  </tr>
+  <tr id="urltext">
+  	<th>跳转网址：</th>
+  	 <td><input type="text" id='menuUrl' name='menuUrl' maxLength='255' style='width:500px;' class='ipt' data-tip="输入网址时以http://或https://开头"/></td>
+  </tr>
+   <tr class="newstext" style="display:none;">
+  	 <th></th>
+     <td>
+        <label>
+           <input type='radio' name='material' value='1' checked  onclick="javascript:matChange(1)">文字
+        </label>
+        <label>
+           <input type='radio' name='material' value='2'  onclick="javascript:matChange(2)">图片
+        </label>
+        <label>
+           <input type='radio' name='material' value='3'  onclick="javascript:matChange(3)">图文
+        </label>
+        <label>
+           <input type='radio' name='material' value='4'  onclick="javascript:matChange(4)">语音
+        </label>
+        <label>
+           <input type='radio' name='material' value='5'  onclick="javascript:matChange(5)">视频
+        </label>
+     </td>
+	  </tr>
+	  <tr class="newstext" style="display:none;">
+	  	 <th></th>
+	     <td>
+	       	<div class="wst-view j-view" id="view1"><a href="javascript:void(0);" onclick="javascript:addMaterial(1);">选择文本</a></div>
+	       	<div class="wst-view j-view" id="view2" style="display:none;"><a href="javascript:void(0);" onclick="javascript:addMaterial(2);">选择文本素材</a></div>
+	       	<div class="wst-view j-view" id="view3" style="display:none;"><a href="javascript:void(0);" onclick="javascript:addMaterial(3);">选择图文素材</a></div>
+	       	<div class="wst-view j-view" id="view4" style="display:none;"><a href="javascript:void(0);" onclick="javascript:addMaterial(4);">选择语音素材</a></div>
+	       	<div class="wst-view j-view" id="view5" style="display:none;"><a href="javascript:void(0);" onclick="javascript:addMaterial(5);">选择视频素材</a></div>
+	     </td>
+	  </tr>
+   <tr>
+      <th width="100">排序号<font color="red">*</font>：</th>
+      <td><input type="text" id="menuSort" name="menuSort" class="ipt" style="width:60px;" onkeypress="return WST.isNumberKey(event);" onkeyup="javascript:WST.isChinese(this,1)" maxlength="10" value="0" aria-required="true" data-tip="请输入排序号"></td>
+   </tr>
+     <tr>
+       <td colspan='2' align='center'>
+           <button type="submit" class="btn btn-primary btn-mright"><i class="fa fa-check"></i>保&nbsp;存</button>
+           <button type="button" class="btn" onclick="javascript:history.go(-1)"><i class="fa fa-angle-double-left"></i>返&nbsp;回</button>
+       </td>
+     </tr>
+</table>
+ </form>
+<div id='wxmenusBox' style='display:none'>
+</div>
+{/block}

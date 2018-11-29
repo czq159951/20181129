@@ -1,0 +1,106 @@
+<view class="container">
+  <view class="wst-or-ap">
+    <view class="shop">{{data.shopName}}</view>
+    <block wx:for="{{data.data}}" wx:for-item="go">
+      <view class="goods">
+        <view class="img">
+          <image mode="aspectFit" src="{{domain}}{{go.goodsImg}}" data-goodsid="{{go.goodsId}}" bindtap="togoods"></image>
+        </view>
+        <view class="names">
+          <view class="name" data-goodsid="{{go.goodsId}}" bindtap="togoods">{{go.goodsName}}{{index}}</view>
+          <view class="spec" wx:if="{{go.goodsSpecNames}}">规格：{{go.goodsSpecNames}}</view>
+        </view>
+        <view class="click"><button type="default" size="mini" bindtap="evaluate" data-goodsid="{{go.goodsId}}" data-goodsspecid="{{go.goodsSpecId}}" data-ordergoodsid="{{go.id}}" class="button">{{go.appraise==null?'评价':'查看'}}</button></view>
+        <view class="wst-clear"></view>
+      </view>
+      <view class="evaluate" wx:if="{{currentId==go.goodsId}}">
+        <view class="list"><view class="left">商品名称</view><view class="right">{{go.goodsName}}</view><view class="wst-clear"></view></view>
+        <block wx:if="{{go.appraise==null}}">
+        <view class="list">
+          <view class="left">商品评分</view>
+          <view class="right">
+          <block wx:for="{{gScore}}" wx:for-item="gs">
+            <i class="wst-stars {{(gs==2)?'star1':'star0'}}" data-index="{{index}}" data-types="goods" bindtap="toScore"></i>
+          </block>
+          <text>{{goodsScore}}分</text>
+          </view>
+          <view class="wst-clear"></view>
+        </view>
+        <view class="list">
+          <view class="left">服务评分</view>
+          <view class="right">
+          <block wx:for="{{sScore}}" wx:for-item="ss">
+            <i class="wst-stars {{(ss==2)?'star1':'star0'}}" data-index="{{index}}" data-types="service" bindtap="toScore"></i>
+          </block>
+          <text>{{serviceScore}}分</text>
+          </view>
+          <view class="wst-clear"></view>
+        </view>
+        <view class="list">
+          <view class="left">时效评分</view>
+          <view class="right">
+          <block wx:for="{{tScore}}" wx:for-item="ts">
+            <i class="wst-stars {{(ts==2)?'star1':'star0'}}" data-index="{{index}}" data-types="time" bindtap="toScore"></i>
+          </block>
+          <text>{{timeScore}}分</text>
+          </view>
+          <view class="wst-clear"></view>
+        </view>
+        <view class="content">
+          <textarea bindinput="reasonText" maxlength="300" value="{{reason}}" placeholder="请填写评价内容" />
+        </view>
+        <view class="imgs">
+          <view wx:for="{{imgList}}" wx:for-item="img" class="img">
+            <image mode="aspectFit" src="{{img}}"></image>
+            <i class="delete" data-index="{{index}}" bindtap="deleteImg"></i>
+          </view>
+        </view>
+        <view class="upload">
+          <button class="button" type="warn" size="mini" bindtap="upload">上传附件(最多5张)</button>
+        </view>
+        <view class="submit">
+          <button type="default" class="button" data-goodsid="{{go.goodsId}}" data-goodsspecid="{{go.goodsSpecId}}" data-ordergoodsid="{{go.id}}" bindtap="submit">提交</button>
+        </view>
+        </block>
+        <block wx:if="{{go.appraise!=null}}">
+        <view class="list">
+          <view class="left">商品评分</view>
+          <view class="right">
+          <block wx:for="{{gScores}}" wx:for-item="gs">
+            <i class="wst-stars {{(gs==2)?'star1':'star0'}}"></i>
+          </block>
+          <text>{{evaluateData.goodsScore}}分</text>
+          </view>
+          <view class="wst-clear"></view>
+        </view>
+        <view class="list">
+          <view class="left">服务评分</view>
+          <view class="right">
+          <block wx:for="{{sScores}}" wx:for-item="ss">
+            <i class="wst-stars {{(ss==2)?'star1':'star0'}}"></i>
+          </block>
+          <text>{{evaluateData.serviceScore}}分</text>
+          </view>
+          <view class="wst-clear"></view>
+        </view>
+        <view class="list">
+          <view class="left">时效评分</view>
+          <view class="right">
+          <block wx:for="{{tScores}}" wx:for-item="ts">
+            <i class="wst-stars {{(ts==2)?'star1':'star0'}}"></i>
+          </block>
+          <text>{{evaluateData.timeScore}}分</text>
+          </view>
+          <view class="wst-clear"></view>
+        </view>
+        <view class="content">{{evaluateData.content}}</view>
+        <view class="imgs" style="padding-bottom: 20rpx;border-bottom: 10rpx solid #f6f6f8;">
+          <view wx:for="{{evaluateData.images}}" wx:for-item="img" class="img">
+            <image mode="aspectFit" src="{{domain}}{{img}}"></image>
+          </view>
+        </view>
+        </block>
+      </view>
+    </block>
+  </view>
+</view>

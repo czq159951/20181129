@@ -1,0 +1,36 @@
+<form id="userForm" autocomplete="off" >
+<table class='wst-form wst-box-top'>
+  <tr>
+    <th width='150'>账号<font color='red'>*</font>：</th>
+      <td width='370'>
+        {$object['loginName']}{if $object['userName']!=''}({$object['userName']}){/if}
+      </td>
+  </tr>
+  <tr>
+    <th width='150'>类型<font color='red'>*</font>：</th>
+      <td width='370'>
+        <lable><input type='radio' name='moneyType' value='1'/>充值 </lable>
+        <lable><input type='radio' name='moneyType' value='0'/>提现 </lable>
+      </td>
+  </tr>
+  <tr>
+    <th width='150'>充值金额<font color='red'>*</font>：</th>
+      <td width='370'>
+        <input type='text' id='money' maxLength='5'/>
+      </td>
+  </tr>
+  <tr>
+    <th width='150'>充值备注<font color='red'>*</font>：</th>
+      <td width='370'>
+        <textarea style='width:80%;height:50px;' id='remark'></textarea>
+      </td>
+  </tr>
+  <tr>
+     <td colspan='2' align='center'>
+       <input type="hidden" name="id" id="userId" class="ipt" value="<?=(int)$object['userId']?>" />
+       <button type="submit" class="btn btn-primary btn-mright" ><i class="fa fa-check"></i>提交</button> 
+       <button type="button" class="btn" onclick="javascript:history.go(-1)"><i class="fa fa-angle-double-left"></i>返回</button>
+     </td>
+  </tr>
+</table>
+</form>

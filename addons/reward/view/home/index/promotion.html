@@ -1,0 +1,37 @@
+{if !empty($rewards)}
+<link href="__ROOT__/addons/reward/view/home/index/reward.css" rel="stylesheet">
+<div class='reward-box'>
+<img src="__ROOT__/addons/reward/view/home/index/img.png" class="reward-tag" />
+{$rewards['rewardTitle']}
+<span class='j-reward-tip'>
+	详情
+	<img src="__ROOT__/addons/reward/view/home/index/arrow_left.png" alt="" />
+</span>
+<div class='j-reward-detail'>
+<div class='title'>
+<img src="__ROOT__/addons/reward/view/home/index/img.png" class="reward-tag" style="margin-right:8.5px" />{$rewards['rewardTitle']}
+</div>
+<div class='content'>
+<table border='0' width='100%'>
+{volist name="rewards['json']" key="rvno" id='rvo'}
+  <tr>
+	<th nowrap valign='top' width='25%'>消费满{$rvo['orderMoney']}元 - </th>
+	<td>
+		{if $rvo['favourableJson']['chk0']}减￥{$rvo['favourableJson']['chk0val']}{/if}
+		{if $rvo['favourableJson']['chk1']}送赠品【{$rvo['favourableJson']['chk1val']['text']}】{/if}
+		{if $rvo['favourableJson']['chk2']}免邮费{/if}
+		{if(WSTConf('WST_ADDONS.reward'))}
+		{if $rvo['favourableJson']['chk3'] && isset($rvo['favourableJson']['chk3val']['text'])}送{$rvo['favourableJson']['chk3val']['text']}优惠券{/if}
+		{/if}
+    </td>
+  </tr>
+{/volist}
+</table>
+</div>
+</div>
+</div>
+<script type='text/javascript' src='__ROOT__/addons/reward/view/home/index/reward.js'></script>
+<script>
+initGoodsDetailReward();
+</script>
+{/if}

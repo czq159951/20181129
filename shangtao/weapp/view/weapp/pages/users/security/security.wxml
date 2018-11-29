@@ -1,0 +1,32 @@
+<view class='container'>
+ <view class='main-model' bindtap='loginPwd'>
+  <view class='left'>
+   <image src='/image/icon_lock.png'></image>
+  </view>
+  <view class='between'>{{data.loginPwd==0?'设置':'修改'}}登录密码</view>
+  <view class='right'>
+   <view class='arrow'></view>
+  </view>
+  <view class='wst-clear'></view>
+ </view>
+ <view class='main-model' bindtap='payPwd'>
+  <view class='left'>
+   <image src='/image/icon_lock.png'></image>
+  </view>
+  <view class='between'>{{data.payPwd==0?'设置':'修改'}}支付密码</view>
+  <view class='right'>
+   <view class='arrow'></view>
+  </view>
+  <view class='wst-clear'></view>
+ </view>
+ <view class='main-model' bindtap='phoneNum'>
+  <view class='left'>
+   <image src='/image/icon_phone.png'></image>
+  </view>
+  <view class='between'>{{data.userPhone==0?'绑定':'修改'}}手机号码</view>
+  <view class='right'>
+   <view class='arrow'></view>
+  </view>
+  <view class='wst-clear'></view>
+ </view>
+</view>

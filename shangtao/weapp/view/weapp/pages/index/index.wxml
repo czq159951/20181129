@@ -1,0 +1,111 @@
+<view class="wst-head {{select == 0 ? '' : 'active'}}"></view>
+<view class="wst-head-input {{select == 0 ? '' : 'active-input'}}">
+  <view class="classify">
+    <i class="icon" bindtap="getClassify"></i>
+  </view>
+  <view class="input">
+    <icon class="icon" type="search" size="13" color="{{select == 0 ? '#fff' : '#666'}}" bindtap="onSearch"/>
+    <input placeholder='按关键字搜索商品' placeholder-class='wst-head-placeholder' bindtap='toSearch' disabled="true"></input>
+  </view>
+  <view class="user">
+    <view wx:if="{{isLogin==0}}" bindtap="getLogin">登陆</view>
+    <view class="icon" wx:if="{{isLogin==1}}" bindtap="getMessages"><span wx:if="{{data.message.message.num>0}}">{{data.message.message.num}}</span></view>
+  </view>
+</view>
+<view  class='container'>
+<!--导航条-->
+  <!--轮播图-->
+  <view class='slide-model' wx:if="{{data.swiper!=''}}">
+   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{continuous}}" indicator-active-color="#fff">
+     <swiper-item wx:for="{{data.swiper}}" wx:for-item="swiper">
+      <image src="{{domain}}{{swiper.adFile}}" class="slide-image" mode='scaleToFill' bindtap='jumpcenter' data-url="{{swiper.adURL}}"/>
+     </swiper-item>
+   </swiper>
+  </view>
+  <!--模块选择-->
+  <view class='choose-model'>
+   <block wx:for="{{data.btns}}">
+    <view class='term' bindtap='jumpcenter' data-url="{{item.btnUrl}}">
+      <view class="btns">
+        <image src='{{domain}}{{item.btnImg}}' mode='aspectFill'></image>
+      </view>
+      <text>{{item.btnName}}</text>
+    </view>
+   </block>
+  </view>
+  <view class="wst-ads" wx:for="{{data.indexAds}}" wx:for-item="lo">
+    <image src='{{domain}}{{lo.adFile}}' mode='widthFix'  bindtap='jumpcenter' data-url="{{lo.adURL}}"></image>
+  </view>
+  <!--最新资讯-->
+  <view class='wst-message'>
+  <view class='message-model'>
+   <view class='message-text'>
+    <view class="text">商城 <p>快讯</p></view>
+   </view>
+   <view class="swiper_container">
+    <swiper autoplay="true" circular="false" vertical="true" duration="300" interval="3000">
+     <swiper-item wx:for="{{data.news}}" wx:for-item="news" bindtap="toNews" data-id="{{news.articleId}}">
+      <view class='text'>{{news.articleTitle}}</view>
+     </swiper-item>
+   </swiper>
+   </view>
+   <view class='message-more'>
+    <text bindtap='getMore'>更多</text>
+   </view>
+  </view>
+  </view>
+  <view class="wst-in-adst" wx:if="{{data.ads1 && data.ads2 && data.ads3}}">
+			<view class="adstl">
+			  <image wx:for="{{data.ads}}" wx:for-item="a1" src='{{domain}}{{a1.adFile}}' mode='scaleToFill' bindtap='jumpcenter' data-url="{{a1.adURL}}"></image>
+			</view>
+			<view class="adstr">
+				<view class="adstrt">
+				  <image wx:for="{{data.ads2}}" wx:for-item="a2" src='{{domain}}{{a2.adFile}}' mode='scaleToFill' bindtap='jumpcenter' data-url="{{a2.adURL}}"></image>
+				</view>
+				<view class="adstrt">
+				  <image wx:for="{{data.ads3}}" wx:for-item="a3" src='{{domain}}{{a3.adFile}}' mode='scaleToFill' bindtap='jumpcenter' data-url="{{a3a2.adURL}}"></image>
+				</view>
+			</view>
+			<view class="wst-clear"></view>
+	</view>
+  <!--分类商品独立显示-->
+  <scroll-view wx:for='{{goods}}' wx:for-item="go">
+  <view class='assify-model'>
+    <view class='assify-type colour{{go.currPage}}'>
+      <view class="line"></view>
+      <view class="text"><p><span><i class="icon"></i>{{go.catName}}</span></p></view>
+    </view>
+     <view class='assify-type-image' wx:for='{{go.ads}}'>
+       <image src='{{domain}}{{item.adFile}}' mode='scaleToFill' bindtap='jumpcenter' data-url="{{item.adURL}}"></image>
+     </view>
+     <!--商品列表-->
+     <block wx:for='{{go.goods}}' wx:for-item="go2" wx:for-index="key2">
+     <navigator open-type='navigate' url='../goods-detail/goods-detail?goodsId={{go2.goodsId}}'>
+     <view class='assify-commodity {{(key2)%2==0 ? "left" : "right"}}'>
+          <view class='image'>
+            <image src='{{domain+go2.goodsImg}}' mode='aspectFill' lazy-load='true'></image>
+          </view>
+          <view class='content'>{{go2.goodsName}}</view>
+          <view class='price'>¥ <text>{{go2.shopPrice}}</text></view>
+          <view class='info'>
+            <text class="praise">{{go2.praiseRate}}</text>
+            <text class="deal">成交数: {{go2.saleNum}}</text>
+          </view>
+     </view>
+     </navigator>
+    </block>
+  </view>
+ </scroll-view>
+  <button class="wst-load" loading="true" disabled="true" wx:if="{{load==0}}">加载中</button>
+  <button class="wst-load" disabled="true" wx:if="{{load==1}}">加载完啦</button>
+</view>
+<view class="wst-mask" wx:if="{{frame}}">
+  <view class="wst-or-frame">
+    <view class="title">用户授权</view>
+    <view class="title2"><i></i>系统需要获取您的微信用户信息</view>
+    <view class="button">
+      <button type="default" size="mini" bindtap="cancel" class="cancel">取消</button>
+      <button type="default" size="mini" bindtap="cancel"  class="authorize" open-type="getUserInfo">去授权</button>
+    </view>
+  </view>
+</view>

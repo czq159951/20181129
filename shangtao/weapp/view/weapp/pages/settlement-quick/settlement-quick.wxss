@@ -1,0 +1,272 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #F6F6F8;
+}
+.container{
+  border-bottom: 88px solid transparent;
+}
+/*订单信息*/
+.list-model{
+  height: auto;
+  padding: 20rpx;
+  background: white;
+  overflow: hidden;
+  position: relative;
+}
+.list-model .shop{
+  padding: 6px 0px 2px 0px;
+  font-size:30rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  -webkit-box-flex: 1;
+  height: inherit;
+}
+.list-model .goos{
+  padding:10rpx 0;
+  font-size:30rpx;
+  border-bottom: 1rpx solid #f1f1f1;
+}
+.list-model .img{
+  width:150rpx;
+  height:150rpx;
+  float: left;
+}
+.list-model .img image{
+  width:150rpx;
+  height:150rpx;
+}
+.list-model .details{
+  float: right;
+  width: 550rpx;
+  padding-left:10rpx;
+  padding-bottom:10rpx;
+  display: flex;
+  font-size: 28rpx;
+}
+.list-model .title{
+  width: 390rpx;
+  min-height:80rpx;
+  line-height:40rpx;
+}
+.list-model .price{
+  width: 160rpx;
+  height: 46rpx;
+  line-height:46rpx;
+  text-align: right;
+  font-size: 26rpx;
+}
+.list-model .spec{
+  float: right;
+  width: 550rpx;
+  padding-left:10rpx;
+  color: #a6a6a6;
+  font-size: 28rpx;
+}
+/*快递详情*/
+.expressDetails{
+  padding:20rpx 0;
+  font-size: 28rpx;
+}
+.expressDetails .freight .number,.expressDetails .amount .number{
+  float: right;
+  color: #de0202;
+}
+/*备注信息*/
+.remarkInform textarea{
+  width: 97%;
+  padding:10rpx;
+  font-size: 28rpx;
+  border: 1rpx solid #909192;
+}
+::-webkit-scrollbar-thumb{
+  width: 5rpx;
+  background: #ABAFB6;
+}
+/*资料统计*/
+.infoAmount{
+  margin-top: 10rpx;
+  padding:0rpx 20rpx;
+  position: relative;
+  background: white;
+}
+.infoAmount .term{
+  height: 86rpx;
+  line-height:86rpx;
+  border-bottom: 1rpx solid #F1F1F1;
+}
+.infoAmount .term .left{
+  width: auto;
+  float: left;
+  font-size: 30rpx;
+  color: #59595C;
+}
+.infoAmount .term .describe{
+  float: left;
+  font-size: 28rpx;
+}
+.infoAmount .term .describe text{
+  color: #e00102;
+}
+.infoAmount .term .between{
+  width: 500rpx;
+  height: 86rpx;
+  float: right;
+  margin-right: 10rpx;
+  color: #777;
+  font-size: 29rpx;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.infoAmount .term .right{
+  width: 50rpx;
+  height: 60rpx;
+  float: right;
+  margin-top: 22rpx;
+}
+.infoAmount .term .arrow{
+  width: 18rpx;
+  height: 18rpx;
+  border-right: 5rpx solid #848A97;
+  border-bottom: 5rpx solid #848A97;
+  margin-top: 10rpx; 
+  transform: rotate(-45deg);
+}
+/*底部导航条*/
+.navigation{
+  width: 100%;
+  height: 170rpx;
+  border: 1rpx solid #F1F1F1;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  background: white;
+  z-index: 999;
+}
+.navigation .list{
+  padding:0 20rpx;
+}
+.navigation .top{
+  height:82rpx;
+}
+.navigation .top .left{
+  width: auto;
+  float: left;
+  font-size: 33rpx;
+  height:82rpx;
+  line-height: 82rpx;
+  font-weight: bold;
+}
+.navigation .top .right{
+  width: auto;
+  float: right;
+  color: #de0202;
+  height:82rpx;
+  line-height: 82rpx;
+}
+.navigation .bottom{
+  margin: 0rpx auto;
+}
+.navigation button{
+  width: 100%;
+  background: #e00102;
+  color: white;
+  font-size:30rpx;
+}
+.navigation button:active,.navigation button[disabled][type="default"],.navigation button[disabled]:not([type]){
+  color:#fff0f0;
+  background:#f52f30;
+  background-clip:padding-box;
+}
+.wst-se-invoice{
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background: #F6F6F8;
+  z-index:99999;
+}
+.wst-se-invoice .head{
+  position: relative;
+  text-align: center;
+  font-size:30rpx;
+  height:80rpx;
+  line-height:80rpx;
+}
+.wst-se-invoice .head .icon{
+  position: absolute;
+  top:12rpx;
+  right:20rpx;
+}
+.wst-se-invoice .invoice{
+  font-size:28rpx;
+  background: #fff;
+  padding:30rpx 20rpx;
+}
+.wst-se-invoice .option{
+  padding:30rpx 0;
+}
+.wst-se-invoice .option label{
+  margin-right:60rpx;
+}
+radio .wx-radio-input{
+  width:18px;
+  height:18px;
+}
+.wst-se-invoice .item{
+  padding:10rpx;
+  margin-bottom:20rpx;
+  background: #F6F6F8;
+  position: relative;
+}
+.wst-se-invoice .item input{
+  width:100%;
+  background: #F6F6F8;
+}
+.wst-se-invoice .item .list{
+  position: absolute;
+  left:0;
+  top:80rpx;
+  z-index:1000;
+  width:100%;
+  background: #F6F6F8;
+}
+.wst-se-invoice .item .list .word{
+  height: 60rpx;
+  line-height: 60rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.wst-se-invoice .content{
+  padding:0 10rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-top:30rpx;
+  border-bottom:1rpx solid #ccc;
+}
+.wst-se-invoice .prompt{
+  padding:10rpx 20rpx;
+  font-size:28rpx;
+}
+.wst-se-invoice .bottom{
+  position: absolute;
+  bottom:20rpx;
+  left:0;
+  width:100%;
+}
+.wst-se-invoice .bottom button{
+  width:95%;
+  background: #e00102;
+  color: white;
+  font-size:30rpx;
+}
+.wst-se-invoice .bottom button:active,.wst-se-invoice .bottom button[disabled][type="default"],.wst-se-invoice .bottom button[disabled]:not([type]){
+  color:#fff0f0;
+  background:#f52f30;
+  background-clip:padding-box;
+}

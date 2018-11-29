@@ -1,0 +1,207 @@
+{extend name="default/base" /}
+{block name="title"}店铺街 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/swiper.min.css">
+<link rel="stylesheet"  href="__MOBILE__/css/shops_list.css?v={$v}">
+{/block}
+{block name="header"}
+    <header class="ui-header ui-header-positive wst-se-header2" style="border-bottom: 1px solid #f6f6f8;">
+		<i class="ui-icon-return" onclick="history.back()"></i>
+		<div class="wst-se-search" onclick="javascript:WST.searchPage('shops',1);">
+		    <i class="ui-icon-search" onclick="javascript:WST.searchPage('shops',1);"></i>
+		    <form action＝"" class="input-form">
+			<input type="search" value="{$keyword}" placeholder="按关键字搜索店铺" onsearch="WST.search(1)" autocomplete="off" disabled="disabled">
+			</form>
+		</div>
+	</header>
+{/block}
+{block name="main"}
+	 <input type="hidden" name="" value="{$keyword}" id="keyword" autocomplete="off">
+	 <input type="hidden" name="" value="" id="condition" autocomplete="off">
+	 <input type="hidden" name="" value="" id="desc" autocomplete="off">
+	 <input type="hidden" name="" value="" id="catId" autocomplete="off">
+	 <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+     <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+	 <input type="hidden" name="" value="" id="accredId" autocomplete="off">
+     <input type="hidden" name="" value="" id="totalScore" autocomplete="off">
+    {/*遮盖层*/}
+     <div id="backgroundTier" onclick="javascript:closeScreenTier();" style="display:none;"></div>
+     <div id="screen">
+     <div class="screen-top">
+		<ul class="ui-tab-content">
+	        <li id="screenAttr"></li>
+	    </ul>
+		<ul class="ui-tab-content">
+	        <li id="graded"></li>
+	    </ul>
+     </div>
+     	<div id="indexbnts" class="index-bnts">	
+     		<div   onclick="javascript:resetAll();" class="left J_ping">重置</div>	
+     		<div onclick="javascript:closeScreenTier();" report-eventparam="B" report-eventid="MFilter_Confirm" class="right J_ping">确定</div>
+     	</div>
+     </div>
+     <section class="ui-container">
+     	<div class="wst-shl-ads">
+     	   <div class="title">名铺抢购</div>
+		   <div class="wst-shl-adsb">
+			<div class="swiper-container">
+	          <div class="swiper-wrapper">
+	          	{wst:ads code="mo-ads-street" cache='86400' num='4'}
+	                <div class="swiper-slide" style="width:33.333333%;">
+	                    <a href="{$vo.adURL}" class="adsImg"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($vo.adFile,3)}"></a>
+	                </div>
+	            {/wst:ads}
+	          </div>
+	        </div>
+	        </div>
+     	</div>
+     	<div class="ui-row-flex wst-shl-head">
+     		<div class="ui-col ui-col-4 ui-row-flex">
+				    <div class="ui-col ui-col-1">
+			           	<div class="ui-select wst-shl-select choice active">
+			                <select onchange="javascript:orderSelect(this.value);">
+			                    <option value="">主营</option>
+			                    {volist name="goodscats" id="g"}
+			                    	<option value="{$g['catId']}">{$g['catName']}</option>
+			                    {/volist}
+			                </select>
+			            </div>
+				    </div>
+				    <div class="ui-col ui-col evaluate" >
+				   		 <p class="choice sorts" status="down" onclick="javascript:orderCondition(this,1);">好评度&nbsp;&nbsp;&nbsp;&nbsp;<i class="down"></i></p>
+				    </div>
+				    <div class="ui-col ui-col evaluate" >
+				   		 <p class="choice sorts" status="down" onclick="javascript:orderCondition(this,2);">距离&nbsp;&nbsp;&nbsp;&nbsp;<i class="down" style="right: 24px;"></i></p>
+				   		 <i class="bar"style=""></i>
+				    </div>
+            </div>
+		    <div class="ui-col evaluate">
+		    	<i class="screen-icon" onclick="javascript:screenTier();">筛选</i>
+		    </div>
+		</div>
+		<ul class="ui-tab-content">
+	        <li id="shops-list"></li>
+	    </ul>
+     </section>
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+{{# for(var i=0; i<d.length; i++){ }}
+	<div class="ui-row-flex ui-whitespace ui-row-flex-ver wst-shl-list">
+            <div class="ui-col">
+                <div class="ui-row-flex">
+                    <div class="ui-col ui-col-2" >
+                      <div class="img j-imgAdapt"><a href="javascript:void(0);" onclick="goShopHome({{ d[i].shopId }})">
+				  	    <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d[i].shopImg }}" title="{{ d[i].shopName }}"></a>
+				  	  </div>
+                    </div>
+                    <div class="ui-col  info" onclick="goToShop({{d[i].shopId}})">
+                        <div class="title ui-nowrap">{{d[i].shopName}}</div>
+                         <p class="ui-nowrap">主营：{{ d[i].catshops }}</p>
+					  	 <p><span>店铺评分：</span>
+						 {{# for(var j=1; j<6; j++){ }}
+			                {{# if(j <= d[i].totalScore){ }}
+			                    <i class="bright"></i>
+							{{# }else{ }}
+			                    <i class="dark"></i>
+							{{# } }}
+						 {{# } }}
+						</p>
+                        
+                    </div>
+                    <div class="ui-col ui-col-2 f-goshops" onclick="goShopHome({{d[i].shopId}})">
+                       <a href="javascript:void(0);" onclick="goToShop({{d[i].shopId}})"><span class="wst-action">进入店铺</span></a>
+                        {{# if(d[i].lat>0 && d[i].lng>0 && d[i].distince){ }}<p class="wst-distance">{{d[i].distince}}km</p>{{# } }}
+                    </div>
+                </div>
+            </div>
+            <div class="ui-col" style="margin-top:5px;">
+                <div class="ui-row-flex goods-box">
+                    {{# var gLength = Math.min(d[i].goods.length,4) }}
+                    {{# for(var g=0;g<gLength;++g){  }}
+                    <div class="goods-item" >
+                       {{# if(d[i].goods[g].goodsImg){ }}
+                       <a href="javascript:void(0);" onclick="WST.intoGoods({{d[i].goods[g].goodsId}})">
+                          <img  src="__ROOT__/{:WSTConf('CONF.goodsLogo')}"  data-echo="__ROOT__/{{WST.replaceImg(d[i].goods[g].goodsImg,'_m_thumb')}}"  >
+                          <i class="goodsPrice ui-nowrap" >¥ {{d[i].goods[g].shopPrice}}</i>
+                       </a>
+                       {{# } }}
+                    </div>
+                    {{# } }}
+                </div>
+            </div>
+            <div class="wst-clear"></div>
+        </div>
+{{# } }}
+{{# }else{ }}
+<div class="wst-prompt-icon"><img src="__MOBILE__/img/nothing-follow-shps.png"></div>
+<div class="wst-prompt-info">
+	<p>对不起，没有相关店铺。</p>
+</div>
+{{# } }}
+</script>
+<script id="accredList" type="text/html">
+
+     	<div class="accred-box screen-box no">
+        <input type="hidden"  class="vsed" value=""/>
+     		<p class="title">店铺服务{{# if(d.length>3){ }}<i class="arrow-base arrow" onclick="javascript:showAll(this)"  s=0></i>{{# } }}</p>
+	         <div class="option-box">
+	                <span id="cancelAccred" onclick="javascript:cancelAccred(this);" class="attrs after-color selected" d="" style="background-color: rgb(255, 255, 255);display:none;"></span>
+				{{# if(d && d.length>0){ }}
+				{{# for (var i=0; i<d.length;i++){ }}
+			     			<span onclick="javascript:selectAccred(this);" class="attrs after-color  accred-lines" d="{{d[i].accredId}}">{{d[i].accredName}}</span>
+				{{# } }}
+				{{# } }}
+		     </div>
+     	</div>
+
+</script>
+<script id="scoreList" type="text/html">
+         
+     	<div class="score-box  screen-box no">
+        <input type="hidden"  class="vsed" value=""/>
+     		<p class="title">好评率</p>
+	         <div class="option-box">
+	                <span id="cancelScore" onclick="javascript:cancelScore(this);" class="attrs after-color selected" d="" style="background-color: rgb(255, 255, 255);display:none;"></span>
+				{{# for(var i in d){ }}
+
+			     	<span onclick="javascript:selectScore(this);" class="attrs after-color wrap-lines" d="{{i}}" style="padding: 0.05rem 0.01rem;">{{d[i]}}</span>
+				{{# } }}
+		     </div>
+     	</div>
+
+</script>
+{/block}
+{block name="include"}
+    <div class="wst-co-search" id="wst-shops-search" style="background-color: #f6f6f8;">
+    <header class="ui-header ui-header-positive wst-se-header2" style="border-bottom: 1px solid #f6f6f8;">
+		<i class="ui-icon-return" onclick="javascript:WST.searchPage('shops',0);"></i>
+		<div class="wst-se-search">
+		    <i class="ui-icon-search" onclick="javascript:WST.search(1);"></i>
+		    <form action＝"" class="input-form">
+			<input type="search" value="" placeholder="按关键字搜索店铺" onsearch="WST.search(1)" autocomplete="off" id="wst-search">
+			</form>
+		</div>
+		<a class="btn" href="javascript:void(0);" onclick="javascript:WST.search(1);">搜索</a>
+	</header>
+	<div class="classify">
+		<ul class="ui-list ui-list-text ui-list-link ui-list-active shops">
+		    <li onclick="javascript:searchCondition(0);">
+		        <h4 class="ui-nowrap">全部店铺</h4>
+		    </li>
+		</ul>
+		<ul class="ui-list ui-list-text ui-list-active shops2">
+            {volist name="goodscats" id="g"}
+		    <li onclick="javascript:searchCondition({$g['catId']});">
+		        <h4 class="ui-nowrap">{$g['catName']}</h4>
+		        <div class="ui-txt-info">查看全部</div>
+		    </li>
+		    {/volist}
+		</ul>
+	</div>
+	</div>
+	<script type='text/javascript' src='__MOBILE__/js/jquery.min.js'></script>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/js/swiper.jquery.min.js'></script>
+<script type='text/javascript' src='__MOBILE__/js/shops_list.js?v={$v}'></script>
+{/block}

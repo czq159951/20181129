@@ -1,0 +1,83 @@
+{if !empty($goods['promotion']) && $goods['promotion']['type']=='reward'}
+{if isset($goods['rewardCartIds'])}
+<link href="__ROOT__/addons/reward/view/home/index/reward.css" rel="stylesheet">
+<div class='cart-reward-goods-box'>
+<div class='reward-txt'>
+<div style='float:left'>
+<span class='tag'>满就送</span>
+{$goods['promotion']['data']['rewardTitle']} &nbsp;&nbsp;| &nbsp;&nbsp;
+</div>
+<div class='scroll-tips' id='rewardTips_{$goods["cartId"]}'></div>
+</div>
+<div class='reward-promotion'>&nbsp;&nbsp;&nbsp;&nbsp;<span id='rewardTotal_{$goods["cartId"]}'>￥{$goods['shopPrice']*$goods['cartNum']}</span><span class='red' id='rewardPromotion_{$goods["cartId"]}'></span></div>
+<div class='wst-clear'></div>
+</div>
+<script>
+$(function(){
+	promotionMethod['rewardGoods{$goods["cartId"]}'] = true;
+});
+function rewardGoods{$goods["cartId"]}(cartMoney){
+	var cartIds = {:json_encode($goods['rewardCartIds'])};
+	var goodsReward = {:json_encode($goods['promotion']['data'])};
+	var rewardMoney = 0;
+	var goodsId = 0,money = 0,goodsNum = 0,json = null;
+	for(var i=0;i<cartIds.length;i++){
+		//设置背景颜色
+        $('.j-g'+cartIds[i]).css('background','#fff4e8');
+	    if($('#gchk_'+cartIds[i])[0].checked){
+	        money = parseFloat($('#gchk_'+cartIds[i]).attr('mval'),10);
+	        goodsNum = parseInt($('#buyNum_'+cartIds[i]).val(),10);
+	        rewardMoney = (rewardMoney + money*goodsNum).toFixed(2);
+	    }
+	}
+	$('#rewardTotal_{$goods["cartId"]}').html("￥"+rewardMoney);
+	showTips{$goods["cartId"]}(rewardMoney,goodsReward);
+	for(var i=goodsReward.json.length-1;i>=0;i--){
+		json = goodsReward.json[i];
+		if(rewardMoney>=json.orderMoney){
+			if(json.favourableJson.chk0){
+				$('#rewardPromotion_{$goods["cartId"]}').html("<br>&nbsp;减￥"+json.favourableJson.chk0val);
+				return json.favourableJson.chk0val;
+			}
+		}
+	}
+	$('#rewardPromotion_{$goods["cartId"]}').html("");
+	return 0;
+}
+var task{$goods["cartId"]};
+function showTips{$goods["cartId"]}(rewardMoney,goodsReward){
+	var html = [],ahtml = [];
+	ahtml.push('<ul>');
+    for(var i=goodsReward.json.length-1;i>=0;i--){
+		json = goodsReward.json[i];
+		html = [];
+		if(json.favourableJson.chk0)html.push("减￥"+json.favourableJson.chk0val);
+		if(json.favourableJson.chk1)html.push("送赠品"+json.favourableJson.chk1val.text);
+		if(json.favourableJson.chk2)html.push("免邮费");
+		if(json.favourableJson.chk3)html.push("送"+json.favourableJson.chk3val.text+'优惠券');
+		if(rewardMoney>=json.orderMoney){
+			$('#rewardTips_{$goods["cartId"]}').html('<li>消费满￥'+json.orderMoney+' - '+html.join('、')+'</li>');
+			clearInterval(task{$goods["cartId"]});
+			return;
+		}
+		ahtml.push('<li>消费满￥'+json.orderMoney+' - '+html.join('、')+'</li>');
+	}
+	ahtml.push('</ul>');
+	$('#rewardTips_{$goods["cartId"]}').html(ahtml.join(''));
+	if(ahtml.length>3){
+		task{$goods["cartId"]} = setInterval(function() {
+		    $('#rewardTips_{$goods["cartId"]}').find("ul:first").animate({
+		        marginTop: "-30px"
+		    },
+		    600,
+		    function() {
+		        $(this).css({
+		            marginTop: "0px"
+		        }).find("li:first").appendTo(this);
+		    });
+		}, 1500);
+	}
+}
+</script>
+{/if}
+{/if}

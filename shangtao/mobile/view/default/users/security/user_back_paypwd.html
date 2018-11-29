@@ -1,0 +1,64 @@
+{extend name="default/base" /}
+{block name="title"}找回支付密码 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/security.css?v={$v}">
+{/block}
+{block name="header"}
+	{php}$Title = "找回支付密码"{/php}
+	{include file="default/header" /}
+{/block}
+{block name="footer"}
+		{/* 大加载 */}
+		<div class="ui-loading-block" id="Loadl">
+		    <div class="ui-loading-cnt">
+		        <i class="ui-loading-bright"></i>
+		        <p id="j-Loadl">正在加载中...</p>
+		    </div>
+		</div>
+		{if($user['phoneType']==1)}
+		<div class="wst-se-footer">
+			<button id="modifyPhone" type="button" class="button" onclick="javascript:backPaypwd({$user['backType']});">{if($user['backType']==0)}下一步{else}确定{/if}</button>
+		</div>
+		{else}
+		<div class="wst-se-footer">
+			<button id="modifyPhone" type="button" class="button" onclick="javascript:inPhone();">去绑定手机号码</button>
+		</div>
+		{/if}
+{/block}
+{block name="main"}
+	<input type="hidden" value="{:WSTConf('CONF.pwdModulusKey')}" id="key" autocomplete="off">
+    <section class="ui-container">
+    	{if($user['backType']==1)}
+	    	<div class="wst-se-pay">
+	    		<div class="pay"><input id="payPwd" type="password" placeholder="新密码" maxlength="6"></div>
+	    		<div class="pay"><input id="copayPwd" type="password" placeholder="确认密码" maxlength="6"></div>
+	    	</div>
+    	{else}
+	        {if($user['phoneType']==1)}
+	    	<div class="wst-se-pay">
+	    			<div class="phone">您绑定的手机号码为：{$user['userPhone']}</div>
+		    		{if(WSTConf('CONF.smsVerfy')==1)}
+					<div class="verify">
+						<input id="smsVerfy" type="text" placeholder="输入验证码" maxlength="10">
+						<img id='verifyImg' src="{:url('mobile/users/getVerify')}" onclick='javascript:WST.getVerify("#verifyImg")'>
+					</div>
+					{/if}
+					<div class="verify">
+						<input id="phoneCode" type="text" placeholder="输入短信验证码" maxlength="8">
+						<button id="obtain" type="button" class="ui-btn-primary" onclick="javascript:backpayCode()">获取验证码</button>
+					</div>
+			 </div>
+	    	{else}
+			<ul class="ui-row-flex wst-flexslp ui-whitespace">
+				<li class="ui-col ui-flex ui-flex-pack-center">
+				<p>对不起，你还未绑定手机号码，请去绑定手机号码。</p>
+				</li>
+			</ul>
+			{/if}
+		{/if}
+    </section>
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__STATIC__/js/rsa.js"></script>
+<script type='text/javascript' src='__MOBILE__/users/security/security.js?v={$v}'></script>
+{/block}

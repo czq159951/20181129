@@ -1,0 +1,47 @@
+{extend name="default/base" /}
+{block name="title"}浏览记录 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/history.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>浏览记录</h1>
+    </header>
+{/block}
+{block name="main"}
+<input type="hidden" name="" value="" id="currPage" autocomplete="off">
+<input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+<script type="text/html" id="list">
+      {{# for(var i=0;i<d.length;++i){ }}
+          <div class="ui-row-flex goods-item">
+              <div class="ui-col">
+                <div class="img j-imgAdapt">
+                  <a href="javascript:void(0);" onclick="javascript:WST.intoGoods({{d[i]['goodsId']}});"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{d[i]['goodsImg']}}"></a>
+                </div>
+              </div>
+              <div class="ui-col ui-col-3" onclick="javascript:WST.intoGoods({{d[i]['goodsId']}});">
+                <div class="ui-row-flex ui-row-flex-ver wst-info">
+                    <div class="goodsTitle ui-nowrap-multi">{{d[i].goodsName}}</div>
+                    <div>
+                      <p class="price"><span>¥ </span>{{d[i].shopPrice}}</p>
+                      <p class="goods-info">成交数:{{d[i].saleNum}}</p>
+                    </div>
+                </div>
+              </div>
+          </div>
+      {{# } }}
+</script>
+
+    <section class="ui-container" id="listBox">
+    </section>
+
+
+{/block}
+{block name="include"}
+{include file="default/dialog" /}<!-- 对话框模板 -->
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/users/history/history.js?v={$v}'></script>
+{/block}

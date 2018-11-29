@@ -1,0 +1,63 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}我的保证金 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/auction/view/wechat/index/css/users_list.css?v={$v}">
+{/block}
+{block name="header"}
+	<header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>我的保证金</h1>
+    </header>
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_WECHAT_FOOTER" /}
+{/block}
+{block name="main"}
+	 <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+     <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+     <section class="ui-container">
+		<ul class="ui-tab-content" id="groupon-container" sc="{:date('Y-m-d H:i:s')}">
+	        <li id="goods-list"></li>
+	    </ul>
+     </section>
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+{{# for(var i=0; i<d.length; i++){ }}
+		<div class="wst-shl-list">
+		   <div class="ui-row-flex goods" onclick="goGoods({{ d[i].auctionId }})" sv="{{ d[i].startTime }}" ev="{{ d[i].endTime }}">
+				<div class="ui-col">
+				<div class="img j-imgAdapt"><a href="javascript:void(0);" onclick="goGoods({{ d[i].auctionId }})">
+				<img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d[i].goodsImg }}" title="{{ d[i].goodsName }}"></a></div>
+				</div>
+				<div class="ui-col ui-col-3 info">
+					<div class="title ui-nowrap">{{ d[i].goodsName }}</div>
+					<p><span>当前拍卖价：</span><span class="price">¥{{ d[i].currPrice }}</span>&nbsp;</p>
+					<p><span>拍卖状态	：</span><span class="price">{{#if(d[i]['status']==1){}}进行中{{#}else{}}已结束{{#}}}</span>&nbsp;</p>
+					<p><span>我的保证金：</span><span class="price">¥{{ d[i].cautionMoney }}</span>&nbsp;</p>
+         			{{#if(d[i]['cautionStatus']==2){}}
+         			<span class='state2'>已退</span>
+         			{{# }else if(d[i]['cautionStatus']==-1){}}
+         			<span class='state4'>没收</span>
+         			{{#}else{}}
+         			<span class='state3'>未退</span>
+         			{{#}}}
+				</div>
+			</div>
+			<div class="ui-row-flex">
+			<div class="ui-col">
+				<p class="time"><i></i>{{ d[i].startTime }}至{{ d[i].endTime }}</p>
+			</div>
+			</div>
+		</div> 
+{{# } }}
+{{# }else{ }}
+<div class="wst-prompt-icon"><img src="__ROOT__/addons/auction/view/wechat/index/img/auction-bond.png"></div>
+<div class="wst-prompt-info">
+	<p>暂无相关保证金。</p>
+</div>
+{{# } }}
+</script>
+{/block}
+{block name="include"}{/block}
+{block name="js"}
+<script type='text/javascript' src='__ROOT__/addons/auction/view/wechat/index/js/list_money.js?v={$v}'></script>
+{/block}

@@ -1,0 +1,100 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}拍卖活动 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<div class="wst-shop-head"><span>拍卖商品</span></div>
+<div class="wst-shop-tbar">
+  <label>
+    商品名称：<input type="text" name="goodsName" id="goodsName" class="s-query" /><a class="s-btn" onclick="queryByPage()">查询</a>
+  </label>
+  <label>
+    <a class="s-btn" style="float: right;width:80px;line-height:16px;height:16px;margin-top:2px;" onclick="javascript:toEdit(0)">新增拍卖商品</a>
+  </label>
+</div>
+<div class="wst-shop-content">  
+   <table class='wst-list'>
+   <thead>
+   <tr>
+     <th>商品名称</th>
+     <th>起拍价格</th>
+     <th>开始时间</th>
+     <th>结束时间</th>
+     <th>当前拍卖价</th>
+     <th>参与人数</th>
+     <th>状态</th>
+     <th width="100">操作</th>
+   </tr>
+   </thead>
+   <tbody id='list'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="tblist" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr>
+      <td>
+          <div class="goods-img">
+          <a href='{{WST.AU("auction://goods/detail","id="+d[i]["auctionId"])}}' target='_blank'>
+            <img class='j-lazyGoodsImg'  data-original='__ROOT__/{{d[i].goodsImg}}'/>
+          </a>
+        </div>
+        <p class="goodsName">
+          {{WST.cutStr(d[i]['goodsName'],43)}}
+        </p>
+      </td>
+      <td>￥{{d[i]['auctionPrice']}}</td>
+  	  <td>{{d[i]['startTime']}}</td>
+   	  <td>{{d[i]['endTime']}}</td>
+      <td>{{d[i]['currPrice']}}</td>
+      <td><a style='color:blue' href='{{WST.AU("auction://shops/bidding","id="+d[i]["auctionId"])}}'>{{d[i]['auctionNum']}}</a></td>
+      <td>
+      {{#if(d[i]['auctionStatus']==0){}}
+      <span class='lbel lbel-warning'>待审核</span>
+      {{#}else if(d[i]['auctionStatus']==-1){}}
+      <span class='lbel lbel-danger' title="{{d[i]['illegalRemarks']}}">审核不通过</span>
+      {{#}else{}}
+        {{#if(d[i]['status']==0){}}
+        <span class='lbel lbel-info'>未开始</span>
+        {{#}else if(d[i]['status']==1){}}
+        <span class='lbel lbel-success'>进行中</span>
+        {{#}else{}}
+        <span class='lbel lbel-gray'>已结束</span>
+        {{#}}}
+      {{#}}}
+      </td>
+      <td>
+         {{#if(d[i]['auctionStatus']==1){}}
+         <a href='{{WST.AU("auction://goods/detail","id="+d[i]["auctionId"])}}' target='_blank'>查看</a>
+         {{#}}}
+         {{#if(d[i]['editable']==1){}}
+         <a href='javascript:toEdit({{d[i]["auctionId"]}})'>编辑</a>
+         {{#}}}
+         {{#if(d[i]['auctionNum']>0){}}
+            {{#if(d[i]['orderId']>0){}}
+            <a href='javascript:del({{d[i]["auctionId"]}})'>删除</a>
+            {{#}}}
+         {{#}else{}}
+            <a href='javascript:del({{d[i]["auctionId"]}})'>删除</a>
+         {{#}}}
+
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/auction/view/home/shops/shop.js?v={$v}"></script>
+<script type="text/javascript">
+$(function(){
+	queryByPage();
+});
+</script>
+{/block}

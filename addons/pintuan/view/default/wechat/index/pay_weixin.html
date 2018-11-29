@@ -1,0 +1,70 @@
+{extend name="default/base" /}
+{block name="title"}拼团支付 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/pintuan/view/default/wechat/index/css/carts.css?v={$v}">
+{/block}
+{block name="header"}
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <a class="ui-icon-return" onclick="history.back()"></a><h1>拼团支付</h1>
+    </header>
+{/block}
+{block name="main"}
+	<section class="ui-container">
+	
+	  	<div class="order-item">
+	    	<div class="ui-row-flex ui-whitespace border-b">
+	      		<div class="ui-col">
+	            	<img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($object['goodsImg'],3)}" title="{$object['goodsName']}" class="o-Img">
+	       		</div>
+	         	<div class="ui-col ui-col-3 o-gInfo">
+	         		<p class="o-gName ui-nowrap-multi ui-whitespace">{$object['goodsName']}</p>
+	       		</div>
+	       		<div class="ui-col order-tr" style="word-break:break-all;"></br>×{$object['goodsNum']}</div>
+	 		</div>
+	      	<div class="ui-btn-wrap" style="text-align: right;">	
+	        	<span class="wst-orders_pricet">拼单金额：<span class="wst-orders_prices">¥<?php echo sprintf("%.2f", $object['needPay']);?></span></span>     	
+	      	</div>
+	      	<div class="wst-clear"></div>
+		</div>
+	 
+		<div style="text-align: center;">
+        
+			<button type="button" class="wst-btn-dangerlo" onclick="javascript:callpay();" style="width: 80%;  display: inline-block;">确认支付</button>
+		</div>
+	</section>
+{/block}
+{block name="footer"}{/block}
+{block name="js"}
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/default/wechat/index/js/carts.js?v={$v}'></script>
+
+<script type="text/javascript">
+	//调用微信JS api 支付
+    function jsApiCall(){
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            <?php echo $jsApiParameters; ?>,
+            function(res){
+                if(res.err_msg=="get_brand_wcpay_request:ok"){
+                	location.href = "{$returnUrl}";
+                }
+            }
+        );
+       setTimeout(function(){
+            $('.wst-btn-dangerlo').removeAttr('disabled');
+        },2000);     
+    }
+    function callpay(){
+    	$('.wst-btn-dangerlo').attr('disabled', 'disabled');
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall();
+        }
+    }
+</script>
+{/block}

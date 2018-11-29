@@ -1,0 +1,51 @@
+<view class='container'>
+<!--顶部选择模块-->
+  <view class='selected-model'>
+      <block wx:for="{{data}}" wx:for-item="li" wx:for-index="key"> 
+        <view class="term">
+          <view class="main-model {{li.chargeMoney>0?'':'single'}} {{sign==key?'active':''}}" bindtap='inSwitch' data-sign="{{key}}" data-id="{{li.id}}" data-money="{{li.chargeMoney}}">
+          <view class='word'>充值{{li.chargeMoney}}元</view>
+          <view class='word2' wx:if="{{li.giveMoney>0}}">送{{li.giveMoney}}元</view>
+          </view>
+        </view>
+      </block>
+      <view class="term">
+        <view class="main-model single {{sign==-1?'active':''}}" bindtap='inSwitch' data-sign="-1" data-id="0" >
+        <view class='word' wx:if="{{sign!=-1}}">其他金额</view>
+        <view class='input' wx:if="{{sign==-1}}"><input type="digit" value="{{money}}" bindinput="money"/></view>
+        </view>
+      </view>
+      <view class="wst-clear"></view>
+  </view>
+  <view class='user-info'>
+    <view class='info-script'>
+      <text>当前余额</text>
+      <text style='color:red;'>¥ {{userMoney}}</text>
+    </view>
+     <view class='info-script'>
+      <text>充值金额</text>
+      <text style='color:red;'>¥ {{money}}</text>
+    </view>
+  </view>
+<!--方式条-->
+<block wx:if="{{payments.length != 0}}">
+ <view class='pay-strip'>支付方式：</view>
+<!--支付选择条-->
+ <view class='pay-select'>
+    <radio-group name="radio" class="option" bindchange="payTerm">
+      <block wx:for="{{payments}}" wx:for-item="pa"> 
+        <label><image src="{{pa.payCode == 'weixinpays'?'../../../../image/pays-weixin.png':''}}"></image><text style='width:80vw;'>{{pa.payName}}</text><view  ><radio color="#e00102" value="{{pa.payCode}}" checked="{{(pa.payCode==payCode)?'true':''}}"/></view></label>
+      </block>
+    </radio-group>
+  </view>
+  </block>
+<!--按钮-->
+  <view class='wst-payment'>
+    <button  class='button' disabled="{{disabled}}" loading="{{loading}}" bindtap='submit'>确认支付</button>
+  </view>
+<!--提醒说明-->
+ <view class='pay-remind'>
+  <view class='size-strip'><icon type='warn' color='#f43d30' size='18' style='margin-top:5rpx;'></icon><view class='content'>充值说明：</view></view>
+  <view class='size-strip-1'>1.充值金额和赠送金额只能用于购买商品，不能提现；</view>
+ </view>
+</view>

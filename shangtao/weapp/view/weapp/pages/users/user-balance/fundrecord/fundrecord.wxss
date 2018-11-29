@@ -1,0 +1,79 @@
+/* pages/user/userBalance/dealRecord/dealRecord.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background: #F6F6F8;
+}
+.container{
+  width: 100%;
+  height: auto;
+}
+.record .content .right{
+  float: right;
+  color: red;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-top:30rpx;
+  margin-right: 40rpx; 
+}
+.record .content .too{
+  color: #18C32E;
+}
+
+.balance-show{
+  width: 100%;
+  height: 140rpx;
+  text-align: center;
+  position: relative;
+}
+.balance-show image{
+  width: 100%;
+  height: 100%;
+}
+.balance-show .number{
+  position: absolute;
+  bottom: 10rpx;
+  right: 10rpx;
+  color: white;
+  font-size: 26rpx;
+}
+.balance-show .number1{
+  position: absolute;
+  bottom: 50rpx;
+  right: 10rpx;
+  color: white;
+  font-size: 30rpx;
+}
+.dealRecord{
+  width: 90%;
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-left: 35rpx;
+  font-weight: bold;
+  font-size: 35rpx;
+  border-bottom: 3rpx solid #EAEAEA; 
+  color: #59595C;
+}
+.remind{
+  text-align: center;
+  margin-top: 20rpx;
+}
+.record .content .left{
+  float: left;
+  width: 66vw;
+  font-size: 30rpx;
+  padding: 15rpx;
+  color: #59595C;
+  margin-left: 20rpx;
+}
+.record .content .left .time{
+  margin-top: 10rpx;
+  color: #8C92A3;
+  font-size: 25rpx;
+}
+.record .content{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-bottom: 1rpx solid #EAEAEA;
+}

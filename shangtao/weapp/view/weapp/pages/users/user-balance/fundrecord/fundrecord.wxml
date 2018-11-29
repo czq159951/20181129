@@ -1,0 +1,23 @@
+<!--pages/user/userBalance/dealRecord/dealRecord.wxml-->
+<view class='container'>
+ <view class='balance-show'>
+  <image src='/image/icon_userscores.png'></image>
+  <view class='number1'>可用资金：¥{{userMoney}}</view>
+  <view class='number'>冻结资金：¥{{lockMoney}}</view>
+ </view>
+ <view class='dealRecord'>资金明细</view>
+ <view  class='remind-model' wx:if="{{list.length ==0}}" >
+    <view class='image' ><image src='/image/nothing-relevant.png' class="img"></image></view>
+    <view class='content' style='background:transparent;border-bottom:0;'>暂无相关信息 ~</view>
+</view>
+ <view class='record'>
+  <view class='content' wx:for="{{list}}">
+    <view class='left'>
+     <view class='text'>{{item.remark}}</view>
+     <view class='time'>{{item.createTime}}</view>
+    </view>
+    <view class='right' wx:if="{{item.moneyType == 1}}">+{{item.money}}</view>
+    <view class='right too' wx:else>-{{item.money}}</view>
+   </view>
+  </view>
+</view>

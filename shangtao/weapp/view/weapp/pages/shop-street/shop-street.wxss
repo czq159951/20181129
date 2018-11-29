@@ -1,0 +1,150 @@
+page{height: 100%;}
+.container{border-top: 82rpx solid transparent; height: calc(100vh - 82rpx);height: -webkit-calc(100vh - 82rpx);height: -moz-calc(100vh - 82rpx);height: -ms-calc(100vh - 82rpx);height: -o-calc(100vh - 82rpx);}
+.wst-se-header{position: fixed; width: 100%; z-index: 100; top:0; left: 0; height: 82rpx; background: #fff; padding-left: 50rpx 0; border-bottom: 2rpx solid #f6f6f8;}
+.wst-se-header .input{display: block; width: 78%; height: 56rpx; line-height: 56rpx; margin: auto;margin-top:10rpx; position: relative;}
+.wst-se-header .input .icon{position: absolute; left:15rpx; top:15rpx;}
+.wst-se-header .input input{padding: 0 0 0 50rpx; width: 100%; box-sizing: border-box; -ms-box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; border-radius: 30rpx; background: #eee; color: #999; font-size: 26rpx; height: 56rpx;line-height: 56rpx; letter-spacing: 1px; border: none;}
+.wst-se-header2{
+position: fixed; width: 100%; z-index: 100; top:0; left: 0; height: 82rpx; background: #fff; border-bottom: 2rpx solid #f6f6f8;
+}
+.wst-se-header2 .input{
+  display: block;
+  width: 78%;
+  height: 56rpx;
+  line-height: 56rpx;
+  margin: auto;
+  margin-top:10rpx;
+  position: relative;
+}
+.wst-se-header2 .input .icon{
+  position: absolute;
+  left:15rpx;
+  top:15rpx;
+}
+.wst-se-header2 .input input{
+  padding: 0 0 0 50rpx;
+  width: 100%;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 30rpx;
+  background: #eee;
+  color: #999;
+  font-size: 26rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  letter-spacing: 1px;
+  border: none;
+}
+.wst-se-header2 .close{
+  position: absolute;
+  left:20rpx;
+  top:16rpx;
+  width:60rpx;
+  height: 72rpx;
+}
+.wst-se-header2 .btn{
+  position: absolute;
+  top:0;
+  right:15rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #df0202;
+}
+.wst-search-list{
+  border-top: 82rpx solid transparent;
+}
+/*排序条*/
+.sortStrip{width: 100%; height: 88rpx;}
+.sortStrip .main-case{width: 25%; height: 84rpx; display: inline-block; background: white;overflow: hidden;}
+.sortStrip .main-case1{color: #de0202;}
+.sortStrip .main-case .border{width: 100%; margin-top: 24rpx; font-size: 28rpx; display: flex;}
+.top{margin-top: 35rpx;}
+.sortStrip .main-case .border .left{width: 130rpx; height: 100%; text-align: center;}
+.sortStrip .main-case .border .right{width: 25rpx; height: 35rpx; margin-top: 5rpx;}
+.sortStrip .main-case2{width: 25%; height: 84rpx; display: inline-block; background: white;position: relative}
+.sortStrip .main-case2 .border{width: 100%; margin-top: 24rpx; font-size: 28rpx; display: flex;}
+.sortStrip .main-case2 .border .right{width: 25rpx; height: 35rpx; margin-top: 5rpx;}
+.sortStrip .main-case2 .border .scr-right{width: 35rpx; height: 50rpx; margin-left: 30rpx;position: absolute;top: 26rpx}
+.sortStrip .main-case2 .border .left{width: 95rpx; height: 100%; text-align: center;margin-left:58rpx}
+.strip{position: absolute; left: 75%; top: 100rpx; width:2rpx; height:50rpx; background-color: #ccc;z-index: 12;}
+.sortStrip .main-case2 .border image{width: 100%; height: 70%;}
+.sortStrip .main-case .border image{width: 100%; height: 70%;}
+.main-case-r{width: 25%; height: 84rpx; display: inline-block; background: white;overflow: hidden;}
+.main-case-r .border image{width: 100%; height: 70%;}
+.main-case-r .border{width: 100%; margin-top: 25rpx; font-size: 28rpx; display: flex;}
+.main-case-r .border .left{width: 110rpx; height: 100%; text-align: center;}
+.main-case-r .border .right{width: 25rpx; height: 35rpx; margin-top: 5rpx;margin-left: 30rpx;}
+/*分类*/
+.wst-scroll{width: 100%; height: 100%;}
+.radio-group{width: 80%; height: auto; overflow: hidden; margin-left: 40rpx; font-size: 35rpx;}
+.radio-group .radio{width: 98%; height: auto; margin: 40rpx 0rpx 40rpx; display: flex;}
+.radio-group .radio .text{margin-left:40rpx; width: 100%; word-wrap:break-word; overflow: hidden; height: auto;}
+radio{width: 25rpx; height: 25rpx;}
+radio .wx-radio-input{width:40rpx; height: 40rpx;}
+.drawer_screen{width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1000; background: #000; opacity: 0.4; overflow: hidden;}
+.animation{width: 100%; height: 600rpx; position: fixed; bottom: 0rpx; left: 0rpx; background: white; z-index: 1001;}
+.animation .wst-top-title{width: 100%; height: 80rpx; position: relative; border-bottom: 3rpx solid #b1b1b1;}
+.animation .wst-top-title .title{width: 100%; height: 80%; margin-top: 15rpx; margin-bottom: 10rpx; position: absolute; z-index: -999; text-align: center;}
+.animation .wst-top-title icon{float: right; margin: 10rpx 10rpx 0rpx 10rpx;}
+.animation .navigation{width: 100%; height: 42rpx; margin-top: 15rpx; border-bottom: 3rpx solid #b1b1b1;}
+.animation .list{margin-left: 20rpx;}
+.animation .navigation .main{width: 150rpx; height: 40rpx; margin-left: 20rpx; text-align: center; float: left; font-size: 33rpx; text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; border-bottom: 3rpx solid red;}
+.animation .navigation .too{margin-left: 0rpx;}
+.animation .navigation .tooed{border-bottom: 3rpx solid transparent;}
+.animation .list{width: 100%; height: 400rpx; font-size: 33rpx;}
+.animation .list .main{width: 100%; height: 60rpx; line-height: 65rpx;}
+.mar-top{margin-top: 5rpx;}
+.sortStrip .main-case .border .left{width: 160rpx; margin-left: 50rpx;}
+.sortStrip .left3{width: 200rpx; white-space: nowrap; margin-left: 50rpx; font-size: 28rpx; overflow: hidden;}
+.scroll_view{height:270rpx;}
+.store-list{width: 100%; margin-top: 1.5vw; background: white;}
+.store-list .border{width: 100%; height: 18vw; display: flex; flex-direction: row; justify-content: space-between;}
+.store-list .buttom{width: 100%; display: flex; flex-direction: row; justify-content: space-between;}
+.store-list .left{width: 15vw; height: 15vw; border: 1px solid #eee; margin: 1vw 1vw 0 1vw;}
+.store-list .right{width: 54%; height: 16vw; margin-top: 10rpx;}
+.store-list .main{width: 100%; height: 5.5vw; line-height: 5.5vw; font-size: 26rpx; text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical;}
+.store-list .right .main1{width: 100%; height: 5.5vw; line-height: 5.5vw; font-weight: bold; font-size: 28rpx; text-align: left;}
+.store-list .right .left1{width: 100%; height: 44rpx;}
+.store-list .right .right1{width: 300rpx; height: 44rpx; position: relative; top: -50rpx; left: 150rpx;}
+.store-list .right .right1 .image{width: 32rpx; height: 32rpx; float: left; margin-left: 8rpx; margin-top: 5rpx;}
+.store-list .right .icon{width: 100%; height: 41.5rpx; border: 1rpx solid red; position: relative;}
+.store-list .right .icon .image{width: 30rpx; height: 30rpx; border: 1rpx solid transparent; margin: -5rpx 5rpx 5rpx; display: inline-block;}
+.model1 image{width: 200rpx; height: 250rpx;}
+.model2 image{width: 200rpx; height: 250rpx;}
+.scroll_view{width:100%; height:300rpx; margin-left:10rpx;}
+image{width: 100%; height: 100%;}
+.menuList{position:fixed; width: 600rpx; left: 82rpx; top: 202rpx; height:700rpx; background:white; overflow:hidden; z-index: 1010;}
+.menuList .strip{width: 330rpx; height: 45rpx; color: red; font-size: 35rpx;}
+.menuList .strip1{width: 330rpx; height: 45rpx; font-size: 35rpx; background: red; color: white;}
+::-webkit-scrollbar{width: 0rpx; height: 0rpx;}
+.drawer_screen{background:#000; opacity:0.7;}
+.botton{width: 19vw; height: 40rpx; padding: 6rpx; text-align: center; line-height: 40rpx; margin-top: 3vw; font-size: 30rpx; color: red; margin-right: 20rpx; border-radius:20rpx; border: 1rpx solid red;}
+.buttom{padding: 1vw;}
+.buttom-bor{width: 100%; height: 100%; display: flex; flex-direction: row; justify-content: space-start; align-items: center;}
+.buttom-bor .box{width: 22.5vw; height: 28vw; margin-right: 2vw;}
+.buttom-bor .box .image{width: 22.5vw; height: 23vw;}
+.buttom-bor .box .image image{border: 1px solid #eee;}
+.buttom-bor .box text{display: block;margin-top:6rpx; text-align: center; color: red; text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; font-size: 26rpx;}
+/*动画模块*/
+.drawer_screen{width: 100%; height: 100%; position: fixed; top: 0; left: 0; z-index: 1000; background: #000; opacity: 0.4; overflow: hidden; border-top: 1rpx solid white;}
+/*mask*/
+.screen-tier{width: 90vw;height:100vh;overflow-y: hidden; position: fixed;top: 0rpx;right:0rpx;background: white ;z-index: 9999;font-size: 32rpx;color: #666;}
+.screen-tier .screen-mol{height: auto;width: 90vw;}
+.screen-tier .screen-mol .title{height: 80rpx;line-height: 80rpx;padding-left: 10rpx;}
+.screen-tier .screen-mol .option-box{width:87vw;padding: 10rpx;display: flex; flex-direction: row;justify-content: flex-start;flex-wrap:wrap;height:5.5vh;overflow: hidden;}
+.screen-tier .screen-mol .option-box .mix-box{height:46rpx;line-height: 46rpx;width: 24.65vw;padding: 10rpx;margin: 6rpx; text-align: center;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.option-box1{width:67vw;padding: 10rpx;display: flex; flex-direction: row;justify-content: flex-start;}
+.option-box1 input{padding: 10rpx;margin: 6rpx; text-align: center;background-color: #f0f2f5;border-radius: 10rpx;}
+.option-box1 .rail{height: 40rpx;border-bottom: 1rpx solid #666;width: 30rpx;margin:0rpx 10rpx 0rpx 10rpx;}
+.option-box1 .transport{width: 24.5vw;padding: 10rpx;margin: 6rpx; text-align: center;background-color: #f0f2f5;border-radius:10rpx;}
+.option-box1 .transported{width: 24.5vw;padding: 10rpx;margin: 6rpx; text-align: center;background-color: white;border-radius:10rpx;border:1rpx solid  #df0202;color:#df0202;}
+.bottom-mol{width: 90vw;height: 7vh;}
+.bottom-mol button{width: 50%;display: inline-block;height: 100%;border-radius:0px;line-height: 7vh; font-size: 30rpx;}
+.bottom-mol .sure{color: #fff;background-color: #f23030;}
+.bottom-mol .sure:active{background-color: #f34b4b;}
+.selected{border:1rpx solid  #df0202;color:#df0202;border-radius: 10rpx;}
+.arrow3{width: 20rpx; height: 20rpx; border-right: 4rpx solid #666; border-bottom: 4rpx solid #666; transform: rotate(45deg); margin-top: 25rpx; margin-right: 20rpx; float: right;}
+.arrow3-1{transform: rotate(225deg); }
+.stop{overflow: hidden;}

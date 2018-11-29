@@ -1,0 +1,185 @@
+{extend name="default/base" /}
+{block name="title"}订单投诉 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/orders_complains.css?v={$v}">
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+{/block}
+{block name="footer"}
+{/block}
+{block name="header"}
+	<div id="useri_infos">
+      <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <a href="{:url('wechat/users/index')}"><i class="ui-icon-return"></i></a><h1 class="useri_info">订单投诉</h1>
+        <i onclick="javascript:closeUploadArea()" style="display:none;font-size: 0.15rem;" id="upload_close">关闭</i>
+        <a href="javascript:void(0);"  style="display:none;float:right;font-size: 0.15rem;" id="upload_button">上传</a> 
+      </header>
+{/block}
+
+{block name="main"}
+<sction class="ui-container" id="upload_modal">
+    <div class="upload-modal">
+     <div id="clipArea" class="clipArea"></div>
+     <input type="hidden" id="imgData" autocomplete="off">
+  </div>
+</sction>
+    <input type="hidden" name="" value="" id="complainType" autocomplete="off">
+    <input type="hidden" name="" value="{$oId}" id="oId" autocomplete="off">
+    <section class="ui-container" id="Ccontrainer">  
+       <script type="text/html" id="detailBox">
+            <div id="detailBox">
+            <div class="ui-row-flex ui-whitespace detail-head">
+                <div class="ui-col ui-col ">订单号：{{d.orderNo}}</div>
+                <div class="ui-col order-tr o-status">
+                {{d.status}}
+                {{# if($.inArray(d.orderStatus,[-1,-3])!=-1){ }}
+                    {{# if(d.isRefund==1) { }} 
+                    (已退款)
+                    {{# }else{ }} 
+                    (未退款)
+                    {{# } }} 
+                {{# } }}
+                </div>
+            </div>
+
+            <div class="ui-row-flex ui-row-flex-ver d-uInfo">
+                <div class="ui-col">{{d.shopName}}</div>
+            </div>
+
+
+            {{# for(var i=0;i<d.goods.length;i++){ }}
+            <div class="ui-row-flex ui-whitespace border-b d-goodsitme">
+                <div class="ui-col">
+                    <div class="o-Img j-imgAdapt">
+                      <a href="javascript:void(0);" onclick="javascript:WST.intoGoods({{d.goods[i]['goodsId']}});">
+                        <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{d.goods[i].goodsImg}}">
+                      </a>
+                    </div>
+                </div>
+                <div class="ui-col ui-col-3 o-gInfo">
+                    <p class="o-gName ui-nowrap-multi">{{d.goods[i].goodsName}}</p>
+
+                
+                    <p class="o-gSpec d-gSpec">
+                    {{# if(d.goods[i].goodsSpecNames){ }}
+                    {{d.goods[i].goodsSpecNames.replace(/@@_@@/g,'<br />')}}
+                    {{# } }}
+                    </p>
+                    
+                </div>
+                <div class="ui-col order-tr" style="word-break:break-all;padding:5px 0;"><p class="price">¥ {{d.goods[i].goodsPrice}}</p><p> x {{d.goods[i].goodsNum}}</p></div>
+            </div>
+            {{# } }}
+
+
+            <div class="ui-row-flex ui-whitespace d-item">
+                <div class="ui-col ui-col">下单时间</div>
+                <div class="ui-col ui-col order-tr">{{d.createTime}}</div>
+            </div>
+
+            <div class="ui-row-flex ui-whitespace d-item" style="min-height:80px;">
+                <div class="ui-col ui-col">商品总额</div>
+                <div class="ui-col ui-col-4 order-tr">
+                    <p class="price">¥ {{d.goodsMoney}}</p>
+                    <p class="price"><span class="title">运费：</span>¥ {{d.deliverMoney}}</p>
+                    <p>实付款：<span class="price">¥ {{d.needPay}}</span></p>
+                </div>
+            </div>
+         </div> 
+</script>
+
+<div id="orderDetail">
+
+</div>
+
+<div class="ui-row-flex ui-whitespace d-item c-item">
+    <div class="ui-col ui-col">投诉类型</div>
+    <div class="ui-col ui-col-3 order-tr" onclick="dataShow(0)" id="complainText" >请选择投诉类型 > </div>
+</div>
+
+<div class="ui-row-flex ui-whitespace ui-row-flex-ver c-box">
+    <div class="ui-col c-title">投诉内容</div>
+    <div class="ui-col c-content">
+      <textarea id="complain"></textarea>
+    </div>
+
+    <div class="ui-col uploadfile-box">
+      <ul class="complainFileBox" id="edit_chart">
+
+      </ul>
+
+      <div id="filePicker" style='margin-left:5px;width:250px;overflow:hidden;height:35px;font-size:.13rem;'>上传附件(最多5张)</div>
+    </div>
+
+    <div class="ui-btn-wrap" style="padding:5px;padding-bottom:5px;">
+        <button class="ui-btn-lg ui-btn-danger c-btn" onclick="saveCom({$oId})">
+            提交
+        </button>
+    </div>
+</div>
+
+
+
+ {/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 订单详情层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title" id="boxTitle"><span>投诉类型</span><i class="ui-icon-close-page" onclick="javascript:dataHide(0);"></i><div class="wst-clear"></div></div>
+    <div class="content" id="content">
+
+      <ul class="ui-row complain-item">
+        <li class="ui-col ui-col-75">承诺的没有做到</li>
+        <li class="ui-col ui-col-25 chk-box">
+          <label class="ui-checkbox">
+            <input class="active" type="radio" name="data" value='1' >
+          </label>
+        </li>
+      </ul>
+
+      <ul class="ui-row complain-item">
+        <li class="ui-col ui-col-75">未按约定时间发货</li>
+        <li class="ui-col ui-col-25 chk-box">
+          <label class="ui-checkbox">
+            <input class="active" type="radio" name="data" value='2' >
+          </label>
+        </li>
+      </ul>
+
+      <ul class="ui-row complain-item">
+        <li class="ui-col ui-col-75">未按成交价格进行交易</li>
+        <li class="ui-col ui-col-25 chk-box">
+          <label class="ui-checkbox">
+            <input class="active" type="radio" name="data" value='3' >
+          </label>
+        </li>
+      </ul>
+
+      <ul class="ui-row complain-item">
+        <li class="ui-col ui-col-75">恶意骚扰</li>
+        <li class="ui-col ui-col-25 chk-box">
+          <label class="ui-checkbox">
+            <input class="active" type="radio" name="data" value='4' >
+          </label>
+        </li>
+      </ul>
+
+
+    </div>
+    <div class="ui-btn-wrap">
+          <button class="ui-btn-lg ui-btn-danger c-btn" onclick="dataHide(1)">
+              确定
+          </button>
+      </div>
+</div>
+</section>
+
+{/block}
+{block name="include"}
+{include file="default/dialog" /}<!-- 对话框模板 -->
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/users/orders/orders_complains.js?v={$v}'></script>
+
+
+<script type='text/javascript' src='__STATIC__/plugins/webuploader/webuploader.js?v={$v}'></script>
+{/block}

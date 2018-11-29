@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+.head{min-height:77px;color:#fff;background:url(../img/icon_userscores.png) no-repeat;background-size:cover;}
+.head-btn{padding:0 75px;font-size:15px}
+.user_scores{font-size:0.16rem;margin-top: 20px;}
+.user_scores p{text-align: right;}
+.ui-btn-lg{font-size:14px;height:24px;line-height:23px;display:block;width:100%;border-radius:3px;background:transparent;border:1px solid #fff;color:#fff}
+.ui-btn-lg:active{background:#fff!important;border:1px solid #ff5e45!important;color:#ff5e45!important}
+.score-detail{padding:10px}
+.score-detail-title{padding:10px;font-size:.15rem;border-bottom:1px solid #eaeaea;font-weight: bold;}
+.score-reduce{font-weight:bold;padding:15px 0;text-align:right;color:#18c328;font-size:.14rem;}
+.score-plus{font-weight:bold;padding:15px 0;text-align:right;color:#f81d1d;font-size:.14rem;}
+.score-line{border-bottom:1px solid #eaeaea;margin-bottom:5px;margin-top:8px}
+.wst-re-info{font-size:.14rem;position: relative;padding-bottom:0.2rem;}
+.score-time{position: absolute;bottom:0;left:0;color:#8c8c8c;font-size:0.12rem;}
+.wst-cover{position:fixed;left:0;top:0;background-color:#000;width:100%;height:100%;filter:alpha(opacity=60);opacity:.6;z-Index:9999;display:none}
+.wst-fr-box{position:fixed;z-index:9999;right:-999px;bottom:0;width:100%;min-height:40%;background-color:#f6f6f8;font-size:.15rem}
+.wst-fr-box .title{height: auto;background: #fff;position: relative;padding: 6px 0;border-bottom: 1px solid #f1f1f1;}
+.wst-fr-box .title span{float: left;width: 100%;height: 26px;line-height: 26px;text-align: center;font-size: 14px;}
+.wst-fr-box .title i{position:absolute;right:5px;top:-2px;font-size:27px}
+.wst-fr-box .content{padding:5px 5px 5px 5px;}

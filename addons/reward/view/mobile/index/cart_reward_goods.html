@@ -1,0 +1,48 @@
+{if !empty($goods['promotion']) && $goods['promotion']['type']=='reward'}
+{if isset($goods['rewardCartIds'])}
+<link href="__ROOT__/addons/reward/view/mobile/index/reward.css" rel="stylesheet">
+<div class='cart-reward-goods-box'>
+<div class='reward-txt'>
+<span class='tag'>满减</span>
+{$goods['promotion']['data']['rewardTitle']}
+<span id="reward_{$goods['shopId']}"></span>
+</div>
+<div class='wst-clear'></div>
+</div>
+<script>
+$(function(){
+	promotionMethod['rewardGoods{$goods["cartId"]}'] = true;
+});
+function rewardGoods{$goods["cartId"]}(cartMoney){
+	var cartIds = {:json_encode($goods['rewardCartIds'])};
+	var goodsReward = {:json_encode($goods['promotion']['data'])};
+	var rewardMoney = 0;
+	var goodsId = 0,money = 0,goodsNum = 0,json = null;
+	for(var i=0;i<cartIds.length;i++){
+		//设置背景颜色
+        $('.j-g'+cartIds[i]).css('background','#fff4e8');
+	    if($('#gchk_'+cartIds[i]).hasClass('wst-active')){
+	        money = parseFloat($('#gchk_'+cartIds[i]).attr('mval'),10);
+	        goodsNum = parseInt($('#buyNum_'+cartIds[i]).val(),10);
+	        rewardMoney = rewardMoney + money*goodsNum;
+	    }
+	}
+	for(var i=goodsReward.json.length-1;i>=0;i--){
+		json = goodsReward.json[i];
+		if(rewardMoney>=json.orderMoney){
+			if(json.favourableJson.chk0){
+				$('#reward_'+goodsReward.shopId).html('，已减'+json.favourableJson.chk0val+'元');
+				$('#rewardPromotion_{$goods["cartId"]}').html("<br>&nbsp;减￥"+json.favourableJson.chk0val);
+				return json.favourableJson.chk0val;
+			}else{
+				$('#reward_'+goodsReward.shopId).html('，已满足促销条件');
+			}
+		}else{
+			$('#reward_'+goodsReward.shopId).html('，还差'+(json.orderMoney-rewardMoney).toFixed(2)+'元');
+		}
+	}
+	return 0;
+}
+</script>
+{/if}
+{/if}

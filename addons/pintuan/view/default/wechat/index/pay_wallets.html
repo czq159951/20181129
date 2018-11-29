@@ -1,0 +1,66 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}支付订单 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/css/carts.css?v={$v}">
+{/block}
+{block name="header"}
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <a class="ui-icon-return" onclick="history.back()"></a><h1>支付订单</h1>
+    </header>
+{/block}
+{block name="main"}
+   	{/* 大加载 */}
+	<div class="ui-loading-block" id="Loadl">
+	    <div class="ui-loading-cnt">
+	        <i class="ui-loading-bright"></i>
+	        <p id="j-Loadl">正在加载中...</p>
+	    </div>
+	</div>
+	<section class="ui-container">
+	{if(empty($message))}
+		<input type="hidden" id="key" value='{:WSTConf("CONF.pwdModulusKey")}'/>
+		<input type="hidden" name="" value="{$orderNo}" id="orderNo" autocomplete="off">
+		<input type="hidden" name="" value="{$payFrom}" id="payFrom" autocomplete="off">
+	  	<div class="order-item">
+	    	<div class="ui-row-flex ui-whitespace border-b">
+	      		<div class="ui-col">
+	            	<img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($object['goodsImg'],3)}" title="{$object['goodsName']}" class="o-Img">
+	       		</div>
+	         	<div class="ui-col ui-col-3 o-gInfo">
+	         		<p class="o-gName ui-nowrap-multi ui-whitespace">{$object['goodsName']}</p>
+	       		</div>
+	       		<div class="ui-col order-tr" style="word-break:break-all;"></br>×{$object['goodsNum']}</div>
+	 		</div>
+	      	<div class="ui-btn-wrap" style="text-align: right;">	
+	        	<span class="wst-orders_pricet">拼团金额：<span class="wst-orders_prices">¥<?php echo sprintf("%.2f", $object['needPay']);?></span></span>     	
+	      	</div>
+	      	<div class="wst-clear"></div>
+		</div>
+	    <div class="wst-wa-info">
+	    	<p class="info">钱包余额：<span>￥{$userMoney}</span>，待支付订单总额：<span>￥{$needPay}</span></p>
+	    	{if($payPwd==0)}
+	    		<p class="pay-info">您尚未设置支付密码，请设置支付密码</p>
+	    		<div class="pay">设置密码：<input type="password" id="payPwd" maxlength="6" autocomplete="off"></div>
+	    		<div class="pay">确认密码：<input type="password" id="payPwd2" maxlength="6" autocomplete="off"></div>
+	    	{else}
+	    		<div class="pay">支付密码：<input type="password" id="payPwd" maxlength="6" autocomplete="off"></div>
+	    	{/if}
+	    </div>
+	    {if($payPwd==1)}<div class="wst-wa-forget ui-whitespace"><a href="{:url('wechat/users/backPayPass')}">忘记密码？</a></div>{/if}
+		<div style="text-align: center;">
+			<button type="button" class="ui-btn-lg wst-btn-dangerlo" onclick="javascript:walletPay({$payPwd});" style="width: 80%;  display: inline-block;">确认支付</button>
+		</div>
+	{else}
+		<ul class="ui-row-flex wst-flexslp">
+			<li class="ui-col ui-flex ui-flex-pack-center">
+			<p>{$message}</p>
+			</li>
+		</ul>
+	{/if}
+	</section>
+{/block}
+{block name="footer"}{/block}
+{block name="js"}
+<script type="text/javascript" src="__STATIC__/js/rsa.js"></script>
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/js/carts.js?v={$v}'></script>
+{/block}

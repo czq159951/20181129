@@ -1,0 +1,50 @@
+page {
+  background-color:#fff;
+}
+.wst-search{
+  font-size: 30rpx;
+}
+.wst-gs-header{
+  height: 80rpx;
+  border-bottom: 2rpx solid #f6f6f8;
+  position: relative;
+}
+.wst-gs-header .input{
+  display: block;
+  width: 75%;
+  height: 56rpx;
+  line-height: 56rpx;
+  margin: auto;
+  padding-top:11rpx;
+  padding-right:50rpx;
+  position: relative;
+}
+.wst-gs-header .input .icon{
+  position: absolute;
+  left:15rpx;
+  top:22rpx;
+}
+.wst-gs-header .input input{
+  padding: 0 0 0 50rpx;
+  width: 100%;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 30rpx;
+  background: #eee;
+  color: #999;
+  font-size: 26rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  letter-spacing: 1px;
+  border: none;
+}
+.wst-gs-header .btn{
+  position: absolute;
+  top:0;
+  right:20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #df0202;
+}

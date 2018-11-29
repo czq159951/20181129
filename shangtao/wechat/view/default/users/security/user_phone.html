@@ -1,0 +1,45 @@
+{extend name="default/base" /}
+{block name="title"}{if($user['phoneType']==1)}修改{else}绑定{/if}手机号码 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/security.css?v={$v}">
+{/block}
+{block name="header"}
+	{php}$user['phoneType']==1?$Title = "修改手机号码":$Title = "绑定手机号码"{/php}
+	{include file="default/header" /}
+{/block}
+{block name="footer"}
+		{/* 大加载 */}
+		<div class="ui-loading-block" id="Loadl">
+		    <div class="ui-loading-cnt">
+		        <i class="ui-loading-bright"></i>
+		        <p id="j-Loadl">正在加载中...</p>
+		    </div>
+		</div>
+		<div class="wst-se-footer">
+			<button id="modifyPhone" type="button" class="button" onclick="javascript:editPhone({$user['phoneType']});">{if($user['phoneType']==1)}下一步{else}确定{/if}</button>
+		</div>
+{/block}
+{block name="main"}
+    <section class="ui-container">
+    	<div class="wst-se-pay">
+    		{if($user['phoneType']==1)}
+    		<div class="phone">您绑定的手机号码为：{$user['userPhone']}</div>
+    		{else}
+			<div class="pay"><input id="userPhone" type="tel" placeholder="手机号码"></div>
+			{/if}
+			{if(WSTConf('CONF.smsVerfy')==1)}
+			<div class="verify">
+				<input id="smsVerfy" type="text" placeholder="输入验证码" maxlength="10">
+				<img id='verifyImg' src="{:url('wechat/users/getVerify')}" onclick='javascript:WST.getVerify("#verifyImg")'>
+			</div>
+			{/if}
+			<div class="verify">
+				<input id="phoneCode" type="text" placeholder="输入短信验证码" maxlength="8">
+				<button id="obtain" type="button" class="ui-btn-primary" onclick="javascript:obtainCode({$user['phoneType']})">获取验证码</button>
+			</div>
+    	</div>
+    </section>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/users/security/security.js?v={$v}'></script>
+{/block}

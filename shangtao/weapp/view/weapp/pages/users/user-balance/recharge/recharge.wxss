@@ -1,0 +1,138 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #F6F6F8;
+}
+.container{
+  width: 100%;
+  height: auto;
+}
+.selected-model{
+  height: auto;
+  padding: 20rpx 10rpx 20rpx 20rpx;
+  background: #fff;
+}
+.selected-model .term{
+  float: left;
+  width: 33.3333%;
+  padding-bottom: 20rpx;
+  position: relative;
+}
+.selected-model .main-model{
+  height: 130rpx;
+  margin-right: 10rpx;
+  border: 3rpx solid #e2e2e2;
+  border-radius: 10rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.selected-model .active{
+  border-color:#e00102;
+}
+.selected-model .main-model .word{
+  margin-top: 28rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.selected-model .main-model .word2{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #9b9b9b;
+  font-size: 28rpx;
+}
+.selected-model .single{
+  line-height: 130rpx;
+}
+.selected-model .single .word{
+  margin-top: 0;
+}
+.selected-model .single .input{
+  margin-top: 38rpx;
+  padding:0 10rpx;
+}
+.selected-model .single .input input{
+  border: 1rpx solid #b5b5b5;
+}
+/*提示条*/
+.pay-strip{
+  height:80rpx;
+  line-height: 80rpx;
+  padding-left: 20rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+/*方式选择条*/
+.pay-select{
+  padding: 0 20rpx;
+  font-size: 30rpx;
+  background: #fff;
+}
+.pay-select .option label{
+  width:100%;
+  height: 85rpx;
+  line-height: 85rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #f3f2f2;
+}
+radio .wx-radio-input{
+  width:16px;
+  height:16px;
+}
+.wst-payment{
+  margin-top: 40rpx;
+  padding:0 20rpx;
+}
+.wst-payment .button{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #e00102;
+  color: white;
+  border-radius: 6rpx;
+  font-size:30rpx;
+}
+.wst-payment .button:active,.wst-payment .button[disabled][type="default"],.wst-payment .button[disabled]:not([type]){
+  color:#fff0f0;
+  background:#f52f30;
+  background-clip:padding-box;
+}
+.pay-remind{
+  height: auto;
+  padding-top:40rpx; 
+  padding-left: 20rpx;
+}
+.pay-remind .size-strip{
+  width: 100%;
+  height: 50rpx;
+  display: flex;
+  font-size:30rpx;
+}
+.pay-remind .size-strip .content{
+  font-size: 32rpx;
+  margin-left: 10rpx;
+}
+.pay-remind .size-strip-1{
+  padding: 0 20rpx 0rpx 35rpx;
+  height: 50rpx;
+  font-size: 28rpx;
+}
+.user-info{
+  width: 100vw;
+  background: white;
+  margin-top: 2vw;
+  font-size: 30rpx;
+}
+.user-info text{
+  display: inline-block;
+  padding:20rpx;
+}
+image{
+  width: 50rpx;
+  height: 40rpx;
+  margin-right:10rpx;
+}

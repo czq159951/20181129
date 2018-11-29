@@ -1,0 +1,33 @@
+<view class='container'>
+  <view class='login-model'>
+    <view class="wst-ba-prompt" wx:if="{{step==0}}"><text>对不起，您还未绑定手机号码，\n请去绑定手机号码。</text></view>
+    <view class='form-model' wx:if="{{step==1}}">
+      <view class='login-prompt'><text>您绑定的手机号码为：{{data.userPhone}}</text></view>
+      <view class='login-item' wx:if="{{smsVerfy==1}}">
+        <input placeholder='验证码' bindinput='phoneVerfy' />
+        <image src="{{code}}" mode='aspectFill' class="verify" bindtap='code'/>
+      </view>
+      <view class='login-item'>
+        <input placeholder='短信验证码' bindinput='phoneCode'/>
+        <button type="default" disabled="{{phDisabled}}" bindtap="pverify" class="obtain">{{verifyWord}}</button>
+      </view>
+    </view>
+    <view class='form-model' wx:if="{{step==2}}">
+      <view class='login-item'>
+            <input  placeholder='新密码' type="text" password maxlength="6" bindinput='payPwd'/>
+      </view>
+      <view class='login-item'>
+            <input  placeholder='确认密码' type="text" password maxlength="6" bindinput='copayPwd'/>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='log-model' wx:if="{{step==0}}">
+    <button class='lo-button' bindtap='jump'>去绑定手机号码</button>
+</view>
+<view class='log-model' wx:if="{{step==1}}">
+    <button class='lo-button' bindtap='verify' disabled="{{nextDisabled}}">下一步</button>
+</view>
+<view class='log-model' wx:if="{{step==2}}">
+    <button class='lo-button' bindtap='submit' disabled="{{suDisabled}}">确认</button>
+</view>

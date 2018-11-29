@@ -1,0 +1,41 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/wstgridtree.js?v={$v}" type="text/javascript"></script>
+<script src="__ADMIN__/wxmenus/wxmenus.js?v={$v}" type="text/javascript"></script>
+<script>
+$(function(){initGrid();inView();})
+</script>
+{/block}
+{block name="main"}
+<style>
+html{height: 100%;}
+body{height: 100%;overflow:hidden}
+.mmGrid{border-bottom:0px}
+</style>
+<div id='alertTips' class='alert alert-success alert-tips fade in'>
+	<div id='headTip' class='head'><i class='fa fa-lightbulb-o'></i>操作说明</div>
+	<ul class='body'>
+		<li>本功能主要用于管理微信公众号菜单，使用前请先在微信认证平台中停用了微信公众号自定义菜单功能。</li>
+	</ul>
+</div>
+<div class="wst-toolbar">
+{if WSTGrant('WX_ZDYCD_01')}
+   <button class="btn btn-success f-right" onclick='javascript:toEdit(0,0)'><i class='fa fa-plus'></i>新增</button>
+{/if}
+{if WSTGrant('WX_ZDYCD_00')}
+   <button class="btn btn-success f-right" style="margin-right:10px;" onclick='javascript:adSynchro();'><i class='fa fa-cloud-upload'></i>同步到微信菜单</button>
+   <button class="btn btn-success f-right" style="margin-right:10px;" onclick='javascript:wxSynchro();'><i class='fa fa-cloud-upload'></i>与微信菜单同步</button>
+{/if}
+   <div style='clear:both'></div>
+</div>
+<div class="wst-views">
+	<div class="reveal">
+		<div class="revealt"></div>
+		<div class="revealb"><i></i><div class="ui" id="list"></div></div>
+	</div>
+</div>
+ <div class='mmGrid layui-form wst-maingr' id="maingrid"></div>
+{/block}

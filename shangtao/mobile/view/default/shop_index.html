@@ -1,0 +1,116 @@
+{extend name="default/base" /}
+{block name="title"}店铺首页 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/swiper.min.css">
+<link rel="stylesheet"  href="__MOBILE__/css/shops.css?v={$v}">
+{/block}
+{block name="header"}
+    <header class="ui-header ui-header-positive wst-se-header2" style="border-bottom: 1px solid #f6f6f8;">
+		<i class="ui-icon-return" onclick="history.back()"></i>
+		<div class="wst-se-search">
+		    <i class="ui-icon-search" onclick="javascript:WST.search(2);"></i>
+		    <form action＝"" class="input-form">
+			<input type="search" value="{$goodsName}" placeholder="按关键字搜索本店商品" onsearch="WST.search(2)" autocomplete="off" id="wst-search">
+			</form>
+		</div>
+	</header>
+{/block}
+
+{block name="main"}
+<input type="hidden" name="" value="{$goodsName}" id="keyword" autocomplete="off">
+<input type="hidden" name="" value="{$data.shop.shopId}" id="shopId" autocomplete="off">
+
+     <section class="ui-container">
+     	<div class="wst-shl-ads">
+     		 <div class="wst-shop-home-bg"
+     		 {if $data['shop']['shopMoveBanner']!=''}
+	   		 	style="background:url(__ROOT__/{:WSTImg($data['shop']['shopMoveBanner'],2)}) no-repeat center top;background-size:cover;"
+	   		 {else}
+	   		 	{if(WSTConf('CONF.shopAdtop'))}
+	   		 		style="background:url(__ROOT__/{:WSTImg(WSTConf('CONF.shopAdtop'),2)}) no-repeat center top;background-size:cover;"
+	   		 	{/if}
+	   		 {/if}>
+     		 	<div class="wst-shop-photo">
+     		 		<img src="__ROOT__/{:WSTImg($data.shop.shopImg,3)}">
+     		 	</div>
+     		 	<div class="wst-shop-name">{$data.shop.shopName}</div>
+
+     		 	<div class="shop-home-btn-box">
+     		 		<div class="ui-btn-group ui-row">
+				    <a href="tel:{$data.shop.shopTel}" style="width:45.5%;margin-right:15px;" class="J_service ui-btn-lg shop-home-btn ui-col ui-col-50">
+                        <img src="__MOBILE__/img/icon_kf.png">
+				        联系卖家
+				    </a>
+                    {:hook('mobileDocumentContact',['type'=>'shopIndex','shopId'=>$data['shop']['shopId']])}
+				    <button class="ui-btn-lg shop-home-btn ui-col ui-col-50 f-btn" id="fBtn" onclick="{if ($isFavor>0)}WST.cancelFavorite({$isFavor},1){else /}WST.favorites({$data.shop.shopId},1){/if}">
+                         {if ($isFavor>0)}
+                        <img src="__MOBILE__/img/icon_gz.png">
+                            <span id="fStatus">已关注</span>
+                        {else /}
+                        <img src="__MOBILE__/img/icon_gz.png">
+                            <span id="fStatus">关注店铺</span>
+                        {/if}
+				    </button>
+					</div>
+     		 	</div>
+
+     		 	<div class="score-box">
+     		 		<div class="ui-row-flex ui-whitespace score-item">
+					    <div class="ui-col ui-col">商品评分：{$data.shop.scores.goodsScore}</div>
+					    <div class="ui-col ui-col">时效评分：{$data.shop.scores.timeScore}</div>
+					    <div class="ui-col ui-col">服务评分：{$data.shop.scores.serviceScore}</div>
+					</div>
+     		 	</div>
+
+     		 </div>
+
+     		 <div class="wst-shop-home-info">
+     		 	<ul class="shop-info">
+     		 		<li class="ui-nowrap ui-whitespace">商家地址：<span>{$data.shop.shopAddress}</span></li>
+     		 		<li class="ui-nowrap ui-whitespace">商家电话：<span>{$data.shop.shopTel}</span></li>
+     		 		<li class="ui-nowrap ui-whitespace">服务时间：<span>{$data.shop.serviceStartTime}-{$data.shop.serviceEndTime}</span></li>
+     		 		<li class="ui-nowrap ui-whitespace">发票说明：
+                        <span>
+                        {if ($data.shop.isInvoice==1)}
+                        可开发票({$data.shop.invoiceRemarks})
+                        {else /}
+                        不支持发票
+                        {/if}
+                        </span>
+                    </li>
+     		 	</ul>
+     		 	<div class="shop-qrcode">
+				    <div id='qrcode'></div>
+				</div>
+     		 </div>
+
+     		 </div>
+
+
+
+     		 
+     	</div>
+     </section>
+{/block}
+
+
+{block name="footer"}{/block}
+{block name="js"}
+<script src="__MOBILE__/js/qrcode.js"></script>
+        <script>
+        $(function(){
+    		var url= "{:url('mobile/shops/home',array('shopId'=>$data['shop']['shopId']),'',true)}";
+    		//参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+    		var qr = qrcode(9, 'H');
+    			qr.addData(url);
+    			qr.make();
+    		$("#qrcode").html(qr.createImgTag(3,3));
+    		$('.wst-in-search').on('submit', '.input-form', function(event){
+    		    event.preventDefault();
+    		})
+        });
+        goShopHome = function(sid){
+            location.href=WST.U('mobile/shops/home','shopId='+sid,true);
+        }
+        </script>
+{/block}

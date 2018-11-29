@@ -1,0 +1,159 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}分销商品-卖家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/batchupload.css?v={$v}" />
+<link href="__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="shop_apply"}{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+<div class="wst-shop-head"><span>分销商品</span></div>
+<div class="wst-shop-tbar">
+  <label>
+    商品分类：
+    <select name="cat1" id="cat1" onchange="getCat(this.value)" class="s-query">
+        <option value="">-请选择-</option>
+      {volist name=":WSTShopCats(0)" id="vo"}
+            <option value="{$vo['catId']}" >{$vo['catName']}</option>
+      {/volist}
+    </select>
+    <select name="cat2" id="cat2" class="s-query"><option value="">-请选择-</option></select>
+  </label>
+  <label>
+    商品名称：<input type="text" name="goodsName" id="goodsName" class="s-query" /><a class="s-btn" onclick="goodsByPage()">查询</a>
+  </label>
+</div>
+<div class="wst-shop-content"> 
+   
+   <table class='wst-list'>
+   <thead>
+   <tr>
+     <th>商品名称</th>
+     <th>商品编号</th>
+     <th>价格</th>
+     <th>推荐</th>
+     <th>精品</th>
+     <th>新品</th>
+     <th>热销</th>
+     <th>销量</th>
+     <th>库存</th>
+     <th width="100">佣金</th>
+   </tr>
+   </thead>
+   <tbody id='list'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="tblist" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr>
+      <td>
+          <div class="goods-img">
+          <a href="{{WST.U("home/goods/detail","goodsId="+d[i]['goodsId']+"&key="+d[i]['verfiycode'])}}">
+            <img class='j-lazyGoodsImg'  data-original='__ROOT__/{{d[i].goodsImg}}'/>
+          </a>
+        </div>
+        <p class="goodsName">
+          {{WST.cutStr(d[i]['goodsName'],43)}}
+        </p>
+      </td>
+      <td>{{d[i]['goodsSn']}}</td>
+      {{# if(d[i]['isSpec']==1) { }}
+        <td>￥{{d[i]['shopPrice']}}</td>
+      {{# }else{ }}
+      <td width="40" >
+        <span id="span_2_{{d[i]['goodsId']}}" style="display: inline;cursor:pointer;color:green;">{{d[i]['shopPrice']}}</span>
+      </td>
+      {{# } }}
+
+      <td><div status="{{d[i]['isRecom']}}" class="w-r {{((d[i]['isRecom']==1)?'right':'wrong')}}"></div></td>
+  	<td><div status="{{d[i]['isBest']}}"  class="w-r {{((d[i]['isBest']==1)?'right':'wrong')}}"></div></td>
+   	<td><div status="{{d[i]['isNew']}}"  class="w-r {{((d[i]['isNew']==1)?'right':'wrong')}}"></div></td>
+  	<td><div status="{{d[i]['isHot']}}" class="w-r {{((d[i]['isHot']==1)?'right':'wrong')}}"></div></td>
+
+      <td>{{d[i]['saleNum']}}</td>
+      {{# if(d[i]['isSpec']==1) { }}
+        <td>{{d[i]['goodsStock']}}</td>
+      {{# }else{ }}
+        <td width="40">
+        <span id="span_3_{{d[i]['goodsId']}}" style="display: inline;cursor:pointer;color:green;">{{d[i]['goodsStock']}}</span>
+        </td>
+      {{# } }}
+      <td>
+         {{d[i]['distributType']==1?d[i]['commission']:"订单<span style='color:red;'>"+d[i]['distributOrderRate']+"%</span>"}}
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript">
+$(function(){
+	goodsByPage();
+});
+
+function goodsByPage(p){
+	$('#list').html('<tr><td colspan="11"><img src="'+WST.conf.ROOT+'/shangtao/home/view/default/img/loading.gif">正在加载数据...</td></tr>');
+	var params = {};
+	params = WST.getParams('.s-query');
+	params.key = $.trim($('#key').val());
+	params.page = p;
+	$.post("{:addon_url('distribut://distribut/queryDistributGoods')}",params,function(data,textStatus){
+	    var json = WST.toJson(data);
+	    if(json.status==1 && json.data){
+	       	var gettpl = document.getElementById('tblist').innerHTML;
+	       	laytpl(gettpl).render(json.data, function(html){
+	       		$('#list').html(html);
+	       		$('.j-lazyGoodsImg').lazyload({ effect: "fadeIn",failurelimit : 10,skip_invisible : false,threshold: 200,placeholder:WST.conf.ROOT+'/'+WST.conf.GOODS_LOGO});//商品默认图片
+	       	});
+	       	if(json.last_page>1){
+	       		laypage({
+		        	 cont: 'pager', 
+		        	 pages:json.last_page, 
+		        	 curr: json.current_page,
+		        	 skin: '#e23e3d',
+		        	 groups: 3,
+		        	 jump: function(e, first){
+		        		    if(!first){
+		        		    	goodsByPage(e.curr);
+		        		    }
+		        	    } 
+		        });
+	       	}else{
+	       		$('#pager').empty();
+	       	}
+       	}  
+	});
+}
+
+function getCat(val){
+	  if(val==''){
+	  	$('#cat2').html("<option value='' >-请选择-</option>");
+	  	return;
+	  }
+	  $.post(WST.U('home/shopcats/listQuery'),{parentId:val},function(data,textStatus){
+	       var json = WST.toJson(data);
+	       var html = [],cat;
+	       html.push("<option value='' >-请选择-</option>");
+	       if(json.status==1 && json.list){
+	         json = json.list;
+	       for(var i=0;i<json.length;i++){
+	           cat = json[i];
+	           html.push("<option value='"+cat.catId+"'>"+cat.catName+"</option>");
+	        }
+	       }
+	       $('#cat2').html(html.join(''));
+	  });
+}
+</script>
+{/block}

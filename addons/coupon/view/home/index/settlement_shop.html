@@ -1,0 +1,17 @@
+<div class='row'>
+    <dt>店铺优惠：</dt>
+    <dd>
+        <select class='j-ipt' id='couponId_{$shopId}' onchange='getCartMoney()'>
+            <option value='0'>不使用优惠</option>
+            {volist name="coupons" id='coupon'}
+            <option value='{$coupon['couponId']}'>
+            {if $coupon['useCondition']==1}
+                满{$coupon['useMoney']}减{$coupon['couponValue']}
+            {else}
+                {$coupon['couponValue']}元优惠券
+            {/if}
+            </option>
+            {/volist}
+        </select>
+    </dd>
+</div>

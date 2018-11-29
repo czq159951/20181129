@@ -1,0 +1,24 @@
+<view calss="container" wx:if="{{data['list']}}">
+  <view class="wst-or-list">
+    <view class="list" wx:for="{{data['list']}}" wx:for-item="li">
+      <view class="head"><text>订单号:{{li.orderNo}}</text><text class="state">邮费:<text>{{li.deliverMoney}}</text></text></view>
+      <view class="goods" wx:for="{{data['goods'][li.orderId]}}" wx:for-item="go">
+        <image mode="aspectFit" src="{{domain}}{{go.goodsImg}}" class="img"></image>
+        <view class="names">
+          <view class="name">{{go.goodsName}}</view>
+          <view class="spec" wx:if="{{go.goodsSpecNames!=''}}">规格：{{go.goodsSpecNames}}</view>
+        </view>
+        <view class="price"><view>¥ {{go.goodsPrice}}</view><view>x {{go.goodsNum}}</view></view>
+        <view class="wst-clear"></view>
+      </view>
+      <view class="info">总金额：<text>¥{{data.totalMoney}}</text></view>
+    </view>
+  </view>
+  <view class='wst-strip'>
+   <view class='info'>钱包余额：<view class='number'>¥ {{data.userMoney}}</view></view>
+   <view class='info pay'>待支付订单总额：<view class='number'>¥ {{data.needPay}}</view></view>
+  </view>
+  <view class="wst-or-button">
+     <button type="default" class="button" disabled="{{disabled}}" loading="{{loading}}" bindtap="payment">支付</button>
+  </view>
+</view>

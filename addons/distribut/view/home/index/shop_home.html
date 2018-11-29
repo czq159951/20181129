@@ -1,0 +1,10 @@
+
+<script type="text/javascript">
+	bShare.addEntry({  
+	    url: "{:url('home/shops/home',array('shopId'=>$addonParams['shop']['shopId'],'shareUserId'=>base64_encode(session('WST_USER.userId'))),true,true)}",
+		title:"{$addonParams['shop']['shopName']}",
+		summary:"{$addonConfig['shopShareTitle']}", 
+	    pic: '{:WSTDomain()}/{$addonParams["shop"]["shopImg"]}'
+	}); 
+</script>
+

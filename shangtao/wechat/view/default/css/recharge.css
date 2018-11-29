@@ -1,0 +1,36 @@
+.ui-radio input:checked:after{background:#f43d30;}
+.ui-grid-trisect{background-color:#fff; }
+.j-charge-money{display: none;}
+.charge-othermoney{width:1rem;height:0.29rem;}
+.j-show-box,.j-edit-box,.j-list-box,.wst-list-box{padding:5px 0px 20px 15px;}
+.j-list-box li{height:40px;line-height:40px;}
+.j-edit-box .rows{width:auto;height:auto;}
+.j-edit-box .label{float:left;width:120px;text-align:right;padding:2px 0px 2px 0px;}
+.j-edit-box .field{float:left;padding:2px 0px 2px 0px;}
+.field label{margin-right:20px;}
+#saveAddressBtn{margin-left:120px;}
+.j-show-box .address{line-height:36px;}
+.j-show-box .address a{color: #1c9eff;}
+.j-show-box .address a:hover{text-decoration:underline;}
+.j-default{padding:5px;background:#ccc;}
+.wst-frame1{border: 2px solid #e2e2e2;text-align:center;position:relative; }
+.wst-frame2{border: 2px solid #e2e2e2;text-align:center;border-radius: 10px;position:relative;padding: 0.2rem 0;font-size: 0.13rem; }
+.wst-frame2 div{line-height:normal; }
+.wst-frame2 div.charge-alone{line-height:0.3rem;font-size: 0.13rem;}
+.wst-frame1.j-selected i,.wst-frame2.j-selected i{font-size: 0;line-height: 0;background: url(../img/img_gd_sel.png) no-repeat 0 0;display: block; width: 11px;height: 11px;position: absolute;z-index: 1;right: -1px;bottom: -1px;}
+.wst-frame1.j-selected,.wst-frame2.j-selected{border: 2px solid #e4393c;}
+.tips-box{margin:0.1rem;}
+.paytype-term{padding:0 0.1rem 0 0.05rem;font-size: 0.14rem;border-bottom: 1px solid #f2f1f1;}
+.paytype-term label{position: absolute;top:23px;right:0;}
+.paytype-term i{display: block;width:44px;height: 44px;}
+.paytype-term .alipays{background: url(../img/pays-ali.png) center center no-repeat;background-size: 70%;}
+.paytype-term .weixinpays{background: url(../img/pays-weixin.png) center center no-repeat;background-size: 70%;}
+.paytype-term .unionpay{background: url(../img/pays-union.png) center center no-repeat;background-size: 70%;}
+.first-time{font-size: 0.15rem;color: #abaaaa;padding-left: 5px;margin-top: 10px;}
+.wst-re-button{height: 38px;line-height: 38px;font-size: 0.15rem;color: #fff;background: #e00102;border-radius: 3px;border-bottom: 1px solid #e00102;}
+.ui-checkbox input:before, .ui-checkbox-s input:before{font-size: 24px;color:#ff3c3c;}
+.ui-checkbox input:checked:before, .ui-checkbox-s input:checked:before{color:#ff3c3c;}
+.wst-re-info{margin:0.08rem 0;padding:0.1rem;background-color:#fff;font-size: 0.15rem;}
+.wst-re-info p{padding:0.05rem 0;color: #999;}
+.wst-re-info .balance{padding-left:0.2rem;font-size: 0.13rem;color:#df0202;}
+.wst-re-info .balance span{font-size: 0.15rem;}

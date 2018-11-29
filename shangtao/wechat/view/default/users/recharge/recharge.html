@@ -1,0 +1,84 @@
+{extend name="default/base" /}
+{block name="title"}我的资金 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/recharge.css?v={$v}">
+{/block}
+{block name="header"}
+    <header style="background:#ffffff;" class="ui-header ui-header-positive wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>充值</h1>
+    </header>
+{/block}
+{block name="main"}
+    <section class="ui-container">
+        
+        <ul class="ui-grid-trisect">
+        {volist name="chargeItems" id="item"}
+        <li>
+            <div class="wst-frame2 {$key} <?php echo ($key==0)?'j-selected':''; ?>" onclick="javascript:changeSelected({$item['id']},'itemId',this)">
+                <div>
+                    {if condition="$item['giveMoney'] gt 0"}
+                    <div class='charge-doub'>充值 <span class="charge-money" id="needPay_{$item['id']}" sum="{$item['chargeMoney']}">{$item['chargeMoney']}</span> 元</div>
+                    <div>送 {$item['giveMoney']} 元</div>
+                    {else/}
+                    <div class='charge-alone'>充值 <span class="charge-money">{$item['chargeMoney']}</span> 元</div>
+                    {/if}
+                </div>
+                <i></i>
+            </div>
+        </li>
+        {/volist}
+        <li >
+            <div class="wst-frame2 " onclick="javascript:changeSelected(0,'itemId',this)">
+                <div>
+                   <div class='charge-alone'>
+                        <span class="j-charge-other">其他金额</span>
+                        <span class="j-charge-money">
+                        <input class="charge-othermoney j-ipt" id="needPay" value="1" maxlength="10" data-rule="充值金额:required;" onkeypress="return WST.isNumberKey(event)" onkeyup="javascript:rechargeMoney(this.value)" maxlength="8">
+                        </span>
+                    </div>
+                </div>
+                <i></i>
+            </div>
+
+        </li>
+    </ul>
+    {php}
+    	$sum = 0;
+    	if(isset($chargeItems[0])){
+    		$sum = $chargeItems[0]['chargeMoney'];
+    	}
+    {/php}
+    <div class="wst-re-info">
+    	<p>当前余额<span class="balance">¥ <span>{$rs['userMoney']}</span></span></p>
+    	<p>充值金额<span class="balance">¥ <span id="rechargeMoney">{$sum}</span></span></p>
+    </div>
+    <div class="ui-form">
+        {volist name="payments" id="payment" }
+            <div class="ui-form-item ui-form-item-radio paytype-term">
+                <label class="ui-checkbox" for="radio">
+                    <input type="radio" {if condition="$key eq 0"}checked{/if} name="payCode" value="{$payment['payCode']}">
+                </label>
+                <i class="{$payment['payCode']}"></i>
+                <p>{$payment['payName']}</p>
+            </div>
+        {/volist}
+    </div>
+    <div class="ui-btn-wrap">
+        <button class="ui-btn-lg ui-btn-danger wst-re-button" onclick="toPay()">确认支付</button>
+    </div>
+    <div class="tips-box">
+        <ul class="ui-row first-time">
+            <li class="ui-col ui-col-100 ft-title"><i></i><span>充值说明：</span></li>
+            <li class="ui-col ui-col-100 ft-item">1.充值金额和赠送金额只能用于购买商品，不能提现；</li>
+        </ul>
+    </div>
+    <input type="hidden" value="" id='itemId' class='j-ipt' />
+    </section>
+{/block}
+
+{block name="footer"}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/users/recharge/recharge.js?v={$v}'></script>
+{/block}

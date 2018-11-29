@@ -1,0 +1,68 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}优惠券 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+<div class="wst-shop-head"><span>优惠券</span></div>
+<div class="wst-shop-tbar">
+  优惠券类型：<select id='useCondition' onchange="queryByPage(0)">
+      <option value='-1'>全部</option>
+      <option value='0'>优惠券</option>
+      <option value='1'>满减券</option>
+  </select>
+  <label>
+    <a class="s-btn" style="float: right;width:80px;line-height:16px;height:16px;margin-top:2px;" onclick="javascript:toEdit(0)">新增优惠券</a>
+  </label>
+</div>
+<div class="wst-shop-content">  
+   <table class='wst-list'>
+   <thead>
+   <tr>
+     <th>面值</th>
+     <th>类型</th>
+     <th>适用对象</th>
+     <th>开始时间</th>
+     <th>结束时间</th>
+     <th>发放量</th>
+     <th>领取数量</th>
+     <th width="100">操作</th>
+   </tr>
+   </thead>
+   <tbody id='couponslist'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="couponstpl" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr>
+      <td>￥{{d[i]['couponValue']}}</td>
+      <td>{{# if(d[i]['useCondition']==1){}}满{{d[i]['useMoney']}}减{{d[i]['couponValue']}}券{{# }else{ }}现金券{{#}}}</td>
+      <td>{{# if(d[i]['useObjects']==0){}}全店通用{{# }else{ }}部分商品{{#}}}</td>
+  	  <td>{{d[i]['startDate']}}</td>
+   	  <td>{{d[i]['endDate']}}</td>
+      <td>{{d[i]['couponNum']}}</td>
+      <td>{{d[i]['receiveNum']}}</td>
+      <td>
+         <a href='javascript:toEdit({{d[i]["couponId"]}})'>编辑</a>
+         <a href='javascript:del({{d[i]["couponId"]}})'>删除</a>
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/coupon/view/home/shops/shop.js?v={$v}"></script>
+<script type="text/javascript">
+$(function(){
+	 queryByPage();
+});
+</script>
+{/block}

@@ -1,0 +1,30 @@
+<view class='container'>
+  <view class='login-model'>
+    <view class='form-model'>
+      <view class='login-item'>
+        <input  placeholder='手机号' value="{{regName}}" bindinput='name' type='number'/>
+      </view>
+      <view class='login-item'>
+        <input  placeholder='密码' password='true' bindinput='pwd'/>
+      </view>
+      <view class='login-item'>
+        <input  placeholder='确认密码' password='true' bindinput='back'/>
+      </view>
+      <view class='login-item' wx:if='{{isPhone}}'>
+        <input placeholder='验证码' bindinput='phoneverfy' />
+        <image src="{{pcode}}" mode='aspectFill' class="verify" bindtap='pcode'/>
+      </view>
+      <view class='login-item' wx:if='{{isPhoneVerify}}'>
+        <input placeholder='短信验证码' bindinput='checkCode'/>
+        <button type="default" disabled="{{phDisabled}}" bindtap="pverify" class="obtain">{{verifyWord}}</button>
+      </view>
+    </view>
+    <view class="wst-lo-agreement">
+    <radio checked="{{radioType==1?true:false}}" color="{{radioType==1?'#de0301':'#7f7f7f'}}" class="radio" bindtap="inAgree"/>
+    我已阅读并同意<span bindtap="agreement">《用户注册协议》</span>
+	  </view>
+    <view class='log-model'>
+      <button  class='lo-button' bindtap='register' disabled="{{reDisabled}}">注册</button>
+    </view>
+  </view>
+</view>

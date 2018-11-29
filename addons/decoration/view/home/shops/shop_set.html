@@ -1,0 +1,62 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}店铺装修-卖家中心{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$seoDecorationDesc}">
+<meta name="Keywords" content="{$seoDecorationKeywords}">
+{/block}
+{block name="css"}
+{/block}
+{block name="shop_apply"}{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<style>
+label{margin-right:10px;}
+</style>
+<div id='tab' class="wst-tab-box">
+	<div class="wst-shop-head"><span>店铺装修</span></div>
+    <div class="wst-tab-content" style='width:99%;margin-bottom: 10px;'>
+        <div class="wst-tab-item" style="position: relative;">
+           	<table id='vinfo_1' class='wst-form'> 
+			  	<tr>
+					<th width='150'>启用店铺装修：</th>
+			     	<td>
+			     		<label><input type="radio" name="userDecoration" value="1" <?php echo ($userDecoration==1)?"checked":"" ?>>是</label>
+			          	<label><input type="radio" name="userDecoration" value="0" <?php echo ($userDecoration==0)?"checked":"" ?>>否</label>
+			          	<p>选择是否使用店铺装修模板；<br>
+			         		 如选择“是”，店铺首页背景、头部、导航以及上方区域都将根据店铺装修模板所设置的内容进行显示；<br>
+			         		 如选择“否”则使用的系统预设值风格进行显示。
+			         	</p>
+			     	</td>
+			  	</tr>
+			  	<tr><td colspan="2" style="text-align: center;"></td></tr>
+			  	<tr>
+					<th width='150'>店铺装修：</th>
+			     	<td>
+				        <a class="s-btn" href="{:addon_url('decoration://decoration/edit',array('id'=>$decorationId))}" target="_blank" style="background-color: #f0a869;">装修页面</a>
+				        <a class="s-btn" href="javascript:;" onclick="decorationBuild({$decorationId});" style="background-color: #5BB75B;">生成页面</a>
+				        <p>点击“装修页面”按钮，在新窗口对店铺首页进行装修设计；<br/>
+							预览效果满意后，点击“生成页面”按钮则可将预览效果保存为您的“店铺装修”风格模板。
+						</p>
+			     	</td>
+			  	</tr>
+			  	<tr>
+			     	<td colspan="2" style="text-align: center;"><br/>
+				       <a class="s-btn" onclick="javascript:saveConf()">保&nbsp;存</a>
+			     	</td>
+			  	</tr>
+			</table>
+        </div>
+        <div class="wst-tab-item" style="display:none;">
+           
+        </div>
+    </div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__ROOT__/addons/decoration/view/home/shops/static/shop_config.js?v={$v}'></script>
+{/block}

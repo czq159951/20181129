@@ -1,0 +1,444 @@
+@import "/pages/shop-self/shop-self.wxss";
+page{
+  background: #f6f6f8;
+}
+.navigation-top .between{
+  margin-left: 20rpx;
+}
+.navigation-top .right{
+  width: 72rpx;
+  height: 84rpx;
+  margin-left: 50rpx;
+}
+.navigation-top .right .image{
+  width: 72rpx;
+  height: 72rpx;
+  margin-top: 5rpx;
+}
+.commodity-list{
+  width: 100%;
+  height: 254rpx;
+  border: 1rpx solid transparent;
+  margin-top: 16rpx;
+  background: white;
+}
+image{
+  width: 100%;
+  height: 100%;
+}
+.commodity-list .left{
+  width: 234rpx;
+  height: 234rpx;
+  border: 1rpx solid transparent;
+  margin: 10rpx 10rpx 10rpx;
+  float: left;
+}
+.commodity-list .right{
+   width: 478rpx;
+   height: 234rpx;
+   border: 1rpx solid transparent;
+   margin: 10rpx 5rpx 10rpx;
+   float: left;
+}
+.commodity-list .right .main{
+  width: 100%;
+  height: 52rpx;
+  border: 1rpx solid transparent;
+}
+.commodity-list .right .main .text{
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.commodity-list .right .main1{
+  border-bottom:3rpx solid RGB(222,222,222);
+  position: relative;
+  overflow: hidden;
+}
+.commodity-list .right .main .left1{
+  width: 76rpx;
+  height: 50rpx;
+  margin-top: -10rpx;
+  border: 1rpx solid transparent;
+  float: left;
+}
+.commodity-list .right .main .left1 image{
+  width: 100%;
+  height: 150%;
+  margin-top: -10rpx;
+  margin-left: 0rpx;
+}
+.commodity-list .right .main  .number{
+  width: 76rpx;
+  height: 28rpx;
+  position: absolute;
+  top: -2rpx;
+  text-align: center;
+  color: white;
+  font-size: 28rpx;
+}
+.commodity-list .right .main .between{
+  width: auto;
+  height: 50rpx;
+  border: 1rpx solid transparent;
+  color: RGB(224,19,36);
+  font-size: 35rpx;
+  font-weight: bold;
+  float: left;
+}
+.commodity-list .right .main .right1{
+  width: auto;
+  height: 50rpx;
+  border: 1rpx solid transparent;
+  float: left;
+  text-decoration: line-through;
+  font-size: 25rpx;
+  margin-left: 10rpx;
+}
+.commodity-list .right .main1{
+  height: 44rpx;
+  font-size: 28rpx;
+  margin-top: 10rpx;
+}
+.commodity-list .right .main2{
+  font-size: 30rpx;
+  margin-top: 10rpx;
+}
+.commodity-list .right .main2 .image{
+  width: 30rpx;
+  height: 30rpx;
+  border: 1rpx solid trans;
+  float: left;
+  margin-top: -1rpx;
+  margin-right: 10rpx;
+}
+.commodity-list .right .main2 .text{
+  width: 420rpx;
+  height: 42rpx;
+  font-size: 28rpx;
+  
+}
+
+/*动画模块*/
+/*mask*/  
+.drawer_screen {  
+  width: 100%;  
+  height: 100%;  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  z-index: 1000;  
+  background: #000;  
+  opacity: 0.4;  
+  overflow: hidden; 
+  border-top: 1rpx solid white; 
+}
+.max-model{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0rpx;
+  font-size: 30rpx;
+  background: #F6F6F8;
+  z-index: 9999;
+}
+.max-model .max-model1{
+  width: 100%;
+  height: 100%;
+  background: #F2F2F2;
+  z-index: 9999;
+  display: flex;
+}
+.max-model .top{
+  width: 100%;
+  height: 70rpx;
+  float: left;
+  overflow: hidden;
+}
+.max-model .top .title{
+  display: flex;
+  justify-content: center;
+  margin-top: 15rpx;
+}
+.max-model .top .icon{
+  width: 50rpx;
+  height: 100%;
+  position: absolute;
+  left: 700rpx;
+  top: 15rpx;
+}
+.max-model1 .model-left{
+  width: 165rpx;
+  height: 99.7%;
+  color: #676767;
+  background: #F6F6F8;
+}
+.max-model .model-left .mix-check{
+  width: 100%;
+  height: 96rpx;
+  border: 1rpx solid #DFE0E2;
+  text-align: center;
+  line-height: 96rpx;
+}
+.max-model .model-left .mix-check-1{
+  width: 100%;
+  height: 96rpx;
+  border: 1rpx solid #DFE0E2;
+  border-left: 5rpx solid #FC7E72;
+  border-right: 0rpx;
+  text-align: center;
+  line-height: 96rpx;
+  background: #F2F2F2;
+  color: #FC7E72;
+}
+.max-model .model-right{
+  width: 565rpx;
+  height: 99.7%;
+  background: #F6F6F8;
+}
+.max-model .model-right .title{
+  width: 100%;
+  height: 70rpx;
+  border-left: 5rpx solid transparent;
+  background: #F2F2F2;
+}
+.max-model .model-right .title .content{
+  padding-left: 10rpx;
+  float: left;
+  height: 44rpx;
+  color: #888888;
+  margin-top: 15rpx;
+  border-left: 5rpx solid #FC7E72;
+}
+.max-model .model-right .title .goods-arrow{
+  width: 20rpx;
+  height: 20rpx;
+  border-right: 5rpx solid #FC7E72;
+  border-bottom: 5rpx solid #FC7E72;
+  transform: rotate(-45deg);
+  margin-top: 20rpx;
+  margin-right: 20rpx; 
+  float: right;
+}
+.max-model .model-right .check-tatol{
+  width: 555rpx;
+  height: auto;
+  float: left;
+  color: #676767;
+}
+.max-model .model-right .check-tatol .mix-check{
+  width: 266rpx;
+  height: 80rpx;
+  float: left;
+  text-align: center;
+  line-height: 80rpx;
+  background: #F3F4F6;
+  border: 1rpx solid #DFE0E2;
+}
+/*底部导航条*/
+.navigation-bottom{
+  width: 740rpx;
+  height: 90rpx;
+  border: 2rpx solid #f6f6f8;
+  position: fixed;
+  z-index: 999;
+  left: 0rpx;
+  bottom: 0rpx;
+  background: white;
+}
+.navigation-bottom .icon{
+  float: left;
+  width: 50rpx;
+  height: 50rpx; 
+  margin-top: 15rpx;
+  margin-left: 10rpx;
+}
+.navigation-bottom .content{
+  float: left;
+  width: auto;
+  height: auto;
+  margin-top: 15rpx;
+  margin-left: 10rpx;
+  color: #838383;
+  font-weight: bold;
+  font-family: Helvetica Neue,Helvetica,STHeiTi,sans-serif;
+}
+.navigation-bottom .amount{
+  float: right;
+  width: auto;
+  height: auto;
+  margin-top: 15rpx;
+  margin-left: 10rpx;
+}
+.navigation-bottom .text{
+  color: #838383;
+  font-weight: bold;
+}
+.navigation-bottom .number{
+  color: #de0202;
+  font-size: 40rpx;
+}
+.botton botton{
+   height: 70rpx;
+}
+button[size="mini"] {
+display:inline-block;
+line-height:2.0;
+font-size:13px;
+padding:0 1.34em;
+
+}
+.guoDu{
+  float: left;
+  margin-left: 25rpx;
+  margin-top:20rpx; 
+  width: 100%;
+  height: 300rpx;
+}
+.navigation-bottom{
+  font-size: 30rpx;
+  bottom: -2rpx;
+}
+.navigation-bottom .store{
+  width: 150rpx;
+  height: 90rpx;
+  margin-top: 6rpx;
+  float: left;
+}
+.navigation-bottom .store .image{
+  width: 100%;
+  height: 41rpx;
+}
+.navigation-bottom .store image{
+  width: 44rpx;
+  height: 41rpx;
+  margin-left: 55rpx;
+}
+.navigation-bottom .store .text{
+  text-align: center;
+  font-weight: 400;
+  color: black;
+  margin-top: 7rpx;
+}
+.navigation-bottom .carts{
+  width: 70rpx;
+  height: 90rpx;
+  margin-left: 20rpx;
+  margin-right: 40rpx;
+  float: left;
+}
+.navigation-bottom .carts image{
+  width: 100%;
+  height: 60rpx;
+  margin-top: 20rpx;
+}
+.navigation-bottom .price{
+  width: 280rpx;
+  height: 90rpx;
+  float: left;
+  display: flex;
+  line-height: 100rpx;
+  text-align: left;
+}
+.navigation-bottom .number{
+  color: #EE3131;
+  font-size: 30rpx;
+}
+.button{
+  float: right;
+  margin-top: 10rpx;
+  height: 90rpx;
+  width: 130rpx;
+}
+button[type="default"] {
+  color:white;
+  background-color:#E8121E;
+  width: 100%;
+  height: 80%;
+  line-height: 80rpx;
+}
+
+.radius{
+  width: 36rpx;
+  height: 36rpx;
+  color:white;
+  text-align:center; 
+  font-size: 24rpx;
+  position: absolute;
+  top: 10rpx;
+  left:226rpx;
+  border-radius: 50%;
+  background:  #de0202;
+}
+.navigation{
+  width: 99.8vw;
+  height: 10vw;
+  font-size: 30rpx;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+  border-top: 10rpx solid #f6f6f8;
+  border-bottom: 10rpx solid #f6f6f8;
+  }
+  .navigation text{
+    display: block;
+    padding: 10rpx 50rpx 10rpx 50rpx;
+  }
+  .model-2{
+    width: 100vw;
+    overflow: hidden;
+  }
+  .model-2 .script{
+    height: 6vw;
+    font-size: 30rpx;
+    font-weight: bold;
+    line-height: 6vw;
+    padding: 10rpx;
+    background: #fff;
+  }
+  .navigation-bewteen{
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background: white;
+  }
+  .wst-sh-goods {
+    height: calc(100% - 0.8rem);
+    height: -webkit-calc(100% - 0.8rem);
+    height: -moz-calc(100% - 0.8rem);
+    height: -ms-calc(100% - 0.8rem);
+    height: -o-calc(100% - 0.8rem);
+    border: 1rpx solid red;
+    overflow: hidden;
+}
+.top-self{
+  margin-top: 0;
+}
+.location-icon{display: inline-block;width:28rpx;height:28rpx;position:absolute;right:230rpx;top:5px;border:1rpx solid transparent;}
+.wst-se-header{height:70rpx;}
+.wst-sh-close{
+  top:-4rpx;
+  width:50rpx;
+  height:60rpx;
+  position:absolute;
+  left:10rpx;
+  font-size:50rpx;
+  text-align:center;
+  padding:5rpx;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.wst-sh-btn{
+  position: absolute;
+  top:0;
+  right:15rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #df0202;
+}

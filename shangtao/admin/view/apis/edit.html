@@ -1,0 +1,63 @@
+{extend name="base" /}
+{block name="js"}
+<script src="__ADMIN__/apis/apis.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<form id="editForm">
+<table class='wst-form wst-box-top'>
+       <tr>
+          <th>接口类型<font color='red'>*</font>：</th>
+          <td colspan='3'>
+            <select id='apiType' class='ipt'>
+                <option value='0' {if $data['apiType']==0}selected{/if}>APP接口</option>
+                <option value='1' {if $data['apiType']==1}selected{/if}>小程序接口</option>
+            </select>
+          </td>
+       </tr>
+       <tr>
+          <th>接口名<font color='red'>*</font>：</th>
+          <td>
+            <input type='text' class='ipt' id='apiName' value="{$data['apiName']}" maxLength='255' data-rule="接口名: required;" style='width:90%'/>
+          </td>
+          <th>接口标记颜色：</th>
+          <td>
+            <input type='text' class='ipt' id='apiColor' value="{$data['apiColor']}" maxLength='10'/>
+          </td>
+       </tr>
+       <tr>
+          <th>接口说明<font color='red'>*</font>：</th>
+          <td colspan="3">
+            <input type='text' class='ipt' id='apiDesc' value="{$data['apiDesc']}" maxLength='255' data-rule="接口说明: required;" style='width:80%'/>
+          </td>
+       </tr>
+       <tr>
+          <th>接口请求参数：</th>
+          <td colspan="3">
+            <textarea id='apiParam' class='ipt' style='height:150px;width:80%'>{$data['apiParam']}</textarea>
+          </td>
+       </tr>
+       <tr>
+          <th>接口返回值：</th>
+          <td colspan="3">
+            <textarea id='apiReturn' class='ipt' style='height:150px;width:80%'>{$data['apiReturn']}</textarea>
+          </td>
+       </tr>
+       <tr>
+          <th>接口排序号：</th>
+          <td colspan="3">
+            <input type="text" id="apiSort" class="ipt" maxLength="20"  value='{$data['apiSort']}' />
+          </td>
+       </tr>
+  
+  <tr>
+     <td colspan="4" align='center'>
+       <input type="hidden" name="id" id="id" class="ipt" value="{$data['id']+0}" />
+       <button type="button"  class='btn btn-primary btn-mright' onclick='javascript:save();' ><i class="fa fa-check"></i>提交</button>
+       <button type="button"  class='btn'><i class="fa fa-angle-double-left" onclick="javascript:history.go(-1)"></i>返回</button>
+     </td>
+  </tr>
+</table>
+</form>
+{/block}
+

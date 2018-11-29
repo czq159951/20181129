@@ -1,0 +1,92 @@
+<template name="coupon-settlement">
+  <view class='infoAmount'>
+    <view class='term' bindtap="onCoupon" data-statu="open" data-shopid="{{ca.shopId}}">
+      <view class='left'>店铺优惠</view>
+      <view class='right' bindtap='powerDrawer'>
+        <view class='arrow'></view>
+      </view>
+      <view class='wst-co-between'>{{coupons[ca.shopId].words}}</view>
+    </view>
+  </view>
+  <view wx:if="{{couponStatus}}">
+    <view class="wst-mask" bindtap="onCoupon" data-statu="close" wx:if="{{couponStatus}}"></view>  
+    <view animation="{{couponData}}" class="wst-co-window" wx:if="true">
+      <view class='co-title'>优惠券
+        <icon type='cancel' color='#B1B1B1' size='28' bindtap="onCoupon" data-statu="close" class="icon"></icon>
+      </view>
+      <scroll-view class="co-content" scroll-y="true">
+        <radio-group name="radio" class="option" bindchange="ifCoupon">
+          <label wx:for="{{couponsInfo.list}}" wx:for-item="co">{{co.couponValue}}元优惠券<radio color="#e00102" value="{{co.couponId}}" checked="{{couponsInfo.couponId==co.couponId?true:false}}"/></label>
+          <label>不使用优惠<radio color="#e00102" value="0" checked="{{couponsInfo.couponId==0?true:false}}"/></label>
+        </radio-group>
+      </scroll-view>
+    </view>  
+ </view>
+</template>
+<template name="coupon-user">
+    <view class='model'bindtap="jumpCenter" data-url="/addons/package/pages/coupon/user/user">
+      <view class='image'><image src="/addons/closure/coupon/image/coupon2.png"mode='AspectFit'></image></view>
+      <view class='title'>我的优惠券</view>
+    </view>
+</template>
+<template name="coupon-user2">
+    <view class="term" bindtap="integralManageUrl">
+      <navigator open-type='navigate' url='/addons/package/pages/coupon/user/user'>
+        <p class="number">{{couponsNum}}</p>
+        <p class="word">优惠券</p>
+      </navigator>
+    </view>
+</template>
+<template name="coupon-goods">
+  <view class='comment' bindtap='coupon' data-statu="open">
+    <view class='title'>领券 <view class='strip'>|</view> 
+    <view class="describe">
+      <view class="gc_item" wx:for="{{coupon}}" wx:for-item="co" wx:for-index="key" wx:if="{{key<3}}">
+        <view class="gc_item_left"><i></i><i></i><i></i><i></i></view>
+        <view class="gc_item_main">{{co.useCondition == 0? co.couponValue+'元无门槛券':'消费满'+co.useMoney+'立减'+co.couponValue}}</view>
+        <view class="gc_item_right"><i></i><i></i><i></i><i></i></view>
+        <view class="wst-clear"></view>
+      </view>
+    </view></view>
+    <view class='radius'>. . .</view>
+  </view>
+ <view wx:if="{{couponStatus}}">
+  <!--mask-->  
+    <view class="wst-mask" bindtap="coupon" data-statu="close" wx:if="{{couponStatus}}"></view>  
+  <!--content-->  
+  <!--使用animation属性指定需要执行的动画-->  
+  <view animation="{{couponData}}" class="wst-go-window wst-co-window" wx:if="true">
+  <!--drawer content-->  
+    <view class='title'>领优惠券
+      <icon type='cancel' color='#B1B1B1' size='28' bindtap="coupon" data-statu="close" class="icon"></icon>
+    </view>
+    <scroll-view class="content wst-co-content" scroll-y="true">
+  <view class="wst-co-list">
+    <view class="list" wx:for="{{coupon}}" wx:for-item="co">
+        <view class="left">
+          <view class="coupon_left"></view>
+          <view class="coupon_left_main">
+              <view class="coupon_left_main_inner">
+                  <p class="coupon_left_txt1"><span class="yan">￥</span>{{co.couponValue}}</p>
+                  <p class="coupon_left_txt2">{{co.useCondition == 0? '无金额门槛':'满'+co.useMoney+'可用'}}</p>
+              </view>
+          </view>
+        </view>
+        <view class="right">
+          <p class="c_item_txt1">{{co.couponValue}}元优惠券</p>
+          <p class="c_item_txt2">{{co.useCondition == 0? '无金额门槛':'消费满'+co.useMoney+'立减'+co.couponValue+''}}</p>
+          <p class="c_item_txt3">{{co.shopName}}</p>
+          <p class="c_item_txt4">{{co.startDate}}~{{co.endDate}}</p>
+              <button class="c_item_button" bindtap='collar' data-isout="{{co.isOut}}" data-couponid="{{co.couponId}}">{{co.isOut == 1? '已领完':'立即领取'}}</button>
+        </view>
+        <view class="wst-clear"></view>
+    </view>
+    <view  class='remind-model' wx:if="{{coupon==''}}">
+      <view class='image' ><image src='/addons/closure/coupon/image/nothing-coupon.png' class="img"></image></view>
+      <view class='content'>暂无相关优惠券 ~</view>
+    </view>
+  </view>
+    </scroll-view>
+    </view>  
+  </view>
+</template>

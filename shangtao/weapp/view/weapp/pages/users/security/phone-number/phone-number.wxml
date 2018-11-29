@@ -1,0 +1,34 @@
+<view class='container'>
+  <view class='login-model'>
+    <view class='form-model' wx:if="{{step==0}}">
+      <view class='login-item'>
+        <input  placeholder='手机号码' type="number"  bindinput='userPhone'/>
+      </view>
+      <view class='login-item' wx:if="{{smsVerfy==1}}">
+        <input placeholder='验证码' bindinput='biVerfy' />
+        <image src="{{code}}" mode='aspectFill' class="verify" bindtap='code'/>
+      </view>
+      <view class='login-item'>
+        <input placeholder='短信验证码' bindinput='biCode'/>
+        <button type="default" disabled="{{bioDisabled}}" bindtap="biObtain" class="obtain">{{biWord}}</button>
+      </view>
+    </view>
+    <view class='form-model' wx:if="{{step==1}}">
+      <view class='login-prompt'><text>您绑定的手机号码为：{{data.userPhone}}</text></view>
+      <view class='login-item' wx:if="{{smsVerfy==1}}">
+        <input placeholder='验证码' bindinput='moVerfy' />
+        <image src="{{code}}" mode='aspectFill' class="verify" bindtap='code'/>
+      </view>
+      <view class='login-item'>
+        <input placeholder='短信验证码' bindinput='moCode'/>
+        <button type="default" disabled="{{mooDisabled}}" bindtap="moObtain" class="obtain">{{moWord}}</button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='log-model' wx:if="{{step==0}}">
+    <button class='lo-button' bindtap='binding' disabled="{{biDisabled}}">确认</button>
+</view>
+<view class='log-model' wx:if="{{step==1}}">
+    <button class='lo-button' bindtap='modify' disabled="{{moDisabled}}">下一步</button>
+</view>

@@ -1,0 +1,204 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}确认订单 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/css/settlement.css?v={$v}">
+{/block}
+{block name="header"}
+    <header style="background:#ffffff;" class="ui-header ui-header-positive wst-header">
+    	<a href="{:addon_url('pintuan://goods/wxlists')}"><i class="ui-icon-return"></i></a><h1>确认订单</h1>
+    </header>
+{/block}
+{block name="footer"}
+		{php}$shopFreight = 0;$shopIds = '';$freight = 0;{/php}
+		{php}
+		if($carts['goodsType']==0 && !$carts['carts']['isFreeShipping']){
+	        if(!empty($userAddress)){
+	            $freight = WSTOrderFreight($carts['carts']['shopId'],$userAddress['areaId2']);
+	            $shopFreight = $shopFreight + $freight;
+	        }else{
+	            $freight = 0;
+	            $shopFreight = $shopFreight + $freight;
+	        }
+        }
+        {/php}
+		{/* 大加载 */}
+		<div class="ui-loading-block" id="Loadl">
+		    <div class="ui-loading-cnt">
+		        <i class="ui-loading-bright"></i>
+		        <p id="j-Loadl">正在加载中...</p>
+		    </div>
+		</div>
+        <footer class="ui-footer wst-footer-btns" style="height:85px; border-top: 1px solid #e8e8e8;" id="footer">
+			<div class="wst-se-total">应付总金额(含运费)：<span id="totalMoney">
+			¥{if empty($userAddress)}
+             {php}echo sprintf("%.2f", $carts["goodsTotalMoney"]);{/php}
+             {else}
+             {php}echo sprintf("%.2f", $carts["goodsTotalMoney"]+$shopFreight);{/php}
+             {/if}
+			</span></div>
+			<div class="wst-se-confirm"><button class="button" onclick="javascript:submitOrder();">确定</button></div>
+        </footer>
+{/block}
+{block name="main"}
+     {php}$shopFreight = 0;{/php}
+     <section class="ui-container">
+       <input type="hidden" name="" value="{$carts['goodsType']}" id="goodsType" autocomplete="off">
+       <input type="hidden" name="" value="{if isset($userAddress['addressId']) }{$userAddress['addressId']}{/if}" id="addressId" autocomplete="off">
+	   <input type="hidden" name="" value="{if isset($userAddress['addressId']) }{$userAddress['areaId2']}{/if}" id="areaId" autocomplete="off">
+       {if($carts['goodsType']==0)}
+		<ul class="ui-list ui-list-text ui-list-link wst-se-address">
+		    <li>
+		    {if empty($userAddress)}
+		    <h4 onclick="javascript:addAddress(1);"><p class="infono">您还没添加收货地址，请添加。</p></h4>
+		    {else}
+		    <h5 onclick="javascript:addAddress(1,{$userAddress['addressId']});">
+		    	<p class="infot">{$userAddress['userName']}    {$userAddress['userPhone']}</p>
+		    	<p class="infob"><i class="ui-icon-pin"></i>{$userAddress['areaName']}{$userAddress['userAddress']}</p>
+		    </h5>
+		    {/if}
+		    </li>
+		</ul>
+		{/if}
+		<div class="wst-se-sh">
+			<p class="ui-nowrap-flex shopn" shopId="{$carts['carts']['shopId']}">{$carts['carts']['shopName']}</p>
+			<ul class="ui-row goods">
+			    <li class="ui-col ui-col-25">
+			    	<div class="img j-imgAdapt">
+				    	<a href="javascript:void(0);" onclick="javascript:goGoods({$carts['carts']['tuanId']});">
+				    	<img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($carts['carts']['goods']['goodsImg'],3)}" title="{$carts['carts']['goods']['goodsName']}">
+				    	</a>
+			    	</div>
+			    </li>
+			    <li class="ui-col ui-col-75">
+			    	<ul class="ui-row info">
+			    		<li class="ui-col ui-col-75">
+			    			<div class="name"><p class="names">{$carts['carts']['goods']['goodsName']}</p>
+			    			{if(!empty($carts['carts']['goods']['specNames']))}
+			    			<p class="spec">规格：
+			    			{volist name="$carts['carts']['goods']['specNames']" id="sp"}
+								{$sp['catName']}:{$sp['itemName']}
+							{/volist}
+			    			</p>
+			    			{/if}</div>
+			    		</li>
+					    <li class="ui-col ui-col-25"><p class="price">¥{$carts['carts']['goods']['shopPrice']}</p><p class="number">×{$carts['carts']['goods']['cartNum']}</p></li>
+					</ul>
+			    </li>
+			</ul>
+			<div class="cost">
+				{if($carts['goodsType']==0)}<div>运费：<span id="shopF">¥{php}echo sprintf("%.2f", $freight);{/php}</span></div>{/if}
+				<div>店铺合计{if($carts['goodsType']==0)}(含运费){/if}：<span id="shopC">¥{php}echo sprintf("%.2f",$freight+$carts['carts']['goodsMoney']);{/php}</span></div>
+			</div>
+			<div class="remarks">
+			<textarea id="remark_{$carts['carts']['shopId']}" autocomplete="off" placeholder="填写订单备注"></textarea>
+			</div>
+		</div>
+		<ul class="ui-list ui-list-text ui-list-link ui-list-active wst-se-mode">
+		    <li class="mode" onclick="javascript:dataShow('payments');">
+		        <h4 class="ui-nowrap">支付方式</h4>
+		        <div class="ui-txt-info" id="paymentst">{if !empty($payments['1'])}{$payments['1']['0']['payName']}{else}{$payments['0']['0']['payName']}{/if}</div>
+		    </li>
+		    {if($carts['goodsType']==0)}
+		    <li class="mode" onclick="javascript:dataShow('gives');">
+		        <h4 class="ui-nowrap">配送方式</h4>
+		        <div class="ui-txt-info" id="givest">快递运输</div>
+		    </li>
+		    {/if}
+		    <li class="{if(WSTConf('CONF.isOpenScorePay')==1)}mode{/if}" onclick="javascript:dataShow('invoices');">
+		        <h4 class="ui-nowrap">发票信息</h4>
+		        <div class="ui-txt-info" id="invoicest">不开发票</div>
+		    </li>
+		    {if(WSTConf('CONF.isOpenScorePay')==1)}
+		   	<li onclick="javascript:dataShow('score');">
+		        <h4 class="ui-nowrap">积分支付</h4>
+		        <div class="ui-txt-info" id="scoret">否</div>
+		    </li>
+		    {/if}
+		</ul>
+     </section>
+{/block}
+{block name="include"}
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 支付方式 */}
+<input type="hidden" name="" value="{if !empty($payments['1'])}1{else}0{/if}" id="paymentsh" autocomplete="off">
+<input type="hidden" name="" value="{if !empty($payments['1'])}{$payments['1']['0']['payCode']}{else}{$payments['0']['0']['payCode']}{/if}" id="paymentsw" autocomplete="off">
+<div class="wst-fr-box frame" id="payments">
+	<div class="title"><span>支付方式</span><i class="ui-icon-close-page" onclick="javascript:dataHide('payments');"></i><div class="wst-clear"></div></div>
+	<div class="content" id="content">
+    {if !empty($payments)} 
+       {php}$paymentkey = 0;{/php}
+       {volist name='$payments' id='paymentvo'}
+          {volist name='$paymentvo' id='paymentitem'}
+          <ul class="ui-list" onclick="javascript:onSwitch(this);">
+             <li><div class="wst-list-infose1"><span>{$paymentitem['payName']}</span></div></li>
+             <i class="ui-icon-push payments_{$paymentitem['payCode']} ui-icon-checked-s" payCode="{$paymentitem['payCode']}" mode="{$paymentitem['isOnline']}" word="{$paymentitem['payName']}"></i>
+          </ul>
+          {php}$paymentkey++;{/php}
+          {/volist}
+       {/volist}
+    {/if}
+	</div>
+	<button class="button" onclick="javascript:inDetermine('payments');">确定</button>
+</div>
+{/* 配送方式 */}
+<input type="hidden" name="" value="0" id="givesh" autocomplete="off">
+<div class="wst-fr-box frame" id="gives">
+	<div class="title"><span>配送方式</span><i class="ui-icon-close-page" onclick="javascript:dataHide('gives');"></i><div class="wst-clear"></div></div>
+	<div class="content" id="content">
+         <ul class="ui-list" onclick="javascript:onSwitch(this);">
+             <li><div class="wst-list-infose1"><span>快递运输</span></div></li>
+             <i class="ui-icon-push gives0 ui-icon-checked-s wst-active" mode="0" word="快递运输"></i>
+         </ul>
+		 <div class="wst-se-line"><p></p></div>
+         <ul class="ui-list" onclick="javascript:onSwitch(this);">
+             <li><div class="wst-list-infose1"><span>自提</span></div></li>
+             <i class="ui-icon-push gives1 ui-icon-unchecked-s" mode="1" word="自提"></i>
+         </ul>
+	</div>
+	<button class="button" onclick="javascript:inDetermine('gives');">确定</button>
+</div>
+{/* 发票信息 */}
+<input type="hidden" name="" value="0" id="invoicesh" autocomplete="off">
+<div class="wst-fr-box frame" id="invoices">
+	<div class="title"><span>发票信息</span><i class="ui-icon-close-page" onclick="javascript:dataHide('invoices');"></i><div class="wst-clear"></div></div>
+	<div class="content" id="content">
+         <ul class="ui-list" onclick="javascript:onSwitch(this,0);">
+             <li><div class="wst-list-infose1"><span>不开发票</span></div></li>
+             <i class="ui-icon-push invoices0 ui-icon-checked-s wst-active" mode="0" word="不开发票"></i>
+         </ul>
+		 <div class="wst-se-line"><p></p></div>
+         <ul class="ui-list" onclick="javascript:onSwitch(this,1);">
+             <li><div class="wst-list-infose1"><span>需开发票</span></div></li>
+             <i class="ui-icon-push invoices1 ui-icon-unchecked-s" mode="1" word="需开发票"></i>
+         </ul>
+         <div class="wst-fr-invoice" id="j-invoice" style="display:none;">
+         	<p>发票抬头：</p>
+         	<textarea id="invoiceClient" autocomplete="off" placeholder=""></textarea>
+         </div>
+	</div>
+	<button class="button" onclick="javascript:inDetermine('invoices');">确定</button>
+</div>
+{/* 积分支付 */}
+<input type="hidden" name="" value="0" id="scoreh" autocomplete="off">
+<div class="wst-fr-box frame" id="score">
+	<div class="title"><span>积分支付</span><i class="ui-icon-close-page" onclick="javascript:dataHide('score');"></i><div class="wst-clear"></div></div>
+	<div class="content" id="content">
+         <ul class="ui-list" onclick="javascript:onSwitch(this);">
+             <li><div class="wst-list-infose1"><span>是</span></div></li>
+             <i class="ui-icon-push score1 ui-icon-checked-s wst-active" mode="1" word="是"></i>
+         </ul>
+		 <div class="wst-se-line"><p></p></div>
+         <ul class="ui-list" onclick="javascript:onSwitch(this);">
+             <li><div class="wst-list-infose1"><span>否</span></div></li>
+             <i class="ui-icon-push score0 ui-icon-unchecked-s" mode="0" word="否"></i>
+         </ul>
+         <div class="wst-fr-score">（可用<span id="userOrderScore">{$userOrderScore}</span>个积分，可抵<span>¥<span id="userOrderMoney">{$userOrderMoney}</span></span>）</div>
+	</div>
+	<button class="button" onclick="javascript:inDetermine('score');">确定</button>
+</div>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/js/settlement.js?v={$v}'></script>
+{/block}

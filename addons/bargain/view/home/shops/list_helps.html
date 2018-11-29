@@ -1,0 +1,56 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}全民砍价 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="css"}
+<link href="__ROOT__/addons/bargain/view/home/shops/css/bargain.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="content"}
+<div class="wst-shop-head"><span>亲友团列表</span><a href="{:addon_url('bargain://shops/joins','bargainId='.$bargainId)}">返回</a></div>
+  <input type='hidden' id='bargainJoinId' class='s-ipt' value='{$bargainJoinId}'/>
+  <div class='wst-shop-content'>
+    <table class='wst-list'>
+       <thead>
+        <tr class='head'>
+           <th>&nbsp;</th>
+           <th>亲友名称</th>
+           <th>帮砍金额</th>
+           <th>砍价时间</th>
+        </tr>
+     </thead>
+     <tbody id='list'></tbody>
+     <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+     </tfoot>
+     <script id="bargainblist" type="text/html">
+      {{# for(var i = 0; i < d.length; i++){ }}
+         <tr>
+            <td>{{i+1}}</td>
+            <td>
+            <div class="bargin-user-photo">
+             <img class='j-lazyUserImg' height='50' data-original='__ROOT__/{{d[i].userPhoto}}'/>
+            </div>
+            <div class='bargin-user-name'>{{WST.blank(d[i]['userName'])}}</div></td>
+            <td>￥{{d[i]['minusMoney']}}</td>
+            <td>{{d[i]['createTime']}}</td>
+         </tr>
+       {{# } }}
+       </script>
+       <tr class='empty-row'>
+            <td colspan='6' id='pager' style='padding:5px 0px 5px 0px;text-align:center;'>&nbsp;</td>
+       </tr>
+    </table>
+  </div>
+{/block}
+{block name="footer"}
+  {include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/bargain/view/home/shops/shop.js?v={$v}"></script>
+<script>
+$(function(){
+  queryByHelps();
+})
+</script>
+{/block}

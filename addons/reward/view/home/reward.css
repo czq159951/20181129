@@ -1,0 +1,9 @@
+/**订单详情**/
+.order-reward-shop-box{float:right;padding-right:10px;}
+.order-reward-goods-box{color:#666;clear:both;padding-left:10px;line-height:30px;border-bottom:1px solid #eee;}
+.order-reward-goods-box .reward-txt{float:left;width:842px;}
+.order-reward-goods-box .reward-txt li{ list-style-type: none; }
+.order-reward-goods-box .reward-txt .scroll-tips{float:left;overflow:hidden;height:30px;line-height:30px;}
+.order-reward-goods-box .tag{padding:2px 5px;border:1px solid #df3033;background:#df3033;color:#fff;font-weight: bold;margin-right:3px;}
+.order-reward-goods-box .red{color:#df3033;}
+.order-reward-goods-box .reward-promotion{float:left;line-height:30px;}

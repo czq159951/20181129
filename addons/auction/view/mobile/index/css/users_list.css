@@ -1,0 +1,120 @@
+@CHARSET "UTF-8";
+/*店铺街*/
+.wst-shl-list{
+	padding: 5px 10px;
+	margin-top:5px;
+	background:#ffffff;
+}
+.wst-shl-list .img{
+	float: left;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    position: relative;
+}
+.wst-shl-list .img a{
+	width: 100%;
+    height: 100px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.wst-shl-list .img a img{
+	max-width: 100px;
+    max-height: 100px;
+}
+.wst-shl-list .info{
+	position: relative;
+	padding-left: 5px;
+}
+.wst-shl-list .title{
+	margin-bottom:5px;
+	font-size:0.175rem;
+	color:#363638;
+}
+.wst-shl-list p{
+	font-size:0.15rem;
+}
+.wst-shl-list p img{
+	width: 15px;
+}
+.wst-shl-list p span{
+	float: left;
+}
+.wst-shl-list p i{
+	float: left;
+	width:16px;
+	height:16px;
+	margin:2px 3px 0px 0px; 
+}
+.wst-shl-list .price{
+	color:#e01324;
+}
+.wst-shl-list .time{
+	color:#a4a4a4;
+	margin-top:3px;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #edebeb;
+}
+.wst-shl-list .time i{
+	width: 15px;
+	height: 15px;
+	background:url(../img/icon_time.png) 0px 0px no-repeat;
+	background-size: 100%;
+}
+.wst-shl-list .time span{
+	line-height:21px;
+}
+.wst-shl-list .complete{
+	padding:5px 0px;
+}
+.wst-shl-list .complete button{
+	float: right;
+	height: 26px;
+	line-height:26px;
+}
+.wst-shl-list .info .state{
+	width: 66px;
+	position: absolute;
+	right:0px;
+	top:0.3rem;
+	font-size:0.15rem;
+	color:#ffffff;
+	text-align: center;
+	background:#5bc0de;
+	border-radius: 2px;
+}
+.wst-shl-list .info .state2{
+	width: 66px;
+	position: absolute;
+	right:0px;
+	top:0.3rem;
+	font-size:0.15rem;
+	color:#ffffff;
+	text-align: center;
+	background: #5cb85c;
+	border-radius: 2px;
+}
+.wst-shl-list .info .state3{
+	width: 66px;
+	position: absolute;
+	right:0px;
+	top:0.3rem;
+	font-size:0.15rem;
+	color:#ffffff;
+	text-align: center;
+	background: #e3e2e2;
+	border-radius: 2px;
+}
+.wst-shl-list .info .state4{
+	width: 66px;
+	position: absolute;
+	right:0px;
+	top:0.3rem;
+	font-size:0.15rem;
+	color:#ffffff;
+	text-align: center;
+	background: #de0202;
+	border-radius: 2px;
+}

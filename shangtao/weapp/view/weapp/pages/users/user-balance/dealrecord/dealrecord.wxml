@@ -1,0 +1,21 @@
+<view class='container'>
+    <view  class='remind-model' wx:if="{{list.length ==0}}" >
+        <view class='image' ><image src='/image/nothing-relevant.png' class="img"></image></view>
+        <view class='content' style='background:transparent;border-bottom:0;'>暂无提现记录 ~</view>
+    </view>
+ <view class='content'  wx:for="{{list}}">
+  <view class='border'>
+   <view class='left'>
+    <view class='script name'>{{item.accUser}}</view>
+    <view class='script area'>{{item.accTargetName}}{{item.accAreaName}}</view>
+    <view class='script time'>{{item.createTime}}</view>
+   </view>
+   <view class='right'>
+   <view class='border'>
+    <view class='status'>{{item.cashSatus == 0?'待处理':item.cashSatus == 1?'已通过':'失败'}}</view>
+    <view class='status number'>-{{item.money}}</view>
+   </view>
+   </view>
+  </view>
+ </view>
+</view>

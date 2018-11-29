@@ -1,0 +1,30 @@
+/* pages/storesInfo/infoManage/infoManage.wxss */
+@import "../../../common/parse/parse.wxss";
+page{
+  width: 100%;
+  height: 90%;
+  background:#F6F6F8;
+}
+.time{
+  width: 100%;
+  height: 44rpx;
+  text-align: center;
+  font-size: 30rpx;
+  margin-top: 10rpx;
+}
+.border{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.content{
+  width: 95%;
+  height: auto;
+  overflow: hidden;
+  font-size: 35rpx;
+  margin-left: 20rpx;
+}
+.content text{
+  width: 100%;
+  height: 100%;
+}

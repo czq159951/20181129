@@ -1,0 +1,88 @@
+.wst-tab-box {width: 100%;height: auto;margin: 0px auto;background: #ffffff;}
+.wst-tab-nav {margin: 0;padding: 0;height: 35px;top: 0px;z-index: 30;background: #ffffff;width:100%;border-bottom: 1px solid #eeeeee;border-left: 1px solid #eeeeee}
+.wst-tab-nav li {cursor: pointer;float: left;margin: 0 0px;list-style: none;border: 1px solid #eee;border-bottom: none;border-left: none;line-height: 34px;text-align: center;color: #000000;padding-left: 10px;padding-right: 10px;}
+.wst-tab-nav .on {border-top: 1px solid #ff2704;border-bottom: 1px solid #ffffff;color: #ff2704;font-weight:bold;background:url(../img/img_bg_xpjssel.png) -24px -3px no-repeat;}
+.wst-tab-content {padding: 5px;width: 99%;height: auto;border: 1px solid #eee;border-top:none;background: #FFF;}
+
+
+.coupon:nth-child(3n+1){margin-left: 3.5%;}
+.coupon:nth-child(3n-1){margin-left: 6%;margin-right: 6%;}
+.coupon{
+	background-color: #f5f5f5;
+	width:250px;
+	height:350px;
+	float:left;
+	margin-bottom:5px;
+	padding:5px;
+	margin-top: 30px;
+}
+.coupon:hover{-webkit-box-shadow:0 0 5px rgba(0,0,0,.1);-moz-box-shadow:0 0 5px rgba(0,0,0,.1);box-shadow:0 0 5px rgba(0,0,0,.1)}
+
+.coupon .top{
+	width: 180px;
+	height: 180px;
+	text-align: center;
+	background-image: url(img/cp_bg.png);
+	background-repeat: no-repeat;
+	border:1px solid transparent;
+	position: relative;
+	top: -20px;
+	margin: 0 auto;
+}
+.coupon .top_out{
+	background-image: url(img/cp_outbg.png);
+}
+.coupon-price{
+	margin-top: 20%;
+	display: block;
+	text-align: center;
+	color: #fff;
+	font-size: 48px;
+	padding: 15px;
+}
+.coupon-explain{
+	display: block;
+	text-align: center;
+	color: #fff;
+	font-size: 14px;
+	margin-top: 8%;
+}
+
+
+.coupon .use-condition{
+	text-align: center;
+	font-size: 12px;
+	color: #555;
+	margin: 20px auto;
+}
+.coupon .touse{
+	display: block;
+	border-radius:20px;
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	cursor: pointer;
+	color: #e65051;
+	border: 1px solid  #e65051;
+	margin: 0 auto;
+	margin-top: 35px;
+}
+.coupon .touse:hover{background:#ea3232;color:#fff;}
+
+.cp_used{
+	width: 72px;
+	height: 67px;
+	background-image: url(img/used.png);
+	background-repeat: no-repeat;
+	float: right;
+	margin-right: 10px;
+}
+.cp_expire{
+	width: 72px;
+	height: 67px;
+	background-image: url(img/expire.png);
+	background-repeat: no-repeat;
+	float: right;
+	margin-right: 10px;
+}

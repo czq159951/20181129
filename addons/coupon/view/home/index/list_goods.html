@@ -1,0 +1,135 @@
+{extend name="$LAYOUT_HOME_BASE" /}
+{block name="title"}优惠券适用商品 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$seoCouponDesc}">
+<meta name="keywords" content="{$seoCouponKeywords}">
+{/block}
+{block name="css"}
+<link href="__ROOT__/addons/coupon/view/home/index/coupon.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="header"}
+	{include file="$LAYOUT_HOME_HEADER" /}
+{/block}
+{block name="main"}
+
+{/* 已筛选的条件 */}
+<input type="hidden" id="couponId" class="sipt" value='{$coupon['couponId']}'/>
+<div class="coupon-head">
+   <div class="item" style="border-left:2px solid #df2003;padding-left: 8px;">
+      <a class="link" href="__ROOT__">首页</a>
+      <i class="arrow">&gt;</i>
+   </div>
+      <div class="wst-lfloat" style='line-height: 22px;'>优惠券适用的商品 </div>
+      <div class="wst-clear"></div>
+</div>
+{/* 商品展示  */}
+<div class="wst-container">
+    <div class='coupon-view'>
+    	<div class='promote_vouchers_box'>
+    		<span class="vouchers_pr">
+			<em>¥</em>{$coupon['couponValue']}
+			</span>
+			<div class="vouchers_des">
+			<p>{$coupon['shopName']}优惠券</p>
+			</div>
+    	</div>
+    	<div class="exlpain_txt">
+			<h3>{if $coupon['useCondition']==1}满{$coupon['useMoney']}减{$coupon['couponValue']}{else}无门槛{/if}</h3>
+			<ul>
+				<li>使用期限：{$coupon['startDate']} 至 {$coupon['endDate']} </li>
+				<li>使用规则：{if $coupon['useObjects']==1}指定商品可用{else}全店可用{/if}</li>
+
+			</ul>
+		</div>
+    </div>
+	<div class="coupon-goods-list">
+	    {volist name="$couponPage['data']" id="li"}
+		<div class="wst-coupon-goods">
+			<div class="wst-coupon-goimg">
+				<a href="{:url('home/goods/detail',array('goodsId'=>$li['goodsId']))}" target="_blank">
+				   <img class="goodsImg" data-original="__ROOT__/{$li['goodsImg']}" title="{$li['goodsName']}">
+				</a>
+				<a href="javascript:WST.addCart({$li['goodsId']});">
+				   <span class="js-cart">加入购物车</span>
+				</a>
+	        </div>
+			<p class="wst-coupon-gonam">
+			<a href="{:url('home/goods/detail',array('goodsId'=>$li['goodsId']))}" target="_blank">{:WSTMSubstr($li['goodsName'],0,15)}</a>
+			</p>
+			<p class="wst-coupon-goodp1">
+			   <span class="wst-shop-goodpr">￥{$li['shopPrice']}</span>
+			   <span class="wst-rfloat">成交数：<span class="wst-coupon-goodpr2">{$li['saleNum']}</span></span>
+			</p>
+		    <p class="wst-coupon-goodp2"><span class="wst-coupon-goodpr3">市场价:￥{$li['marketPrice']}</span><span class="wst-rfloat">已有<span class="wst-coupon-goodpr4">{$li['appraiseNum']}</span>人评价</span>
+		    </p>
+		</div>
+		{/volist}
+	    <div class='wst-clear'></div>
+	</div>
+	<div >
+	  	<div id="wst-pager"></div>
+    </div>
+		
+	<div class='wst-clear'></div>
+	<div style="height: 50px;"></div>
+</div>
+{include file="$LAYOUT_HOME_RIGHT_CART"/}
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__ROOT__/addons/coupon/view/home/index/index.js?v={$v}'></script>
+<script type='text/javascript'>
+laypage({
+    cont: 'wst-pager',
+    pages: {$couponPage["last_page"]}, //总页数
+    skip: true, //是否开启跳页
+    skin: '#e23e3d',
+    groups: 3, //连续显示分页数
+    curr: function(){ //通过url获取当前页，也可以同上（pages）方式获取
+        var page = location.search.match(/page=(\d+)/);
+        return page ? page[1] : 1;
+    }(), 
+    jump: function(e, first){ //触发分页后的回调
+        if(!first){ //一定要加此判断，否则初始时会无限刷新
+        	var nuewurl = WST.splitURL("page");
+        	var ulist = nuewurl.split("?");
+        	if(ulist.length>1){
+        		location.href = nuewurl+'&page='+e.curr;
+        	}else{
+        		location.href = '?page='+e.curr;
+        	}
+            
+        }
+    }
+});
+
+var total = {$couponPage["last_page"]};
+function page(t){
+	var page = location.search.match(/page=(\d+)/);
+	var curr = 1;
+	if(page && page.length>1){ //说明当前url上有page参数
+		curr = page[1]; // 当前页
+	}
+	var nuewurl = WST.splitURL("page"); // 当前url
+	var ulist = nuewurl.split("?"); // 将传递的参数与url分开
+	// 说明当前有参数. 需要带着参数一起传递
+	var url = (ulist.length>1)?nuewurl+'&page=':'?page=';
+
+	if(t=='prev'){ // 上一页
+		if(curr<=1)return;
+		curr = parseInt(curr)-1;
+		location.href = url+curr;
+	}else{ // 下一页
+		if(curr>=total)return;
+		curr = parseInt(curr)+1;
+		location.href = url+curr;
+	}
+}
+$(function(){couponGoodsInit()})
+</script>
+{/block}

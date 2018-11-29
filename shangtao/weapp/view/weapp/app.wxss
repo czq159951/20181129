@@ -1,0 +1,141 @@
+/**app.wxss**/
+page{
+  color: #232326;
+  font-family: Helvetica,sans-serif;
+  background-color:#f6f6f8;
+  font-size: 32rpx;
+}
+image{
+  width: auto;
+  height: auto;
+}
+.wst-clear{
+  clear:both;
+}
+.wst-mask{
+  position: fixed;
+  left:0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  background: rgba(0, 0, 0, 0.6);
+  display: -webkit-box;
+}
+.remind-model{
+  position: relative;
+  top: 200rpx;
+  margin: 0 auto;
+}
+.remind-model .image{
+  width: 178rpx;
+  height: 178rpx;
+  margin:0 auto;
+}
+.remind-model .image .img{
+  width: 178rpx;
+  height: 178rpx;
+}
+.remind-model .content{
+  width: 100%;
+  margin-top: 50rpx;
+  font-size: 32rpx;
+  text-align: center;
+  color: #222;
+}
+.wst-search-interim{
+  width: 100vw;
+  background: white;
+  font-size: 30rpx;
+}
+.search-script-top{
+  width: 100vw;
+  height: 10vw;
+  line-height: 10vw;
+  border-top: 16rpx solid #F6F6F8;
+  border-bottom: 16rpx solid #F6F6F8;
+}
+.search-script{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 10vw;
+  line-height: 10vw;
+  border-bottom: 6rpx solid #F6F6F8;
+}
+.search-script-top text{
+  padding-left:2vw;
+}
+.search-script text{
+  padding-left:2vw;
+  padding-right: 2vw; 
+}
+.search-script-top .script-arrow{
+  margin-top:3vw;
+  margin-right:2vw;
+  width:20rpx;
+  height:20rpx;
+  border-right:1rpx solid #ABAAAA;
+  border-bottom:1rpx solid #ABAAAA;
+  float:right;
+  transform:rotate(-45deg);
+}
+::-webkit-scrollbar{
+  height: 0;
+  width: 0;
+}
+.interim-box{
+  font-size: 26rpx;
+}
+.interim-box .wst-top{
+  width: 99.8vw;
+  display: flex;
+  align-items: center;
+}
+.interim-box .wst-top image{
+  width: 40rpx;
+  height: 44rpx;
+  margin: 10rpx;
+}
+.interim-box .wst-top text{
+  font-weight: bold;
+}
+.mix-box{
+  margin-top: 20rpx;
+  width: auto;
+  overflow: hidden;
+}
+.mix-box text{
+  display: inline-block;
+  width: auto;
+  overflow: hidden;
+  margin: 10rpx;
+  padding: 10rpx;
+  background: #F0F2F5;
+  color: #686868;
+  border-radius: 10rpx;
+}
+.arrow-bor{
+  width: 60rpx;
+  height: 55rpx;
+  float: left;
+}
+button::after {
+  border:0 !important;
+  border-radius:0 !important;
+}
+.wst-load{
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 26rpx;
+  color: #333;
+  background-color:#f6f6f8;
+}
+.wst-load[disabled]:not([type]) {
+  color:#333;
+  background-color:#f6f6f8;
+}

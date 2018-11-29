@@ -1,0 +1,134 @@
+<view class="container">
+  <view class="wst-or-de">
+    <view class="detail-head">
+			<view class="wst-or-process" wx:if="{{data.orderStatus==-2 || data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2}}">
+				<view class="wst-row-flex">
+    				<view class="wst-col wst-col process" wx:if="{{data.payType==1}}"><p class="line">
+						<span class="{{(data.orderStatus==-2 || data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}"></span>
+						<span class="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}"></span>
+						<p class="icon"><icon class="{{(data.orderStatus==-2 || data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}" color="{{(data.orderStatus==-2 || data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'#de0301':'#7f7f7f'}}" size="20" type="success"></icon></p>
+					<view class="wst-clear"></view></p><p>待付款</p></view>
+    				<view class="wst-col wst-col process"><p class="line">
+						<span class="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}"></span>
+						<span class="{{(data.orderStatus==1 || data.orderStatus==2)?'active':''}}"></span>
+						<p class="icon"><icon class="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}" color="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'#de0301':'#7f7f7f'}}" size="20" type="success"></icon></p>
+					<view class="wst-clear"></view></p><p>待发货</p></view>
+    				<view class="wst-col wst-col process"><p class="line">
+						<span class="{{(data.orderStatus==1 || data.orderStatus==2)?'active':''}}"></span>
+						<span class="{{(data.orderStatus==2)?'active':''}}"></span>
+						<p class="icon"><icon class="{{(data.orderStatus==1 || data.orderStatus==2)?'active':''}}" color="{{(data.orderStatus==1 || data.orderStatus==2)?'#de0301':'#7f7f7f'}}" size="20" type="success"></icon></p>
+					<view class="wst-clear"></view></p><p>已发货</p></view>
+    				<view class="wst-col wst-col process"><p class="line">
+						<span class="{{(data.orderStatus==2)?'active':''}}"></span>
+						<span class="{{(data.orderStatus==2)?'active':''}}"></span>
+						<p class="icon"><icon class="{{(data.orderStatus==2)?'active':''}}" color="{{(data.orderStatus==2)?'#de0301':'#7f7f7f'}}" size="20" type="success"></icon></p>
+					<view class="wst-clear"></view></p><p>已收货</p></view>
+				</view>
+			</view>
+      <view class="wst-or-process" wx:if="{{(data.orderStatus==-3 || data.orderStatus==-1) && data.payType==1 && data.isPay==1}}">
+				<view class="wst-row-flex">
+    				<view class="wst-col wst-col process" wx:if="{{data.payType==1}}"><p class="line">
+						<span class="active"></span>
+						<span class="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}"></span>
+						<p class="icon"><icon class="active" color="#de0301" size="20" type="success"></icon></p>
+					<view class="wst-clear"></view></p><p>买家申请退款</p></view>
+
+    				<view class="wst-col wst-col process"><p class="line">
+						<span class="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}"></span>
+						<span class="{{(data.orderStatus==2)?'active':''}}"></span>
+						<p class="icon"><icon class="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'active':''}}" color="{{(data.orderStatus==0 || data.orderStatus==1 || data.orderStatus==2)?'#de0301':'#7f7f7f'}}" size="20" type="success"></icon></p>
+					<view class="wst-clear"></view></p><p>商家申请退款处理</p></view>
+    				<view class="wst-col wst-col process"><p class="line">
+						<span class="{{(data.orderStatus==2)?'active':''}}"></span>
+						<span class="{{(data.orderStatus==2)?'active':''}}"></span>
+						<p class="icon"><icon class="{{(data.orderStatus==2)?'active':''}}" color="{{(data.orderStatus==2)?'#de0301':'#7f7f7f'}}" size="20" type="success"></icon></p>
+					<view class="wst-clear"></view></p><p>退款完成</p></view>
+				</view>
+			</view>
+      <view class="term"><view class="left">订单状态：</view><view class="right wst-red">{{data.orderWords}}{{data.orderStatus==-1 || data.orderStatus==3? data.payType==1 && data.isPay==1?data.isRefund==1?'(已退款)':'(未退款)':'':''}}</view><view class="wst-clear"></view></view>
+      <view class="term"><view class="left">订单编号：</view><view class="right">{{data.orderNo}}</view><view class="wst-clear"></view></view>
+      <view class="term"><view class="left">下单时间：</view><view class="right">{{data.createTime}}</view><view class="wst-clear"></view></view>
+      <view class="term" wx:if="{{data.expressId>0}}"><view class="left">物流公司：</view><view class="right">{{data.expressName}}</view><view class="wst-clear"></view></view>
+      <view class="term" wx:if="{{data.expressId>0}}"><view class="left">运单编号：</view><view class="right">{{data.expressNo}}</view><view class="wst-clear"></view></view>
+    </view>
+    
+    <view class="detail-head2">
+      <block wx:if="{{data.deliverType==0 && data.userName}}">
+      <view class="term"><view class="left">收货人：</view><view class="right">{{data.userName}} {{data.userPhone}}</view><view class="wst-clear"></view></view>
+      <view class="term"><view class="left">收货地址：</view>
+      <view class="right"><view class="local">
+        <i class="icon address"></i>
+        {{data.userAddress}}
+      </view></view><view class="wst-clear"></view></view>
+      </block>
+      <block wx:if="{{data.deliverType==1}}">
+        <view   class="term">
+              <view class="left">自提信息:</view>
+              <view class="right">{{data.shopAddress}}</view>
+              <view class="wst-clear"></view>
+        </view>
+      </block>
+    <view class="term"><view class="left">支付信息：</view><view class="right wst-ash">{{data.payInfo}}</view><view class="wst-clear"></view></view>
+    <view class="term"><view class="left">配送信息：</view><view class="right wst-ash">{{data.deliverInfo}}</view><view class="wst-clear"></view></view>
+    <view class="term"><view class="left">发票信息：</view><view class="right wst-ash">{{data.isInvoice==1?'需要':'不需要'}}</view><view class="wst-clear"></view></view>
+    <view class="term" wx:if="{{data.isInvoice==1}}">
+      <view class="left">发票抬头：</view><view class="right wst-ash">{{data.invoiceClient}}</view><view class="wst-clear"></view>
+    </view>
+    <view class="term" wx:if="{{data.isInvoice==1 && data.invoiceCode}}">
+      <view class="left">发票信息：</view><view class="right wst-ash">{{data.invoiceCode}}</view><view class="wst-clear"></view>
+    </view>
+    <view class="term"><view class="left" style="width:20%;">订单备注：</view><view class="right wst-ash" style="width:80%;">{{data.orderRemarks}}</view><view class="wst-clear"></view></view>
+    </view>
+
+  <view class="detail-head2">
+    <view class="shops" data-shopid="{{data.shopId}}" bindtap="toshops"><i></i>{{data.shopName}}</view>
+    <view class="goods" wx:for="{{data.goods}}" wx:for-item="go">
+      <navigator open-type='navigate' url='../../../goods-detail/goods-detail?goodsId={{go.goodsId}}'>
+        <view class="img">
+          <image mode="aspectFit" src="{{domain}}{{go.goodsImg}}"></image>
+        </view>
+        <view class="names">
+          <view class="name">{{go.goodsName}}</view>
+          <view class="spec" wx:if="{{go.goodsSpecNames[0]}}" wx:for="{{go.goodsSpecNames}}" wx:for-item="spe">{{spe}}</view>
+        </view>
+        <view class="price"><view>{{(go.goodsCode=='gift')?'【赠品】':'¥'+go.goodsPrice}}</view><view>x {{go.goodsNum}}</view></view>
+        <view class="wst-clear"></view>
+      </navigator>
+      </view>
+      <block wx:for="{{data.goods}}" wx:for-item="go" wx:if="{{go.goodsType==1 && data.orderStatus==2}}">
+        <for wx:for="{{go.extraJson}}" wx:for-item="ex">
+        <view class="term" style="border-top: 5rpx solid #ededef;">
+          <view class="left">卡券号</view><view class="right">{{ex.cardNo}}</view><view class="wst-clear"></view>
+        </view>
+        <view class="term">
+          <view class="left">卡券密码</view><view class="right wst-ash">{{ex.cardPwd}}</view><view class="wst-clear"></view>
+        </view>
+        </for>
+      </block>
+  </view>
+
+  <view class="detail-head2" wx:if="{{data.isRefund==1}}">
+      <view class="term" style="border-top: 5rpx solid #ededef;">
+        <view class="left">退款信息</view><view class="wst-clear"></view>
+      </view>
+      <view class="term">
+        <view class="left">退款金额</view><view class="right">{{data.backMoney}}</view><view class="wst-clear"></view>
+      </view>
+      <view class="term">
+        <view class="left">退款备注</view><view class="right">{{data.refundRemark}}</view><view class="wst-clear"></view>
+      </view>
+      <view class="term" style="border-bottom: 5rpx solid #ededef;">
+        <view class="left">退款时间</view><view class="right">{{data.refundTime}}</view><view class="wst-clear"></view>
+      </view>
+  </view>
+
+  <view class="detail-head2">
+    <view class="term"><view class="left">获得积分</view><view class="right wst-red" style="text-align: right;">{{data.orderScore}}个</view><view class="wst-clear"></view></view>
+    <view class="term"><view class="left">商品总额</view><view class="right wst-red" style="text-align: right;">¥ {{data.goodsMoney}}</view><view class="wst-clear"></view></view>
+    <view class="term"><view class="left">运费</view><view class="right wst-red" style="text-align: right;">¥ {{data.deliverMoney}}</view><view class="wst-clear"></view></view>
+    <view class="term"><view class="left">积分抵扣</view><view class="right wst-red" style="text-align: right;">¥ -{{data.scoreMoney}}</view><view class="wst-clear"></view></view>
+    <view class="term number"><view class="left">实付款</view><view class="right wst-red" style="text-align: right;">¥ <text class="price">{{data.realTotalMoney}}</text></view><view class="wst-clear"></view>
+    </view>
+    </view>
+  </view>
+</view>

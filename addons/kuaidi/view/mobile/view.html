@@ -1,0 +1,62 @@
+<link href="__ROOT__/addons/kuaidi/view/mobile/express.css" rel="stylesheet">
+<script type="text/html" id="expressBox">
+	<div id="expressBox">
+		<div class="ui-row-flex ui-whitespace border-b d-goodsitme">
+     		<div class="ui-col">
+         		<img src="__ROOT__/{{d.goodlist[0].goodsImg}}" class="o-Img">
+    		</div>
+     		<div class="ui-col ui-col-3 o-gInfo">
+       			<p class="o-gName ui-nowrap-multi">物流状态&nbsp;<span style="font-weight:bold;color:red;">{{ d.express['stateTxt'] }}</span></p>
+				<p class="o-gName ui-nowrap-multi">运单号：{{ (d.express && d.express['expressNo'])?d.express['expressNo']:'--' }}</p>
+				<p class="o-gName ui-nowrap-multi">信息来源：{{ (d.express && d.express['expressName'])?d.express['expressName']:'--' }}</p>
+      		</div>
+   		</div>
+		{{# if(d.data){ }}
+		<section id="cd-timeline" class="cd-container">
+			{{# for(var i=0;i<d.data.length;i++){ }}
+			<div class="cd-timeline-block">
+				<div class="cd-timeline-img cd-picture">
+					{{# if(i==0){ }}
+					<i class="ui-icon-checked" style=" color: #75ce66;position: absolute;left: -2px;top: -2px;font-size:24px;line-height:25px;"></i>
+					{{# }else{ }}
+					<i class="ui-icon-checked" style="color: rgba(0, 0, 0, 0.2);position: absolute;left: -2px;top: -2px;font-size:24px;line-height:25px;"></i>
+					{{# } }}
+				</div>
+				<div class="cd-timeline-content">
+					<p class="o-gName ui-nowrap-multi">{{ d.data[i].context }}</p>
+					<p style='color:#d2d2d2'>{{ d.data[i].time }}</p>
+				</div>
+			</div>
+			{{# } }}
+		{{# }else{ }}
+			<div class="ui-col ui-col o-gInfo">暂无获取到物流信息！</div>
+		{{# } }}
+			
+		</section>
+		
+	</div> 
+</script>
+
+<script>
+function checkExpress(oid){
+  $.post(WST.U('addon/kuaidi-kuaidi-checkmobileexpress'),{orderId:oid},function(data){
+      var json = WST.toJson(data);
+      if(json.status!=-1){
+        var gettpl1 = document.getElementById('expressBox').innerHTML;
+          laytpl(gettpl1).render(json, function(html){
+            $('#content').html(html);
+            // 弹出层滚动条
+            var clientH = WST.pageHeight();// 屏幕高度
+            var boxheadH = $('#boxTitle').height();// 弹出层标题高度
+            var contentH = $('#content').height(); // 弹出层内容高度
+            if((clientH-boxheadH) < contentH){
+              $('#content').css('height',clientH-boxheadH+'px');
+            }
+            dataShow('物流信息');
+          });
+      }else{
+        WST.msg(json.msg,'info');
+      }
+  });
+}
+</script>

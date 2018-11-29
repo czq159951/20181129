@@ -1,0 +1,108 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}我的拼团 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/users/css/pulist.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>我的拼团</h1>
+    </header>
+{/block}
+{block name="footer"}
+	
+{/block}
+{block name="main"}
+	<input type="hidden" name="" value="0" id="ftype" autocomplete="off">
+	<input type="hidden" name="" value="" id="currPage" autocomplete="off">
+    <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+    <section class="user-info">
+		<img class="user-img" src="{:WSTUserPhoto($user['userPhoto'])}">
+		<p class="user-name" data-reactid="4">{$user["userName"]}</p>
+    </section>
+    <section class="ui-container" id="shopBox">
+        <div class="ui-tab">
+            <ul class="ui-tab-nav order-tab">
+                <li class="tab-item tab-curr" type="0">全部</li>
+                <li class="tab-item" type="1">待付款</li>
+                <li class="tab-item" type="2">待成团</li>
+                <li class="tab-item" type="3">已成团</li>
+                <li class="tab-item" type="4">已退款</li>
+            </ul>
+        </div>
+        <ul class="ui-tab-content" id="pintuan-container">
+            <li id="goods-list"></li>
+        </ul>
+    </section>
+
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+{{# for(var i=0; i<d.length; i++){ }}
+<div class="tuan-item" >
+    <div class="item-top-block">
+        <div>发起了拼单</div>
+        <div class='time'>{{d[i].createTime}}</div>
+        {{# if(d[i].tuanStatus==0){ }}
+            <div class="order-status red">待支付</div>
+        {{# }else if(d[i].tuanStatus==1){ }}
+            <div class="order-status blue">正在拼团</div>
+        {{# }else if(d[i].tuanStatus==2){ }}
+            <div class="order-status green">拼团成功</div>
+        {{# }else if(d[i].tuanStatus==-1){ }}
+            <div class="order-status red">拼团失败</div>
+        {{# } }}
+    </div>
+    <div class="item-goods" onclick="toDetail({{ d[i].tuanNo }});">
+        <img class="goods-img" src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d[i].goodsImg }}" title="{{ d[i].goodsName }}">
+        <div class="goods-name">
+            <p>{{ d[i].goodsName }}</p>
+        </div>
+        <p class="spec">{{d[i].tuanNum}}人拼单</p>
+        <div class="price-and-num">
+            <div class="goods-price">
+                <span>￥{{d[i].tuanPrice}}</span>
+            </div>
+            <div class="goods-number">x{{ d[i].goodsNum }}</div>
+        </div>
+    </div>
+   
+    <div class="button-block">
+        {{# if(d[i].tuanStatus==0){ }}
+             <div class="currency-block">
+                <p class="currency-head">实付<span>:</span>￥<span class="currency-amount">{{ d[i].needPay }}</span></p>
+            </div>
+            <button class="cancel" onclick="showCancelBox('toCancel({{d[i].id}})');">取消拼单</button>
+            <button class="go-pay" onclick="choicePay({{ d[i].orderNo }});">去支付</button>
+        {{# }else if(d[i].tuanStatus==1){ }}
+            <button class="go-friend" onclick="toDetail({{ d[i].tuanNo }});">去邀请好友</button>
+        {{# }else{ }}
+            <button class="check" onclick="toDetail({{ d[i].tuanNo }});">查看拼团</button>
+        {{# } }}
+    </div>
+</div>
+
+{{# } }}
+<div class="wst-clear"></div>
+{{# }else{ }}
+<div class="wst-prompt-icon"><img src="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/img/pintuan-goods.png"></div>
+<div class="wst-prompt-info">
+	<p>对不起，没有相关拼团。</p>
+</div>
+{{# } }}
+</script>
+<div class="ui-dialog" id="cancelBox">
+    <div class="ui-dialog-cnt">
+        <div class="ui-dialog-bd">
+            <div class="ui-dialog-bd-title">您确定要取消该拼团吗？</div>
+            <p class="cancel-btn-box">
+                <button id="wst-event1" type="button" class="ui-btn-s wst-dialog-b1" data-role="button">取消</button>&nbsp;&nbsp;
+                <button id="wst-event0" type="button" class="ui-btn-s wst-dialog-b2">确定</button>
+            </p>
+        </div>
+    </div>        
+</div>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/users/js/pulist.js?v={$v}'></script>
+{/block}

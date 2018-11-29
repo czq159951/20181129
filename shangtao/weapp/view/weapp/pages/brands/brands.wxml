@@ -1,0 +1,16 @@
+<view class='container'>
+  <scroll-view scroll-X='true' class="wst-ba-head">
+    <block wx:for="{{catList}}" wx:for-item="i">
+    <view class="term {{i.catId == catId? 'active':''}}" data-catId="{{i.catId}}" bindtap='choice'>{{i.simpleName}}</view>
+    </block>
+  </scroll-view>
+  <view class='border'>
+    <block wx:for="{{brandsArray}}" wx:for-item="br">
+      <view class='main-model'  data-id="{{br.brandId}}"  data-catId="{{br.catId}}" bindtap='brandDetail'>
+        <view class='left'><image src="{{domain+br.brandImg}}" mode='aspectFit'></image></view>
+        <view class='content'>{{br.brandName}}</view>
+      </view>
+    </block>
+    <view class="wst-clear"></view>
+  </view>
+</view>

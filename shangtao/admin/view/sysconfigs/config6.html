@@ -1,0 +1,152 @@
+<style>
+.staffName label{width:120px;display:inline-block;}
+.staffName label input[type='checkbox']{margin-right:5px;}
+</style>
+<div class="layui-tab-item staffName">
+     <table class='wst-form wst-box-top'>
+      <tr>
+      	<td colspan='2'>
+      		   <div id='alertTips' class='alert alert-success alert-tips fade in' style='margin:0px 0px'>
+				  <div id='headTip' class='head'><i class='fa fa-lightbulb-o'></i>操作说明</div>
+				  <ul class='body'>
+				    <li>因微信通和短信通知会在事件发生的时候触发，请勿同时发送给太多人，以免造成提交延时影响用户体验。</li>
+				  </ul>
+				</div>
+      	</td>
+      </tr>
+      <tr>
+	     <td colspan='2' class='head-ititle'>用户下单：</td>
+	  </tr>
+	  <tr>
+	     <th width='150'>提醒方式：</th>
+	     <td>
+	     	<label><input type='checkbox' id='wxSubmitOrderTip' class='ipt' {if $object["wxSubmitOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxSubmitOrderTip,smsSubmitOrderTip","submitOrderTipUsers")'/>微信提醒</label>
+	     	<label><input type='checkbox' id='smsSubmitOrderTip' class='ipt' {if $object["smsSubmitOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxSubmitOrderTip,smsSubmitOrderTip","submitOrderTipUsers")'/>短信提醒</label>
+	     </td>
+	  </tr>
+	  <tr>
+	     <th valign="top">提醒人：</th>
+	     <td>
+	        {volist name='list' id='vo'}
+	     	<label class='staffName'><input type='checkbox' class='ipt submitOrderTipUsers' value='{$vo['staffId']}' {if in_array($vo['staffId'],$object["submitOrderTipUsers"])}checked{/if}/>{$vo['staffName']}</label>
+	     	{/volist}
+	     </td>
+	  </tr>
+	  <tr>
+	     <td colspan='2' class='head-ititle'>支付订单：</td>
+	  </tr>
+	  <tr>
+	     <th>提醒方式：</th>
+	     <td>
+	     	<label><input type='checkbox' id='wxPayOrderTip' class='ipt' {if $object["wxPayOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxPayOrderTip,smsPayOrderTip","payOrderTipUsers")'/>微信提醒</label>
+	     	<label><input type='checkbox' id='smsPayOrderTip' class='ipt' {if $object["smsPayOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxPayOrderTip,smsPayOrderTip","payOrderTipUsers")'/>短信提醒</label>
+	     </td>
+	  </tr>
+	  <tr>
+	     <th valign="top">提醒人：</th>
+	     <td>
+	     	{volist name='list' id='vo'}
+	     	<label class='staffName'><input type='checkbox' class='ipt payOrderTipUsers' value='{$vo['staffId']}' {if in_array($vo['staffId'],$object["payOrderTipUsers"])}checked{/if}/>{$vo['staffName']}</label>
+	     	{/volist}
+	     </td>
+	  </tr>
+	  <tr>
+	     <td colspan='2' class='head-ititle'>取消订单：</td>
+	  </tr>
+	  <tr>
+	     <th>提醒方式：</th>
+	     <td>
+	     	<label><input type='checkbox' id='wxCancelOrderTip' class='ipt' {if $object["wxCancelOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxCancelOrderTip,smsCancelOrderTip","cancelOrderTipUsers")'/>微信提醒</label>
+	     	<label><input type='checkbox' id='smsCancelOrderTip' class='ipt' {if $object["smsCancelOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxCancelOrderTip,smsCancelOrderTip","cancelOrderTipUsers")'/>短信提醒</label>
+	     </td>
+	  </tr>
+	  <tr>
+	     <th valign="top">提醒人：</th>
+	     <td>
+	     	{volist name='list' id='vo'}
+	     	<label class='staffName'><input type='checkbox' class='ipt cancelOrderTipUsers' value='{$vo['staffId']}' {if in_array($vo['staffId'],$object["cancelOrderTipUsers"])}checked{/if}/>{$vo['staffName']}</label>
+	     	{/volist}
+	     </td>
+	  </tr>
+	  <tr>
+	     <td colspan='2' class='head-ititle'>拒收订单：</td>
+	  </tr>
+	  <tr>
+	     <th>提醒方式：</th>
+	     <td>
+	     	<label><input type='checkbox' id='wxRejectOrderTip' class='ipt' {if $object["wxRejectOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxRejectOrderTip,smsRejectOrderTip","rejectOrderTipUsers")'/>微信提醒</label>
+	     	<label><input type='checkbox' id='smsRejectOrderTip' class='ipt' {if $object["smsRejectOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxRejectOrderTip,smsRejectOrderTip","rejectOrderTipUsers")'/>短信提醒</label>
+	     </td>
+	  </tr>
+	  <tr>
+	     <th valign="top">提醒人：</th>
+	     <td>
+	     	{volist name='list' id='vo'}
+	     	<label class='staffName'><input type='checkbox' class='ipt rejectOrderTipUsers' value='{$vo['staffId']}' {if in_array($vo['staffId'],$object["rejectOrderTipUsers"])}checked{/if}/>{$vo['staffName']}</label>
+	     	{/volist}
+	     </td>
+	  </tr>
+	  <tr>
+	     <td colspan='2' class='head-ititle'>申请退款：</td>
+	  </tr>
+	  <tr>
+	     <th>提醒方式：</th>
+	     <td>
+	     	<label><input type='checkbox' id='wxRefundOrderTip' class='ipt' {if $object["wxRefundOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxRefundOrderTip,smsRefundOrderTip","refundOrderTipUsers")'/>微信提醒</label>
+	     	<label><input type='checkbox' id='smsRefundOrderTip' class='ipt' {if $object["smsRefundOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxRefundOrderTip,smsRefundOrderTip","refundOrderTipUsers")'/>短信提醒</label>
+	     </td>
+	  </tr>
+	  <tr>
+	     <th valign="top">提醒人：</th>
+	     <td>
+	     	{volist name='list' id='vo'}
+	     	<label class='staffName'><input type='checkbox' class='ipt refundOrderTipUsers' value='{$vo['staffId']}' {if in_array($vo['staffId'],$object["refundOrderTipUsers"])}checked{/if}/>{$vo['staffName']}</label>
+	     	{/volist}
+	     </td>
+	  </tr>
+	  <tr>
+	     <td colspan='2' class='head-ititle'>订单投诉：</td>
+	  </tr>
+	  <tr>
+	     <th>提示方式：</th>
+	     <td>
+	     	<label><input type='checkbox' id='wxComplaintOrderTip' class='ipt' {if $object["wxComplaintOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxComplaintOrderTip,smsComplaintOrderTip","complaintOrderTipUsers")'/>微信提醒</label>
+	     	<label><input type='checkbox' id='smsComplaintOrderTip' class='ipt' {if $object["smsComplaintOrderTip"]==1}checked{/if} onclick='javascript:checkTip("wxComplaintOrderTip,smsComplaintOrderTip","complaintOrderTipUsers")'/>短信提醒</label>
+	     </td>
+	  </tr>
+	  <tr>
+	     <th valign="top">提醒人：</th>
+	     <td>
+	     	{volist name='list' id='vo'}
+	     	<label class='staffName'><input type='checkbox' class='ipt complaintOrderTipUsers' value='{$vo['staffId']}' {if in_array($vo['staffId'],$object["complaintOrderTipUsers"])}checked{/if}/>{$vo['staffName']}</label>
+	     	{/volist}
+	     </td>
+	  </tr>
+	  <tr>
+	     <td colspan='2' class='head-ititle'>申请提现：</td>
+	  </tr>
+	  <tr>
+	     <th>提醒方式：</th>
+	     <td>
+	     	<label><input type='checkbox' id='wxCashDrawsTip' class='ipt' {if $object["wxCashDrawsTip"]==1}checked{/if} onclick='javascript:checkTip("wxCashDrawsTip,smsCashDrawsTip","cashDrawsTipUsers")'/>微信提醒</label>
+	     	<label><input type='checkbox' id='smsCashDrawsTip' class='ipt' {if $object["smsCashDrawsTip"]==1}checked{/if} onclick='javascript:checkTip("wxCashDrawsTip,smsCashDrawsTip","cashDrawsTipUsers")'/>短信提醒</label>
+	     </td>
+	  </tr>
+	  <tr>
+	     <th valign="top">提醒人：</th>
+	     <td>
+	     	{volist name='list' id='vo'}
+	     	<label class='staffName'><input type='checkbox' class='ipt cashDrawsTipUsers' value='{$vo['staffId']}' {if in_array($vo['staffId'],$object["cashDrawsTipUsers"])}checked{/if}/>{$vo['staffName']}</label>
+	     	{/volist}
+	     </td>
+	  </tr>
+	  <tr>
+	  	{if ($grant)}
+	     <td colspan='2' align='center'>
+	     	<button type="button" class="btn btn-primary btn-mright" onclick='javascript:edit()'><i class="fa fa-check"></i>保存</button> 
+        	<button type="reset" class="btn" ><i class="fa fa-refresh"></i>重置</button>
+	     </td>
+	     {/if}
+	  </tr>
+	 </table>
+</div>

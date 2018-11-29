@@ -1,0 +1,36 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ADMIN__/images/images.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<form>
+<div class="wst-toolbar">
+<select id='key' class='ipt'>
+    <option value=''>所有目录</option>
+    {volist name="$datas" key="i" id='vo'}
+    <option value="{$vo['dataVal']}" {if $keyword==$vo['dataVal']}selected{/if}>{$vo['dataName']}</option>
+    {/volist}
+</select>
+<select id='isUse' class='ipt'>
+    <option value='-1'>全部</option>
+    <option value='1'>有效</option>
+    <option value='0'>失效</option>
+</select>
+</form>
+<button class="btn btn-primary" type='button' onclick='javascript:loadGrid(0)'><i class='fa fa-search'></i>查询</button> 
+<button class="btn f-right" type='button' onclick="javascript:history.go(-1)"><i class="fa fa-angle-double-left"></i>返回</button> 
+</div>
+<table id="mmg" class="mmg">
+   <tr>
+      <th rowspan="" colspan=""></th>
+   </tr>
+</table>
+<div id="pg" style="text-align: right;"></div>
+<script>
+$(function(){initGrid();})
+</script>
+{/block}

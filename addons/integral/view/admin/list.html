@@ -1,0 +1,28 @@
+{extend name="../../../shangtao/admin/view/base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ROOT__/addons/integral/view/admin/list.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="wst-toolbar">
+	<select id="cat1_0" class='ipt pgoodsCats' level="0" onchange="WST.ITGoodsCats({id:'cat1_0',val:this.value,isRequire:false,className:'pgoodsCats'});">
+		<option value="">-所属商品分类-</option>
+		   {volist name=":WSTGoodsCats(0)" id="vo"}
+	    <option value="{$vo['catId']}">{$vo['catName']}</option>
+			{/volist}
+	</select>
+	<input type="text" name="goodsName1"  placeholder='商品名称/商品编号' id="goodsName1" class='j-ipt'/>
+	<button class="btn btn-primary" onclick='javascript:loadGrid(0)'><i class='fa fa-search'></i>查询</button>
+	<button class="btn btn-success f-right btn-fixtop" onclick='javascript:toEdit(0)'><i class='fa fa-plus'></i>添加</button>
+	<div style='clear:both'></div>
+</div>
+<table id="mmg" class="mmg">
+	<tr>
+		<th rowspan="" colspan=""></th>
+	</tr>
+</table>
+<div id="pg" style="text-align: right;"></div>
+{/block}

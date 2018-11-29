@@ -1,0 +1,57 @@
+page{
+  width: 100%;
+  height: 90%;
+  background: #F6F6F8;
+}
+.container{
+  width: 100%;
+  height: 100%;
+}
+.content{
+  width: 97%;
+  height: 160rpx;
+  font-size: 30rpx;
+  margin-left: 10rpx;
+  margin-top: 10rpx;
+  border-radius:5rpx; 
+  border-bottom: 3rpx solid #EAEAEA;
+  background: white;
+}
+.content .left{
+  width: 520rpx;
+  height: 130rpx;
+  margin-top: 5rpx;
+  float: left;
+  overflow: hidden;
+}
+.content .left .script{
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-left: 10rpx;
+  margin-top: 5rpx;
+  overflow: hidden;
+}
+.content .left .time{
+  color: #8C8C8C;
+}
+.content .right{
+  width: 180rpx;
+  height: 130rpx;
+  margin-right: 5rpx;
+  float: right;
+}
+.content .right .border{
+  width: 100%;
+  height: auto;
+  margin-top: 30rpx;
+}
+.content .right .status{
+  width: 100%;
+  height: 40rpx;
+  text-align: right;
+  margin-top: 10rpx;
+}
+.content .right .number{
+  color: red;
+}

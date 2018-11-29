@@ -1,0 +1,52 @@
+{extend name="../../../shangtao/admin/view/base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="wst-toolbar">
+	<input type="text" name="loginName"  placeholder='账号' id="loginName" class="query" />
+	<input type="text" name="loginPhone" placeholder='手机号码' id="loginPhone" class="query" />
+	<input type="text" name="loginEmail" placeholder='电子邮箱' id="loginEmail" class="query" />
+	<button type="button"  class='btn btn-primary btn-mright'  onclick="javascript:userQuery()"><i class="fa fa-search"></i>查询</button>
+	<button type="button"  class='btn f-mright' onclick="javascript:history.go(-1)"><i class="fa fa-angle-double-left"></i>返回</button>
+<div style="clear:both"></div>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<script>
+  $(function(){initGrid()});
+  var mmg;
+  function initGrid(){
+   var h = WST.pageHeight();
+   var cols = [
+            {title:'账号;', name:'loginName', width: 50},
+            {title:'用户名', name:'userName' ,width:100},
+            {title:'手机号码', name:'userPhone' ,width:30},
+            {title:'电子邮箱', name:'userEmail' ,width:30},
+            {title:'积分', name:'userScore' ,width:30},
+            {title:'注册时间', name:'createTime' ,width:30},
+            {title:'状态', name:'userStatus' ,width:30, renderer: function(val,item,rowIndex){
+                return (val==1)?"<span class='statu-yes'><i class='fa fa-check-circle'></i> 启用</span>":"<span class='statu-no'><i class='fa fa-ban'></i> 停用</span>";
+            }},
+            {title:'总佣金', name:'distributMoney' ,width:80, align:'center'}
+            ];
+ 
+    mmg = $('.mmg').mmGrid({height: h-85,indexCol: true, indexColWidth:50, cols: cols,method:'POST',
+        url: "{:addon_url('distribut://distribut/queryAdminDistributChildUsers',array('userId'=>$userId))}", fullWidthRows: true, autoLoad: true,
+        plugins: [
+            $('#pg').mmPaginator({})
+        ]
+    });  
+}
+function userQuery(){
+	 var query = WST.getParams('.query');
+	 query.userId="{$userId}";
+	 mmg.load(query);
+}
+</script>
+{/block}

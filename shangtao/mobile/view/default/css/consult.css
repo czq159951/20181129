@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+body{font-size:.15rem;background:#f0f2f5}
+.gcListBox{width:99%}
+.gcList{width:100%}
+.item-time{float:right}
+.gcList li{background:#fff;border-bottom:1px solid #ccc;width:97%;padding:10px 5px}
+.gcList li:last-child{border:0}
+.gc-item-tit{font-size:.11rem;margin:0 10px}
+.question-box{padding-top:8px}
+.question-pic{display:block;width:17px;height:17px;background-size:50px 50px;background-image:url(./../img/QA-icon.png);background-position:0 -15px;margin-left:10px;float:left;margin-top:1px}
+.question-content{width:100%;margin-left:-27px;display:block;float:left;word-break:break-word;overflow:hidden}
+.question-content span{margin-left:37px;display:block;padding-right:12px;font-size:13px;color:#848689;line-height:18px;margin-top:0}
+.question-content{width:100%;margin-left:-27px;display:block;float:left;word-break:break-word;overflow:hidden}
+.answer-content span{color:#252525}
+.answer-pic{background-position:-33px -15px}
+.gcplist{padding:10px}
+.gcplist li{margin-bottom:5px}#consultContent{width:100%;min-height:100px}
+.consult{width:30px;height:30px;position:absolute;right:5px;top:5px;background:url(./../img/icon_adds_users.png) no-repeat;background-position:-75px -2px;background-size:150px 38.5px}
+.consult-button{width:100px;height:30px;margin-top:10px;font-size:.15rem;line-height:30px;color:#fff;background:#e00102;border-radius:3px;border-bottom:1px solid #e00102}
+.consult-button:not(.disabled):not(:disabled):active{color:#fff0f0;background:#f52f30;background-clip:padding-box}

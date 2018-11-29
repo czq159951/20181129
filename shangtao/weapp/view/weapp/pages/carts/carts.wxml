@@ -1,0 +1,63 @@
+<import src="../../addons/closure/reward/reward.wxml"/>
+<view class='container'>
+  <!--当列表无内容时渲染-->
+  <view  class='remind-model' wx:if="{{data==''}}" >
+    <view class='image' ><image src='/image/nothing-cart.png' class="img"></image></view>
+    <view class='content'>购物车内还没商品哦，去逛逛吧 ~</view>
+    <view class="button" bindtap='toIndex'><button>去逛逛</button></view>
+  </view>
+  <!--当列表有内容时渲染-->
+  <block  wx:if="{{data!=''}}">
+  <view class='list-model' wx:for="{{data}}" wx:for-item="ca">
+    <!--店铺名-->
+    <view class='store-info'>
+      <icon wx:if="{{check[ca.shopId].isCheck==1}}" type='success' color='#de0301' bindtap='shopCheck' size='20' id="{{ca.shopId}}" data-types="1"></icon>
+      <icon wx:else type='circle' bindtap='shopCheck' size='20' id="{{ca.shopId}}" data-types="0"></icon>
+      <view class='store-name' data-shopid="{{ca.shopId}}" bindtap="toshops"><i></i>{{ca.shopName}}</view>
+    </view>
+    <!--商品详情-->
+    <template is="reward-carts" data="{{ca,addons}}" />
+    <view class='commodify wst-{{promotion[ca.shopId].list[li.cartId].type}}' wx:for="{{ca.list}}" wx:for-item="li">
+      <icon wx:if="{{check[ca.shopId].list[li.cartId]==1}}" type='success' color='#de0301' bindtap='goodsCheck' size='20' id="{{li.cartId}}" data-shopid="{{ca.shopId}}"  data-types="1"></icon>
+      <icon wx:else type='circle' bindtap='goodsCheck' size='20' id="{{li.cartId}}" data-shopid="{{ca.shopId}}" data-types="0"></icon>
+      <view class="img">
+        <image src='{{domain}}{{li.goodsImg}}' mode='aspectFit' data-goodsid="{{li.goodsId}}" bindtap="togoods"></image>
+      </view>
+      <view class='details' data-goodsid="{{li.goodsId}}" bindtap="togoods">
+        <view class='title'>{{li.goodsName}}</view>
+        <view class='price'>¥ {{price[ca.shopId].list[li.cartId]}}</view>
+      </view>
+      <view class='spec' wx:if="{{li.specNames!=''}}">
+        规格：<block wx:for="{{li.specNames}}" wx:for-item="sp">{{sp.catName}}:{{sp.itemName}} </block>
+      </view>
+      <!--数量-->
+      <view class='number-change'>
+        <view class='subtract' bindtap='changeNum' id="{{li.cartId}}" data-val="0" data-stock="{{li.goodsStock}}">-</view>
+          <input class='number {{(num[li.cartId]>li.goodsStock)?"back":""}}' bindinput="inputNum" bindblur="blurNum" value="{{num[li.cartId]}}" id="{{li.cartId}}" data-stock="{{li.goodsStock}}"></input>
+          <view class='add' bindtap='changeNum' id="{{li.cartId}}" data-val="1" data-stock="{{li.goodsStock}}">+</view>
+          <text class="prompt" wx:if="{{num[li.cartId]>li.goodsStock}}">库存不足</text>
+          <!--删除-->
+          <view class='icon' bindtap='delete' id="{{li.cartId}}"><image src='/image/delete.png' mode='aspectFit'></image></view>
+        </view>
+      </view>
+      <!--统计-->
+      <view class='total'>
+        <view class='left'>共{{ca.list.length}}件商品</view>
+        <view class='right'>¥ {{price[ca.shopId].money}}</view>
+      </view>
+    </view>
+  <!--底部导航条-->
+  <view class='wst-ca-bottom'>
+    <view class="bottom">
+      <!--全选状态-->
+      <view class='icon'>
+        <icon wx:if="{{isCheck==1}}" type='success' color='#de0301' size='20' data-types="1" bindtap='allCheck'></icon>
+        <icon wx:else type='circle' size='20' data-types="0" bindtap='allCheck'></icon>
+      </view>
+      <text class='whole'>全选</text>
+      <view class='settlement'><button type='warn' size='mini' class="button" bindtap="settlement">结算</button></view>
+      <view class='total'>合计：<text>¥ {{totalMoney}}</text></view>
+    </view>
+  </view>
+ </block>
+</view>

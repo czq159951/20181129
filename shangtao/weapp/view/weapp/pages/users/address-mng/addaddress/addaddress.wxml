@@ -1,0 +1,39 @@
+<!--pages/user/userBalance/accountManage/addAccount/addAccount.wxml-->
+<view class='container'>
+ <view class='type-set row'><view class="strip">收货人：</view><view class='input'><input placeholder='请填写收货人' bindinput='userName' value="{{userName}}"></input></view></view>
+ <view class='address-set row'><view class="strip">联系电话：</view><view class='input'><input placeholder='请填写联系电话' bindinput='phoneNumber' value="{{userPhone}}"></input></view></view>
+ <view class='address-set userName row'><view class="strip">收货地址：</view><view class='set  address' bindtap='powerDrawer' data-status="open">{{total?total:areaName}}</view></view>
+ <view class='address-set number row'><view class="strip">详细地址：</view><view class='input'><input bindinput='attensionAddress'   placeholder='请填写详细地址' value="{{userAddress}}">{{cardNumber}}</input></view></view>
+ <view class='address-set set'>
+  <view class='content'>设为默认地址</view>
+  <switch checked="{{isDefault}}" color='#FF3C3C' bindchange="isDefault" data-status="{{isDefault}}"/></view>
+ <view class='button'>
+  <button bindtap='infoSave'>保存</button>
+ </view>
+<!--菜单列表-->
+ <view class='menuList' wx:if="{{selectType}}">
+  <block wx:for="{{typeArray}}" wx:for-index="{{typeArray.id}}">
+   <view data-id="{{item.id}}"  class="{{item.selectArea?'strip1' :'strip'}}" bindtap='mySelect' bindtouchend='touchend' bindtouchstart='touchstart' data-type="{{item.typeName}}">{{item.typeName}}</view>
+  </block>
+ </view>
+<!--动画模板-->
+<!--mask-->  
+ <view class="drawer_screen" bindtap="powerDrawer" data-status="close" wx:if="{{showModalStatus}}"></view>  
+<!--content-->
+ <view class='animation' animation="{{animationData}}" wx:if="{{showModalStatus}}">
+  <view class='wst-top-title'>
+   <view class='title'>收货地址</view>
+   <icon type='cancel' color='#b1b1b1' size="25" bindtap="powerDrawer" data-status="close"></icon>
+  </view>
+  <view class='navigation'>
+   <view class="main {{pattern == 1?'':'tooed'}}" wx:if='{{pattern >= 1}}' bindtap="mySelect" id="1">{{address1}}</view>
+   <view class="main too {{pattern == 2?'':'tooed'}}"  wx:if='{{pattern >= 2}}' bindtap="mySelect" id="2">{{address2}}</view>
+   <view class="main too {{pattern == 3?'':'tooed'}}"  wx:if='{{pattern >= 3}}' bindtap="mySelect" id="3">{{address3}}</view>
+  </view>
+  <scroll-view scroll-y > 
+   <view class='list'>
+    <view class='main' wx:for="{{pattern == 1?Area:pattern == 2?Area1:Area2}}" data-areaId="{{item.areaId}}" bindtap='clickArea'>{{item.areaName}}</view>
+   </view>
+  </scroll-view>
+ </view>
+</view>

@@ -1,0 +1,90 @@
+<view class="container">
+<!--顶部轮播-->
+  <scroll-view scroll-X='true' class="wst-or-head">
+    <block wx:for="{{termData}}">
+    <view class="term {{item.types == types? 'active':''}}" data-types="{{item.types}}" bindtap='selected'>{{item.title}}</view>
+    </block>
+  </scroll-view>
+  <view class="wst-or-list">
+    <view class="list" wx:for="{{orders}}" wx:for-item="or">
+      <view class="head">
+        <test>订单号：{{or.orderNo}}</test>
+        <test class="state">{{or.status}}</test>
+        <test class="remind" wx:if="{{or.orderStatus==0 && or.noticeDeliver==1}}"><i class="icon" style="background:url(/image/nocite_deliver.png) no-repeat 0 0rpx;background-size:100%;"></i>提醒发货</test>
+      </view>
+      <view class="goods" wx:for="{{or.list}}" wx:for-item="li" data-orderid="{{or.orderId}}" bindtap="todetail">
+        <image mode="aspectFit" src="{{domain}}{{li.goodsImg}}" class="img"></image>
+        <view class="names">
+          <view class="name">{{li.goodsName}}</view>
+          <view class="spec" wx:if="{{li.goodsSpecNames}}">规格：{{li.goodsSpecNames}}</view>
+        </view>
+        <view class="price"><view>{{(li.goodsCode=='gift')?'【赠品】':'¥'+li.goodsPrice}}</view><view>x {{li.goodsNum}}</view></view>
+        <view class="wst-clear"></view>
+      </view>
+      <view class="info">订单总价：<text>¥{{or.realTotalMoney}}</text></view>
+      <view class="operate">
+        <button type="default" size="mini" bindtap="modify" data-orderid="{{or.orderId}}" class="button red" wx:if="{{or.orderStatus==-2}}">修改价格</button>
+        <button type="default" size="mini" bindtap="deliver" data-orderid="{{or.orderId}}" class="button red" wx:if="{{or.orderStatus==0}}">发货</button>
+        <button type="default" size="mini" bindtap="refund" data-refundid="{{or.refundId}}" class="button red" wx:if="{{or.payType==1 && or.refundId!=null}}">退款操作</button>
+        <button type="default" size="mini" bindtap="toevaluate" data-orderid="{{or.orderId}}" class="button red" wx:if="{{or.isAppraise==1}}">查看评价</button>
+      </view>
+    </view>
+    <view  class='remind-model' wx:if="{{orders==''}}">
+      <view class='image' ><image src='/image/nothing-order.png' class="img"></image></view>
+      <view class='content'>暂无相关订单 ~</view>
+    </view>
+  </view>
+</view>
+<view class="wst-mask" wx:if="{{modifyFrame}}">
+  <view class="wst-or-frame">
+    <view class="title">修改价格</view>
+    <view class="menu">订单号：<text>{{orderNo}}</text></view>
+    <view class="prompt">商品价格：<text>¥{{goodsMoney}}</text></view>
+    <view class="prompt">运费：<text>¥{{deliverMoney}}</text></view>
+    <view class="prompt">总价格：<text>¥{{totalMoney}}</text></view>
+    <view class="prompt">实际支付价格：<text class="red">¥{{realTotalMoney}}</text></view>
+    <view class="quota">
+      <input bindinput="modifyText" type="digit" placeholder="新价格" />
+    </view>
+    <view class="button">
+        <button type="default" size="mini" bindtap="hide" class="cancel">取消</button>
+        <button type="default" size="mini" bindtap="toModify" class="confirm">确定</button>
+    </view>
+  </view>
+</view>
+<view class="wst-mask" wx:if="{{deliverFrame}}">
+  <view class="wst-or-frame">
+    <view class="title">发货</view>
+    <picker class="menu" bindchange="deliverMenu" value="0" range="{{deliverData}}">
+      <view class="weui-input">{{deliverWords}}</view>
+    </picker>
+    <view class="quota">
+      <input bindinput="deliverText" type="text" placeholder="快递号" />
+    </view>
+    <view class="button">
+      <button type="default" size="mini" bindtap="hide" class="cancel">取消</button>
+      <button type="default" size="mini" bindtap="toDeliver" class="confirm">确定</button>
+    </view>
+  </view>
+</view>
+<view class="wst-mask" wx:if="{{refundFrame}}">
+  <view class="wst-or-frame">
+    <view class="title">退款操作</view>
+    <view class="menu">订单号：<text>{{orderNo}}</text></view>
+    <view class="prompt">实付金额：<text>¥{{realTotalMoney}}</text></view>
+    <view class="prompt">退款金额：<text class="red">¥{{backMoney}}</text></view>
+    <view class="prompt">退款积分：<text class="red">{{useScore}}个（积分抵扣¥{{scoreMoney}}）</text></view>
+    <view class="prompt">商家意见： </view>
+    <radio-group name="radio" class="option" bindchange="ifRefund">
+        <label><radio color="#e00102" value="1" checked="true"/>同意</label>
+        <label><radio color="#e00102" value="-1" />不同意</label>
+    </radio-group>
+    <view class="text" wx:if="{{refundIf==-1}}">
+      <textarea bindinput="refundText" maxlength="200" auto-height placeholder="请填写原因" />
+    </view>
+    <view class="button">
+        <button type="default" size="mini" bindtap="hide" class="cancel">取消</button>
+        <button type="default" size="mini" bindtap="toRefund" class="confirm">确定</button>
+    </view>
+  </view>
+</view>

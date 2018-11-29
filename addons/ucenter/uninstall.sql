@@ -1,0 +1,1 @@
+alter table `wst_users` drop column ucUid;

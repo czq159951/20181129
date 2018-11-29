@@ -1,0 +1,27 @@
+        {/* 小加载 */}
+        <div class="ui-loading-wrap wst-Load" id="Load">
+		    <i class="ui-loading"></i>
+		</div>
+		{/* 大加载 */}
+		<div class="ui-loading-block" id="Loadl">
+		    <div class="ui-loading-cnt">
+		        <i class="ui-loading-bright"></i>
+		        <p id="j-Loadl">正在加载中...</p>
+		    </div>
+		</div>
+        <footer class="ui-footer wst-footer-btns" style="height:43px; border-top: 1px solid #e8e8e8;" id="footer">
+	        <div class="wst-toTop" id="toTop">
+			  <i class="wst-toTopimg"></i>
+			</div>
+			{php}$cartNum = WSTCartNum();{/php}
+            <div class="ui-row-flex wst-menus">
+			    <div class="ui-col ui-col"><a href="{:url('wechat/index/index')}"><p id="home"></p></a></div>
+			    <div class="ui-col ui-col"><a href="{:url('wechat/goodscats/index')}"><p id="category"></p></a></div>
+			    {:hook('wechatDocumentBottomNav')}
+			    <div class="ui-col ui-col carsNum"><a href="{:url('wechat/carts/index')}"><p id="cart">
+                </p></a>{if($cartNum>0)}<i>{php} echo $cartNum;{/php}</i>{/if}</div>
+                <div class="ui-col ui-col J_followbox"><a href="{:url('wechat/favorites/goods')}"><p id="follow"></p></a></div>
+			    <div class="ui-col ui-col"><a href="{:url('wechat/users/index')}"><p id="user"></p></a></div>
+			</div>
+        </footer>
+        {:hook('initCronHook')}

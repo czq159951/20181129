@@ -1,0 +1,116 @@
+/* pages/browHistory/browHistory.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background: #f6f6f8;
+}
+.container{
+  width: 100%;
+}
+
+/*商品列表*/
+.commodityList{
+  position: ralative;
+}
+.commodity{
+  position: relative;
+  color: #989292;
+}
+.commodityList .commodity{
+  width: 100vw;
+  height: 230rpx;
+  background: white;
+  border-bottom: 1rpx solid #F1F1F1;
+  overflow: hidden;
+  margin-top: 15rpx;
+  border: 1rpx solid transparent;
+}
+.commodityList .commodity .img{
+  width: 180rpx;
+  height: 180rpx;
+  float: left;
+  margin-left: 10rpx;
+  border: 1rpx solid transparent;
+  margin-top: 10rpx;
+}
+.commodityList .commodity .img image{
+  width: 180rpx;
+  height: 180rpx;
+}
+/*信息内容*/
+.commodityList .details{
+  height: 100rpx;
+  width: 450rpx;
+ display: flex;
+ position: absolute;
+ left: 175rpx;
+ font-size: 35rpx;
+ border: 1rpx solid transparent;
+ margin-top: 10rpx;
+ margin-left: 10rpx;
+ padding-left:30rpx;
+ padding-right: 30rpx; 
+ box-sizing: border-box;
+ overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: black;
+}
+.commodityList .price{
+  color: #FF241F;
+  width: auto;
+  height: 50rpx; 
+  border: 1rpx solid transparent;
+  position: absolute;
+  left: 215rpx;
+  top: 110rpx;
+  font-size: 28rpx;
+  margin-left: 10rpx;
+}
+
+.commodityList .number{
+  width: auto;
+  height: 50rpx;
+  border: 1rpx solid transparent;
+  position: absolute;
+  left: 215rpx;
+  top: 160rpx;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+/*数量条*/
+.commodityList .shopping{
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  position: relative;
+  left: 400rpx;
+  top: 160rpx;
+  overflow: hidden;
+}
+.commodity .shopping image{
+  width: 60rpx;
+  height: 60rpx;
+  border: 1rpx solid transparent;
+  margin-left: 0rpx;
+  margin-top: 0rpx;
+  
+}
+
+.remind-model .button button {
+  width:300rpx;
+  height:70rpx;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background-color:#fff;
+  color:#df0202;
+  border-radius:6rpx;
+  font-size:30rpx;
+  border:2rpx solid #df0202;
+
+}

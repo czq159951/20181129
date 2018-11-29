@@ -1,0 +1,77 @@
+<?php
+	if(empty($gdata)) {
+    	$goods_list = unserialize($block_content);
+	} else {
+   	 	$goods_list = $gdata['data'];
+	}
+?>
+<?php if(!empty($goods_list) && is_array($goods_list)){?>
+
+	<div class="wst-shop-listg">
+  	<?php foreach($goods_list as $key=>$val){?>
+	  	<div class="wst-shop-goods" nctype="goods_item" data-goods-id="{$val['goodsId']}" data-goods-name="{$val['goodsName']}" data-goods-price="{$val['shopPrice']}"  data-goods-image="<?php if(empty($gdata)){ ?> {$val['goodsImg']} <?php }else{ ?>  __ROOT__/{$val['goodsImg']} <?php } ?>">
+	    	<div class="wst-shop-goimg">
+		    	<a href="{:url('home/goods/detail',array('id'=>$val['goodsId']))}" target="_blank">
+		    		<?php if(empty($gdata)){ ?>
+		    		<img class="goodsImg" src="{$val['goodsImg']}" title="{$val['goodsName']}">
+		    		<?php }else{ ?>
+		    		<img class="goodsImg" src="__ROOT__/{$val['goodsImg']}" title="{$val['goodsName']}">
+		    		<?php } ?>
+		    	</a>
+	    	</div>
+			<p class="wst-shop-gonam">
+				<a href="{:url('home/goods/detail',array('id'=>$val['goodsId']))}" target="_blank">{:WSTMSubstr($val['goodsName'],0,15)}</a>
+			</p>
+			<div class="wst-shop-rect">
+				<span>￥{$val['shopPrice']}</span>
+				<?php if(empty($gdata)) { ?>
+				<a nctype="btn_goods_cart" class="wst-shop-recta" href="javascript:addCart({$val['goodsId']})">加入购物车</a>
+				<?php } ?>
+			</div>
+			
+		    <?php if(!empty($gdata)) { ?>
+		    <a nctype="btn_module_goods_operate" class="wst-btn-mini" href="javascript:;"><i class="icon-plus"></i>选择添加</a>
+		    <?php } ?>
+	  	</div>
+  	<?php } ?>
+  	<div style="clear:both;"></div>
+	</div>
+	<?php if(!empty($gdata)) { ?>
+		<div id="pagination" class="pagination"></div>
+	<?php } ?>
+	
+	<script>
+	$(function(){
+		<?php if(isset($gdata) && $gdata['last_page']>1){ ?>
+			laypage({
+			    cont: 'pagination',
+			    pages: {$gdata['last_page']}, //总页数
+			    curr: {$gdata['current_page']},
+			    skip: true, //是否开启跳页
+			    skin: '#fd6148',
+			    groups: 3, //连续显示分页数
+			   	prev: '<<',
+				next: '>>',
+			    jump: function(e, first){ //触发分页后的回调
+			        if(!first){ //一定要加此判断，否则初始时会无限刷新
+			        	var param = {};
+			        	param.shopCatId1 = $("#shopCatId1").val();
+			        	param.shopCatId2 = $("#shopCatId2").val();
+			        	param.goodsName = $("#goodsName").val();
+			        	param.page = e.curr;
+			        	var load = layer.load(0, {shade: false})
+			            $('#div_module_goods_search_list').load(WST.AU('decoration://decoration/goodssearch') ,param,function(){
+			            	layer.close(load);
+			            });
+			        }
+			    }
+			});
+		<?php } ?>
+	
+	});
+	</script>
+<?php } else { ?>
+	<?php if(!empty($goods_list)) { ?>
+		<div>没有商品信息</div>
+	<?php } ?>
+<?php } ?>

@@ -1,0 +1,38 @@
+@CHARSET "UTF-8";
+h1{position:relative}
+.record{display:inline-block;position:absolute;right: 10px;top:0;color:black;color: #59595c;font-size: 13px;}
+.bgimg{display:inline-block;width:67px;height:60px;margin-top:20px;margin-bottom:5px}
+.head-btn{display:block;width:auto;height:40px;line-height:40px;font-size:.22rem;color:#fff;background-color:#ff4e4e}
+.head-btn i{position:relative;top:16%;display:inline-block;width:26px;height:26px;margin-right:5px;background:url(../img/icon_tixian.png) no-repeat;background-size:100%}
+.head-btn-box{margin-top:77px}
+.wst-header h1{z-index:-1}
+.head{min-height:1rem;color:#fff;background:url(../img/icon_logmoney.png) no-repeat;background-size:cover;position: relative;}
+.title{position: absolute;left:0;bottom:0;width:100%;}
+.title .money_number{font-size:0.15rem;text-align: right;padding:0 0.1rem;}
+.title .money_number2{font-size:0.13rem;margin-top: 2px;text-align: right;padding:0 0.1rem 0.05rem 0.1rem;}
+.title .money_number p{font-size:0.16rem;}
+.title .money_number span{font-size:0.13rem;}
+.money-detail{padding:5px;background-color:#fff;border-bottom:1px solid #edebeb;font-size:.15rem;}
+.money-detail h5{font-size:.15rem;}
+.money-detail-title{padding:5px 10px;font-size:.18rem}
+.m-tr{text-align:right;color:#abaaaa}
+.first-time{font-size:0.15rem;color:#abaaaa;padding-left:5px;margin-top:10px}
+.wst-lo-choice{width:100%;padding:2px 2px 2px 5px;height:36px;border-radius:2px;border:1px solid #a0a0a0;background:#fff;}
+.wst-cover{position:fixed;left:0;top:0;background-color:#000;width:100%;height:100%;filter:alpha(opacity=60);opacity:.6;z-Index:9999;display:none}
+.wst-fr-box{position:fixed;z-index:9999;right:-999px;bottom:0;width:100%;min-height:40%;background:#f2f2f2;font-size:.15rem}
+.wst-fr-box .title,.wst-cart-box .title{height:auto;background:#fff;position:relative;padding:6px 0;border-bottom:1px solid #f1f1f1}
+.wst-fr-box .title span{float:left;width:100%;height:26px;line-height:26px;text-align:center;font-size: 16px;}
+.wst-fr-box .title i,.wst-cart-box .title i{position:absolute;right:5px;top:-2px;font-size:27px}
+.wst-fr-box .info{padding:0.1rem;background:#fff;font-size:.15rem;}
+.wst-fr-box .info .money{margin-top:0.05rem;font-size:.175rem;color: #df0202;}
+.wst-fr-box .info .money span{font-size:.15rem;}
+.wst-fr-box .content{padding:0.1rem;margin-top:10px;background:#fff;font-size:.15rem;}
+.wst-fr-box .content li{margin:5px auto;line-height:36px}
+.recharge-box{height:50px;line-height:50px;text-align:center;background:white;color:black;font-size:.15rem;border-bottom: 1px solid #f2f1f1;}
+.wst-apply-button{height: 38px;line-height: 38px;font-size: 0.15rem;color: #fff;background: #e00102;border-radius: 3px;border-bottom: 1px solid #e00102;}
+.icon_add{background: url(../img/icon_add_money.png) no-repeat;background-size: contain; width: 60px;margin:5px;margin: 0 auto;margin-top: 10%; height: 20px;}
+.icon_out{background: url(../img/icon_out_money.png) no-repeat;background-size: contain; width: 60px;margin:5px;margin: 0 auto;margin-top: 10%; height: 20px;}
+.wst_model p {display: inline-block;padding-left:14px;line-height: 20px;}
+.icon_stript{width: 20px;height:20px;float: left;}
+.stript_1{background: url(../img/icon_cart_money.png) no-repeat;background-size: cover;}
+.stript_2{background: url(../img/icon_record.png) no-repeat;background-size: cover;}

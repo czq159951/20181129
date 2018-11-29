@@ -1,0 +1,104 @@
+<import src="../common/parse/parse.wxml"/>
+<view class='wst-container'>
+<scroll-view scroll-X='true' class="wst-or-head">
+    <block wx:for="{{CatInfos}}" wx:for-index="id">
+      <view class="term {{articlesNum == item.catId? 'active':''}}" data-catId="{{item.catId}}"  bindtap='selected'>{{item.catName}}</view>
+    </block>
+</scroll-view>
+<view style='height:60rpx;'></view>
+<block wx:for="{{data}}" wx:if="{{item.catId == articlesNum}}">
+    <block wx:if="{{item.TypeStatus == 1 || item.TypeStatus == 2}}">
+    <view class='wst-box' bindtap="getNewDetail" data-statu='open' data-id="{{item.articleId}}">
+      <block wx:if="{{item.TypeStatus == 1}}">
+        <view class='wst-top'>
+          <view class='wst-image'>
+            <image src='{{domain}}{{item.coverImg}}' mode='aspectFill'></image>
+          </view>
+          <view class='wst-content'>
+            <view class='wst-cont-top wst-omit'>{{item.articleTitle}}</view>
+            <view class='wst-cont-bot wst-omit'>{{item.articleContent}}</view>
+          </view>
+        </view>
+      </block>
+
+      <block wx:if="{{item.TypeStatus == 2}}">
+        <view class='wst-top'>
+          <view class='wst-content'>
+            <text class='wst-cont-top wst-omit'>{{item.articleTitle}}</text>
+            <text class='wst-cont-bot wst-omit'>{{item.articleContent}}</text>
+          </view>
+          <view class='wst-image'>
+            <image src='{{domain}}{{item.coverImg}}' mode='aspectFill'></image>
+          </view>
+        </view>
+      </block>
+      <view class='wst-bottom'>
+        <text>•已有{{item.visitorNum}}浏览</text>
+        <text>•{{item.createTime}}</text>
+      </view>
+    </view>
+    </block>
+
+    <block wx:if="{{item.TypeStatus == 3}}">
+    <view class='wst-box wst-box-3' bindtap="getNewDetail" data-statu='open' data-id="{{item.articleId}}">
+      <view class='wst-top-3'>
+        <view class='wst-content-3'>
+        <view class='wst-omit' style='font-weight:bold;font-size:36rpx;color:black;'>{{item.articleTitle}}</view>
+        <view class='wst-omit' style='font-size:30rpx;color:#999;'>{{item.articleContent}}</view>
+        </view>
+        <view class='wst-image-3'>
+        <image src='{{domain}}{{item.coverImg}}' mode='aspectFill'></image>
+        </view>
+      </view>
+      <view class='wst-bottom'>
+          <text>•已有{{item.visitorNum}}浏览</text>
+          <text>•{{item.createTime}}</text>
+      </view>
+    </view>
+    </block>
+    
+    <block wx:if="{{item.TypeStatus == 4}}">
+    <view class='wst-box' bindtap="getNewDetail" data-statu='open' data-id="{{item.articleId}}" style='height:auto;'>
+        <view class='wst-top'>
+          <view class='wst-content' >
+            <text class='wst-cont-top wst-omit' style='width:100vw;'>{{item.articleTitle}}</text>
+            <text class='wst-cont-bot wst-omit' style='width:100vw;padding-bottom:10rpx;'>{{item.articleContent}}</text>
+          </view>
+        </view>
+      <view class='wst-bottom' style='padding:0 8rpx 6rpx 8rpx;'>
+        <text>•已有{{item.visitorNum}}浏览</text>
+        <text style='padding-top:4rpx;'>•{{item.createTime}}</text>
+      </view>
+    </view>
+    </block>
+</block>
+<view wx:if="{{hasData == 1}}" class="remind-box">
+   暂无相关快讯
+</view>
+</view>
+<!--mask-->  
+ <view class='wst-animationModel' animation="{{animationData}}"  wx:if="{{animationStatus}}">
+ <scroll-view scroll-y="true" style='height:100%;width:100vw;'>
+ <view class='detailBox'>
+   <view class='icon' ><icon type='cancel' color='#9A9A9A' size='26' bindtap="powerDrawer" data-statu="close"></icon></view>
+   <view class='wst-main .wst-main2'>
+      <view class='wst-border'>
+      <view class='title'>{{articleTitle}}</view>
+      <view class='time'>{{createTime}}</view>
+          <view class='main'>
+            <template is="wxParse" data="{{wxParseData:articleContent.nodes}}"/>
+          </view>
+      </view>
+      <view class='like-model'>
+        <view class='box' bindtap='actionLike' data-newsId="{{articleId}}">
+           <view class='image'>
+              <image src='/image/icon_like1.png' wx:if="{{likeStatus == 0}}"></image> 
+              <image src='/image/icon_like2.png' wx:if="{{likeStatus == 1}}"></image> 
+           </view>
+           <text>{{likeNum}}</text>
+        </view>
+      </view>
+   </view>
+   </view>
+  </scroll-view>
+  </view>

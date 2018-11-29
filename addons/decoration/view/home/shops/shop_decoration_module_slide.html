@@ -1,0 +1,33 @@
+<?php $block_content = empty($block_content) ? '' : $block_content; ?>
+<?php $block_content = unserialize($block_content);?>
+
+<div class="s-wst-slide" style="width:100%;height:{$block_content['height']}px;overflow:hidden;">
+	<div class="s-wst-slide-numbox" data-slide-height="{$block_content['height']}" >
+		{if(count($block_content['images'])>1)}
+		<div class="s-wst-slide-controls">
+		{volist name="$block_content['images']" id="vo" key="k"}
+			{if condition="$k+1 eq 1"}
+				<span class="curr"> </span>
+			{else/}
+				<span class=""> </span>
+			{/if}
+		{/volist}
+		</div>
+		{/if}
+	</div>
+	<?php if(!empty($block_content['images']) && is_array($block_content['images'])) {?>
+	<ul class="s-wst-slide-items">
+		{volist name="$block_content['images']" id="vo"}
+		<?php $image_url = $vo['image_name'];?>
+		<a href="{$vo['image_link']}" target="_blank">
+		<li data-image-name="{$image_url}" data-image-url="{$image_url}" data-image-link="{$vo['image_link']}" style="height:{$block_content['height']}px; background: url({$image_url}) 50% 0% / cover no-repeat scroll;"></li>
+		</a>
+		{/volist}
+	</ul>
+	<?php } ?>
+</div>
+{if(count($block_content['images'])>1)}
+<script type='text/javascript'>
+WST.slides('.s-wst-slide');
+</script>
+{/if}

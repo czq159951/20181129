@@ -1,0 +1,21 @@
+.goods-seach-tr{width:350px;height:400px;border:1px solid #eee;overflow:hidden;}
+.goods-seach-tr .head{width:350px;height:30px;background:#eee}
+.goods-seach-tr .head .h-chk{float:left;width:30px;padding-left:3px;}
+.goods-seach-tr .head .h-name{float:left;width:310px}
+.goods-seach-tr .body-tr{width:350px;overflow-y:auto;overflow-x:hidden;height:370px;}
+.goods-seach-tr .body{width:350px;padding:3px;overflow:hidden;}
+.goods-seach-tr .body .b-chk{float:left;width:30px;height:30px;}
+.goods-seach-tr .body .b-img{float:left;width:33px;height:30px;}
+.goods-seach-tr .body .b-name{float:left;width:280px;height:30px;}
+.goods-result-tr{width:350px;height:400px;border:1px solid #eee;overflow:hidden;}
+.goods-result-tr .head{width:350px;overflow:hidden;background:#eee}
+.goods-result-tr .head .h-chk{float:left;width:30px;padding-left:3px;}
+.goods-result-tr .head .h-name{float:left;width:310px;}
+.goods-result-tr .body-tr{width:350px;overflow-y:auto;overflow-x:hidden;height:370px;}
+.goods-result-tr .body{width:350px;padding:3px;overflow:hidden;}
+.goods-result-tr .body .b-chk{float:left;width:30px;height:30px;}
+.goods-result-tr .body .b-img{float:left;width:33px;height:30px;}
+.goods-result-tr .body .b-name{float:left;width:280px;height:30px;overflow:hidden;text-overflow:ellipsis;}
+.rewardTbl{width:100%;border:0;margin:0;border-collapse:collapse;border-spacing:0;}
+.rewardTbl tr th{text-align: left;border-bottom:1px solid #ccc;}
+.rewardTbl tr td{border-bottom:1px solid #ccc;}

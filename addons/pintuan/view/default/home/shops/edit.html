@@ -1,0 +1,116 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}拼团设置 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<link href="__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+<style>
+input[type=text]{width:150px;}
+</style>
+<div class="wst-body"> 
+<div class="wst-shop-head"><span>拼团设置</span></div>
+<div class="wst-clear"></div>
+   <div class="wst-shop-content">
+      <form id='pintuanform' name='pintuanform' autocomplete="off">
+        <input type='hidden' id='tuanId' class='ipt' value='{$object["tuanId"]}'/>
+        <table class="wst-form">
+           <tr>
+             <td colspan="2">
+               <div class='wst-tips-box'>
+               <div class='icon'></div>
+               <div class='tips'>
+               1.拼团商品为实物商品时，拼团数量和实物商品数量无关联；拼团商品为虚拟商品时请确保虚拟商品有足够的库存。<br/>
+               2.若拼团为多规格商品的话，则取推荐的规格为拼团商品的规格。<br/>
+               3.正在拼团中的商品只能下架，并将未成团的拼团退款给用户，再重新上架新的拼团商品。
+               </div>
+               <div style="clear:both"></div>
+               </div>
+             </td>
+           </tr>
+           <tr>
+             <th width='120' align='right'>&nbsp;</th>
+             <td>
+             	<select id="shopCatId1" class='j-ipt' onchange="getShopsCats('shopCatId2',this.value,'');">
+                 <option value="">-请选择-</option>
+                 {volist name=":WSTShopCats(0)" id="vo"}
+                 <option value="{$vo['catId']}">{$vo['catName']}</option>
+                 {/volist}
+              </select>
+              <select id='shopCatId2' class='j-ipt'>
+                 <option value=''>请选择</option>
+              </select>
+			    <br/>
+             	<input type='text' id='goodsName' placeholder="请输入要搜索的商品名称" />
+             	<a type="button" class='s-btn' onclick="searchGoods()">查&nbsp;询</a>
+             </td>
+           </tr>
+           {if $object['tuanStatus']==-1}
+           <tr class="wst-order-rate" >
+               <th width='120'>不通过原因：</th>
+             <td colspan='3' style='color:red'>
+                 {$object['illegalRemarks']}
+             </td>
+           </tr>
+           {/if}
+           <tr>
+             <th width='150' align='right'>拼团商品：</th>
+             <td>
+             	<select id='goodsId' class='ipt' onchange='changeGoods(this)'>
+                <option value="{$object['goodsId']}">{$object['goodsName']}</option>
+              </select><br/>
+             </td>
+           </tr>
+           <tr>
+               <th>市场价格：</th>
+	             <td colspan='3' id='marketPrice'>￥{$object["marketPrice"]}</td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th width='120'>拼团价格<font color="red">*</font>：</th>
+	           <td colspan='3'>
+	               <input type='text' id='tuanPrice' name='tuanPrice'class='ipt' maxLength='10' value='{$object["tuanPrice"]}' data-rule='店铺价格:required;price' data-rule-price="[/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/, '价格必须大于0']" onblur="javascript:WST.limitDecimal(this,2)" onkeypress="return WST.isNumberdoteKey(event)" onkeyup="javascript:WST.isChinese(this,1)"/>
+	           </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th>拼团数量<font color="red">*</font>：</th>
+	           <td colspan='3'>
+	               <input type='text' id='goodsNum' name='goodsNum' class='ipt' maxLength='8' data-rule='拼团数量:required;integer[+]' value='{$object["goodsNum"]}'/>
+	           </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th>拼团人数<font color="red">*</font>：</th>
+	           <td colspan='3'>
+	               <input type='text' id='tuanNum' name='tuanNum' class='ipt' maxLength='8' data-rule='拼团人数:required;integer[+]' value='{$object["tuanNum"]}'/>
+	           </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th>拼团有效时间（小时）<font color="red">*</font>：</th>
+	           <td colspan='3'>
+	               <input type='text' id='tuanTime' name='tuanTime' class='ipt' maxLength='8' data-rule='拼团有效时间:required;integer[+]' value='{$object["tuanTime"]}'/>
+	           </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th>拼团说明：</th>
+	           <td colspan='3'>
+	               <textarea id='tuanDesc' class='ipt' style='width:70%;height:150px;'>{$object["tuanDesc"]}</textarea>
+	           </td>
+           </tr>
+           <tr>
+             <td colspan='2' style='text-align:center;padding:20px;'>
+                 <a class='s-btn' onclick="save()">保&nbsp;存</a>&nbsp;&nbsp;
+                 <a class='s-btn' onclick='javascript:location.reload();'>重&nbsp;置</a>
+             </td>
+           </tr>
+        </table>
+        </form>
+   </div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script src="__STATIC__/plugins/layer/laydate.js"></script>
+<script type="text/javascript" src="__STATIC__/plugins/validator/jquery.validator.min.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/addons/pintuan/view/{$addonStyle}/home/shops/shop.js?v={$v}"></script>
+{/block}

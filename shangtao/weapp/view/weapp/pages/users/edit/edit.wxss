@@ -1,0 +1,206 @@
+/* pages/accountManage/accountManage.wxss */
+@import "../../common/we-cropper/we-cropper.wxss";
+page{
+  width: 100%;
+  height: 100%;
+  background: #F6F6F8;
+
+}
+.container{
+  width: 100%;
+  height: auto;
+  font-size: 35rpx;
+  color: #777777;
+  background: white;
+}
+/*头像管理*/
+.user-head{
+  width: 100%;
+  height: 180rpx;
+  border-top: 1rpx solid #E8E8E8;
+}
+.user-head .left{
+  width: auto;
+  height: 88rpx;
+  border: 1rpx solid transparent;
+  margin-top: 40rpx;
+  margin-left: 30rpx;
+  line-height: 80rpx;
+  float: left;
+}
+.user-head .right{
+  width: 25rpx;
+  height: 25rpx;
+  float: right;
+  margin-top: 80rpx;
+  margin-right: 20rpx;
+  border-right:5rpx solid #C7C7CC;
+  border-bottom:5rpx solid #C7C7CC;  
+  transform: rotate(-45deg);
+}
+.user-head .between{
+  width: 125rpx;
+  height: 120rpx;
+  float: right;
+  margin-top: 30rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.user-head .between image{
+   width: 100%;
+  height: 100%;
+}
+/*用户名管理*/
+.user-name{
+  width: 100%;
+  height: 88rpx;
+  border-top: 1rpx solid #E8E8E8;
+}
+.user-name .left{
+  width: auto;
+  height: 50rpx;
+  border: 1rpx solid transparent;
+  margin-top: 15rpx;
+  margin-left: 30rpx;
+  float: left;
+}
+.user-name .right{
+  width: auto;
+  height: 50rpx;
+  border: 1rpx solid transparent;
+  margin-top: 15rpx;
+  margin-right: 30rpx;
+  float: right;
+}
+/*昵称*/
+.user-nickName{
+  width: 100%;
+  height: 88rpx;
+  border-top: 1rpx solid #E8E8E8;
+}
+.user-nickName .left{
+  width: auto;
+  height: 50rpx;
+  border: 1rpx solid transparent;
+  margin-top: 15rpx;
+  margin-left: 30rpx;
+  float: left;
+}
+.user-nickName .between{
+  width: autorpx;
+  height: 50rpx;
+  border: 1rpx solid transparent;
+  float: right;
+  margin-top: 20rpx;
+  margin-right: 10rpx;
+}
+.user-nickName .right{
+  width: 25rpx;
+  height: 25rpx;
+  float: right;
+  margin-top: 30rpx;
+  margin-right: 20rpx;
+  border-right:5rpx solid #C7C7CC;
+  border-bottom:5rpx solid #C7C7CC;  
+  transform: rotate(-45deg);
+}
+/*mask*/  
+.drawer_screen {  
+  width: 100%;  
+  height: 100%;  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  z-index: 1000;  
+  background: #000;  
+  opacity: 0.4;  
+  overflow: hidden;  
+} 
+/*动画弹窗*/
+.animation-model{
+   width: 100%;
+   height: 500rpx;
+   background: white;
+   position: fixed;
+   bottom: 0rpx;
+   z-index: 1001;
+}
+.animation-model .title{
+  width: 100%;
+  height: 80rpx;
+}
+.animation-model .content{
+  width: 100%;
+  height: 428rpx;
+  background: #F6F6F8;
+  position: relative;
+  border: 1rpx solid #E8E8E8;
+}
+.animation-model .title .title-content{
+  width: auto;
+  float: left;
+  margin-left: 300rpx;
+  margin-top: 15rpx;
+  height: 60%;
+  color: black;
+}
+.animation-model icon{
+  float: right;
+  width: 50rpx;
+  height: 50rpx;
+  margin-top: 13rpx;
+  margin-right: 10rpx;
+}
+.animation-model .button{
+  width: 100%;
+  height: 80rpx;
+  background: white;
+  position: fixed;
+  bottom: 10rpx;
+  z-index: 1004;
+}
+.animation-model button{
+  width: 90%;
+  height: 100%;
+  color: white;
+  background: #e00102; 
+}
+/*模块1*/
+.animation-model .nickName{
+width: 90%;
+height: 80rpx;
+border: 1rpx solid #CCCCCC;
+border-radius: 10rpx;
+position: relative;
+left: 35rpx;
+top: 50rpx;
+}
+.animation-model .nickName .input{
+
+}
+.animation-model .nickName input{
+  width: 90%;
+  height: 80rpx;
+  margin-left: 10rpx;
+  
+}
+/*模块2*/
+.animation-model .userGender .strip{
+  width: 100%;
+  height: 80rpx;
+  background: white;
+  border-bottom: 1rpx solid #E8E8E8;
+}
+.animation-model .userGender .strip .left{
+  width: auto;
+  height: 55rpx;
+  float: left;
+  margin-top: 12rpx;
+  margin-left: 20rpx;
+  color: #000;
+}
+.animation-model .userGender .strip .right{
+  width: 50rpx;
+  height: 50rpx; 
+}

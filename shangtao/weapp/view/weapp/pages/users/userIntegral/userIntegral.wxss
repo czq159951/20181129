@@ -1,0 +1,127 @@
+
+page{
+  width: 100%;
+  height: 90%;
+  background:#F6F6F8;
+}
+.container{
+  width: 100%;
+  height: auto;
+}
+.top-show{
+  width: 100%;
+  height: 140rpx;
+  font-size: 30rpx;
+  position: relative;
+}
+.top-show .number{
+  width: auto;
+  color:white;
+  position: absolute;
+  bottom: 10rpx;
+  right: 10rpx;
+}
+.top-show .number1{
+  width: auto;
+  color:white;
+  position: absolute;
+  bottom: 50rpx;
+  right: 10rpx;
+}
+.top-show image{
+  width: 100%;
+  height: 100%;
+}
+.top-show .title{
+  width: 340rpx;
+  height: 50rpx;
+  border: 1rpx solid white;
+  border-radius: 10rpx;
+  margin: 0rpx auto;
+  margin-top: 20rpx;
+  text-align: center;
+  font-size: 20rpx;
+  color: white;
+}
+.record{
+  width: 100%;
+  height: auto;
+}
+.record .title{
+  width: 100%;
+  height: 60rpx;
+  border-bottom: 1rpx solid #EAEAEA;
+  margin-top: 15rpx;
+  line-height: 2.0;
+  padding-left:30rpx; 
+  font-weight: bold;
+  font-size: 30rpx;
+}
+.record .content{
+  width: 100%;
+  height: 114rpx;
+  border-bottom: 1rpx solid #EAEAEA;
+}
+.record .content .left{
+  float: left;
+  font-size: 30rpx;
+  padding: 15rpx;
+  color: #59595C;
+  width: 68vw;
+  margin-left: 20rpx;
+}
+.record .content .left .time{
+  margin-top: 10rpx;
+  color: #8C92A3;
+  font-size: 25rpx;
+}
+.record .content .right{
+  float: right;
+  color: red;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-top:30rpx;
+  margin-right: 40rpx; 
+}
+.record .content  .right2{
+  color: green;
+}
+/*mask*/  
+.drawer_screen {  
+  width: 100%;  
+  height: 100%;  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  z-index: 1000;  
+  background: #000;  
+  opacity: 0.4;  
+  overflow: hidden; 
+  border-top: 1rpx solid white; 
+}
+.wst-animationModel{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1001;
+  top: 0rpx;
+  background: #F6F6F8;
+}
+.wst-animationModel .content{
+  width: 100%;
+  height: auto;
+  font-size: 30rpx;
+}
+.wst-animationModel button{
+  width: 30%;
+  height: 60rpx;
+  font-size: 30rpx;
+  background: #D80000;
+  color: white;
+  margin-top: 50rpx;
+  line-height: 60rpx;
+  border: 1rpx solid red;
+}
+.wst-animationModel .button-hover{
+  background: #DB4C4C;
+}

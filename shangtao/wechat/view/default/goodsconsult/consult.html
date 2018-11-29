@@ -1,0 +1,39 @@
+{extend name="default/base" /}
+{block name="title"}发表咨询 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/consult.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>发表咨询</h1>
+    </header>
+{/block}
+{block name="main"}
+<input type="hidden" name="goodsId" value="{$goodsId}" id="goodsId" autocomplete="off">
+    <section class="ui-container">
+      <ul class="gcplist">
+        <li>
+          <label>
+            咨询类型：
+            <select id="consultType">
+              {volist name=":WSTDatas('COUSULT_TYPE')" id="vo"}
+              <option name="pointType" value="{$vo.dataVal}">{$vo.dataName}</option>
+              {/volist}
+            </select>
+          </label>
+        </li>
+        <li>咨询内容：</li>
+        <li><textarea id="consultContent"></textarea></li>
+        <li style="text-align:center;">
+            <button class="consult-button" onclick="consultCommit();">
+                提交
+            </button>
+        </li>
+      </ul>
+    </section>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/goodsconsult/consult.js?v={$v}'></script>
+{/block}

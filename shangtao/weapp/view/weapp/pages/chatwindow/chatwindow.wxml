@@ -1,0 +1,31 @@
+<!--pages/chatWindow/chatWindow.wxml-->
+<view class='wst-container'>
+  <view  class='remind-model' wx:if="{{!hasData}}">
+    <view class='image' ><image src='/image/nothing-message.png' class="img"></image></view>
+    <view class='content'>暂无购买咨询~</view>
+    <view class="button" bindtap='addInfo' style='margin-top:40rpx;'><button>我要咨询</button></view>
+  </view>
+<block wx:if="{{hasData}}">
+<block wx:for="{{InfoArray}}">
+ <view class='wst-content'>
+  <view class='wst-border'>
+   <view class='wst-top'>
+    <view class='wst-name'>{{item.loginName == null?'游客':item.loginName}}</view>
+    <view class='wst-time'>{{item.createTime}}</view>
+   </view>
+   <view class='wst-bottom'>
+    <view class='wst-img'><image src="/image/QA-icon1.png" mode='aspectFit'></image></view>
+    <view class='wst-text'>{{item.consultContent}}</view>
+   </view>
+   <view class='wst-bottom' wx:if="{{item.reply != ''}}">
+    <view class='wst-img'><image src="/image/QA-icon2.png" mode='aspectFit'></image></view>
+    <view class='wst-text'>{{item.reply}}</view>
+   </view>
+  </view>
+ </view>
+</block>
+ <view class='wst-button' bindtap='addInfo'>
+   <button>点击添加</button>
+  </view>
+</block>
+</view>

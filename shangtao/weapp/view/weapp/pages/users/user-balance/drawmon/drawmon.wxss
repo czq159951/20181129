@@ -1,0 +1,122 @@
+@import "../account-mng/addaccount/addaccount.wxss";
+
+page{
+  width: 100%;
+  height: 100%;
+  background: #F2F2F2;
+}
+.container{
+  width: 100%;
+  height: auto;
+}
+.info-model{
+   width: 100%;
+   height: auto;
+   overflow: hidden;
+   font-size: 33rpx;
+   margin-top: 20rpx;
+   background: white;
+}
+.info-model .border{
+  width: 100%;
+  height: auto;
+  margin-bottom: 30rpx;
+  margin-top: 20rpx;
+}
+.main-model1{
+  width: 95%;
+  height: 72rpx;
+  margin-top: 20rpx;
+  margin-left: 15rpx;
+}
+.main-model{
+  margin:20rpx 20rpx 20rxp;
+}
+.main-model1 .content{
+  width: 178rpx;
+  height: 72rpx;
+  float: left;
+  line-height: 72rpx;
+  text-align: center;
+}
+.main-model .input{
+  width: 510rpx;
+  height: 62rpx;
+  float: left;
+  border: 1rpx solid #A0A0A0;
+  border-radius: 5rpx;
+}
+input{
+  width: 97%;
+  height: 100%;
+}
+.remind{
+  color: red;
+  line-height: 2.0;
+}
+/*按钮*/
+button{
+  width: 80%;
+  height: 80rpx;
+  margin-top: 40rpx;
+  background: #DE0202;
+  color: white;
+  line-height: 2.0;
+}
+.main-model1 .border{
+  width: 510rpx;
+  height: 72rpx;
+  float: left;
+  margin-top: 5rpx;
+  border: 1rpx solid #A0A0A0;
+  border-radius: 5rpx;
+}
+.main-model1 .border1{
+   width: 500rpx;
+  height: 68rpx;
+  border: 1rpx solid #7E7E7E;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  line-height: 72rpx;
+  padding-left: 10rpx;
+  display: flex;
+  position: relative;
+}
+.main-model1 .border1 .text{
+  width: 460rpx;
+  height: 100%;
+  overflow: hidden;
+} 
+.main-model1 .border1 .icon{
+  position: absolute;
+  left: 480rpx;
+  font-size: 20rpx;
+}
+.button .button-hover {
+color:#E896A0;
+background-color:#E2574D;
+
+}
+.menuList{
+  position: fixed;
+  top: 280rpx;
+  left: 60rpx;
+  z-index: 1002;
+  width: 600rpx;
+  height: 700rpx;
+  background: white;
+  overflow: hidden;
+}
+::-webkit-scrollbar{
+  height: 0rpx;
+  width: 0rpx;
+}
+
+.top-remind{
+  padding: 40rpx 20rpx 40rpx 20rpx;
+  background: #ffffff;
+}
+.top-remind .number{
+  padding: 10rpx 20rpx 0 0;
+  color: #df0202;
+}

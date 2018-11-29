@@ -1,0 +1,35 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ADMIN__/wxusers/wxusers.js?v={$v}" type="text/javascript"></script>
+<script>
+$(function(){initGrid();})
+</script>
+{/block}
+{block name="main"}
+<div class="wst-toolbar">
+   <input type='text' id='key' placeholder='用户名称'/>  
+   <button class="btn btn-primary" onclick='javascript:loadGrid(0)'><i class='fa fa-search'></i>查询</button>
+{if WSTGrant('WX_ZDYCD_00')}
+   <button class="btn btn-success f-right" style="margin-right:10px;" onclick='javascript:wxSynchro();'><i class='fa fa-cloud-upload'></i>与微信用户管理同步</button>
+{/if}
+   <div style='clear:both'></div>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<div id='wxusersBox' style='display:none'>
+  <form id='wxusersForm' autocomplete="off">
+  <table class='wst-form wst-box-top'>
+     <tr>
+        <th width='100'>用户备注<font color='red'>*</font>：</th>
+        <td><input type='text' id='userRemark' name="userRemark" class='ipt' maxLength='20' style='width:200px;' data-msg-required="请输入备注" data-tip="请输入备注"/></td>
+     </tr>
+  </table>
+  </form>
+</div>
+{/block}

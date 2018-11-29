@@ -1,0 +1,256 @@
+<import src="../../addons/closure/reward/reward.wxml"/>
+<import src="../../addons/closure/coupon/coupon.wxml"/>
+<import src="../common/parse/parse.wxml"/>
+<view class="wst-mask" bindtap="inMore" data-statu="0" wx:if="{{moreStatus}}"></view>
+<view class='container'>
+<!--顶部导航条-->
+ <view class='navigetor-top' wx:if="{{moreGoods==0}}">
+   <view class="{{storeStatus == true?'lefted' : 'left'}}" bindtap='layoutCut' id='1'>商品</view>
+   <view class="{{detailsStatus == true?'betweened' : 'between'}}" bindtap='layoutCut' id='2'>详情</view>
+   <view class="{{commentStatus == true?'righted' : 'right'}}" bindtap='layoutCut' id='3'>评论</view>
+   <view class='commocart' bindtap='toCart'>
+    <image src='/image/shopping22.png' class="img"></image>
+    <i class="num" wx:if="{{data.carts>0}}">{{data.carts}}</i>
+   </view>
+ </view>
+<!--基本版面-->
+<scroll-view wx:if="{{storeStatus}}" scroll-y="{{backStatus}}" bindscroll="onRoll" style="height:100%;">
+<!--轮播图-->
+ <view class='slider-model'>
+  <swiper indicator-dots='true' autoplay='true' circular='true' interval='5000' indicator-active-color='#ff6666' indicator-color='rgba(0,0,0,.2)'>
+   <block wx:for="{{data.gallery}}" wx:for-item="gallery">
+    <swiper-item>
+      <image src="{{domain}}{{gallery}}" mode='aspectFill'></image>
+    </swiper-item>
+  </block>
+  </swiper>
+  <view class="wst-go-mores" bindtap="inMore" data-statu="1"><i>···</i></view>
+    <view class="wst-go-more" wx:if="{{moreStatus}}"><i class="arrow"></i>
+      <view class="more">
+          <view class="term" bindtap="toIndex"><view class="column line"><i class="home"></i><p>首页</p></view></view>
+          <view class="term" bindtap="toClassify"><view class="column line"><i class="category"></i><p>分类</p></view></view>
+          <view class="term" bindtap="toCart"><view class="column line"><i class="cart"></i><p>购物车</p></view></view>
+          <view class="term" bindtap="toAttension"><view class="column line"><i class="follow"></i><p>关注</p></view></view>
+          <view class="term" bindtap="toUser"><view class="column"><i class="user"></i><p>我的</p></view></view>
+      </view>
+	  </view>
+ </view>
+<!--商品标题-->
+ <view class='commodity-title' wx:if="{{moreGoods==1}}">{{data.goodsName}}</view>
+<!--商品信息-->
+ <view class='commodity-info' wx:if="{{moreGoods==1}}">
+  <view class='price'><i>¥ </i>{{data.shopPrice}}<span class='market'>¥{{data.marketPrice}}</span></view>
+  <view class='info'>
+    <view class="term" style="text-align: left;">快递: {{data.isFreeShipping==1?'免运费':data.shop.freight}}</view>
+    <view class="term" style="text-align: center;">销量: {{data.saleNum}}</view>
+    <view class="term" style="text-align: right;">{{data.shop.areas.areaName1}}{{data.shop.areas.areaName2}}</view>
+  </view>
+ </view>
+ <view class="wst-term">
+  <template is="reward-goods" data="{{rewardData}}" wx:if="{{addons.Reward==1}}"/>
+  <template is="coupon-goods" data="{{coupon,couponData,couponStatus}}" wx:if="{{addons.Coupon==1}}"/>
+  <!--积分-->
+  <view class='comment' wx:if="{{confInfo.isOrderScore==1}}">
+    <view class='title'>积分 <view class='strip'>|</view> 购买即可获得{{data.shopPrice|Int}}积分</view>
+    <view class='radius'>. . .</view>
+  </view>
+  <view class='comment' bindtap='parameter' wx:if="{{data.attrs!=''}}" data-statu="open">
+    <view class='title'>产品参数</view>
+    <view class='radius'>. . .</view>
+  </view>
+  <!--评论-->
+  <view class='comment' bindtap='backTrackComent'>
+    <view class='title'>商品评价(<view class='number'> {{data.appraiseNum}} </view>)</view>
+    <view class='radius'>. . .</view>
+  </view>
+ </view>
+<!--店铺详情-->
+ <view class='storedetail' data-shopid="{{data.shop.shopId}}" bindtap='store'>
+  <view class='image'>
+    <image src='{{domain}}{{data.shop.shopImg}}' mode='aspectFit'></image>
+  </view>
+  <view class='info'>
+   <view class='name'>{{data.shop.shopName}}</view>
+   <view class='variety'>主营：{{data.shop.cat}}</view>
+  </view>
+  <view class="wst-clear"></view>
+ </view>
+<!--评分详情-->
+ <view class='graded'>
+  <view class='content'><view class='between' style="text-align:left;">商品评分:<text class='size'>{{data.shop.goodsScore}}</text></view><view class='strip'>|</view><view class='between' style="text-align:center;">时效评分:<text class='size'>{{data.shop.timeScore}}</text></view><view class='strip'>|</view><view class='between' style="text-align:right;">服务评分:<text class='size'>{{data.shop.serviceScore}}</text></view></view>
+ </view>
+<!--资讯-->
+ <view class='message' bindtap="chatWindow"  data-statu="open" data-goodsId="{{goodsId}}">
+  <view class='image'></view>
+  <view class='content'>购买咨询</view>
+  <view class="icon"></view>
+ </view>
+ <view class="wst-consult" wx:if="{{data.consult.consultContent}}">
+    <view class="content"><image src="/image/QA-icon1.png" mode='aspectFit'></image>{{data.consult.consultContent}}</view>
+    <view class="content" wx:if="{{data.consult.reply}}"><image src="/image/QA-icon2.png" mode='aspectFit'></image>{{data.consult.reply}}  </view>
+ </view>
+<!--推荐商品-->
+ <view class='recommend'>
+<!--分隔栏-->
+  <view class='background'>
+   <view class='image'>
+    <image src='/image/img_titlebg.png'><view class='content'>猜你喜欢</view></image>
+   </view>
+  </view>
+<!--商品模块-->
+<block wx:for="{{data.like}}" wx:for-item="like">
+  <navigator open-type='navigate' url='../goods-detail/goods-detail?goodsId={{like.goodsId}}'>
+    <view class='commodity'>
+      <view class='image'><image src='{{domain}}{{like.goodsImg}}'></image></view>
+      <view class='title'>{{like.goodsName}}</view>
+      <view class='price'>¥ {{like.shopPrice}}</view>
+    </view>
+  </navigator>
+</block>
+</view>
+</scroll-view>
+<!--详情版面-->
+<scroll-view wx:if="{{detailsStatus}}" scroll-y="{{backStatus}}" class="wst-back">
+  <view class='detailsStatus'>
+    <template is="wxParse" data="{{wxParseData:goodsDesc.nodes}}"/>
+  </view>
+  <view style="height:160rpx;"></view>
+</scroll-view>
+<!--评论版面-->
+<view wx:if="{{commentStatus}}">
+   <view class="digital-layer">
+     <view class="model" style="color:{{type == ''?'#de0202':''}};"  bindtap='chooseAppraises' data-type="">
+         <view>全部</view>
+         <view>{{appraises.sum?appraises.sum:0}}</view>
+     </view>
+     <view class="model" style="color:{{type == 'best'?'#de0202':''}};"   bindtap='chooseAppraises' data-type="best">
+         <view>好评</view>
+         <view>{{appraises.bestNum?appraises.bestNum:0}}</view>
+     </view>
+     <view class="model" style="color:{{type == 'good'?'#de0202':''}};"  bindtap='chooseAppraises' data-type="good">
+         <view>中评</view>
+         <view>{{appraises.goodNum?appraises.goodNum:0}}</view>
+     </view>
+     <view class="model" style="color:{{type == 'bad'?'#de0202':''}};"  bindtap='chooseAppraises' data-type="bad">
+         <view>差评</view>
+         <view>{{appraises.badNum?appraises.badNum:0}}</view>
+     </view>
+     <view class="model" style="color:{{type == 'pic'?'#de0202':''}};"  bindtap='chooseAppraises' data-type="pic">
+         <view>晒图</view>
+         <view>{{appraises.picNum?appraises.picNum:0}}</view>
+     </view>
+   </view>
+<scroll-view wx:if="{{commentStatus}}" scroll-y="{{backStatus}}" bindscrolltolower="loadEvaluate" class="wst-back">
+ <view class='commentStatus' wx:if="{{evaluate!=''}}">
+<!--有评论列表-->
+    <view class='wst-go-evaluate' wx:for="{{evaluate}}" wx:for-item="eva">
+    <view class='top'>
+      <image src="{{eva.userPhoto}}" mode="aspectFit" class="headPhoto"></image>
+      <view class='userName'>{{eva.loginName}}</view>
+      <view class='userGrade'><image src="{{domain}}{{eva.userTotalScore}}" mode='aspectFit'></image></view>
+      <view class='commentGrade' wx:for="{{eva.avgScores}}"><image src='/image/img_pentagon.png'></image></view>
+      <view class='commentTime'>{{eva.createTime}}</view>
+    </view>
+    <view class='bottom'>
+      <view class='commentContent'>{{eva.content}}</view>
+      <view class='imageslist'>
+        <view class='images' wx:for="{{eva.images}}" wx:for-item="img"><image src='{{domain}}{{img}}' class="img" bindtap='preview' data-img="{{domain}}{{img}}" data-id="{{eva.id}}"></image></view>
+        <view class='wst-clear'></view>
+      </view>
+      <view class='spec'>{{eva.goodsSpecNames}}</view>
+    </view>
+    </view>
+    <view style="height:100rpx;"></view>
+  </view>
+</scroll-view>
+
+  <view  class='remind-model'  wx:if="{{evaluate==''}}">
+    <view class='image' ><image src='/image/nothing-follow-goods.png' class="img"></image></view>
+    <view class='content'>对不起，没有相关评论</view>
+  </view>
+</view>
+<!--底部导航条-->
+ <view class='navigation-bottom'>
+  <view class='left-model'>
+    <view class="list">
+      <view class='term' bindtap='toCall' style="border-right: 2rpx solid rgba(0,0,0,.05);">
+        <view class='image'><image src='/image/icon_contect.png'></image></view>
+        <view class='content'>客服</view>
+      </view>
+      <view class='term' data-shopid="{{data.shop.shopId}}" bindtap='store' style="border-right: 2rpx solid rgba(0,0,0,.05);">
+        <view class='image'><image src='/image/icon_store.png'></image></view>
+        <view class='content'>店铺</view>
+      </view>
+      <view class='term' bindtap='selectStatus' >
+        <view wx:if="{{favGood > 0}}" class='image'><image src='/image/icon_attentioned.png'></image></view>
+        <view wx:else class='image'><image src='/image/icon_attention.png'></image></view>
+        <view class='content'>关注</view>
+      </view>
+    </view>
+  </view>
+  <view class='right-model' wx:if="{{goodsType==0}}">
+    <button class='right' bindtap="powerDrawer" data-statu="open" data-type="1">立即购买</button>  
+    <button class='left' bindtap="powerDrawer" data-statu="open" data-type="0">加入购物车</button>
+  </view>
+  <view class='right-model' wx:if="{{goodsType==1}}">
+    <button class='whole' bindtap="powerDrawer" data-statu="open" data-type="1">立即购买</button>  
+  </view>
+ </view>
+</view>
+
+<!--参数-->
+ <view wx:if="{{parameterStatus}}">
+<!--mask-->  
+  <view class="wst-mask" bindtap="parameter" data-statu="close" wx:if="{{parameterStatus}}"></view>  
+<!--content-->  
+<!--使用animation属性指定需要执行的动画-->  
+ <view animation="{{parameterData}}" class="wst-go-window" wx:if="true">
+<!--drawer content-->  
+   <view class='title'>产品参数
+    <icon type='cancel' color='#B1B1B1' size='28' bindtap="parameter" data-statu="close" class="icon"></icon>
+   </view>
+   <scroll-view class="content" scroll-y="true">
+      <view wx:for="{{data.attrs}}" wx:for-item="attrs" class="attrs">{{attrs.attrName}}：{{attrs.attrVal}}<br/></view>
+   </scroll-view>
+  </view>  
+ </view>
+
+<!--加入购物车-->
+ <view wx:if="{{showModalStatus}}">
+<!--mask-->
+  <view class="wst-mask" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>  
+<!--content-->  
+<!--使用animation属性指定需要执行的动画-->  
+ <view animation="{{animationData}}" class="drawer_attr_box {{data.isSpec == 1?'drawer_attr_box2':''}}" wx:if="true">
+<!--drawer content-->  
+   <view class='model-top'>
+    <view class='image'><image src='{{domain}}{{descImage}}' mode='aspectFit'></image></view>
+    <view class='content'>
+     <view class='title'>{{data.goodsName}}</view>
+     <view class='price'>¥{{goodsPrice}}<p class='old-price'>¥{{marketPrice}}</p></view>
+    </view>
+     <view class='icon_out' bindtap="powerDrawer" data-statu="close"><icon type='cancel' color='#B1B1B1' size='28'></icon></view>
+   </view>
+    <scroll-view class='wst-go-spec' scroll-y="true">
+      <view class="term" wx:for="{{data.spec}}" wx:for-item="spec" wx:if="{{spec.isImg==1}}">
+        <view class="spec">{{spec.name}}</view>
+          <image class="img {{arraySpec[list.catId] == list.itemId?'active':''}}" wx:for="{{spec.list}}" wx:for-item="list" src="{{domain}}{{list.itemImg}}" data-catid="{{list.catId}}" data-itemid="{{list.itemId}}" data-itemimg="{{list.itemImg}}" bindtap="switchSpec" ></image>
+          <view class='wst-clear'></view>
+      </view>
+      <view class="term" wx:for="{{data.spec}}" wx:for-item="spec" wx:if="{{spec.isImg==0}}">
+        <view class="spec">{{spec.name}}</view>
+          <view class="option {{arraySpec[list.catId] == list.itemId?'active':''}}" wx:for="{{spec.list}}" wx:for-item="list" data-catid="{{list.catId}}" data-itemid="{{list.itemId}}" bindtap="switchSpec">{{list.itemName}}</view>
+          <view class='wst-clear'></view>
+      </view>
+    </scroll-view>
+   <view class='model-bottom'>
+    <view class='border'>
+     <view class='content'>数量</view>
+     <view class='surplus'><view class='left'>库存：<view class='number1'>{{goodsStock}}{{data.goodsUnit}}</view></view><view class='right'><view class='icon_subtract' bindtap='changeNum' data-mode="reduce" data-min="{{minStock}}" data-max="{{maxStock}}">-</view><view class='number'>{{num}}</view><view class='icon_add' bindtap='changeNum' data-mode="plus" data-min="{{minStock}}" data-max="{{maxStock}}">+</view></view></view>
+    </view>
+   </view>
+   <view class='button'>
+    <button bindtap='join' data-type="{{cartsType}}" >确定</button>
+   </view>
+  </view>  
+ </view>

@@ -1,0 +1,127 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}我的 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/user.css?v={$v}">
+<link rel="stylesheet"  href="__ROOT__/addons/distribut/view/wechat/users/distribut.css?v={$v}">
+{/block}
+{block name="header"}
+    {php}
+		$we = WSTWechat();
+		$datawx = $we->getJsSignature(request()->scheme().'://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+	{/php}
+{/block}
+{block name="main"}
+    <section class="ui-container">
+        	<div class="ui-row-flex wst-users_info">
+	        	<div class="ui-row-flex" style="height:0.7rem">
+		     		<div class="ui-col ui-col-2">
+		     			<div class="wst-users_infol" id="previewImages">
+		     			    <img src="{:WSTUserPhoto($user['userPhoto'])}" class="wst-useri_portrait" id="imgurl">
+		     			</div>
+		     			<p class="wst-users_infor wst-users_infortop">
+		     			{:$user['userName']?$user['userName']:$user['loginName']}
+		     			{if ($user['ranks']['rankName']!='')}<img src="__ROOT__/{$user['ranks']['userrankImg']}">{/if}
+		     			</p>
+		     			{if ($user['ranks']['rankName']!='')}
+		     			<p class="wst-users_infor wst-users_inforbo">{$user['ranks']['rankName']}</p>
+		     			{/if}
+		     		</div>
+				</div>
+			</div>
+			<div class="ui-row-flex ui-whitespace wst-sha_icon">
+			    <div class="ui-col ui-col make">
+			        <button type="button" class="ui-btn-lg button" onclick="WST.dialogShare();">二维码分享</button>
+			    </div>
+			    <div class="ui-col ui-col make">
+			        <button type="button" class="ui-btn-lg button" onclick="WST.share();">立刻赚钱</button>
+			    </div>
+			</div>
+			<div class="ui-row-flex ui-whitespace wst-sha_icon2">
+			    <div class="ui-col ui-col">
+				    <p class="number">{$user["userCnt"]}</p>
+				    <p>总用户</p>
+			    </div>
+			    <div class="ui-col ui-col">
+			    	<p class="number">¥ {$user["distributMoney"]}</p>
+			    	<p>总佣金</p>
+			    </div>
+			</div>
+			<a href="{:url('addon/distribut-distribut-wechatdistributmoneys')}">
+			<ul class="ui-list ui-list-link wst-users_list ui-list-active">
+			    <li><div class="wst-list-thumb-sus">
+			            <span class="wst-sha_chart1"></span>
+			        </div>
+			        <div class="ui-list-info">
+			            <h5 class="ui-nowrap">佣金信息</h5>
+			    </div></li>
+			</ul></a>
+			<a href="{:url('addon/distribut-distribut-wechatdistributusers')}">
+			<ul class="ui-list ui-list-link wst-users_list ui-list-active">
+			    <li><div class="wst-list-thumb-sus">
+			            <span class="wst-sha_chart2"></span>
+			        </div>
+			        <div class="ui-list-info">
+			            <h5 class="ui-nowrap">用户列表</h5>
+			    </div></li>
+			</ul></a>
+        </section>
+        
+        <!--二维码对话框-->
+		<div class="ui-dialog" id="wst-di-qrcod" onclick="WST.dialogHide('qrcod');">
+		    <div class="ui-dialog-cnt wst-dialog-cnt5" style="">
+		        <div class="wst-dialog-bd">
+		            <div><div id="qrcodes"></div></div>
+		        </div>
+		    </div>        
+		</div>
+
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_WECHAT_DIALOG" /}<!-- 对话框模板 -->
+	{include file="$LAYOUT_WECHAT_FOOTER" /}
+{/block}
+{block name="js"}
+<script src="{:request()->scheme()}://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type='text/javascript' src='__WECHAT__/users/user.js?v={$v}'></script>
+<script type="text/javascript" src="__STATIC__/js/qrcode.js?v={$v}"></script>
+<script>
+wx.config({
+    debug: false,
+    appId: '<?php echo $we->appId;?>', //公众号的唯一标识
+    timestamp: '<?php echo $datawx['timestamp'];?>', //生成签名的时间戳
+    nonceStr: '<?php echo $datawx['noncestr'];?>', //生成签名的随机串
+    signature: '<?php echo $datawx['signature'];?>',//签名
+    jsApiList: [ //需要使用的JS接口
+       	'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'onMenuShareQZone'
+    ]
+});
+WST.dialogShare = function(){
+	$("#wst-di-qrcod").dialog("show");
+}
+wx.ready(function(){
+	var shareData = {
+			title: '{$shareInfo["title"]}',
+			desc: '{$shareInfo["desc"]}',
+			link: '{$shareInfo["link"]}',
+			imgUrl: '{$shareInfo["imgUrl"]}'
+		};
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareTimeline(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
+	wx.onMenuShareQZone(shareData);
+});
+$(function(){
+ 	var url= "{:url('wechat/Index/index',array('shareUserId'=>base64_encode($user['userId'])),true,true)}";
+ 	//参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+ 	var qr = qrcode(10, 'H');
+ 		qr.addData(url);
+ 		qr.make();
+ 	$("#qrcodes").html(qr.createImgTag(4,4));
+});
+</script>
+{/block}

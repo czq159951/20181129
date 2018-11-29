@@ -1,0 +1,82 @@
+<link href="__ROOT__/addons/coupon/view/mobile/index/coupon.css" rel="stylesheet">
+<script id="gcoupon_script" type="text/html">
+{{# for(var i = 0; i < d.length; i++){ }}
+  <div class="coupon_item">
+        <div class="coupon_item_left">
+            <div class="coupon_left">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="coupon_left_main">
+                <div class="coupon_left_main_inner">
+                    <p class="coupon_left_txt1"><span class="yan">￥</span>{{d[i].couponValue}}</p>
+                    <span class="coupon_left_txt2">
+                    {{# if(d[i].useCondition==0){ }}
+                        无金额门槛
+                    {{# }else{  }}
+                        满{{d[i].useMoney}}可用
+                    {{# }  }}
+                    </span>
+                </div>
+            </div>
+            <div class="wst-clear"></div>
+        </div>
+        <div class="coupon_item_right">
+            <div class="coupon_item_right_inner">
+                <div class="c_item_r_left">
+                    <p class="c_item_txt1 ui-nowrap ui-whitespace">{{d[i].couponValue}}元优惠券</p>
+                    <p class="c_item_txt2 ui-nowrap ui-whitespace">
+                        {{# if(d[i].useCondition==0){ }}
+                            无金额门槛
+                        {{# }else{  }}
+                            消费满{{d[i].useMoney}}立减{{d[i].couponValue}}
+                        {{# }  }}
+                    </p>
+                    <p class="c_item_txt3 ui-nowrap ui-whitespace">&nbsp;&nbsp;</p>
+                    <p class="c_item_txt4 ui-nowrap ui-whitespace">{{d[i].startDate}}~{{d[i].endDate}}</p>
+                </div>
+                {{# if(d[i].isOut==1){  }}
+                    <a href="javascript:" class="get_btn unuse_btn">已领完</a>
+                {{# }else{  }}
+                    <a href="javascript:void(0)" onClick="getCoupon({{d[i].couponId}})"  class="get_btn">立即领取</a>
+                {{# }  }}
+                <div class="wst-clear"></div>
+            </div>
+        </div>
+        <div class="wst-clear"></div>
+    </div>
+{{#  } }}
+</script>
+	<li id='j-coupon' onclick="couponListShow()" style="display:none;">
+        <div class="ui-list-info">
+            <h5 class="ui-nowrap">
+            	<div style="float: left;">
+	            	<span class="word">领券</span>
+	            	<span class="line">|</span>
+	            </div>
+            	<div class="gc_itembox">
+            		<div class="gc_item">
+            			<div class="gc_item_left"><i></i><i></i><i></i><i></i></div>
+            			<div class="gc_item_main" id="coupon_txt1"></div>
+            			<div class="gc_item_right"><i></i><i></i><i></i><i></i></div>
+            			<div class="wst-clear"></div>
+            		</div>
+            		<div class="gc_item" id="gc_item2" style="display:none;">
+            			<div class="gc_item_left"><i></i><i></i><i></i><i></i></div>
+            			<div class="gc_item_main" id="coupon_txt2"></div>
+            			<div class="gc_item_right"><i></i><i></i><i></i><i></i></div>
+            			<div class="wst-clear"></div>
+            		</div>
+            	</div>
+            	<div class="wst-clear"></div>
+            </h5>
+        </div>
+        <span class="icon">···</span>
+    </li>
+	<div class="wst-cart-box" id="gcoupon_listbox" style="z-Index:99999;bottom:-539px;">
+		<div class="gcl_tit">
+			领优惠券
+			<div class="gcl_close" onclick="couponListHide()">X</div>
+		</div>
+		<div class="gcl_content"></div>
+	</div>
+<script type='text/javascript' src='__ROOT__/addons/coupon/view/mobile/index/goods_detail_coupon.js'></script>

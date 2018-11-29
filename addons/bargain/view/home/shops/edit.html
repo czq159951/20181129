@@ -1,0 +1,120 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}全民砍价 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<link href="__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+<style>
+input[type=text]{width:150px;}
+</style>
+<div class="wst-body"> 
+<div class="wst-shop-head"><span>全民砍价</span></div>
+<div class="wst-clear"></div>
+   <div class="wst-shop-content">
+      <form id='editform' name='editform' autocomplete="off">
+        <input type='hidden' id='bargainId' class='ipt' value='{$object["bargainId"]}'/>
+        <table class="wst-form">
+           <tr>
+             <td colspan="2">
+               <div class='wst-tips-box'>
+               <div class='icon'></div>
+               <div class='tips'>
+               1.活动商品为实物商品时，商品数量和实物商品数量无关联;商品为虚拟商品时请确保虚拟商品有足够的库存。<br/>2.若活动商品为多规格商品的话，则取推荐的规格为活动商品的规格。<br/>3.正在活动中的商品如果有修改的话，则该活动商品则需要重新审核。</div>/div>
+               <div style="clear:both"></div>
+               </div>
+             </td>
+           </tr>
+           <tr>
+             <th width='120' align='right'>&nbsp;</th>
+             <td>
+              <select id="shopCatId1" class='j-ipt' onchange="WST.shopsCats('shopCatId2',this.value,'');">
+                 <option value="">-请选择-</option>
+                 {volist name=":WSTShopCats(0)" id="vo"}
+                 <option value="{$vo['catId']}">{$vo['catName']}</option>
+                 {/volist}
+              </select>
+              <select id='shopCatId2' class='j-ipt'>
+                 <option value=''>请选择</option>
+              </select>
+          <br/>
+              <input type='text' id='goodsName' placeholder="请输入要搜索的商品名称" />
+              <a type="button" class='s-btn' onclick="searchGoods()">查&nbsp;询</a>
+             </td>
+           </tr>
+           {if $object['bargainStatus']==-1}
+           <tr class="wst-order-rate" >
+               <th width='120'>不通过原因：</th>
+             <td colspan='3' style='color:red'>
+                 {$object['illegalRemarks']}
+             </td>
+           </tr>
+           {/if}
+           <tr>
+             <th width='120' align='right'>活动商品：</th>
+             <td>
+              <select id='goodsId' class='ipt'>
+                <option value="{$object['goodsId']}">{$object['goodsName']}</option>
+              </select><br/>
+             </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th width='120'>商品原价：</th>
+               <td colspan='3'>
+                 <input type='text' id='startPrice' name='startPrice'class='ipt' maxLength='10' value='{$object["startPrice"]}' data-rule='商品价格:required;'/>
+               </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th width='120'>商品底价：</th>
+               <td colspan='3'>
+                 <input type='text' id='floorPrice' name='floorPrice'class='ipt' maxLength='10' value='{$object["floorPrice"]}' data-rule='商品底价:required;'/>
+               </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th width='120'>商品数量：</th>
+               <td colspan='3'>
+                 <input type='text' id='goodsStock' name='goodsStock' class='ipt' maxLength='8' data-rule='商品数量:required;integer[+]' value='{$object["goodsStock"]}'/>
+              </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th width='120'>砍价刀数：</th>
+               <td colspan='3'>
+                 <input type='text' id='minusNum' name='minusNum' class='ipt' maxLength='8' data-rule='商品数量:required;integer[+]' value='{$object["minusNum"]}'/>
+              </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th width='120'>每刀金额：</th>
+               <td colspan='3'>
+                 <input type='radio' name='minusType' id='minusType0' class='ipt' value='0' {if $object['minusType']==0}checked{/if}/>随机
+                 <input type='radio' name='minusType' id='minusType1' class='ipt' value='1' {if $object['minusType']==1}checked{/if}/>平均
+              </td>
+           </tr>
+           <tr class="wst-order-rate" >
+               <th width='120'>活动时间：</th>
+             <td colspan='3'>
+                 <input type='text' id='startTime' name='startTime' class='ipt laydate-icon' value='{$object["startTime"]}' onclick="laydate({format: 'YYYY-MM-DD hh:mm:ss',istime:true})"  data-rule="开始日期: required;datetime;"/>
+                 至
+                   <input type='text' id='endTime' name='endTime' class='ipt laydate-icon' value='{$object["endTime"]}' onclick="laydate({format: 'YYYY-MM-DD hh:mm:ss',istime:true})" data-rule="结束日期: required;datetime;match(gt, startTime, datetime)"/>
+             </td>
+           </tr>
+           <tr>
+             <td colspan='2' style='text-align:center;padding:20px;'>
+                 <a class='s-btn' onclick="save()">保&nbsp;存</a>&nbsp;&nbsp;
+                 <a class='s-btn' onclick='javascript:location.reload();'>重&nbsp;置</a>
+             </td>
+           </tr>
+        </table>
+      </form>
+   </div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script src="__STATIC__/plugins/layer/laydate.js"></script>
+<script type="text/javascript" src="__STATIC__/plugins/validator/jquery.validator.min.js?v={$v}"></script>
+<script src="__STATIC__/plugins/kindeditor/kindeditor.js?v={$v}" type="text/javascript" ></script>
+<script type="text/javascript" src="__ROOT__/addons/bargain/view/home/shops/shop.js?v={$v}"></script>
+<script>$(function(){initForm();})</script>
+{/block}

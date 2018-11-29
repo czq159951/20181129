@@ -1,0 +1,154 @@
+{extend name="$LAYOUT_HOME_BASE" /}
+{block name="title"}填写核对订单信息  - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="css"}
+<link href="__ROOT__/addons/auction/view/home/users/css/form.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="top"}
+  {include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="shop_apply"}
+  {include file="$LAYOUT_HOME_SHOP_APPLY" /}
+{/block}
+{block name="header"}
+  {include file="$LAYOUT_HOME_HEADER" /}
+{/block}
+{block name="main"}
+<div class="wst-container">
+  <div id="stepflex" class="stepflex">
+       <dl class="first doing">
+          <dt class="s-num">1</dt>
+          <dd class="s-text">支付拍卖出价</dd>
+          <dd></dd>
+       </dl>
+       <dl class="normal doing">
+          <dt class="s-num">2</dt>
+          <dd class="s-text">填写核对订单信息</dd>
+       </dl>
+       <dl class="last">
+          <dt class="s-num1">3</dt>
+          <dd class="s-text1">成功提交订单</dd>
+       </dl>
+    </div>
+    <div class='wst-clear'></div>
+    <div class='main-head'>填写并核对订单</div>
+    <input type='hidden' class='j-ipt' id='auctionId' value='{$auctionId}'/>
+    <input type='hidden' class='j-ipt' id='s_addressId' value='{if isset($userAddress["addressId"]) }{$userAddress["addressId"]}{/if}'/>
+    <input type='hidden' class='j-ipt' id='s_areaId' value='{if isset($userAddress["addressId"]) }{$userAddress["areaId2"]}{/if}'/>
+    <!-- 用户地址 -->
+    <div class='address-box'>
+       <div class='box-head'>收货人信息 <a class="add-addr" href="javascript:;" onclick="javascript:emptyAddress(this,1)">新增收货地址</a></div>
+       <!-- 选中地址 -->
+       <div class='j-show-box {if empty($userAddress)}hide{/if}' >
+          <div id="s_userName" class="wst-frame1 j-selected">{if isset($userAddress["addressId"]) }{$userAddress['userName']}{/if}<i></i></div>
+          <div class="address" onmouseover="addrBoxOver(this)" onmouseout="addrBoxOut(this)">
+            <span id='s_address'>
+            {if isset($userAddress["addressId"]) }
+            {$userAddress['userName']}&nbsp;&nbsp;&nbsp;{$userAddress['areaName']}&nbsp;&nbsp;{$userAddress['userAddress']}&nbsp;&nbsp;{$userAddress['userPhone']}
+            {/if}
+            </span>
+            &nbsp;&nbsp;
+            <span id="isdefault" {if(isset($userAddress['isDefault'])&&($userAddress['isDefault']==1))} class="j-default">默认地址{else /} >{/if}</span>
+            <div class="operate-box">
+              <a href="javascript:void(0)" onclick="javascript:toEditAddress({if isset($userAddress["addressId"]) }{$userAddress["addressId"]}{/if},this,1,1,1)">编辑</a>&nbsp;&nbsp;
+            </div>
+          </div>
+                    
+          <div class='wst-clear'></div>
+
+          <div class="address">
+            <a class="wst-lfloat" href='javascript:void(0)' onclick='javascript:showEditAddressBox()' style=''>更多地址</a>
+          </div>
+
+       </div>
+       <!-- 地址列表  -->
+       <ul class='j-list-box hide' id='addressList'></ul>
+
+       <!-- 新增编辑地址 -->
+       <div class='j-edit-box {if !empty($userAddress)}hide{/if}'>
+          <form id='addressForm' autocomplete='off'>
+            <input type='hidden' class='j-eipt' id='addressId' value=''/>
+            <div class='rows'>
+                <div class='label'>收货人<font color='red'>*</font>：</div>
+                <div class='field'><input type='text' class='j-eipt' id='userName' maxLength='25'/></div>
+                <div class='wst-clear'></div>
+            </div>
+            <div class='rows'>
+                <div class='label'>收货地址<font color='red'>*</font>：</div>
+                <div class='field'>
+                <select id="area_0" class='j-areas' level="0" onchange="WST.ITAreas({id:'area_0',val:this.value,isRequire:true,className:'j-areas'});">
+              <option value="">-请选择-</option>
+              {volist name="areaList" id="vo"}
+              <option value="{$vo['areaId']}">{$vo['areaName']}</option>
+              {/volist}
+          </select>
+                <input type='text' class='j-eipt' id='userAddress' style='width:300px' maxLength='200'/>
+                </div>
+                <div class='wst-clear'></div>
+            </div>
+            <div class='rows'>
+                <div class='label'>联系电话<font color='red'>*</font>：</div>
+                <div class='field'><input type='text' id='userPhone' class='j-eipt' name="addrUserPhone" maxLength='50'/>  </div>
+                <div class='wst-clear'></div>
+            </div>
+            <div class='rows'>
+                <div class='label'>是否默认地址<font color='red'>*</font>：</div>
+                <div class='radio-box'>
+                  <label style='margin-right:36px;'>
+                     <input type='radio' name='isDefault' value='1' checked class='j-eipt wst-radio' id="isDefault1"/><label class="mt-1" for="isDefault1"></label>是
+                  </label>
+                  <label>
+                     <input type='radio' name='isDefault' value='0' class='j-eipt wst-radio' id="isDefault2"/><label class="mt-1" for="isDefault2"></label>否
+                  </label>
+                </div>
+                <div class='wst-clear'></div>
+            </div>
+            <div class='rows'>
+                <a href='javascript:void(0)' class='wst-cart-reda' id='saveAddressBtn' onclick='javascript:editAddress()' style='width:105px;line-height:33px;padding:6px 15px'>保存收货人地址</a>
+            </div>
+          </form>
+       </div>
+    </div>
+    <div class='cart-box2'>
+    <!-- 送货方式 -->
+      <div class='pay-boxs'>
+         <div class='box-head'>送货方式</div>
+         <div class="wst-list-box">
+           <div class="wst-frame2 j-selected" onclick="javascript:changeDeliverType(0,'deliverType',this)">快递运输<i></i></div>
+           <div class="wst-frame2" onclick="javascript:changeDeliverType(1,'deliverType',this)">自提<i></i></div>
+            <input type='hidden' value='0' id='deliverType' class='j-ipt' />
+            <div class='wst-clear'></div>
+         </div>
+      </div>
+         <div class='cart-footer'>
+      <!-- 发票信息 -->
+      <div class="pay-boxs">
+         <div class='box-head'>发票信息</div>
+         <div class="j-show-box">
+           <div style="float:left;" id="invoice_info">不开发票</div>
+           <div style="float:left;color:blue;margin-left:10px;cursor:pointer;" onclick='javascript:changeInvoice(1,"#invoiceClientDiv",this)'>修改</div>
+           <div class="wst-clear"></div>
+             <input type="hidden" id="invoiceId" value="0" class='j-ipt' />
+             <input type='hidden' value='0' id='isInvoice' class='j-ipt' />
+             <input type='hidden' value='个人' id='invoiceClient' class='j-ipt' />
+         </div>
+         <div class='wst-clear'></div>
+       </div>
+       <div class='order-remark'>
+         <span class='text'>订单备注：</span><input type='text' id="remark" class='j-ipt' style='width:700px;' maxLength='100' placeholder='给卖家留言'/>
+         <div {if WSTConf('CONF.isOrderScore')!=1 }style='display:none'{/if} class='order-score'>可获得积分：<span id='orderScore'>{:WSTMoneyGiftScore($payPrice)}</span>个&nbsp;&nbsp;</div>
+      </div>
+    </div>
+    </div>
+     <div class='cart-btn'>
+        <a href='{:addon_url("auction://users/auction")}' class='wst-prev wst-cart-asha' style='width:105px;height:33px;line-height:33px;'>返回</a>
+        <a href='javascript:void(0)' onclick='javascript:submitOrder()' class='wst-order wst-cart-reda' style='width:118px;height:33px;line-height:33px;'>提交订单</a>
+        <div class='wst-clear'></div>
+     </div>
+</div>
+{/block}  
+{block name="footer"}
+  {include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/auction/view/home/users/js/form.js?v={$v}"></script>
+{/block}

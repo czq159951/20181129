@@ -1,0 +1,19 @@
+		    <div class="ui-col ui-col">
+		    <a href="{:url('/addon/coupon-users-moindex')}">
+		    	<p class="ui-badge-wrap ui-nowrap" id="couponsNum">0</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">优惠券</span>
+		    </a>
+		    </div>
+		    <script>
+		    $(document).ready(function(){
+		    	couponsNum();
+		    });
+		    function couponsNum(){
+		        $.post(WST.AU('coupon://coupons/couponsNum'), {},function(data){
+		            var json = WST.toJson(data);
+		            if(json){
+		            	$('#couponsNum').html(json);
+		            }
+		        });
+		    }
+		    </script>

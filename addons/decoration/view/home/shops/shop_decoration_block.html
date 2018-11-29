@@ -1,0 +1,38 @@
+<?php 
+$control_flag = false;
+$op = request()->routeInfo()["var"];
+$op = $op['module'].'-'.$op['action'].'-'.$op['method'];
+if($op == 'decoration-decoration-edit' || $op == 'decoration-decoration-blockadd') { 
+    $control_flag = true;
+} 
+$block_content = isSet($block['blockContent'])?$block['blockContent']:"";
+if($control_flag) { 
+    $block_title = '上下拖拽布局块位置可改变排列顺序，无效的可删除。<br/>编辑布局块内容请点击“编辑模块”并选择操作。';
+} else {
+    $block_title = '';
+}
+?>
+<?php $extend_class = (isSet($block['blockFullWidth']) && $block['blockFullWidth'] == '1') ? 'store-decoration-block-full-width' : '';?>
+<div id="block_<?php echo $block['blockId'];?>" data-block-id="<?php echo $block['blockId'];?>" nctype="shop_decoration_block" class="wst-decration-block store-decoration-block-1 <?php echo $extend_class;?> tip" title="<?php echo $block_title;?>">
+    <div nctype="shop_decoration_block_content" class="wst-decration-block-content store-decoration-block-1-content">
+        <div nctype="shop_decoration_block_module" class="store-decoration-block-1-module">
+            <?php if(isSet($block['blockModuleType']) && !empty($block['blockModuleType'])) { 
+            	if($block['blockModuleType']=='html'){?>
+           			{include file="home/shops/shop_decoration_module_html" /}
+           		<?php }else if($block['blockModuleType']=='goods'){ ?>
+           			{include file="home/shops/shop_decoration_module_goods" /}
+           		<?php }else if($block['blockModuleType']=='slide'){ ?>
+           			{include file="home/shops/shop_decoration_module_slide" /}
+           		<?php }else if($block['blockModuleType']=='hot_area'){ ?>
+           			{include file="home/shops/shop_decoration_module_hot_area" /}
+           		<?php } ?>
+            <?php } ?>
+        </div>
+        <?php if($control_flag) { ?>
+        <a class="edit" nctype="btn_edit_module" data-module-type="<?php echo isSet($block['blockModuleType'])?$block['blockModuleType']:'';?>" href="javascript:;" data-block-id="<?php echo $block['blockId'];?>"><i class="icon-edit"></i>编辑模块</a>
+        <?php } ?>
+    </div>
+    <?php if($control_flag) { ?>
+    <a class="delete" nctype="btn_del_block" href="javascript:;" data-block-id="{$block['blockId']}" title="删除该布局块"><i class="icon-trash"></i>删除布局块</a>    
+    <?php } ?>
+</div>

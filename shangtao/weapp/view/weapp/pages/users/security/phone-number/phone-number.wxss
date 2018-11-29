@@ -1,0 +1,83 @@
+page{
+  width: 100%;
+  height: 90%;
+}
+.container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.form-model{
+  margin-top: 15rpx;
+  width: 100%;
+  height: 27%;
+}
+.login-model{
+  border-top: 16rpx solid #f6f6f8;
+}
+.login-item{
+  display: flex;
+  height: 72rpx;
+  margin: 30rpx 60rpx;
+  border:2rpx solid #a0a0a0;
+  border-radius: 4rpx;
+  font-size:28rpx;
+}
+.login-item input{
+  width: 100%;
+  padding:0 10rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+}
+.login-item .verify{
+  width: 320rpx;
+  height: 72rpx;
+}
+.login-prompt{
+  padding:20rpx 60rpx 0rpx 60rpx;
+  font-size:30rpx;
+}
+.log-model{
+  margin-top: 40rpx;
+  height: 80rpx;
+  margin: 0 60rpx;
+}
+.lo-button{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #e00102;
+  color: white;
+  border-radius: 6rpx;
+  font-size:30rpx;
+}
+.lo-button:active,.lo-button[disabled][type="default"],.lo-button[disabled]:not([type]){
+  color:#fff0f0;
+  background:#f52f30;
+  background-clip:padding-box;
+}
+.login-item .obtain{
+  width:300rpx;
+  height:72rpx;
+  line-height:72rpx;
+  color: #fff;
+  font-size: 30rpx;
+  border-color: #0baae4;
+  background-color: #18b4ed;
+  border-radius:4rpx;
+}
+.login-item .obtain:active,.login-item .obtain[disabled][type="default"],.login-item .obtain[disabled]:not([type]){
+  background: #1ca7da;
+  border-color: #1ca7da;
+  color: rgba(255, 255, 255, 0.5);
+  background-clip:padding-box;
+}
+.wst-ba-prompt{
+  margin-top: 120px;
+  padding:0 20rpx;
+  font-size: 34rpx;
+  text-align:center;
+}

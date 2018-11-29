@@ -1,0 +1,39 @@
+<view class='container'>
+<!--无商品显示列表-->
+  <view  class='remind-model' wx:if="{{!hascommodity}}">
+    <view class='image' ><image src='/image/nothing-follow-goods.png' class="img"></image></view>
+    <view class='content'>您还没有关注商品</view>
+    <view class="button" bindtap='toIndex' style='margin-top:40rpx;'><button>去逛逛</button></view>
+  </view>
+<!--有商品显示列表-->
+  <view class='commodityList' wx:if="{{hascommodity}}">
+    <!--商品详情-->
+    <view class='commodity' wx:for="{{attList}}">
+      <icon wx:if="{{item.Status}}" type='success' size='16' color='#E32726' bindtap='selectList'  id='{{item.favoriteId}}' color='red'></icon>
+      <icon wx:else type='circle' bindtap='selectList'  size='16'  id='{{item.favoriteId}}'></icon>
+      <navigator open-type='navigate' url='../../goods-detail/goods-detail?goodsId={{item.goodsId}}'>
+      <view class="img">
+        <image src="{{domain}}{{item.goodsImg}}" mode='aspectFit' lazy-load='true'></image>
+      </view>
+      <view class='details'>{{item.goodsName}}</view>
+      <view class='price'>¥ {{item.shopPrice}}</view>
+      <view class='number'>成交数 : {{item.saleNum}}</view>
+      </navigator>
+      <!--购物车-->
+      <view class='shopping' bindtap='addShopping'>
+       <image src='{{shoppingcar}}' mode='aspectFit' bindtap='addCart' data-goodsId="{{item.goodsId}}"></image>
+      </view>
+    </view>
+  </view>
+ <view class='interim' style='height:300rpx;width:100%;'></view>  
+ </view>
+  <!--底部导航条-->
+  <view class='navigation-bottom' wx:if="{{hascommodity}}">
+  <!--全选状态-->
+   <view class='icon'>
+    <icon wx:if="{{selectedAllStatus}}" type='success' size='18' color='#E32726' bindtap='selectAll'></icon>
+    <icon wx:else type='circle' size='18' bindtap='selectAll'></icon>
+   </view>
+   <view class='content'>全选</view>
+   <view class='botton'><button  type='warn' size='datail' style='background:#E00102;font-size:30rpx;' bindtap='cancelAttension'>取消关注</button></view>
+</view>

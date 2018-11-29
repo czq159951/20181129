@@ -1,0 +1,67 @@
+{extend name="$LAYOUT_MOBILE_BASE" /}
+{block name="title"}商品列表 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/swiper.min.css">
+<link rel="stylesheet"  href="__ROOT__/addons/distribut/view/mobile/index/goods_list.css?v={$v}">
+{/block}
+{block name="header"}
+    <header class="ui-header ui-header-positive wst-se-header2" style="border-bottom: 1px solid #f6f6f8;">
+		<a href="{:url('mobile/index/index')}"><i class="ui-icon-return"></i></a>
+		<div class="wst-se-search">
+		    <i class="ui-icon-search" onclick="javascript:searchGoods();"></i>
+		    <form action＝"" class="input-form">
+			<input type="search" value="{$keyword}" placeholder="按关键字搜索商品" onsearch="searchGoods(0)" autocomplete="off" id="wst-search">
+			</form>
+		</div>
+	</header>
+{/block}
+{block name="main"}
+     <input type="hidden" name="" value="{$keyword}" id="keyword" autocomplete="off">
+     <input type="hidden" name="" value="" id="orderBy" autocomplete="off">
+	 <input type="hidden" name="" value="" id="order" autocomplete="off">
+	 <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+     <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+     <section class="ui-container">
+     	<div class="ui-row-flex wst-shl-head">
+		    <div class="ui-col ui-col sorts active" status="down" onclick="javascript:orderCondition(this,0);">
+		   		 <p class="pd0">销量</p><i class="down2"></i>
+		    </div>
+		    <div class="ui-col ui-col sorts" status="down" onclick="javascript:orderCondition(this,1);">
+		   		 <p class="pd0">价格</p><i class="down"></i>
+		    </div>
+		    <div class="ui-col ui-col sorts" status="down" onclick="javascript:orderCondition(this,3);">
+		   		 <p class="pd0">人气</p><i class="down"></i>
+		    </div>
+		    <div class="ui-col ui-col sorts" status="down" onclick="javascript:orderCondition(this,4);">
+		   		 <p>上架时间</p><i class="down"></i>
+		    </div>
+		</div>
+		<ul class="ui-tab-content">
+	        <li id="goods-list"></li>
+	    </ul>
+     </section>
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+{{# for(var i=0; i<d.length; i++){ }}
+<div class="wst-in-goods" onclick="javascript:WST.intoGoos({{ d[i].goodsId }});">
+<div class="img j-imgAdapt"><a href="javascript:void(0);" onclick="javascript:WST.intoGoods({{ d[i].goodsId }});"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d[i].goodsImg }}" title="{{ d[i].goodsName }}"/></a></div>
+<div class="name ui-nowrap-multi">{{ d[i].goodsName }}</div>
+<div class="info"><span class="price">¥{{ d[i].shopPrice }}</span><span class="deal">成交数:{{ d[i].saleNum }}</span></div>
+</div>
+{{# } }}
+<div class="wst-clear"></div>
+{{# }else{ }}
+<div class="wst-prompt-icon"><img src="__MOBILE__/img/nothing-goods.png"></div>
+<div class="wst-prompt-info">
+	<p>对不起，没有相关商品。</p>
+</div>
+{{# } }}
+</script>
+{/block}
+{block name="footer"}
+{include file="$LAYOUT_MOBILE_FOOTER" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/js/swiper.jquery.min.js'></script>
+<script type='text/javascript' src='__ROOT__/addons/distribut/view/mobile/index/goods_list.js?v={$v}'></script>
+{/block}

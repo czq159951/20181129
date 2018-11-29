@@ -1,0 +1,25 @@
+<view class='container'>
+ <view class='info-logo'>
+    <image src='{{domain}}{{data.shopLogo}}'></image>
+    <text>{{data.mallName}}</text>
+    <view class='script'></view>
+ </view>
+ <view class='info-material'>
+    <view class='script-box'>
+     <image src='/image/custom.png' mode='aspectFit'></image>
+     <text>联系电话：{{data.serviceTel}}</text>
+    </view>
+    <view class='script-box'>
+     <image src='/image/qq.png' mode='aspectFit'></image>
+     <text>客服QQ：{{data.serviceQQ}}</text>
+    </view>
+    <view class='script-box'>
+     <image src='/image/email.png' mode='aspectFit'></image>
+     <text>联系邮箱：{{data.serviceEmail}}</text>
+    </view>
+    <view class='script-box'>
+     <image src='/image/copy.png' mode='aspectFit'></image>
+     <text>版权所有：{{data.copyRight}}</text>
+    </view>
+ </view>
+</view>

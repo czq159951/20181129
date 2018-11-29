@@ -1,0 +1,23 @@
+<view class='container'>
+<!--无账户提醒-->
+ <view  class='remind-model' wx:if="{{!dataStatu}}">
+    <view class='image' ><image src='/image/nothing-account.png' class="img"></image></view>
+    <view class='content'>暂无相关信息</view> 
+    <view class='button' bindtap='addAccount'><button>点击添加</button></view>
+ </view>
+<!--有数据时列表-->
+ <block wx:if="{{dataStatu}}" wx:for="{{dataList}}">
+  <view class='dataList'  >
+   <view class='left' bindtap='jumpAccountInfo' data-id="{{item.id}}" data-areaName="{{item.areaName}}" data-bankName="{{item.bankName}}" data-accUser="{{item.accUser}}" data-accNo="{{item.accNo}}">
+    <view class='strip' style='color:red;font-weight:bold;font-size:30rpx;'>{{item.accNo}}</view>
+    <view class='strip'>持卡人姓名:{{item.accUser}}</view>
+    <view class='strip'>开户行:{{item.bankName}}</view>
+   </view>
+   <view class='right' data-id="{{item.id}}" bindtap='delInfo'>
+    <view class='image'><image src='/image/icon_bucket.png' mode='aspectFit'></image></view>
+    <view class='delete'>删除</view>
+   </view>
+  </view>
+ </block>
+    <view class='button' bindtap='addAccount'><button>点击添加</button></view>
+</view>

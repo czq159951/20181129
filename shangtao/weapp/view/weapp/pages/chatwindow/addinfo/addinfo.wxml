@@ -1,0 +1,36 @@
+<!--pages/chatWindow/addInfo/addInfo.wxml-->
+<view class='wst-container'>
+ <view class='wst-content'>
+  <view class='border'>
+   <view class='type'>
+     <picker bindchange="bindPickerChange" value="{{index}}" range="{{typeArray}}">
+          <view class="picker">
+            咨询类型：
+          </view>
+          <view class='border' bindtap='clickType'>{{index}}<view class='icon'>▼</view></view>
+      </picker>
+    </view>
+   <view class='remind'>咨询内容：</view>
+   <view class='text'>
+    <view class="remarkInform">
+     <scroll-view>
+     <view  class="textarea1">
+      <textarea   placeholder='填写咨询内容' auto-focus='true' placeholder-style='font-size:30rpx;' bindinput="getContent"></textarea>
+     </view>
+     </scroll-view>
+   </view>
+   </view>
+   <view class='wst-button' bindtap='submit'>
+   <button>提交</button>
+  </view>
+  </view>
+ </view>
+ <!--mask-->  
+ <view class="drawer_screen" bindtap="clickType"  wx:if="{{selectType}}"></view>  
+ <!--菜单列表-->
+ <view class='menuList' wx:if="{{selectType}}">
+  <block wx:for="{{typeArray}}" wx:for-index="{{typeArray.id}}">
+   <view data-id="{{item.id}}"  class="{{item.selectArea?'strip1' :'strip'}}" bindtap='mySelect' bindtouchend='touchend' bindtouchstart='touchstart' data-type="{{item.typeName}}">{{item.typeName}}</view>
+  </block>
+ </view>
+</view>

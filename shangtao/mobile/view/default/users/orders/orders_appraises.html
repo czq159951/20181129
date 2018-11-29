@@ -1,0 +1,172 @@
+{extend name="default/base" /}
+{block name="title"}商品评价 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/orders_appraises.css?v={$v}">
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+{/block}
+{block name="header"}
+	{php}$Title='商品评价'{/php}
+  {include file="default/header" /}
+{/block}
+{block name="main"}
+    <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+    <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+    <input type="hidden" name="" value="{$oId}" id="oId" autocomplete="off">
+    <section class="ui-container">  
+        <div class="ui-row-flex item-head">
+        <div class="ui-col ui-col-2 ui-nowrap-flex shop"><i></i>{$data['shopName']}</div>
+        </div>
+        {volist name="data['data']" id="g"}
+        <div class="ui-row-flex border-b g-item">
+            <div class="ui-col">
+                <div class="g-Img j-imgAdapt">
+                  <a href="javascript:void(0);" onclick="javascript:WST.intoGoods({$g['goodsId']});">
+                    <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($g['goodsImg'],3)}">
+                  </a>
+                </div>
+            </div>
+            <div class="ui-col ui-col-3 g-gInfo">
+                <p class="g-gName ui-nowrap-multi">{$g['goodsName']}</p>
+                <p class="g-gSpec ui-nowrap-flex">{if($g['goodsSpecNames'])}规格：{$g['goodsSpecNames']}{/if}</p>
+            </div>
+            <div class="ui-col order-tr" style="word-break:break-all;">
+            {if ($g['appraise']!='')}
+                <span class="appraise" onclick="appraise({$g.goodsId},{$g['goodsSpecId'] ?? 0},{$g.id},this)"></span>
+            {else /}
+                <span class="appraise" onclick="appraise({$g.goodsId},{$g['goodsSpecId'] ?? 0},{$g.id},this)"></span>
+            {/if}
+            </div>
+        </div>
+        <div id="appBox_{$g.id}"></div>
+        {/volist}
+        <script id="appraises-box" type="text/html">
+            <ul class="ui-row appraise-box">
+                <li class="ui-col ui-col-25 appraise-title">商品名称</li>
+                <li class="ui-col ui-col-75 ui-nowrap-multi appraise-name">
+                    {{d.goodsName}}
+                </li>
+                <li class="ui-col ui-col-25 appraise-title" style="height: 25px;line-height:25px;">商品评分</li>
+                <li class="ui-col ui-col-75">
+                    <ul class="ui-row">
+                      <li class="ui-col ui-col-80">
+                      {{# if(d.goodsScore!=''){ }}
+                        {{# for(var i=0;i<d.goodsScore;i++){ }}
+                            <span class="start-on"></span>
+                        {{# } }}
+
+                        {{# for(var j=0;j<5-d.goodsScore;j++){ }}
+                             <span class="start-not"></span>
+                        {{# } }}
+
+                      {{# }else{ }}
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                      {{# } }}
+                      </li>
+                      <li class="ui-col ui-col-20 score" id="goodsScore" score="{{(d.timeScore!='')?d.timeScore:'0'}}" style="height: 25px;line-height:25px;">{{(d.goodsScore!='')?d.goodsScore:'0'}}分</li>
+                    </ul>
+                </li>
+
+                <li class="ui-col ui-col-25 appraise-title" style="height: 25px;line-height:25px;">服务评分</li>
+                <li class="ui-col ui-col-75">
+                    <ul class="ui-row">
+                      <li class="ui-col ui-col-80">
+                      {{# if(d.serviceScore!=''){ }}
+                        {{# for(var i=0;i<d.serviceScore;i++){ }}
+                            <span class="start-on"></span>
+                        {{# } }}
+
+                        {{# for(var j=0;j<5-d.serviceScore;j++){ }}
+                             <span class="start-not"></span>
+                        {{# } }}
+
+                      {{# }else{ }}
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                      {{# } }}
+                      </li>
+                      <li class="ui-col ui-col-20 score" id="serviceScore" score="{{(d.timeScore!='')?d.timeScore:'0'}}" style="height: 25px;line-height:25px;">{{(d.serviceScore!='')?d.serviceScore:'0'}}分</li>
+                    </ul>
+                </li>
+
+                <li class="ui-col ui-col-25 appraise-title" style="height: 25px;line-height:25px;">时效评分</li>
+                <li class="ui-col ui-col-75">
+                    <ul class="ui-row">
+                      <li class="ui-col ui-col-80">
+                      {{# if(d.timeScore!=''){ }}
+                        {{# for(var i=0;i<d.timeScore;i++){ }}
+                            <span class="start-on"></span>
+                        {{# } }}
+
+                        {{# for(var j=0;j<5-d.timeScore;j++){ }}
+                             <span class="start-not"></span>
+                        {{# } }}
+
+                      {{# }else{ }}
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                        <span class="start-not" onclick="clickStar(this)"></span>
+                      {{# } }}
+                      </li>
+                      <li class="ui-col ui-col-20 score" id="timeScore" score="{{(d.timeScore!='')?d.timeScore:'0'}}" style="height: 25px;line-height:25px;">{{(d.timeScore!='')?d.timeScore:'0'}}分</li>
+                    </ul>
+                </li>
+
+                {{# if(d.content==''){ }}
+                    <li class="ui-col" style="padding:10px">
+                      <textarea class="appraisesContent" id="content"></textarea>
+                    </li>
+                    <div class="ui-col uploadfile-box">
+                      <ul class="complainFileBox" id="edit_chart">
+                      </ul>
+                      <div id="filePicker" style='margin-left:10px;width:250px;overflow:hidden;height:35px;font-size:.13rem;'>上传附件(最多5张)</div>
+                    </div>
+                    <br />
+                    <div class="ui-btn-wrap post-btn">
+                      <button class="ui-btn-lg ui-btn-danger" onclick="javascript:saveAppr({{d.goodsId}},{{d.goodsSpecId}},{{d.orderGoodsId}});">提交</button>
+                    </div>
+                {{# }else{ }}
+                     <li class="ui-col ui-col-25 appraise-title">点评内容</li>
+                     <li class="ui-col ui-col-75">
+                        {{d.content}}
+                    </li>
+                    <li class="ui-col ui-col-25 appraise-title" style="padding-top:15px;">评价附件</li>
+                     <li class="ui-col ui-col-75" style="margin-top:10px;margin-left:-10px;">
+                        {{# if(WST.blank(d.images)!=''){
+                            var img = d.images;
+                         }}
+                        <ul class="complainFileBox">
+                          {{# for(var g=0;g<img.length;++g){ }}
+                            <li><img src="__ROOT__/{{img[g]}}"> </li>
+                          {{# } }}
+                        </ul>
+                        {{# } }}
+                     </li>
+                    
+                {{# } }}
+            </ul>
+
+            
+
+        </script>
+        <div id="appraisesBox">
+        </div>
+
+    </section>
+{/block}
+{block name="include"}
+{include file="default/dialog" /}<!-- 对话框模板 -->
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__MOBILE__/users/orders/orders_appraises.js?v={$v}'></script>
+<script type='text/javascript' src='__STATIC__/plugins/webuploader/webuploader.js?v={$v}'></script>
+{/block}

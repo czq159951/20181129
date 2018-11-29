@@ -1,0 +1,56 @@
+<view class='container'>
+<!--余额显示-->
+ <view class='balance-show'>
+  <image src='/image/icon_logmoney.png'></image>
+  <view class='number1'>可用资金：¥ {{data.userMoney}}</view>
+  <view class='number'>冻结资金：¥ {{data.lockMoney}}</view>
+ </view>
+<!--操作选择-->
+ <view class='action'>
+  <view class='left' bindtap='recharge'>
+     <image src='/image/icon_add_money.png'></image>
+     <text>充值</text>
+  </view>
+  <view class='left' bindtap='withdrawDeposit'>
+     <image src='/image/icon_out_money.png'></image>
+     <text>提现</text>
+  </view>
+ </view>
+<!--管理模块-->
+ <view class='manage-model' type="primary"bindtap="modalinput">
+  <image src='/image/icon_cart_money.png' mode='aspectFill'></image>
+  <view class='left'>我的提现账户</view>
+  <view class='right'></view>
+  <view class='between'>{{num}}个</view>
+ </view>
+ <view class='manage-model' bindtap='fundRecord'>
+  <image src='/image/icon_record.png' mode='aspectFill'></image>
+  <view class='left'>我的资金流水</view>
+  <view class='right'></view>
+ </view>
+ <view class='manage-model' bindtap='dealRecord'>
+  <image src='/image/icon_money_record.png' mode='aspectFill'></image>
+  <view class='left'>我的提现记录</view>
+  <view class='right'></view>
+ </view>
+<view class="wst-mask" wx:if="{{hiddenmodalput}}">
+  <view class="wst-or-frame">
+    <view class="title">请输入支付密码</view>
+    <view class="quota">
+      <input bindinput="getInput" type="password" placeholder="请输入支付密码" value='{{value}}' maxlength='6' auto-focus/>
+    </view>
+    <view class="button">
+      <button type="default" size="mini" bindtap="cancel" class="cancel">取消</button>
+      <button type="default" size="mini" bindtap="confirm" class="confirm">确定</button>
+    </view>
+  </view>
+</view>
+<view class='bottom'>
+  <icon type='warn' color='red' size='16' style='margin-left:10rpx;margin-top:36rpx;'></icon>
+  <view class='left'>
+    <view class='remind1'><view>首次提现步骤：</view></view>
+    <view><view class='text'>1.设置支付密码和绑定手机号码</view></view>
+    <view><view class='text'>2.绑定您的微信钱包或银行卡</view></view>
+  </view>
+</view>
+</view>

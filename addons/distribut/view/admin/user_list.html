@@ -1,0 +1,54 @@
+{extend name="../../../shangtao/admin/view/base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<div class="wst-toolbar">
+	 <input type="text" name="loginName"  placeholder='会员账号' id="loginName" class="query" />
+	 <input type="text" name="loginPhone" placeholder='手机号码' id="loginPhone" class="query" />
+	 <input type="text" name="loginEmail" placeholder='电子邮箱' id="loginEmail" class="query" />
+	 <button type="button"  class='btn btn-primary' onclick="javascript:userQuery()"><i class="fa fa-search"></i>查询</button>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<script>
+$(function(){initGrid()});
+var grid;
+function initGrid(){
+   var h = WST.pageHeight();
+   var cols = [
+            {title:'账号;', name:'loginName', width: 50},
+            {title:'用户名', name:'userName' ,width:100},
+            {title:'手机号码', name:'userPhone' ,width:30},
+            {title:'电子邮箱', name:'userEmail' ,width:30},
+            {title:'积分', name:'userScore' ,width:30},
+            {title:'注册时间', name:'createTime' ,width:30},
+            {title:'状态', name:'userStatus' ,width:30, renderer: function(val,item,rowIndex){
+                return (val==1)?"<span class='statu-yes'><i class='fa fa-check-circle'></i> 启用</span>":"<span class='statu-no'><i class='fa fa-clock-o'></i> 停用</span>";
+            }},
+            {title:'总佣金', name:'distributMoney' ,width:80, align:'center'},
+            {title:'推广用户数', name:'userCnt' ,width:30},
+            {title:'操作', name:'userCnt' ,width:30,renderer: function(val,item,rowIndex){
+                return "<a class='btn btn-blue' href='"+WST.U('addon/distribut-distribut-admindistributchildusers',{'userId':item['parentId']})+"'><i class='fa fa-search'></i>查看</a> ";
+            }}
+            ];
+ 
+    mmg = $('.mmg').mmGrid({height: h-85,indexCol: true, indexColWidth:50, cols: cols,method:'POST',
+        url: "{:addon_url('distribut://distribut/queryAdminDistributUsers')}", fullWidthRows: true, autoLoad: true,
+        plugins: [
+            $('#pg').mmPaginator({})
+        ]
+    });  
+}
+function userQuery(){
+		var query = WST.getParams('.query');
+		mmg.load(query);
+}
+</script>
+{/block}

@@ -1,0 +1,43 @@
+<div class="user-share">
+	<ul class="ui-row">
+    <li class="ui-col ui-col-50"><p class="money">￥&nbsp;<span>{$user["distributMoney"]}</span></p><p class="get">累计获得佣金</p></li>
+    <li class="ui-col ui-col-50">	<p class="money"><span>{$user["userCnt"]}</span>&nbsp;人</p><p class="get">总用户数</p></li>
+    </ul>
+	<a href="{:url('/addon/distribut-distribut-mobiledistributhome')}"><button type="button" class="button">分享赚钱</button></a>
+</div>
+<style>
+.user-share{
+	padding: 5px 10px;
+	background:#ffffff;
+	border-top: 1px solid #edebeb;
+	text-align: center;
+}
+.user-share .money{
+	font-size: 0.15rem;
+	color: gold;
+}
+.user-share .money span{
+	font-size: 0.25rem;
+}
+.user-share .get{
+	font-size: 0.15rem;
+}
+.user-share .button{
+	bottom:10px;
+	width: 100%;
+	margin-top:10px;
+	margin-bottom:6px;
+	font-size: 0.165rem;
+    height: 38px;
+    line-height: 38px;
+    color:#ffffff;
+    background:#e54848;
+    border-radius:3px;
+	border-bottom:1px solid #e54848;
+}
+.user-share .button:not(.disabled):not(:disabled):active{
+	color:#fff0f0;
+	background:#f52f30;
+	background-clip: padding-box;
+}
+</style>

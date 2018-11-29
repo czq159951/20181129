@@ -1,0 +1,26 @@
+{if !empty($goods['promotionJson']) && $goods['promotionJson']['orderCode']=='reward'}
+{if $goods['isHead']}
+<link href="__ROOT__/addons/reward/view/home/reward.css" rel="stylesheet">
+<div class='order-reward-goods-box'>
+<div class='reward-txt'>
+<span class='tag'>满就送</span>
+消费满￥{$goods['promotionJson']['extraJson']['orderMoney']}{$goods['promotionJson']['text']}
+</div>
+<div class='reward-promotion red'>
+{if $goods['promotionJson']['extraJson']['favourableJson']['chk0']}
+减￥{$goods['promotionJson']['extraJson']['favourableJson']['chk0val']}
+{/if}
+</div>
+<div class='wst-clear'></div>
+</div>
+<script>
+$(function(){
+	var cartIds = {:json_encode($goods['promotionJson']['promotionGoodsIds'])};
+	for(var i=0;i<cartIds.length;i++){
+		//设置背景颜色
+        $('.j-g'+cartIds[i]).css('background','#fff4e8');
+	}
+});
+</script>
+{/if}
+{/if}

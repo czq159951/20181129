@@ -1,0 +1,115 @@
+{extend name="default/base" /}
+{block name="title"}
+{$payObj=='recharge'?"在线充值":"支付订单"}
+- {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/orders.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header class="ui-header ui-header-positive wst-header">
+    	{if($payObj=='recharge')}
+    		<a class="ui-icon-return" href='{:Url('wechat/logmoneys/usermoneys')}'></a><h1>在线充值</h1>
+    	{else}
+	    	<a class="ui-icon-return" href='{:Url('wechat/orders/index')}'></a><h1>支付订单</h1>
+	    {/if}
+    </header>
+{/block}
+{block name="main"}
+	<section class="ui-container" id="shopBox">
+	{if(empty($message))}
+		{if($payObj=='recharge')}
+			<div class="recharge-box">
+				<div>钱包充值</div>
+				<div class="paybox"><span class="wst-orders_prices">¥ {$needPay}</span></div>
+			</div>
+	    {else}
+		   	{volist name="$rs['list']" id="order"}
+			  	<div class="order-item">
+			  		<div class="ui-row-flex item-head" onclick="getOrderDetail({{d[i].orderId}})">
+			   			<div class="ui-col ui-col-2 ui-nowrap-flex">订单号：{$order['orderNo']}<span style="float : right;">邮费：{$order['deliverMoney']}</span></div>
+			 		</div>
+			     	{volist name="$rs['goods'][$order['orderId']]" id="vo"}
+			    	<div class="ui-row-flex">
+			      		<div class="ui-col">
+			            	<img src="__ROOT__/{$vo['goodsImg']}" class="o-Img">
+			       		</div>
+			         	<div class="ui-col ui-col-3 o-gInfo">
+			         		<p class="o-gName ui-nowrap-multi">{$vo['goodsName']}</p>
+							{if condition="count($vo['goodsSpecNames']) gt 0"}
+			               	<p class="o-gSpec ui-nowrap-flex">规格：
+			              		{volist name="$vo['goodsSpecNames']" id="spec"}
+							   		{$spec}&nbsp;
+								{/volist}
+							</p>
+			      			{/if}
+			       		</div>
+						<div class="ui-col order-tr" style="word-break:break-all;padding:5px 0"><p>¥ {$vo['goodsPrice']}</p><p>x {$vo['goodsNum']}</p></div>
+			 		</div>
+			       	{/volist}
+			
+			      	<div class="ui-btn-wrap" style="text-align: right;padding:10px 0">
+			        	<span class="wst-orders_pricet">总金额：<span class="wst-orders_prices">¥ <?php echo sprintf("%.2f", $rs['totalMoney']);?></span></span>
+			      	</div>
+			      	<div class="wst-clear"></div>
+				</div>
+			{/volist}
+	    {/if}
+		<div style="text-align: center;padding-top: 20px;">
+			<button type="button" class="wst-btn-dangerlo" onclick="javascript:callpay();" style="width: 80%;  display: inline-block;">确认支付</button>
+		</div>
+	</section>
+	{else}
+		<ul class="ui-row-flex wst-flexslp">
+			<li class="ui-col ui-flex ui-flex-pack-center">
+			<p>{$message}</p>
+			</li>
+		</ul>
+	{/if}
+    </div>
+
+{/block}
+{block name="footer"}{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/users/orders/orders_list.js?v={$v}'></script>
+{if(empty($message))}
+<script type="text/javascript">
+	//调用微信JS api 支付
+    function jsApiCall(){
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest',
+            <?php echo $jsApiParameters; ?>,
+            function(res){
+                if(res.err_msg=="get_brand_wcpay_request:ok"){
+                	location.href = "{$returnUrl}";
+                }
+            }
+        );
+       setTimeout(function(){
+            $('.wst-btn-dangerlo').removeAttr('disabled');
+        },2000);     
+    }
+    function callpay(){
+    	$('.wst-btn-dangerlo').attr('disabled', 'disabled');
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall();
+        }
+    }
+    $(document).ready(function(){
+    	{if($payObj=='recharge')}
+			backPrevPage(WST.U('wechat/logmoneys/usermoneys'));
+		{else}
+			backPrevPage(WST.U('wechat/orders/index'));
+	    {/if}
+    });
+	</script>
+{/if}
+{/block}

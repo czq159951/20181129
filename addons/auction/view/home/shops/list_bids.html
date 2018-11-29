@@ -1,0 +1,56 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}拍卖活动 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<div class="wst-shop-head"><span>拍卖参与者列表</span><a href="{:addon_url('auction://shops/auction')}">返回</a></div>
+ <input type='hidden' id='id' class='s-ipt' value='{$id}'/>
+  <div class='wst-shop-content'>
+    <table class='wst-list'>
+       <thead>
+        <tr class='head'>
+           <th>&nbsp;</th>
+           <th>竞拍人</th>
+           <th>竞拍价</th>
+           <th>竞拍时间</th>
+           <th>订单号</th>
+           <th width='100'>&nbsp;</th>
+        </tr>
+     </thead>
+     <tbody id='loadingBdy'>
+         <tr id='loading' class='empty-row' style='display:none'>
+              <td colspan='4'><img src="__STYLE__/img/loading.gif">正在加载数据...</td>
+         </tr>
+      </tbody>
+      <script id="tblist" type="text/html">
+      {{# for(var i = 0; i < d.length; i++){ }}
+      <tbody class="j-order-row">
+         <tr>
+            <td>{{i+1}}</td>
+            <td>{{d[i]['loginName']}}</td>
+            <td>{{d[i]['payPrice']}}</td>
+            <td>{{d[i]['createTime']}}</td>
+            <td><a href='#none' style='color:blue' onclick='view({{d[i]['orderId']}})'>{{d[i]['orderNo']}}</a></td>
+            <td>{{#if(d[i]['isTop']==1){}}<span class="lbel lbel-success">最高价</span>{{#}}}</td>
+         </tr>
+       </tbody>
+       {{# } }}
+       </script>
+       <tr class='empty-row'>
+            <td colspan='6' id='pager' style='padding:5px 0px 5px 0px;text-align:center;'>&nbsp;</td>
+       </tr>
+    </table>
+  </div>
+{/block}
+{block name="footer"}
+  {include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/auction/view/home/shops/shop.js?v={$v}"></script>
+<script>
+$(function(){
+  listByPage();
+})
+</script>
+{/block}

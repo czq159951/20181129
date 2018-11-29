@@ -1,0 +1,77 @@
+{extend name="$LAYOUT_HOME_USER_BASE" /}
+{block name="title"}优惠券 - 买家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<link href="__ROOT__/addons/coupon/view/home/users/users.css" rel="stylesheet">
+<script type='text/javascript' src='__ROOT__/addons/coupon/view/home/users/users.js'></script>
+<div class="wst-user-head"><span>我的优惠券</span></div>
+<div class="wst-user-content">
+<div id='couponTab' class="wst-tab-box">
+  <ul id='goodsTabs' class="wst-tab-nav">
+    <li>未使用（<span id='num0'>{$coupons['num0']}</span>）</li>
+    <li>已使用（<span id='num1'>{$coupons['num1']}</span>）</li>
+    <li>已过期（<span id='num2'>{$coupons['num2']}</span>）</li>
+  </ul>
+  <div class="wst-tab-content" style='width:99%;margin-bottom: 10px;min-height:1312px;'>
+    <div class="wst-tab-item">
+       <div id='coupon-box0'></div>
+       <div class='wst-clear'></div>
+       <div id='coupon-pager0'></div>
+    </div>
+    <div class="wst-tab-item hide">
+       <div id='coupon-box1'></div>
+       <div class='wst-clear'></div>
+       <div id='coupon-pager1'></div>
+    </div>
+    <div class="wst-tab-item hide">
+       <div id='coupon-box2'></div>
+       <div class='wst-clear'></div>
+       <div id='coupon-pager2'></div>
+    </div>
+  </div>
+</div>
+<script id="couponstpl" type="text/html">
+{{#
+  var couponStatus = d.couponStatus;
+  var d = d.data;
+  for(var i = 0; i < d.length; i++){ 
+
+}}
+
+  <div class="coupon">         
+      <div class="top {{# if(couponStatus!=0){}}top_out{{# } }} ">           
+        <span class="coupon-price">￥{{d[i]['couponValue']}}</span>
+        <span class="coupon-explain">
+          {{#if(d[i]['useCondition']==1){}}满{{d[i]['useMoney']}}减{{d[i]['couponValue']}}{{#}}}
+        </span>
+      </div>         
+      <div class="use-condition">
+        <div>限<a href='{{WST.U('home/shops/home','shopId='+d[i]["shopId"])}}' target='_blank'>{{d[i]['shopName']}}</a></div>    
+        <div>{{#if(d[i]['useObjects']==1){}}指定部分商品可用{{#}else{}}全店可用{{#}}}</div>         
+        <div>{{d[i]['startDate']}}  至 {{d[i]['endDate']}} </div>                
+      </div>         
+      {{# if(couponStatus==0){}}
+        <a class='touse' href='{{WST.AU("coupon://coupons/goods","couponId="+d[i]['couponId'])}}'>立即使用</a>
+      {{#}}}
+      {{# if(couponStatus==1){}}
+        <div class="cp_used"></div>
+      {{#}}}
+      {{# if(couponStatus==2){}}
+        <div class="cp_expire"></div>
+      {{#}}}
+  </div>
+
+   {{# } }}
+</script>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/coupon/view/home/users/users.js?v={$v}"></script>
+<script type="text/javascript">
+</script>
+{/block}

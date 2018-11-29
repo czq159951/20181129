@@ -1,0 +1,92 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}拼团活动 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+<div class="wst-shop-head"><span>拼团商品</span></div>
+<div class="wst-shop-tbar">
+  <label>
+    商品名称：<input type="text" name="goodsName" id="goodsName" class="s-query" /><a class="s-btn" onclick="queryByPage()">查询</a>
+  </label>
+  <label>
+    <a class="s-btn" style="float: right;width:80px;line-height:16px;height:16px;margin-top:2px;" onclick="javascript:toEdit(0)">新增拼团商品</a>
+  </label>
+</div>
+<div class="wst-shop-content">  
+   <table class='wst-list'>
+   <thead>
+   <tr>
+     <th>商品名称</th>
+     <th>商品编号</th>
+     <th>店铺价</th>
+     <th>拼团价</th>
+     <th>有效时间（小时）</th>
+     <th>商品数量</th>
+     <th>拼团人数</th>
+     <th>开团数</th>
+     <th>销量</th>
+     <th>状态</th>
+     <th width="100">操作</th>
+   </tr>
+   </thead>
+   <tbody id='list'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="tblist" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr>
+      <td>
+          <div class="goods-img">
+          	<a><img class='j-lazyGoodsImg'  data-original='__ROOT__/{{d[i].goodsImg}}'/></a>
+        </div>
+        <p class="goodsName">
+          {{WST.cutStr(d[i]['goodsName'],43)}}
+        </p>
+      </td>
+      <td>{{d[i]['goodsSn']}}</td>
+      <td>￥{{d[i]['shopPrice']}}</td>
+	  <td>￥{{d[i]['tuanPrice']}}</td>
+  	  <td>{{d[i]['tuanTime']}}</td>
+   	  <td>{{d[i]['goodsNum']}}</td>
+      <td>{{d[i]['tuanNum']}}</td>
+      <td><a style="color:blue" href='{{WST.AU("pintuan://shops/opentuan","tuanId="+d[i]["tuanId"])}}'>{{d[i]['openTuanCnt']}}</a></td>
+      <td><a style="color:blue" href='{{WST.AU("pintuan://shops/opentuan","tuanStatus=2&tuanId="+d[i]["tuanId"])}}'>{{d[i]['saleNum']}}</a></td>
+      <td>
+      {{#if(d[i]['tuanStatus']==0){}}
+      <span class='lbel lbel-warning'>待审核</span>
+      {{#}else if(d[i]['tuanStatus']==-1){}}
+      <span class='lbel lbel-danger' title="{{d[i]['illegalRemarks']}}">审核不通过</span>
+      {{#}else{}}
+       <span class='lbel lbel-success'>审核通过</span>
+      {{#}}}
+      </td>
+      <td>
+         {{#if(d[i]['tuanStatus']==1){}}
+         <a href='javascript:unSale({{d[i]["tuanId"]}})'>下架</a>
+         {{#}else{}}
+         <a href='javascript:toEdit({{d[i]["tuanId"]}})'>编辑</a>
+         <a href='javascript:del({{d[i]["tuanId"]}})'>删除</a>
+         {{#}}}
+         
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/pintuan/view/{$addonStyle}/home/shops/shop.js?v={$v}"></script>
+<script type="text/javascript">
+$(function(){
+	queryByPage();
+});
+</script>
+{/block}

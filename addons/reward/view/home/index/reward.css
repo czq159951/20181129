@@ -1,0 +1,25 @@
+/**商品详情**/
+.reward-box{color:#999;position:relative;margin-top: 10px;}
+.reward-tag{width: 54px; height:16px; vertical-align: middle;vertical-align: bottom; margin-right: 5px;}
+.j-reward-tip{float: right; color: #999;}
+.j-reward-tip img{width: 15px; height: 15px; margin-left: 2px; vertical-align: middle;}
+.j-reward-detail{width: 86%; overflow-x: hidden; position: absolute; display: none; top: -4px; left: 80px; z-index: 100; border: 1px solid #ddd; background: #ffffff; }
+.j-reward-detail .title{background: #fbfbfb;cursor: pointer;padding:3px 4px;border-bottom:1px solid #ddd;}
+.j-reward-detail .content{padding:5px 4px;}
+.j-reward-detail .content th{padding-left:5px;padding-right:5px;text-align:right}
+/**购物车**/
+.cart-reward-shop-box{float:right;padding-right:10px;}
+.cart-reward-goods-box{color:#666;clear:both;padding-left:10px;line-height:30px;border-bottom:1px solid #eee;}
+.cart-reward-goods-box .reward-txt{float:left;width:960px;}
+.cart-reward-goods-box .reward-txt li{ list-style-type: none; }
+.cart-reward-goods-box .reward-txt .scroll-tips{float:left;overflow:hidden;height:30px;line-height:30px;}
+.cart-reward-goods-box .tag{padding:2px 5px;border:1px solid #df3033;background:#df3033;color:#fff;font-weight: bold;margin-right:3px;}
+.cart-reward-goods-box .red{color:#df3033;}
+.cart-reward-goods-box .reward-promotion{float:left;line-height:20px;}
+/**结算页**/
+.settlement-reward-shop-box{float:right;padding-right:10px;}
+.settlement-reward-goods-box{color:#666;clear:both;padding-left:10px;line-height:30px;border-bottom:1px solid #eee;}
+.settlement-reward-goods-box .reward-txt{float:left;width:960px;}
+.settlement-reward-goods-box .tag{padding:2px 5px;border:1px solid #df3033;background:#df3033;color:#fff;font-weight: bold;margin-right:3px;}
+.settlement-reward-goods-box .red{color:#df3033;}
+.settlement-reward-goods-box .reward-promotion{float:left;line-height:20px;}

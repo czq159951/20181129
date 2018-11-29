@@ -1,0 +1,210 @@
+page{
+  width: 100%;
+  height: 100%;
+}
+.container{
+  border-top: 82rpx solid transparent;
+  height: calc(100vh - 82rpx);
+	height: -webkit-calc(100vh - 82rpx);
+	height: -moz-calc(100vh - 82rpx);
+	height: -ms-calc(100vh - 82rpx);
+	height: -o-calc(100vh - 82rpx);
+  display: flex;
+}
+.wst-se-header{
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  top:0;
+  left: 0;
+  height: 80rpx;
+  background: #e50e0f;
+  padding-left: 50rpx 0;
+  border-bottom: 2rpx solid #f6f6f8;
+}
+.wst-se-header .input{
+  display: block;
+  width: 80.9%;
+  height: 56rpx;
+  line-height: 56rpx;
+  margin: auto;
+  margin-top:10rpx;
+  position: relative;
+}
+.wst-se-header .input .icon{
+  position: absolute;
+  left:15rpx;
+  top:15rpx;
+}
+.wst-se-header .input input{
+  padding: 0 0 0 50rpx;
+  width: 100%;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 30rpx;
+  background: #eee;
+  color: #999;
+  font-size: 26rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  letter-spacing: 1px;
+  border: none;
+}
+/*左模块*/
+.model-left{
+  width: 100%;
+  font-size: 26rpx;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+.mix-model{
+  padding: 35rpx 36rpx;
+  border: 2rpx solid #f6f6f8;
+  border-right:0;
+  background: white;
+}
+.mix-model-hover{
+  padding: 35rpx 36rpx;
+  border: 2rpx solid #f6f6f8;
+  border-right:0;
+  background: #f6f6f8;
+  border-left: 4rpx solid #df0202;
+  color: #df0202;
+}
+/*右模块*/
+.model-right{
+  width: 560rpx;
+  float: left;
+  height: 100%;
+  position: relative;
+}
+::-webkit-scrollbar{
+  width: 0rpx;
+  height: 0rpx;
+  color: transparent;
+}
+.assify-model{
+  margin: 0px 10rpx;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+.assify-image{
+  width: 100%;
+  height: auto;
+}
+.assify-image .ads{
+  margin: 0px 10rpx;
+  font-size: 24rpx;
+  background: #fff;
+}
+.assify-image image{
+  display: block;
+  width: 100%;
+  height:-webkit-calc((100vw)/3.1);
+}
+swiper{
+  height:-webkit-calc((100vw)/3.1);
+}
+.model-right-size{
+  padding-top: 10rpx;
+  padding-left: 20rpx;
+  height: 80rpx;
+  line-height:80rpx;
+  font-size: 26rpx;
+  background: #f6f6f8;
+}
+.model-right-list{
+  float: left;
+  width: calc((100% - 30rpx)/3);
+  width: -webkit-calc((100% - 30rpx)/3);
+  width: -moz-calc((100% - 30rpx)/3);
+  width: -ms-calc((100% - 30rpx)/3);
+  width: -o-calc((100% - 30rpx)/3);
+  height: calc((100vw - 30rpx)/3);
+  height: -webkit-calc((100vw - 40rpx)/3);
+  height: -moz-calc((100vw - 30rpx)/3);
+  height: -ms-calc((100vw - 30rpx)/3);
+  height: -o-calc((100vw - 30rpx)/3);
+  padding: 10rpx 0 0 10rpx;
+  text-align: center;
+}
+.model-right-image{
+  width: calc(100%);
+  width: -webkit-calc(100%);
+  width: -moz-calc((100% - 30rpx)/3);
+  width: -ms-calc((100% - 30rpx)/3);
+  width: -o-calc((100% - 30rpx)/3);
+  height: calc((100vw - 240rpx)/3);
+  height: -webkit-calc((100vw - 240rpx)/3);
+  height: -moz-calc((100vw - 240rpx)/3);
+  height: -ms-calc((100vw - 240rpx)/3);
+  height: -o-calc((100vw - 240rpx)/3);
+}
+.model-right-image image{
+  width: 100%;
+  height: 100%;
+}
+.model-right-title{
+  height: 50rpx;
+  text-align: center;
+  font-size: 24rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  -webkit-box-flex: 1;
+}
+.wst-se-header2{
+  height: 72rpx;
+  border-bottom: 2rpx solid #f6f6f8;
+}
+.wst-se-header2 .input{
+  display: block;
+  width: 80%;
+  height: 56rpx;
+  line-height: 56rpx;
+  margin: auto;
+  margin-top:10rpx;
+  position: relative;
+}
+.wst-se-header2 .input .icon{
+  position: absolute;
+  left:15rpx;
+  top:15rpx;
+}
+.wst-se-header2 .input input{
+  padding: 0 0 0 50rpx;
+  width: 100%;
+  box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 30rpx;
+  background: #eee;
+  color: #999;
+  font-size: 26rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  letter-spacing: 1px;
+  border: none;
+}
+.arrow{
+   width: 25rpx;
+  height: 25rpx;
+  border-left: 4rpx solid #df0202;
+  border-top: 4rpx solid #df0202;
+  transform: rotate(-45deg);
+  margin-top: 14rpx;
+  margin-left: 30rpx; 
+  float: left;
+}
+.wst-search-interim{
+  height: 100vh;
+  background: white;
+}

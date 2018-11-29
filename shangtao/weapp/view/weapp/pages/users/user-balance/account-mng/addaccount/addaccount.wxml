@@ -1,0 +1,43 @@
+<!--pages/user/userBalance/accountManage/addAccount/addAccount.wxml-->
+<view class='container'>
+ <view class='type-set'>账户类型：<view class='border' bindtap='seleDrawer' data-status="open">{{firstContent}}<view class='icon'>▼</view></view></view>
+ <view class='address-set'>账户地址：<view class='set' bindtap='powerDrawer' data-status="open">{{total?total:areaName}}</view></view>
+ <view class='address-set userName'>持卡人　：<view class='input'><input bindinput='userName' value="{{accUser}}" placeholder='请填写持卡人姓名'></input></view></view>
+ <view class='address-set number'>卡号　　：<view class='input'><input bindinput='userNumber' value="{{accNo}}"  placeholder='请填写银行卡号'>{{cardNumber}}</input></view></view>
+ <view class='button'>
+  <button bindtap='infoSave'>保存</button>
+ </view>
+
+<!--动画模板-->
+<!--mask-->  
+ <view class="drawer_screen" bindtap="powerDrawer" data-status="close" wx:if="{{showModalStatus}}"></view>  
+ <view class="drawer_screen" bindtap="seleDrawer" data-status="close" wx:if="{{selectStaus}}"></view>  
+<!--content-->
+ <view class='animation' animation="{{animationData}}" wx:if="{{showModalStatus}}">
+  <view class='wst-top-title'>
+   <view class='title'>账户地址</view>
+   <icon type='cancel' color='#b1b1b1' size="25" bindtap="powerDrawer" data-status="close"></icon>
+  </view>
+  <view class='navigation'>
+   <view class="main {{pattern == 1?'':'tooed'}}" wx:if='{{pattern >= 1}}' bindtap="mySelect" id="1">{{address1}}</view>
+   <view class="main too {{pattern == 2?'':'tooed'}}"  wx:if='{{pattern >= 2}}' bindtap="mySelect" id="2">{{address2}}</view>
+   <view class="main too {{pattern == 3?'':'tooed'}}"  wx:if='{{pattern >= 3}}' bindtap="mySelect" id="3">{{address3}}</view>
+  </view>
+  <scroll-view scroll-y > 
+   <view class='list'>
+    <view class='main' wx:for="{{pattern == 1?areas:pattern == 2?Area1:Area2}}" data-areaId="{{item.areaId}}" bindtap='clickArea'>{{item.areaName}}</view>
+   </view>
+  </scroll-view>
+ </view>
+ <!--菜单列表-->
+ <view class='menuList' animation="{{animationSele}}" wx:if="{{selectStaus}}">
+ <scroll-view class='wst-scroll' scroll-y >
+  <radio-group class="radio-group" bindchange="radioChange" bindtap="seleDrawer" data-status="close" >
+    <label class="radio" wx:for="{{banks}}">
+     <radio size='20' value="{{item.bankId}}" checked="{{item.checked}}"/>
+     <view class='text'>{{item.bankName}}</view>
+    </label>
+  </radio-group>
+ </scroll-view>
+ </view>
+</view>

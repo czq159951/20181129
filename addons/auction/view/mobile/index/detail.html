@@ -1,0 +1,232 @@
+{extend name="$LAYOUT_MOBILE_BASE" /}
+{block name="title"}商品详情 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/auction/view/mobile/index/css/detail.css?v={$v}">
+{/block}
+{block name="header"}
+<div class="wst-head-left"><a href="{:addon_url('auction://goods/molists')}"><i></i></a></div>
+{/block}
+{block name="footer"}
+{if($info)}
+    <div class="ui-loading-wrap wst-Load" id="Load">
+	    <i class="ui-loading"></i>
+	</div>
+	<input type="hidden" name="" value="{$info['currPrice']+$info['fareInc']}" id="currPrices" autocomplete="off">
+    <footer class="ui-footer" style="height:58px;" id="footer">
+        <div class="wst-toTop" id="toTop">
+	  	<i class="wst-toTopimg"><span>顶部</span></i>
+		</div>
+		<div class="wst-goods-bac"></div>
+		<span class="wst-goods-time" id="grouptime">{if $info['status']==-1}拍卖活动已结束{else}正在计算拍卖时间...{/if}</span>
+		<div class="ui-row-flex">
+		<div class="ui-col ui-col-4 wst-goods-ensure">
+			<p>保证金¥{$info['cautionMoney']}</p>
+			<p>（未拍到全额退还）</p>
+		</div>
+	    <div class="ui-col ui-col-3">
+	     {if $info['payMoney']==0}
+			<button id="buyBtn" class="wst-goods_buym active" type="button" onclick="javascript:addBond();" disabled>交保证金报名</button>
+		 {else}
+		 	<button id="buyBtn" class="wst-goods_buym active" type="button" onclick="javascript:cartShow(1);" disabled>我要出价</button>
+		 {/if}
+	    </div>
+	    </div>
+    </footer>
+{/if}
+{/block}
+{block name="main"}
+{if($info)}
+	 {/* 商品  */}
+     <section class="ui-container"  id="goods1">
+        <div class="ui-slider" style="padding-top:100%;position: relative;" id="groupon-time" sc="{:date("Y-m-d H:i:s")}" sv="{$info['startTime']}" ev="{$info['endTime']}">
+		    <ul class="ui-slider-content" style="{if($info['imgcount']>0)}{$info['imgwidth']}{/if}">
+		        {volist name="info['gallery']" id="ga"}
+		        <li><div class="wst-go-img"><a><img src="__ROOT__/{:WSTImg($ga,2)}"></a></div></li>
+		        {/volist}
+		    </ul>
+		    {if $info['status']==1}
+               	<i class="wst-det-state reds">正在拍卖</i>
+            {/if}
+            {if($info['status']==0)} 
+            	<i class="wst-det-state ashs">尚未开始</i>
+            {/if}
+            {if($info['status']==-1)} 
+            	 <i class="wst-det-state ashs">拍卖结束</i>
+            {/if}    
+		</div>
+		<div class="ui-nowrap-multi ui-whitespace wst-go-name">{$info['goodsName']}</div>
+		<div class="wst-go-price">
+	    	<p class="price">当前价:<span class="market">¥{$info['currPrice']}</span></p>
+	    	<p><span class="red">{$info['auctionNum']}</span>人出价   | <span class="red">{$info['visitNum']}</span>次围观</p>
+	    	<p><span class="red">（*拍卖结束后请在{$endPayDate}日内支付货款）</span></p>
+		    {if!empty($info['spec'])}
+		    <div class="wst-go-spec">
+				{volist name="$info['spec']" id="sp"}
+				<div class="spec">
+					{volist name="sp['list']" id="sp2"}
+					{if $sp2['itemImg']!=''}
+						<span class="introduce">{$sp['name']}:</span><img class="j-option img active" data-val="{$sp2['itemId']}" src="__ROOT__/{$sp2['itemImg']}" title="{$sp2['itemName']}">
+					{else}
+						<span class="introduce">{$sp['name']}:</span><span class="j-option words active" data-val="{$sp2['itemId']}">{$sp2['itemName']}</span>
+					{/if}
+					{/volist}
+					<div class="wst-clear"></div>
+				</div>
+				{/volist}
+			</div>
+			{/if}
+		</div>
+		<ul class="ui-list ui-list-text wst-go-ul ui-list-active">
+		    <li onclick="javascript:wholeShow('record');">
+		        <div class="ui-list-info">
+		            <p class="ui-nowrap" style="color: #a8a8a8;font-size: 0.15rem;">出价记录:<span class="red">{$info['auctionNum']}</span><span style="color: #59595c;">次出价</span></p>
+		        </div>
+		        <span class="icon">></span>
+		    </li>
+		</ul>
+		<ul class="ui-list ui-list-text wst-go-li ui-list-active">
+		    <li style="padding-bottom:0px"><p style="font-size: 0.15rem;">拍卖流程</p></li>
+		    <li style="padding:0px">
+			    <img src="__ROOT__/addons/auction/view/mobile/index/img/luicheng.png" style="width: 100%;">
+		    </li>
+		    <li style="padding:5px 10px 0px 10px;"><div class="line"></div></li>
+		  	<li>
+		        <div class="ui-list-info">
+		            <p class="ui-nowrap" style="font-size: 0.15rem;">保证金规则:<span style="color: #a8a8a8;">拍卖结束后退回</span></p>
+		        </div>
+		    </li>
+		    <li onclick="javascript:wholeShow('rule');">
+		        <div class="ui-list-info">
+		            <p class="ui-nowrap" style="font-size: 0.15rem;">拍卖须知:<span style="color: #a8a8a8;"></span></p>
+		        </div>
+		        <span class="icon">></span>
+		    </li>
+		</ul>
+		<ul class="ui-list ui-list-one ui-list-link wst-go-shop">
+		    <li onclick="javascript:location.href='{:url('mobile/shops/home',['shopId'=>$info['shop']['shopId']])}';">
+		        <div class="ui-list-thumb">
+		            <span><img src="__ROOT__/{:WSTImg($info['shop']['shopImg'],3)}" title="{$info['shop']['shopName']}"></span>
+		        </div>
+		     <div class="ui-list-info info">
+		    	<p class="name">{$info['shop']['shopName']}</p><br/>
+		        <p class="ui-nowrap-flex name2"><a href="tel:{$info['shop']['shopTel']}"><i></i>联系客服</a></p>
+        	</div>
+		    </li>
+		    <div class="ui-whitespace">
+		    <div class="ui-row-flex score">
+			    <div class="ui-col ui-col">商品评分:<span class="red">{$info['shop']['goodsScore']}</span></div><span class="line">|</span>
+			    <div class="ui-col ui-col">时效评分:<span class="red">{$info['shop']['timeScore']}</span></div><span class="line">|</span>
+			    <div class="ui-col ui-col">服务评分:<span class="red">{$info['shop']['serviceScore']}</span></div>
+			</div>
+			</div>
+		</ul>
+		{if($info['goodsDesc'])}
+		<div class="wst-go-details">
+			<p style="color: #3d3d3d;">拍品介绍</p>
+			{$info['goodsDesc']}
+		</div>
+		{/if}
+		<div class="wst-shl-ads">
+	     	<p style="color: #3d3d3d;font-size: 0.15rem;padding:10px 10px 3px 10px">热门拍卖</p>
+	     	{volist name='hot_auctions' id='vo'}
+	     	<div class="wst-go-goods" onclick="javascript:goGoods({$vo['auctionId']});">
+	     		<div class="img j-imgAdapt">
+	     			<a href="javascript:void(0);" onclick="javascript:goGoods({$vo['auctionId']});"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($vo['goodsImg'],3)}" title="{$vo['goodsName']}"></a>
+	     		</div>
+	     		<p class="name ui-nowrap-multi">{$vo['goodsName']}</p>
+	     		<div class="info"><span class="ui-nowrap-flex price">¥{$vo['currPrice']}</span></div>
+	     	</div>
+	     	{/volist}
+		    <div class="wst-clear"></div>
+	    </div>
+	    <div class="wst-go-top" style="display: none;">查看全部</div>
+     </section>
+    {/* 详情  */}
+{else}
+ <ul class="ui-row-flex wst-flexslp">
+	<li class="ui-col ui-flex ui-flex-pack-center">
+	<p>对不起，没有找到商品。</p>
+	</li>
+</ul>
+{/if}
+{/block}
+{block name="include"}
+{/* 提示分享对话框 share */}
+<div class="ui-dialog" id="wst-di-share" onclick="WST.dialogHide('share');">
+     <div class="wst-prompt"></div>
+</div>
+{if($info)}
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/*加入购物车框  */}
+<div class="wst-cart-box" id="frame-cart">
+	<div class="title">
+     	<div class="picture"><div class="img"><a href="javascript:void(0);"><img src="__ROOT__/{:WSTImg($info['goodsImg'],2)}" title="{$info['goodsName']}"></a></div></div>
+		<i class="ui-icon-close-page" onclick="javascript:cartHide();"></i>
+		<p class="ui-nowrap-multi">{$info['goodsName']}</p>
+		<p class="ui-nowrap-flex price">¥{$info['currPrice']}</p>
+		<div class="wst-clear"></div>
+	</div>
+	<div class="standard" id="standard">
+	<div class="number">
+		<p>（每次加价幅度：￥{$info['fareInc']}）</p>
+		<div class="stock">竞拍价：</div>
+	  	<div class="wst-buy_l">
+           <input class="wst-buy_l1" type="button" value="-" onclick='javascript:WST.changeIptNum(-{$info['fareInc']},"#buyNum")'><input id="buyNum" class="wst-buy_l2" data-min='{$info['currPrice']+$info['fareInc']}' data-max='' type="number" value="{$info['currPrice']+$info['fareInc']}" autocomplete="off" onkeyup='WST.changeIptNum(0,"#buyNum")'><input class="wst-buy_l3" type="button" value="+" onclick='javascript:WST.changeIptNum({$info['fareInc']},"#buyNum")'>
+      	</div>
+		<div class="wst-clear"></div>
+	</div>
+	</div>
+	<button class="button" onclick="javascript:addOffer();">确定</button>
+</div>
+{/* 记录  */}
+<div class="wst-fr-rule" id="record">
+    <div class="title"><span>出价记录</span><i class="ui-icon-close-page" onclick="javascript:wholeHide('record');"></i><div class="wst-clear"></div></div>
+       <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+       <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+       <div class="contents" id="record-list"></div>
+
+</div>
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+<table class="wst-details_content">
+	<thead>
+		<tr><th>竞拍人</th><th>竞拍价</th><th>竞拍时间</th></tr>
+	</thead>
+    <tbody>
+	{{# for(var i=0; i<d.length; i++){ }}
+		<tr class="{{#if(d[i]['isTop']==1){}}highest{{#}else{}}other{{#}}}"><td>{{ d[i].loginName }}</td><td>¥{{ d[i].payPrice }}</td><td>{{ d[i].createTime }}</td></tr>
+	{{# } }}
+	</tbody>
+</table>
+{{# }else{ }}
+	<ul class="ui-row-flex wst-flexslp">
+		<li class="ui-col ui-flex ui-flex-pack-center">
+		<p>对不起，没有相关出价记录。</p>
+		</li>
+	</ul>
+{{# } }}
+</script>
+{/* 规则  */}
+<div class="wst-fr-rule" id="rule">
+    <div class="title"><span>拍卖须知</span><i class="ui-icon-close-page" onclick="javascript:wholeHide('rule');"></i><div class="wst-clear"></div></div>
+    <div class="content">
+       	{$info['article']|htmlspecialchars_decode}
+    </div>
+</div>
+{/block}
+
+
+
+{block name="js"}
+<script>
+var goodsInfo = {
+		auctionId:{$info['auctionId']},
+		id:{$info['goodsId']}
+	}
+</script>
+{/if}
+<script type='text/javascript' src='__MOBILE__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__ROOT__/addons/auction/view/mobile/index/js/detail.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/auction/view/mobile/index/js/time.js?v={$v}'></script>
+{/block}

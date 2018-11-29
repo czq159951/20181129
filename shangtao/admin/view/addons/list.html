@@ -1,0 +1,27 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ADMIN__/addons/addons.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="wst-toolbar">
+	<div id="query" style="float:left;">
+		<input type="text" name="keyWords" placeholder="插件名称、标识" id="keyWords" class="j-ipt query">
+		<button type="button"  class='btn btn-primary btn-mright'  onclick="javascript:addonsQuery()"><i class="fa fa-search"></i>查询</button>
+		<span style="color:red;font-weight:bold;">&nbsp;&nbsp;安装插件后，进入“设置”，填写配置信息，然后点击保存！</span>
+	</div>
+  
+   <div style="clear:both"></div>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<script>
+$(function(){initGrid()});
+</script>
+
+{/block}

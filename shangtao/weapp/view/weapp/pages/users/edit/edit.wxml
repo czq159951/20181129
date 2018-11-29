@@ -1,0 +1,67 @@
+<!--pages/accountManage/accountManage.wxml-->
+<import src="../../common/we-cropper/we-cropper.wxml" />
+<view class='container'>
+<!--头像管理-->
+ <view class='user-head'>
+  <view class='left'>头像</view>
+  <view class='right' bindtap='ylimg'>
+   <view class='arrow'></view>
+  </view>
+  <view class='between'bindtap='selectTap' data-mode='rectangle'><image src="{{userPhoto}}" mode='aspectFill'></image></view>
+ </view>
+<!--user-name-->
+ <view class='user-name'>
+  <view class='left'>用户名</view>
+  <view class='right'>{{loginName}}</view>
+ </view>
+<!--昵称-->
+ <view class='user-nickName' bindtap='nickNameChange' data-statu="open">
+  <view class='left'>昵称</view>
+  <view class='right' ></view>
+  <view class='between'>{{userName}}</view>
+ </view>
+<!--性别-->
+ <view class='user-nickName user-gender' bindtap='genderChange' data-statu="open">
+  <view class='left'>性别</view>
+  <view class='right' ></view>
+  <view class='between'>{{userSex == '0'?'保密':userSex == '1'?'男':'女'}}</view>
+ </view>
+<!--动画模块-->
+<!--mask-->  
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{modelStatus}}"></view>  
+ <view class='animation-model' animation="{{animationData}}" wx:if="{{modelStatus}}">
+  <view class='title'>
+   <view class='title-content'>{{titleContent}}</view>
+   <icon type='cancel' color='#B7B7B7' size='28' bindtap='powerDrawer'  data-statu="close"></icon>
+  </view>
+  <view class='content'>
+   <!--内容1-->
+   <view class='nickName' wx:if="{{model_id == '1'}}">
+    <view class='input'>
+     <input placeholder='请输入昵称' maxlength='50' bindinput='nickName'></input> 
+    </view>
+   </view>
+   <!--内容2-->
+   <view class='userGender' wx:if="{{model_id == '2'}}">
+    <view class='strip' bindtap='genderSelected' data-id='0'>
+     <view class='left'>保密</view>
+     <icon class='right' type="{{select_id == '0'?'success':''}}" size='25' color='red'></icon>
+    </view>
+    <view class='strip' bindtap='genderSelected' data-id='1'>
+     <view class='left'>男</view>
+     <icon class='right' type="{{select_id == '1'?'success':''}}" size='25' color='red'></icon>
+    </view>
+    <view class='strip' bindtap='genderSelected' data-id='2' >
+     <view class='left'>女</view>
+     <icon class='right' type="{{select_id == '2'?'success':''}}" size='25' color='red'></icon>
+    </view>
+   </view>
+  </view>
+  <view class='button' wx:if="{{model_id == '1'}}">
+   <button bindtap='textSubmit' >确定</button>
+  </view>
+ </view>
+ 
+  <template is="welCropper" data="{{data:cropperData, cropperMovableItems:cropperMovableItems, cropperChangableData:cropperChangableData}}"></template> 
+
+</view>

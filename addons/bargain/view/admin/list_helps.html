@@ -1,0 +1,22 @@
+{extend name="../../../shangtao/admin/view/base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ROOT__/addons/bargain/view/admin/helps.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<input type='hidden' id='bargainId' value='{$bargainId}'/>
+<input type='hidden' id='bargainJoinId' value='{$bargainJoinId}'/>
+<div class="wst-toolbar">
+	<button class="btn btn-primary f-right" onclick='javascript:location.href="{:addon_url('bargain://admin/joins','bargainId='.$bargainId)}"'><i class="fa fa-angle-double-left"></i>返回</button>
+	<div style='clear:both'></div>
+</div>
+<table id="mmg" class="mmg">
+	<tr>
+	    <th rowspan="" colspan=""></th>
+	</tr>
+</table>
+<div id="pg" style="text-align: right;"></div>
+{/block}

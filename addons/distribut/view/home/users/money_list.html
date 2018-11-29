@@ -1,0 +1,116 @@
+{extend name="$LAYOUT_HOME_USER_BASE" /}
+{block name="title"}分成记录-买家中心{__block__}{/block}
+{block name="css"}
+<style>
+<!--
+.wst-order-list th{text-align: left;padding: 0px 4px;}
+.wst-order-list td{height: 30px;padding: 2px 4px;}
+-->
+</style>
+{/block}
+{block name="shop_apply"}
+	{if condition="session('WST_USER.userType') eq 0"}
+		{include file="$LAYOUT_HOME_SHOP_APPLY" /}
+	{/if}
+{/block}
+
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+
+<div class="wst-user-head"><span>分成记录</span></div>
+  <div class='wst-user-tbar'>
+              订单号：<input type="text" name="orderNo" id="orderNo" class="s-query" />
+   	  用户名称：<input type="text" name="userName" id="userName" class="s-query" />
+     <button class="wst-sec-but u-btn" onclick="moneyByPage()">查询</button>
+  </div>
+  <div class='wst-user-content'>
+    <table class='wst-order-list'>
+       <thead>
+	      <tr class='head'>
+	         <th>订单编号</th>
+		     <th>获佣用户</th>
+		     <th>佣金描述</th>
+		     <th>商品金额</th>
+		     <th>佣金</th>
+		     <th width="160">记录时间</th>
+	      </tr>
+	   </thead>
+	   <tbody id='list'></tbody>
+       <script id="tblist" type="text/html">
+      	{{# for(var i = 0; i < d.length; i++){ }}
+	   	<tr>
+	      <td>
+	         {{d[i]['orderNo']}}
+	      </td>
+	      <td>
+	         {{d[i]['userName']?d[i]['userName']:d[i]['loginName']}}
+	      </td>
+		  <td>
+	         {{d[i]['remark']}}
+	      </td>
+		  <td>
+	         {{d[i]['money']}}
+	      </td>
+		  <td>
+	         {{d[i]['distributMoney']}}
+	      </td>
+		  <td>
+	         {{d[i]['createTime']}}
+	      </td>
+	   	</tr>
+   		{{# } }}
+       </script>
+       <tr class='empty-row'>
+            <td colspan='6' id='pager' align="center" style='padding:5px 0px 5px 0px'>&nbsp;</td>
+       </tr>
+    </table>
+  </div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript">
+$(function(){
+	moneyByPage();
+});
+
+function moneyByPage(p){
+	$('#list').html('<tr><td colspan="11"><img src="'+WST.conf.ROOT+'/shangtao/home/view/default/img/loading.gif">正在加载数据...</td></tr>');
+	var params = {};
+	params = WST.getParams('.s-query');
+	params.key = $.trim($('#key').val());
+	params.page = p;
+	$.post("{:addon_url('distribut://distribut/queryUserMoneys')}",params,function(data,textStatus){
+	    var json = WST.toJson(data);
+	    if(json.status==1 && json.data){
+	       	var gettpl = document.getElementById('tblist').innerHTML;
+	       	laytpl(gettpl).render(json.data, function(html){
+	       		$('#list').html(html);
+	       		$('.j-lazyGoodsImg').lazyload({ effect: "fadeIn",failurelimit : 10,skip_invisible : false,threshold: 200,placeholder:WST.conf.ROOT+'/'+WST.conf.GOODS_LOGO});//商品默认图片
+	       	});
+	       	if(json.last_page>1){
+	       		laypage({
+		        	 cont: 'pager', 
+		        	 pages:json.last_page, 
+		        	 curr: json.current_page,
+		        	 skin: '#e23e3d',
+		        	 groups: 3,
+		        	 jump: function(e, first){
+		        		    if(!first){
+		        		    	moneyByPage(e.curr);
+		        		    }
+		        	    } 
+		        });
+	       	}else{
+	       		$('#pager').empty();
+	       	}
+       	}  
+	});
+}
+
+</script>
+{/block}

@@ -1,0 +1,45 @@
+<!--pages/user/userBalance/withdrawDeposit/withdrawDeposit.wxml-->
+<view class='container'>
+ <view class="top-remind">
+    <view>可提现金额</view>
+    <view class="number">¥ {{putMoney}}</view>
+ </view>
+ <view class='info-model'>
+  <view class='border'>
+   <view class='main-model1'>
+    <view class='content' >提现账号：</view>
+
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{banks}}">
+          <view class='border1' bindtap='seleDrawer' data-status="open">
+                    <view class='text'>{{firstContent?firstContent:'请选择账号'}}</view>
+                    <view class='icon'>▼</view>
+          </view>
+      </picker>
+    
+   </view>
+   <view class='main-model1 main-model'>
+    <view class='content'>提现金额：</view>
+    <view class='input'><input placeholder='' bindinput='money' type="number"></input></view>
+   </view>
+   <view class='main-model1 main-model'>
+    <view class='content'>支付密码：</view>
+    <view class='input'><input  password="ture" bindinput='payPwd' maxlength='6'></input></view>
+   </view>
+   <view class='main-model1 main-model remind'>（至少￥{{drawCashLimit}}以上可提现）</view>
+   <view class='button'><button bindtap='infoSave'>确认</button></view>
+  </view>
+ </view>
+ <!--动画模板-->
+  <view class="drawer_screen" bindtap="seleDrawer" data-status="close" wx:if="{{selectStaus}}"></view>  
+  <!--菜单列表-->
+ <view class='menuList' animation="{{animationSele}}" wx:if="{{selectStaus}}">
+ <scroll-view class='wst-scroll' scroll-y >
+  <radio-group class="radio-group" bindchange="radioChange" bindtap="seleDrawer" data-status="close" >
+    <label class="radio" wx:for="{{banks}}">
+     <radio size='20' value="{{item.id}}" checked="{{item.checked}}"/>
+     <view class='text'>{{item.accUser}}{{item.accNo?'|'+item.accNo:''}}</view>
+    </label>
+  </radio-group>
+ </scroll-view>
+ </view>
+</view>

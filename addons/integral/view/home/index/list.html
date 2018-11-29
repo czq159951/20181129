@@ -1,0 +1,219 @@
+{extend name="$LAYOUT_HOME_BASE" /}
+{block name="title"}{$catName} - 积分商城 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$seoIntegralDesc}">
+<meta name="Keywords" content="{$seoIntegralKeywords}">
+{/block}
+{block name="css"}
+<link href="__ROOT__/addons/integral/view/home/index/css/list.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="shop_apply"}
+	{include file="$LAYOUT_HOME_SHOP_APPLY" /}
+{/block}
+{block name="header"}
+	{include file="$LAYOUT_HOME_HEADER" /}
+{/block}
+{block name="main"}
+
+{/* 横栏广告  */}
+
+<div class="wst-ads" >
+	<div class="wst-slide" id="wst-slide">
+		<ul class="wst-slide-items">
+			{wst:ads code="ads-integral" cache='86400'}
+				<a href="{$vo.adURL}" {if ($vo['isOpen'])}target='_blank'{/if} {if ($vo['adURL']!='')}onclick="WST.recordClick({$vo['adId']})"{/if}><li style="background: url(__ROOT__/{$vo.adFile}) no-repeat  scroll center top;background-size:cover;" ></li></a>
+			{/wst:ads}
+		</ul>
+		<div class="wst-slide-numbox">
+			<div class="wst-lbox">
+				<div>
+					{php}$signScore=explode(",",WSTConf('CONF.signScore'));{/php}
+		    		<div class="ws-left-user">
+		    			<div class="top">
+		    				<div class="userphoto">
+		    					<img class="usersImg" data-original="{:WSTUserPhoto(session('WST_USER.userPhoto'))}">
+		    				</div>
+		    				<div class="name">
+		    					{if condition="session('WST_USER.userId') >0"}
+		    					<a href="{:Url('home/users/index')}">
+			    					<p class="uname">
+			    						{:session('WST_USER.userName')?session('WST_USER.userName'):session('WST_USER.loginName')}
+			    					</p>
+		    					</a>
+		    					<div class="bottom">
+				    				<div class="left">
+					    				<div>当前积分</div>
+					    				<div>
+					    					<a href="{:Url('home/userscores/index')}">
+					    					<span id="currentScore" class="currentscore">
+					    					{$user["userScore"]}
+					    					</span>
+					    					</a>
+					    				</div>
+				    				</div>
+				    				<div class="right">
+					    				<div>余额（元）</div>
+					    				<div>
+					    					<a href="{:Url('home/cashdraws/index')}">
+					    					<span id="currentScore" class="currentscore">
+					    					{$user["userMoney"]}
+					    					</span>
+					    					</a>
+					    				</div>
+				    				</div>
+				    				<div class="wst-clear"></div>
+				    			</div>
+				    			{if(WSTConf('CONF.signScoreSwitch')==1 && $signScore[0]>0)}
+			    					{if(session('WST_USER.signScoreTime')==date('Y-m-d'))}
+			    					<button id="j-sign" class="sign actives"><i class="plus">+</i>已签到</button>
+			    					{else}
+			    					<button id="j-sign" class="sign" onclick="javascript:inSign();"><i class="plus">+</i>签到领积分</button>
+			    					{/if}
+		    					 {/if}
+		    					{else}
+		    						<div class="hello">Hi 欢迎来到{:WSTMSubstr(WSTConf('CONF.mallName'),0,13)}</div>
+		    						<div>
+		    							<a class="loginbnt" href="{:url('home/users/login')}">请登录</a>
+		    							<a class="registbnt" href="{:url('home/users/regist')}">立即注册</a>
+		    						</div>
+		    					{/if}
+		    					
+		    				</div>
+		    			</div>
+		    			
+		    			<div class="wst-clear"></div>
+		    		</div>
+		    	   
+				</div>
+			</div>
+			<div class="wst-slide-controls">
+			  	{wst:ads code="ads-integral" cache='86400'}
+				  	{if condition="$k+1 eq 1"}
+				  		 <span class="curr"></span>
+				  	{else/}
+				  		 <span class=""></span>
+				  	{/if}
+				{/wst:ads}
+			</div>
+		</div>
+
+	</div>
+</div>
+{/* 筛选条件  */}
+<div class="integral-catbox">
+	<div class="integral-selector">
+	    <ul class='selector-item'>
+	    <li><a href="{:addon_url('integral://goods/lists')}" {if $integralCatId==0}class='curr'{/if}>全部商品分类</a></li>
+	    {volist name="$catList" id='vo'}
+	      <li><a href="{:addon_url('integral://goods/lists','catId='.$vo['catId'])}" {if $integralCatId==$vo['catId']}class='curr'{/if}>{$vo['catName']}</a></li>
+	    {/volist}
+	    </ul>
+	    <div class="wst-clear"></div>
+	</div>
+</div>
+
+{/* 商品展示  */}
+<div class="wst-container" id='integral-container' sc="{:date('Y-m-d H:i:s')}">
+	<div class='goods-main'>
+	   <div class="goods-list">
+	      {volist name='goodsPage["data"]' id='vo'}
+	      <div class="goods" sv="{$vo['startTime']}" ev="{$vo['endTime']}" st="{$vo['status']}">
+	      	<div class="img"><a target='_blank' href="{:addon_url('integral://goods/detail','id='.$vo['id'])}"><img title="{$vo['goodsName']}" alt="{$vo['goodsName']}" class='goodsImg2' data-original="__ROOT__/{$vo['goodsImg']}"/></a></div>
+	      	<div class='goods-txt'>
+	      	    <div class="p-name">
+	      	    <a target='_blank' href="{:addon_url('integral://goods/detail','id='.$vo['id'])}"  title="{$vo['goodsName']}">{$vo['goodsName']}</a>
+	      	    </div>
+	      	    <div style="padding:0 10px;color:#999;">店铺价：￥{$vo['shopPrice']}</div>
+	      		<div class="p-price" style='width:100%'>
+	      		<span class='integral-price'><em>￥</em>{$vo['goodsPrice']}</span>
+	      		+ <span class='integral-price2'>{$vo['integralNum']}</span> <span style="font-weight:normal;">积分</span>
+	      		</div>
+	      		 <div class='wst-clear'></div>
+	      		<div >
+	      			{if condition="($vo['totalNum']-$vo['orderNum']) gt 0"}
+		      			{if condition="isSet($user) and $user['userScore'] lt $vo['integralNum']"}
+			      		<a class="p-goods-over" href="javascript:;">积分不足</a>
+			      		{else/}
+			      		<a class="p-add-cart" target='_blank' href="{:addon_url('integral://goods/detail','id='.$vo['id'])}">立即兑换</a>
+			      		{/if}
+	      			{else/}
+	      			<a class="p-goods-over" href="javascript:;">已抢光</a>
+	      			{/if}
+	      		</div>
+	      		<div class='wst-clear'></div>
+	      	</div>
+	      </div>
+	      
+	      {/volist}
+	     <div class='wst-clear'></div>
+	   	</div>
+	   	<div >
+	  		<div id="wst-pager"></div>
+		</div>
+		
+	</div>
+	<div class='wst-clear'></div>
+	<div style="height: 50px;"></div>
+</div>
+{include file="$LAYOUT_HOME_RIGHT_CART"/}
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__ROOT__/addons/integral/view/home/index/js/list.js?v={$v}'></script>
+<script type='text/javascript'>
+laypage({
+    cont: 'wst-pager',
+    pages: {$goodsPage["last_page"]}, //总页数
+    skip: true, //是否开启跳页
+    skin: '#e23e3d',
+    groups: 3, //连续显示分页数
+    curr: function(){ //通过url获取当前页，也可以同上（pages）方式获取
+        var page = location.search.match(/page=(\d+)/);
+        return page ? page[1] : 1;
+    }(), 
+    jump: function(e, first){ //触发分页后的回调
+        if(!first){ //一定要加此判断，否则初始时会无限刷新
+        	var nuewurl = WST.splitURL("page");
+        	var ulist = nuewurl.split("?");
+        	if(ulist.length>1){
+        		location.href = nuewurl+'&page='+e.curr;
+        	}else{
+        		location.href = '?page='+e.curr;
+        	}
+            
+        }
+    }
+});
+
+
+
+var total = {$goodsPage["last_page"]};
+function page(t){
+	var page = location.search.match(/page=(\d+)/);
+	var curr = 1;
+	if(page && page.length>1){ //说明当前url上有page参数
+		curr = page[1]; // 当前页
+	}
+	var nuewurl = WST.splitURL("page"); // 当前url
+	var ulist = nuewurl.split("?"); // 将传递的参数与url分开
+	// 说明当前有参数. 需要带着参数一起传递
+	var url = (ulist.length>1)?nuewurl+'&page=':'?page=';
+
+	if(t=='prev'){ // 上一页
+		if(curr<=1)return;
+		curr = parseInt(curr)-1;
+		location.href = url+curr;
+	}else{ // 下一页
+		if(curr>=total)return;
+		curr = parseInt(curr)+1;
+		location.href = url+curr;
+	}
+	
+}
+</script>
+{/block}

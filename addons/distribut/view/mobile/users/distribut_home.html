@@ -1,0 +1,160 @@
+{extend name="$LAYOUT_MOBILE_BASE" /}
+{block name="title"}我的 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/user.css?v={$v}">
+<link rel="stylesheet"  href="__ROOT__/addons/distribut/view/mobile/users/distribut.css?v={$v}">
+<link rel="stylesheet"  href="__MOBILE__/js/share/nativeShare.css?v={$v}">
+<style>
+
+</style>
+{/block}
+{block name="header"}
+   
+{/block}
+{block name="main"}
+    <section class="ui-container">
+        	<div class="ui-row-flex wst-users_info">
+	        	<div class="ui-row-flex" style="height:0.7rem">
+		     		<div class="ui-col ui-col-2">
+		     			<div class="wst-users_infol" id="previewImages">
+		     			    <img src="{:WSTUserPhoto($user['userPhoto'])}" class="wst-useri_portrait" id="imgurl">
+		     			</div>
+		     			<p class="wst-users_infor wst-users_infortop">
+		     			{:$user['userName']?$user['userName']:$user['loginName']}
+		     			{if ($user['ranks']['rankName']!='')}<img src="__ROOT__/{$user['ranks']['userrankImg']}">{/if}
+		     			</p>
+		     			{if ($user['ranks']['rankName']!='')}
+		     			<p class="wst-users_infor wst-users_inforbo">{$user['ranks']['rankName']}</p>
+		     			{/if}
+		     		</div>
+				</div>
+			</div>
+			<div class="ui-row-flex ui-whitespace wst-sha_icon">
+			    <div class="ui-col ui-col make">
+			        <button type="button" class="ui-btn-lg button" onclick="WST.dialogShare();">二维码分享</button>
+			    </div>
+			    <div class="ui-col ui-col make">
+			        <button type="button" class="ui-btn-lg button" onclick="javascript:shareShow();">立刻赚钱</button>
+			    </div>
+			</div>
+			<div class="ui-row-flex ui-whitespace wst-sha_icon2">
+			    <div class="ui-col ui-col">
+				    <p class="number">{$user["userCnt"]}</p>
+				    <p>总用户</p>
+			    </div>
+			    <div class="ui-col ui-col">
+			    	<p class="number">¥{$user["distributMoney"]}</p>
+			    	<p>总佣金</p>
+			    </div>
+			</div>
+			<a href="{:url('addon/distribut-distribut-mobiledistributmoneys')}">
+			<ul class="ui-list ui-list-link wst-users_list ui-list-active">
+			    <li><div class="wst-list-thumb-sus">
+			            <span class="wst-sha_chart1"></span>
+			        </div>
+			        <div class="ui-list-info">
+			            <h5 class="ui-nowrap">佣金信息</h5>
+			    </div></li>
+			</ul></a>
+			<a href="{:url('addon/distribut-distribut-mobiledistributusers')}">
+			<ul class="ui-list ui-list-link wst-users_list ui-list-active">
+			    <li><div class="wst-list-thumb-sus">
+			            <span class="wst-sha_chart2"></span>
+			        </div>
+			        <div class="ui-list-info">
+			            <h5 class="ui-nowrap">用户列表</h5>
+			    </div></li>
+			</ul></a>
+        </section>
+        
+	{/*分享 */}
+	<?php if(!(Request()->isSsl())){?>
+	<div class="wst-cart-box" id="frame-share" style="padding-top:10px;" >
+		<div class="content" id="nativeShare" style="padding-bottom:20px;">
+			<script type='text/javascript' src='__MOBILE__/js/share/nativeShare.js?v={$v}'></script>
+			<div class="bshare-custom icon-medium-plus">
+				<div class="ui-form-item ui-form-item-show" style="font-size:0.15rem;">    
+					<a title="分享到QQ空间" class="bshare-qzone">分享到QQ空间</a>
+				</div>
+				<div class="ui-form-item ui-form-item-show" style="font-size:0.15rem;">
+					<a title="分享到新浪微博" class="bshare-sinaminiblog">分享到新浪微博</a>
+				</div>
+				<div class="ui-form-item ui-form-item-show" style="font-size:0.15rem;">    
+					<a title="分享到开心网" class="bshare-kaixin001">分享到开心网</a>
+				</div>
+				<div class="ui-form-item ui-form-item-show" style="font-size:0.15rem;">
+					<a title="分享到人人网" class="bshare-renren">分享到人人网</a>
+				</div>
+			</div>
+			<script>
+		        var config = {
+					url: "{:url('mobile/index/index','shareUserId='.base64_encode(session('WST_USER.userId')),true,true)}",
+		            title:"",
+		            desc:"",
+		            img:""
+		        };
+				var share_obj = new nativeShare('nativeShare',config);
+				$(function(){
+			    	if(bShare){
+				    	bShare.addEntry({
+						    url:  "{:url('mobile/index/index','shareUserId='.base64_encode(session('WST_USER.userId')),true,true)}",
+							title:"{:WSTConf('CONF.mallName')}",
+							summary:"",
+						    pic: "{:WSTDomain()}/{:WSTConf('CONF.mallLogo')}"
+						});
+				    }
+			    });
+		    </script>
+		</div>
+		<button class="button" onclick="javascript:shareHide();" style="display: block;margin: 0 auto;margin-bottom: 0.05rem;">取消</button>
+	</div>
+	<?php } ?>  
+        <!--二维码对话框-->
+		<div class="ui-dialog" id="wst-di-qrcod" onclick="WST.dialogHide('qrcod');">
+		    <div class="ui-dialog-cnt wst-dialog-cnt5">
+		        <div class="wst-dialog-bd">
+		            <div><div id="qrcodes"></div></div>
+		        </div>
+		    </div>        
+		</div>
+		
+		{/* 遮盖层  */}
+		<div class="wst-cover" id="cover" style="z-index:0"></div>
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_MOBILE_DIALOG" /}<!-- 对话框模板 -->
+	{include file="$LAYOUT_MOBILE_FOOTER" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__MOBILE__/users/user.js?v={$v}'></script>
+<script type="text/javascript" src="__STATIC__/js/qrcode.js?v={$v}"></script>
+<script>
+jQuery.noConflict();
+//弹框
+function shareShow(){
+	jQuery('#cover').attr("onclick","javascript:shareHide();").show();
+	jQuery('#frame-share').animate({"bottom": 0}, 500);
+}
+function shareHide(){
+	var cartHeight = '345px';
+	jQuery('#frame-share').animate({'bottom': '-'+cartHeight}, 500);
+	jQuery('#cover').hide();
+}
+WST.dialogShare = function(){
+	$("#wst-di-qrcod").dialog("show");
+}
+$(function(){
+	shareHide();
+ 	var url= "{:url('Mobile/Index/index',array('shareUserId'=>base64_encode($user['userId'])),true,true)}";
+ 	//参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+ 	var qr = qrcode(10, 'H');
+ 		qr.addData(url);
+ 		qr.make();
+ 	$("#qrcodes").html(qr.createImgTag(4,4));
+});
+</script>
+
+
+{/block}
+{/block}

@@ -1,0 +1,38 @@
+{if !empty($goods['promotion']) && $goods['promotion']['type']=='reward'}
+{if isset($goods['rewardCartIds'])}
+<link href="__ROOT__/addons/reward/view/wechat/index/reward.css" rel="stylesheet">
+<div class='cart-reward-goods-box'>
+<div class='reward-txt' id="reward_box{$goods.shopId}">
+	<span class='tag'>满就送</span>
+	{if !empty($goods['rewardResult'])}
+	消费满￥{$goods['rewardResult']['orderMoney']}{$goods['rewardText']}
+	{/if}
+	</span>
+</div>
+<div class='wst-clear'></div>
+</div>
+<script>
+$(function(){
+	var cartIds = {:json_encode($goods['rewardCartIds'])};
+	var money=goodsNum=rewardMoney=0;
+	for(var i=0;i<cartIds.length;i++){
+		// 计算参与活动的商品总金额
+        money = parseFloat($('#price_'+cartIds[i]).attr('mval'),10);
+        goodsNum = parseInt($('#number_'+cartIds[i]).attr('mval'),10);
+        rewardMoney = rewardMoney + money*goodsNum;
+	}
+	if( rewardMoney >= {$orderMoney} ){
+		// 满足满减条件
+		for(var i=0;i<cartIds.length;i++){
+			//设置背景颜色
+	        $('.j-g'+cartIds[i]).css('background','#fff4e8');
+		}
+		 // 显示`立减`
+		$('#reward_'+{$goods.shopId}).show();
+	}else{
+		$('#reward_box{$goods.shopId}').hide();
+	}
+});
+</script>
+{/if}
+{/if}

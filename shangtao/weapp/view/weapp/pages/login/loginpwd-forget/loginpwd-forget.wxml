@@ -1,0 +1,16 @@
+<view class='container'>
+  <view class='login-model'>
+    <view class='form-model'>
+      <view class='login-item'>
+        <input  placeholder='用户名' type="text"  bindinput='loginName'/>
+      </view>
+      <view class='login-item'>
+        <input placeholder='验证码' bindinput='verifyCode' />
+        <image src="{{code}}" mode='aspectFill' class="verify" bindtap='code'/>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='log-model'>
+    <button class='lo-button' bindtap='submit' disabled="{{suDisabled}}">确认</button>
+</view>

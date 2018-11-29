@@ -1,0 +1,127 @@
+/* pages/chatWindow/addInfo/addInfo.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  background: #F0F2F5;
+}
+.wst-container{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.wst-content{
+  width: 100%;
+  height: auto;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+}
+.wst-content .border{
+  width: 96%;
+  height: auto;
+}
+.wst-content .border .type{
+  width: 100%;
+  height: 44rpx;
+  display: flex;
+  margin-left: 20rpx;
+  flex-direction:row;
+}
+.type .border{
+  width: 160rpx;
+  height: 35rpx;
+  border: 1rpx solid #7E7E7E;
+  display: flex;
+  position: absolute;
+  background: white;
+  top:0;
+  left:150rpx;
+}
+.type .border .icon{
+  position: absolute;
+  top: 8rpx;
+  left: 130rpx;
+  font-size: 20rpx;
+}
+.wst-content .border .remind{
+  width: 100%;
+  height: 44rpx;
+  margin-left: 20rpx;
+  margin-top: 10rpx;
+}
+.wst-button{
+  width: 25%;
+  height: 60rpx;
+  text-align: center;
+  margin: 0rpx auto;
+  margin-top: 10rpx;
+}
+button{
+  width: 100%;
+  height:90%;
+  line-height: 1.8;
+  border-radius: 10rpx;
+  background: #E00102;
+  color: white;
+  font-size: 30rpx;
+  margin-top: 20rpx;
+}
+
+/*备注信息*/
+.remarkInform{
+  width: 98%;
+  height: 200rpx;
+  margin: 0rpx 15rpx 10rpx;
+  border: 1rpx solid #ABAFB6;
+  position: relative;
+  background: white;
+  margin-left: 20rpx;
+}
+.remarkInform textarea{
+  width: 100%;
+  height: 190rpx;
+}
+
+/*下拉菜单*/
+.menuList{
+  position: absolute;
+  left: 158rpx;
+  top: 62rpx;
+  width: 160rpx;
+  height: auto;
+  border: 1rpx solid black;
+  z-index: 10;
+  background: white;
+  z-index: 1001;
+}
+.menuList .strip{
+  width: 160rpx;
+  height: 40rpx;
+  font-size: 30rpx;
+}
+.menuList .strip1{
+  width: 160rpx;
+  height: 40rpx;
+  font-size: 30rpx;
+  background: #ADE1F5;
+  color: white;
+}
+/*动画模块*/
+
+/*mask*/  
+.drawer_screen {  
+  width: 100%;  
+  height: 100%;  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  z-index: 1000;  
+  background: transparent;  
+  opacity: 0.4;  
+  overflow: hidden;  
+} 
+picker{
+    display:inline-block;
+    width:200px;
+    position:relative;
+
+}

@@ -1,0 +1,45 @@
+{extend name="default/base" /}
+{block name="title"}我的提现账户 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/cashconfigs.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header style="background:#ffffff;" class="ui-header ui-header-positive wst-header js-account">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>我的提现账户</h1>
+        <span class="add" onclick="editAddress()">添加</span>
+    </header>
+{/block}
+{block name="main"}
+<input type="hidden" name="" value="" id="currPage" autocomplete="off">
+<input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+<script type="text/html" id="list">
+    {{# for(var i=0;i<d.length;++i){ }}
+     <ul class="ui-row" >
+        <li class="ui-col ui-col-80" onclick="editAddress({{d[i].id}})">
+		   <input type="hidden" id="addr_{{d[i].id}}" value="{{d[i].areaName}}">
+           <p class="wst-ca-accno">{{d[i].accNo}}</p>
+           <p class="wst-ca-info"> 持卡人姓名：{{d[i].accUser}}</p>
+           <p class="wst-ca-info"> 开户行：{{d[i].bankName}}</p>
+        </li>
+        <li class="ui-col ui-col-20" onclick="del({{d[i].id}})"><p class="c-tr"><span class="delete-icon"></span>删除<p></li>
+     </ul>
+    {{# } }}
+</script>
+<section class="ui-container js-account" id="listBox"></section>
+
+{include file="default/dialog" /}<!-- 对话框模板 -->
+{include file="default/users/cashconfigs/edit" /}<!-- 新增/编辑收货地址模板 -->
+
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__MOBILE__/users/cashconfigs/cashconfigs.js?v={$v}'></script>
+{/block}
+
+
+
+
+
+
+

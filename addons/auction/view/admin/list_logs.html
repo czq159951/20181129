@@ -1,0 +1,22 @@
+{extend name="$LAYOUT_ADMIN_BASE" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ROOT__/addons/auction/view/admin/log.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<input type='hidden' id='id' value='{$id}'/>
+<div class="wst-toolbar">
+	竞拍人：<input type="text" name="key"  placeholder='竞拍人账号/名称' id="key" class='j-ipt'/>
+	<button class="btn btn-primary" onclick='javascript:loadGrid(0)'><i class='fa fa-search'></i>查询</button>
+	<div style='clear:both'></div>
+</div>
+<table id="mmg" class="mmg">
+   <tr>
+      <th rowspan="" colspan=""></th>
+   </tr>
+</table>
+<div id="pg" style="text-align: right;"></div>
+{/block}

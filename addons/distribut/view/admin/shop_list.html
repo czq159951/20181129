@@ -1,0 +1,57 @@
+{extend name="../../../shangtao/admin/view/base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="wst-toolbar">
+   <div id="query" style="float:left;">
+	   	<input type="text" name="shopSn"  placeholder='店铺编号' id="shopSn" class="query" />
+	   	<input type="text" name="shopName" placeholder='店铺名称' id="shopName" class="query" />
+	   	<input type="text" name="shopkeeper" placeholder='店主姓名' id="shopkeeper" class="query" />
+	   	<button type="button"  class='btn btn-primary btn-mright' onclick="javascript:userQuery()"><i class="fa fa-search"></i>查询</button>
+	</div>
+   <div style="clear:both"></div>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<script>
+$(function(){initGrid();})
+  var mmg;
+  function initGrid(){
+    var h = WST.pageHeight();
+    var cols = [
+            {title:'店铺编号', name:'shopSn', width: 50},
+            {title:'店铺名称', name:'shopName' ,width:100},
+            {title:'店主姓名', name:'shopkeeper' ,width:30},
+            {title:'店主联系电话', name:'telephone' ,width:30},
+            {title:'店主店铺地址', name:'shopAddress' ,width:30},
+            {title:'所属公司', name:'shopCompany' ,width:30},
+            {title:'分销模式', name:'saleNum' ,width:30, renderer: function(val,item,rowIndex){
+                return (item['distributType']==1?"按商品设置提取佣金":"按订单比例提取佣金");
+            }},
+            {title:'购买者分成', name:'buyerRate' ,width:30},
+            {title:'第二级分成', name:'secondRate' ,width:30},
+            {title:'第三级分成', name:'thirdRate' ,width:30},
+            {title:'营业状态', name:'commission' ,width:80, align:'center', renderer: function(val,item,rowIndex){
+                return (item['shopAtive']==1)?"<span class='statu-yes'><i class='fa fa-check-circle'></i> 营业中</span>":"<span class='statu-wait'><i class='fa fa-clock-o'></i> 休息中</span>";
+            }}
+            ];
+ 
+    mmg = $('.mmg').mmGrid({height: h-85,indexCol: true,indexColWidth:50,  cols: cols,method:'POST',
+        url: "{:addon_url('distribut://distribut/queryadmindistributshops')}", fullWidthRows: true, autoLoad: true,
+        plugins: [
+            $('#pg').mmPaginator({})
+        ]
+    });  
+}
+function userQuery(){
+	var query = WST.getParams('.query');
+	mmg.load(query);
+}
+</script>
+{/block}

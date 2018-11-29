@@ -1,0 +1,28 @@
+<template name="reward-carts">
+  <view class='wst-rew-cart' wx:if="{{ca.promotion!=''}}">
+    <text class="reduce">满减</text>
+    <text>{{ca.promotion.data.rewardTitle}}</text>
+    <text>{{addons[ca.shopId].words}}</text>
+  </view>
+</template>
+
+<template name="reward-settlement">
+  <view class='wst-rew-cart' wx:if="{{ca.promotion!=''}}">
+    <text class="reduce">满就送</text>
+    <text wx:if="{{ca.list[0].rewardResult!=''}}">消费满 ¥ {{ca.list[0].rewardResult.orderMoney+ca.list[0].rewardText}}</text>
+  </view>
+</template>
+
+<template name="reward-goods">
+  <view class='comment' bindtap='rewardState' wx:if="{{rewardData!=''}}">
+    <view class='title'>促销 <view class='strip'>|</view> <view class="describe"><text class="reduce">满就送</text>{{rewardData.rewardTitle}}</view></view>
+    <view class='radius'>. . .</view>
+  </view>
+  <view class="wst-rew-info" wx:for="{{rewardData.list}}" wx:for-item="rew" wx:if="{{rewardData.state==1}}">
+    <text>消费满{{rew.orderMoney}}元 - </text>
+    <text wx:if="{{rew.favourableJson.chk0}}">减￥{{rew.favourableJson.chk0val}}、</text>
+    <text wx:if="{{rew.favourableJson.chk1}}">送赠品【{{rew.favourableJson.chk1val.text}}】、</text>
+    <text wx:if="{{rew.favourableJson.chk2}}">免邮费</text>
+    <text wx:if="{{rewardData.reward && rew.favourableJson.chk2 && rew.favourableJson.chk3val.text}}">、送{{rew.favourableJson.chk3val.text}}优惠券</text>
+  </view>
+</template>

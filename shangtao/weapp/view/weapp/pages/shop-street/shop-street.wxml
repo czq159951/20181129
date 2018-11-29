@@ -1,0 +1,176 @@
+<!--pages/Store/Stores.wxml-->
+<block wx:if="{{!interIm}}">
+  
+<view class="wst-se-header">
+  <view class="input">
+    <icon class="icon" type="search" size="13" color="{{select == 0 ? '#fff' : '#666'}}" bindtap="search"/>
+    <input placeholder='请输入店铺名称' placeholder-class='wst-head-placeholder' bindinput="getSearch" bindtap='interPage'></input>
+  </view>
+
+ <view class='sortStrip'>
+
+   <view class="main-case">
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{typeArray}}">
+          <view class='border'  > 
+          <view class='left3'>{{mainArray2}}</view>
+          </view>
+      </picker>
+
+   </view>
+
+   <view class="main-case {{selected == sortArray.id?'main-case1':''}}" bindtap='sortSelect' data-id="{{sortArray.id}}">
+    <view class='border'> 
+     <view class='left'>{{sortArray.title}}</view>
+     <view class='right' wx:if="{{selected != 1}}"><image src="{{sortArray.img2}}" mode='aspectFill'></image></view>
+     <block wx:if="{{selected == 1}}">
+      <view class='right'><image src="{{desc == 1?sortArray.img1:sortArray.img}}" mode='aspectFill'></image></view>
+     </block>
+    </view>
+   </view>
+   <view class="main-case {{selected == 2?'main-case1':''}}" bindtap='distance' data-id="2">
+    <view class='border'> 
+     <view class='left'>距离</view>
+     <view class='right' wx:if="{{selected != 2}}"><image src="{{sortArray.img2}}" mode='aspectFill'></image></view>
+     <block wx:if="{{selected == 2}}">
+      <view class='right'><image src="{{desc == 1?sortArray.img1:sortArray.img}}" mode='aspectFill'></image></view>
+     </block>
+    </view>
+   </view>
+   <view class="main-case-r" bindtap='openScreenTier' data-action="open">
+    <view class='border'> 
+     <view class='right'><image src="../../image/screen.png" mode='aspectFill'></image></view>
+     <view class='left'>筛选</view>
+    </view>
+   </view>
+ </view>
+</view>
+
+<view  class='remind-model' wx:if="{{!hasDate}}" style='line-height:300rpx;'>
+    <view class='image' ><image src='/image/nothing-cart.png' class="img"></image></view>
+    <view class='content' style='margin-top:-70rpx;'>对不起,没有相关店铺。</view>
+  </view>
+<block wx:if="{{storeArray.length != 0}}">
+<scroll-view scroll-y='{{allStatus}}' style='border-top:68rpx solid transparent;'>
+<view class='container'>
+<!--排序条-->
+<!--店铺列表-->
+<block wx:for="{{storeArray}}">
+ <view class='store-list'>
+  <view class='border' bindtap='jumpShopDetail' data-shopid="{{item.shopId}}">
+    <view class='left'>
+      <image src="{{domain+item.shopImg}}" mode='aspectFit'></image>
+    </view>
+    <view class='right'>
+      <view class='main1'>{{item.shopName}}</view>
+      <view class='main' wx:if="{{item.catshops}}">主营：{{item.catshops}}</view>
+      <view class='main grade'>
+        <view class='left1'>店铺评分：</view>
+        <view class='right1'>
+          <block wx:for="{{item.totalScore}}">
+            <view class='image'><image src="/image/img_pentagon.png" mode='aspectFit'></image></view>
+          </block>
+          <block wx:for="{{5-item.totalScore}}">
+            <view class='image'><image src='/image/img_pentagon1.png' mode='aspectFit'></image></view>
+          </block >
+        </view>
+      </view>
+    </view>
+    <view>
+      <view class='botton'>
+        <text>进入店铺</text>
+      </view>
+      <block wx:if="{{item.lat>0 && item.lng>0 && item.distince}}">
+      <view style="display:flex;flex-direction:'row'">
+        <image src="/image/location-icon.png"  mode="aspectFit" style="width:30rpx;height:30rpx;margin-top:7rpx;margin-right:6rpx;"></image>
+        <view class='main mar-top' >距离:{{item.distince}}km</view>
+      </view>
+      </block>
+    </view>
+  </view>
+  <view class='buttom' wx:if="{{item.rec.length >0}}" id="{{item.rec.length}}">
+    <view class='buttom-bor'>
+    <block  wx:for="{{item.rec}}" >
+      <navigator open-type='navigate' url='../goods-detail/goods-detail?goodsId={{item.goodsId}}'>
+      <view class='box'>
+        <view class='image'>
+          <image src="{{domain+item.goodsImg}}?{{domain+item.goodsImg}}:" mode='aspectFit'></image>
+        </view>
+        <text>¥{{item.shopPrice}}</text>
+      </view>
+      </navigator>
+    </block>
+    </view>
+  </view>
+ </view>
+</block>
+<!--菜单列表-->
+ <view class='menuList' animation="{{animationSele}}" wx:if="{{selectType}}">
+ <scroll-view class='wst-scroll' scroll-y >
+  <radio-group class="radio-group" bindchange="radioChange" bindtap="sortSelect" data-status="close" >
+    <label class="radio" wx:for="{{typeArray}}" wx:for-index="{{typeArray.id}}">
+    <view  bindtap='mySelect' style='display:flex;' bindtouchstart='touchstart'  data-status='close' data-type="{{item.catName}}" data-id="{{item.catId}}">
+     <radio size='20' value="{{item.bankId}}" checked="{{item.checked}}"/>
+     <view class='text'>{{item.catName}}</view>
+     </view>
+    </label>
+  </radio-group>
+ </scroll-view>
+ </view>
+ <view class="drawer_screen" bindtouchmove="powerDrawer" bindtap='powerDrawer' data-status="close" wx:if="{{showModalStatus}}"></view>  
+</view>
+</scroll-view>
+</block>
+</block>
+<!--搜索页面-->
+<block wx:if="{{interIm}}">
+  <view class='wst-search-interim'>
+    <view class="wst-se-header2">
+      <view class='close' bindtap='black'>
+        <icon color="#9A9A9A" data-statu="close" size="22" type="cancel"></icon>
+      </view>
+      <view class="input">
+        <icon class="icon" type="search" size="13" color="{{select == 0 ? '#fff' : '#666'}}" bindtap="search"/>
+        <input placeholder='请输入店铺名称' placeholder-class='wst-head-placeholder' bindinput="getSearch" bindtap='interPage'></input>
+      </view>
+      <view class="btn" bindtap="search">搜索</view>
+    </view>
+    <scroll-view scroll-y class="wst-search-list">
+    <view class='interim-box' bindtap='mySelect'  bindtouchstart='touchstart'  data-status='close' data-type="{{item.catName}}" data-id="{{item.catId}}" wx:for="{{typeObj}}" wx:for-index="id">
+      <view class='search-script-top' wx:if="{{id == 0}}">
+        <text>全部店铺</text>
+        <view class='script-arrow'></view>
+      </view>
+      <view class='search-script' wx:if="{{id != 0}}">
+        <text>{{item.catName}}</text>
+        <text>查看全部</text>
+      </view>
+    </view>
+    </scroll-view>
+  </view>
+</block>
+<view class="drawer_screen" bindtap="openScreenTier" data-action="close" wx:if="{{showModalStatus}}"></view>
+<!--筛选层-->
+<view class="screen-tier" id="screen-tier" wx:if="{{screenTier}}" animation="{{parameterData}}">
+<scroll-view style='height:93vh;' scroll-y>
+      <view class="screen-mol" wx:if="{{accred != ''}}">
+      <view class="title">店铺服务</view>
+      <view class="option-box" bindtap="cancelAccred">
+          <view class='mix-box selected'>{{accred}}</view>
+      </view>
+      </view>
+      <view class="screen-mol" wx:if="{{scoreSection != ''}}">
+      <view class="title">好评率</view>
+      <view class="option-box" bindtap="cancelScore">
+          <view class='mix-box selected'>{{scoreSection}}</view>
+      </view>
+      </view>
+      <screen  screen-hidden="{{is_modal_Hidden}}" screen-data="{{service}}" id="screen" bindmyevent="selectAttr" wx:if="{{service != ''}}"></screen>
+      <screen  screen-hidden="{{is_modal_Hidden}}" screen-data="{{graded}}" id="screen" bindmyevent="selectAttr"
+wx:if="{{graded != ''}}"></screen>
+  <view style="height:20rpx;"></view>
+</scroll-view>
+<view class='bottom-mol'>
+  <button bindtap="resetAll" form-type="reset">重置</button>
+  <button class='sure' bindtap="openScreenTier" data-action="close">确定</button>
+</view>
+</view>

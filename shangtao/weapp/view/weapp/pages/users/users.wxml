@@ -1,0 +1,86 @@
+<import src="../../addons/closure/coupon/coupon.wxml"/>
+<view  class='container'>
+  <!--用户信息-->
+  <view style="background:#fff;">
+   <view class='user-top-model' style="background-image:url({{domain}}shangtao/weapp/view/weapp/image/user.png);background-size:cover;">
+    <view class='image'>
+      <image src="{{(userData.userPhoto)?userData.userPhoto:domain+userPhoto}}" mode='aspectFill' bindtap='preview'></image>
+    </view>
+    <view class='inform'>
+      <view class='user'>
+       <view class='identity'>{{userData.userName == ''?userData.loginName:userData.userName}}</view><image src="{{domain+userData.ranks.userrankImg}}"></image>
+      </view>
+      <view class='number'>{{userData.ranks.rankName}}</view>
+    </view>
+    <view class="sign {{ integralWord==1?'already' : 'noalready' }}" bindtap='statusSign'></view>
+    <view class="wst-info-icon" bindtap="accountManageUrl"></view>
+    <view class="wst-msg-icon" bindtap='toMail'><span class="number" wx:if="{{userData.datam.message.num >0}}">{{userData.datam.message.num}}</span></view>
+   </view>
+   </view>
+    <view class='user-indent' wx:if="{{userData.userType==1}}" style="margin-top:0;">
+     <view class='left'><i class="order-icon"></i>商家订单管理</view>
+     <view class='right' bindtap="sellerOrders">查看全部订单 ></view>
+    </view>
+    <view class='user-indent'  style="{{(userData.userType==1)?'margin-top:2rpx':'margin-top:0'}}">
+     <view class='left'><i class="order-icon"></i>我的订单</view>
+     <view class='right' bindtap="userOrders">查看全部订单 ></view>
+    </view>
+    <view class='user-inform'>
+      <view class='mix-table wst-left' bindtap='toOrders' data-types='waitPay'>
+       <image src='/image/users_icon1.png'></image>
+       <view class='title' >待付款</view>
+       <view class='radius' wx:if="{{userData.datam.order.waitPay >0}}">{{userData.datam.order.waitPay}}</view>
+      </view>
+      <view class='mix-table' bindtap='toOrders' data-types='waitDeliver'>
+       <image src='/image/users_icon2.png'></image>
+       <view class='title'>待发货</view>
+       <view class='radius' wx:if="{{userData.datam.order.waitSend >0}}">{{userData.datam.order.waitSend}}</view>
+      </view>
+      <view class='mix-table' bindtap='toOrders' data-types='waitReceive'>
+       <image src='/image/users_icon3.png'></image>
+       <view class='title'>待收货</view>
+       <view class='radius' wx:if="{{userData.datam.order.waitReceive >0}}">{{userData.datam.order.waitReceive}}</view>
+      </view>
+      <view class='mix-table' bindtap='toOrders' data-types='waitAppraise'>
+       <image src='/image/users_icon5.png'></image>
+       <view class='title'>待评价</view>  
+       <view class='radius' wx:if="{{userData.datam.order.waitAppraise >0}}">{{userData.datam.order.waitAppraise}}</view>
+      </view>
+      <view class='mix-table' bindtap='toOrders' data-types='abnormal'>
+       <image src='/image/users_icon6.png'></image>
+       <view class='title'>取消拒收</view>
+      </view>
+    </view>
+    <view class='user-indent'>
+     <view class='left'><i class="wallet-icon"></i>我的财产</view>
+     <view class='right' bindtap="jumpCenter" data-url="/pages/users/user-balance/user-balance">资金管理 ></view>
+    </view>
+    <view class="wst-us-wallet">
+      <view class="term">
+        <navigator open-type='navigate' url='/pages/users/user-balance/user-balance'>
+          <p class="number"><span>¥ </span>{{userData.userMoney}}</p>
+          <p class="word">余额</p>
+        </navigator>
+      </view>
+      <view class="term">
+        <navigator open-type='navigate' url='/pages/users/userIntegral/userIntegral'>
+          <p class="number">{{userData.userScore}}</p>
+          <p class="word">积分</p>
+        </navigator>
+      </view>
+      <template is="coupon-user2" data="{{couponsNum}}" wx:if="{{addons.Coupon==1}}"/>
+    </view>
+    <view class='user-indent'>
+     <view class='left'><i class="tool-icon"></i>必备工具</view>
+     <view class='right'></view>
+    </view>
+    <view class='wst-bor'>
+    <view class='user-icon-bottom'>
+     <view class='model' wx:for="{{jumpCenter}}" bindtap="jumpCenter" data-url="{{item.url}}">
+      <view class='image'><image src="{{item.img}}"mode='AspectFit'></image></view>
+      <view class='title'>{{item.name}}</view>
+     </view>
+     <template is="coupon-user" data="" wx:if="{{addons.Coupon==1}}"/>
+    </view>
+    </view>
+</view>

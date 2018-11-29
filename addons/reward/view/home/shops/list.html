@@ -1,0 +1,66 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}满就送活动 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+<div class="wst-shop-head"><span>满就送活动</span></div>
+<div class="wst-shop-tbar">
+ <label>
+   活动名称：<input type='text' id='rewardTitle' placeholder='活动名称' class='s-query'/><a class='s-btn' href='javascript:queryByPage(0)'>搜索</a>
+ </label>
+  <label>
+    <a class="s-btn" style="float: right;width:80px;line-height:16px;height:16px;margin-top:2px;" onclick="javascript:toEdit(0)">新增满就送</a>
+  </label>
+</div>
+<div class="wst-shop-content">  
+   <table class='wst-list'>
+   <thead>
+   <tr>
+     <th>活动</th>
+     <th>时间</th>
+     <th>状态</th>
+     <th width="100">操作</th>
+   </tr>
+   </thead>
+   <tbody id='rewardlist'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="rewardtpl" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr>
+      <td>{{d[i]['rewardTitle']}}</td>
+  	  <td>{{d[i]['startDate']}} 至 {{d[i]['endDate']}}</td>
+      <td>
+      {{# if(d[i]['rewardStatus']==-1){ }}
+      <span class='lbel lbel-info'>未开始</span>
+      {{# }else if(d[i]['rewardStatus']==0){ }}
+      <span class='lbel lbel-success'>进行中</span>
+      {{# }else{ }}
+      <span class='lbel lbel-gray'>已结束</span>
+      {{# } }}
+      </td>
+      <td>
+         <a href='javascript:toEdit({{d[i]["rewardId"]}})'>编辑</a>
+         <a href='javascript:del({{d[i]["rewardId"]}})'>删除</a>
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/reward/view/home/shops/shop.js?v={$v}"></script>
+<script type="text/javascript">
+$(function(){
+	 queryByPage();
+});
+</script>
+{/block}

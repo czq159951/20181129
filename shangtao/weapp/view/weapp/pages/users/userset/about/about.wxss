@@ -1,0 +1,50 @@
+page{
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+.info-logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.info-material{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+.info-logo image{
+  width: 40vw;
+  height: 20vw;
+  margin-top: 10vh;
+}
+.info-logo text{
+  margin-top: 2vh;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #777;
+}
+.info-logo .script{
+  width: 60vw;
+  height:1px;
+  background: #EAEAEA;
+  margin-bottom: 6vh;
+  margin-top: 2vh;
+}
+.info-material .script-box{
+  height: 7vw;
+  width: 66vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.info-material .script-box image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.info-material .script-box text{
+  font-size: 26rpx;
+  margin-left: 8rpx;
+}

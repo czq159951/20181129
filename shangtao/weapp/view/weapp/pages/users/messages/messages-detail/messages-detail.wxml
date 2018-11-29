@@ -1,0 +1,8 @@
+<!--pages/storesInfo/infoManage/infoManage.wxml-->
+<import src="../../../common/parse/parse.wxml"/>
+<view class='container'>
+ <view class='time'>{{createTime}}</view>
+ <view class='border'>
+  <view class='content'><template is="wxParse" data="{{wxParseData:managerInfo.nodes}}"/></view>
+ </view>
+</view>

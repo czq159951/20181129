@@ -1,0 +1,25 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ADMIN__/wxtemplatemsgs/wxtemplatemsgs.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<style>.body li{height:22px;}</style>
+<div id='alertTips' class='alert alert-success alert-tips fade in'>
+	<div id='headTip' class='head'><i class='fa fa-lightbulb-o'></i>操作说明</div>
+	<ul class='body'>
+		<li>本功能使用微信公众号接口，需在注册并认证“服务号”，并获得模板消息的使用权限，<a class='wst-wiki' target='_blank' href='https://mp.weixin.qq.com/wiki'>微信公众平台文档</a>。</li>
+		<li>本系统中的模板仅供参考，建议在公众平台模板库中选择“<strong>IT科技 互联网|电子商务 | IT科技 IT软件与服务</strong>”的行业，然后添加与本模板内容相同的模板。</li>
+		<li>因微信对通知内容要求较严格，不支持营销、到期提醒类消息推送，详细规则<a class='wst-wiki' href='https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751288' target='_blank'>查看</a>。</li>
+	</ul>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg layui-form"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<script>$(function(){initGrid();})</script>
+{/block}
+

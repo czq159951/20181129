@@ -1,0 +1,5 @@
+<?php
+use think\Db;
+
+
+

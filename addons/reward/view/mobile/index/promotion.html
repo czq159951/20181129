@@ -1,0 +1,19 @@
+{if !empty($rewards)}
+<link href="__ROOT__/addons/reward/view/mobile/index/reward.css" rel="stylesheet">
+<div class='reward-box' style="float: left;padding-top: 1px;">
+<span class='reward-tag'>满就送</span>{$rewards['rewardTitle']}<span class='j-reward-tip'></span>
+<div class='j-reward-detail'>
+	{volist name="rewards['json']" key="rvno" id='rvo'}
+	<div>消费满{$rvo['orderMoney']}元 - 
+	{if $rvo['favourableJson']['chk0']}减￥{$rvo['favourableJson']['chk0val']}、<br />{/if}
+	{if $rvo['favourableJson']['chk1']}送赠品【{$rvo['favourableJson']['chk1val']['text']}】、<br />{/if}
+	{if $rvo['favourableJson']['chk2']}免邮费、<br />{/if}
+	{if(WSTConf('WST_ADDONS.reward'))}
+	{if $rvo['favourableJson']['chk3'] && isset($rvo['favourableJson']['chk3val']['text'])}、送{$rvo['favourableJson']['chk3val']['text']}优惠券{/if}
+	{/if}
+	</div>
+	{/volist}
+</div>
+</div>
+<script type='text/javascript' src='__ROOT__/addons/reward/view/mobile/index/reward.js'></script>
+{/if}

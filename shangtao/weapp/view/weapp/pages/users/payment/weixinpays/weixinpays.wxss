@@ -1,0 +1,123 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #f6f6f8;
+}
+.wst-or-list{
+  border-top: 10rpx solid transparent;
+}
+.wst-or-list .list{
+  padding: 0 20rpx;
+  background: #fff;
+  border-bottom: 2rpx solid #e3e3e3;
+}
+.wst-or-list .head{
+  padding: 20rpx 0;
+  font-size: 30rpx;
+  border-bottom: 2rpx solid #dadada;
+}
+.wst-or-list .head .state{
+  float:right;
+}
+.wst-or-list .head .state text{
+  color: #e00102;
+}
+.wst-or-list .goods{
+  padding: 10rpx;
+  border-bottom: 1rpx solid #dadada;
+}
+.wst-or-list .goods .img{
+  float:left;
+  width: 130rpx;
+  height: 130rpx;
+}
+.wst-or-list .goods .names{
+  float:left;
+  width: 400rpx;
+  padding: 10rpx 10rpx 0 10rpx;
+}
+.wst-or-list .goods .name{
+  width: 400rpx;
+  height: 80rpx;
+  line-height: 40rpx;
+  font-size: 28rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.wst-or-list .goods .spec{
+  width: 400rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 26rpx;
+  color: #ccc;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.wst-or-list .goods .price{
+  float:left;
+  width: 140rpx;
+  font-size: 28rpx;
+  padding: 20rpx 0;
+  text-align: right;
+}
+.wst-or-list .info{
+  font-size: 28rpx;
+  padding: 20rpx 0;
+  text-align: right;
+}
+.wst-or-list .info text{
+  color:#e00102;
+}
+.wst-strip{
+  height: 80rpx;
+  font-size:28rpx;
+  background: white;
+  border-bottom: 1rpx solid #ccc;
+}
+.wst-strip .info{
+  width: auto;
+  height: 100%;
+  display: flex;
+  justify-content: left;
+  float: left;
+  text-align: center;
+  line-height: 80rpx;
+  padding-left: 20rpx;
+}
+.wst-strip .pay{
+  justify-content: right;
+  float: right;
+  padding-left: 0rpx;
+  padding-right: 20rpx;
+}
+.wst-strip .number{
+  color:#e00102;
+}
+.wst-pay-prompt{
+  text-align: center;
+  padding: 20rpx;
+  color: #000;
+  font-size: 28rpx;
+  font-weight: bold;
+  background:#fff;
+}
+.wst-or-button{
+  margin-top: 60rpx;
+  padding: 0 60rpx;
+}
+.wst-or-button .button{
+  text-align: center;
+  background-color: #e00102;
+  color: white;
+  border-radius: 6rpx;
+  font-size:30rpx;
+}
+.wst-or-button .button:active,.wst-or-button .button[disabled][type="default"],.wst-or-button .button[disabled]:not([type]){
+  color:#fff0f0;
+  background:#f52f30;
+  background-clip:padding-box;
+}

@@ -1,0 +1,23 @@
+<!--pages/storesInfo/storesInfo.wxml-->
+<view class='container'><!--无数据提示栏-->
+ <view class='remind' wx:if="{{!hascommodity}}">对不起，暂无相关消息</view>
+<block wx:for="{{managerInfo}}">
+ <view class='wst-strip' data-id="{{data.index}}">
+  <view class='border'>
+   <icon type='circle' size='20' wx:if="{{!item.status}}"  bindtap='selectList' data-id="{{item.id}}"></icon>
+   <icon type='success' color='#E32726' size='20' wx:else  bindtap='selectList' data-id="{{item.id}}"></icon>
+   <view class='img'><image src="{{item.msgStatus == 1?'/image/info_icon1.png':'/image/info_icon2.png'}}" mode='aspectFit'></image></view>
+   <view class='text'  bindtap='toDetail' data-msgId="{{item.id}}">{{item.msgContent}}</view>
+  </view>
+ </view>
+</block>
+   <!--全选状态-->
+ <view class='navigation-bottom'>
+  <view class='icon'>
+   <icon wx:if="{{selectedAllStatus}}" type='success' color='red' size='20' bindtap='selectAll'></icon>
+   <icon wx:else type='circle' bindtap='selectAll' size='20'></icon>
+  </view>
+  <view class='content'>全选</view>
+  <view class='botton'><button  type='warn' size='datail'  bindtap='deleteData'>删除信息</button></view>
+ </view>
+</view>

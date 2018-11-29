@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+.wst-se-l{margin-top:8px}
+.wst-se-l .line{border-bottom:1px solid #edebeb}
+.wst-se-l span{width:23px;height:23px;display:block;margin-right:6px}
+.wst-se-l .pay{background:url(../img/icon_zhanghuanquan.png) 0 0 no-repeat;background-size:97%}
+.wst-se-l .phone{background:url(../img/icon_zhanghuanquan.png) 0 -53px no-repeat;background-size:97%}
+.wst-se-pay{font-size:.18rem;margin-top:8px;padding:12px 10px 2px 10px;background:#fff}
+.wst-se-pay .pay{padding-bottom:10px}
+.wst-se-pay .pay input{width:100%;padding:2px 2px 2px 5px;height:36px;border-radius:2px;border:1px solid #a0a0a0;font-size:.14rem;}
+.wst-se-footer{position:fixed;width:100%;z-index:100;left:0;bottom:0}
+.wst-se-footer .button{position:absolute;left:3%;bottom:10px;width:93%;margin-bottom:6px;font-size:.15rem;height:38px;line-height:38px;color:#fff;background:#e00102;border-radius:3px;border-bottom:1px solid #e00102}
+.wst-se-footer .button:not(.disabled):not(:disabled):active{color:#fff0f0;background:#f52f30;background-clip:padding-box}
+.wst-se-pay .verify{border-radius:2px;margin-bottom:10px;border:1px solid #a0a0a0}
+.wst-se-pay .verify input{width:60%;padding:2px 2px 2px 5px;height:36px;border-top-left-radius:2px;border-bottom-left-radius:2px;border:0;font-size:.14rem;}
+.wst-se-pay .verify button{float:right;height:36px;width:40%;border-top-left-radius:0;border-bottom-left-radius:0;border-top-right-radius:2px;border-bottom-right-radius:2px;font-size:.14rem;}
+.wst-se-pay .verify img{float:right;height:36px;width:40%;border-top-right-radius:2px;border-bottom-right-radius:2px}
+.wst-se-pay .phone{padding:10px;font-size:.15rem;}
+.wst-se-back{padding:10px;font-size:.14rem;}
+.wst-se-back a{color: #999;}

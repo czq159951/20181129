@@ -1,0 +1,119 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}拼团活动 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/css/list.css?v={$v}">
+{/block}
+{block name="header"}    
+    <header class="ui-header ui-header-positive wst-se-header2" style="border-bottom: 1px solid #f6f6f8;">
+		<i class="ui-icon-return" onclick="history.back()"></i>
+		<div class="wst-se-search">
+		    <i class="ui-icon-search" onclick="javascript:searchGoods();"></i>
+		    <form action＝"" class="input-form">
+			<input type="search" value="{$keyword}" placeholder="按关键字搜索商品" onsearch="searchGoods()" autocomplete="off" id="wst-search">
+			</form>
+		</div>
+       	<span class="wst-se-icon" onclick="javascript:dataShow();"></span>
+	</header>
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_WECHAT_FOOTER" /}
+{/block}
+{block name="main"}
+
+    <input id="currPuId" type="hidden" value="{$maxPuId}"/>
+    <input id="maxPuId" type="hidden" value="{$maxPuId}"/>
+
+	 <input type="hidden" name="" value="{$keyword}" id="keyword" autocomplete="off">
+	 <input type="hidden" name="" value="{$goodsCatId}" id="goodsCatId" autocomplete="off">
+	 <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+     <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+     <section class="ui-container">
+		<ul class="ui-tab-content" id="pintuan-container">
+	        <li id="goods-list"></li>
+	    </ul>
+     </section>
+
+<div id="tuantip" class="ui-newstips-wrap" style="position:fixed;top:0.3rem;display:none;">
+    <div class="ui-newstips">
+        <span class="ui-avatar-tiled">
+            <span id="tuanImg" style="background-image:url(http://placeholder.qiniudn.com/60x60)"></span>
+        </span>
+        <div id="tuanMsg"></div>
+        <span class="ui-reddot ui-reddot-static"></span>
+    </div>
+</div>
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+{{# for(var i=0; i<d.length; i++){ }}
+<div class="wst-in-goods" onclick="goGoods({{ d[i].tuanId }})">
+    <div class="img j-imgAdapt">
+        <a href="javascript:void(0);" onclick="goGoods({{ d[i].tuanId }});">
+            <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d[i].goodsImg }}" title="{{ d[i].goodsName }}"/>
+        </a>
+    </div>
+<div class="name ui-nowrap-multi">{{ d[i].goodsName }}</div>
+<div class="tags ui-nowrap-multi">&nbsp;
+{{# if(d[i].isSelf==1){ }}<span class='tag'>自营</span>{{# } }}
+{{# if(d[i].isFreeShipping==1){ }}<span class='tag'>包邮</span>{{# } }}
+{{ d[i]['tags']!=undefined?d[i]['tags'].join(' '):'' }}
+</div>
+<div class="info">
+    <span class="price">¥{{ d[i].tuanPrice }}</span>
+    <span class="deal">已拼{{ (d[i].orderNum>=10000)?(new Number(d[i].orderNum/10000).toFixed(2)+"万"):d[i].orderNum }}件</span>
+</div>
+</div>
+{{# } }}
+<div class="wst-clear"></div>
+{{# }else{ }}
+<div class="wst-prompt-icon"><img src="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/img/pintuan-goods.png"></div>
+<div class="wst-prompt-info">
+	<p>对不起，没有相关拼团商品。</p>
+</div>
+{{# } }}
+</script>
+
+{/block}
+{block name="include"}
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 分类层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title"><span>商品分类</span><i class="ui-icon-close-page" onclick="javascript:dataHide();"></i><div class="wst-clear"></div></div>
+    <div class="content">
+       <div class="ui-scrollerl">
+            <ul>
+                {volist name="$data['goodscats']" key="k" id="gc"}
+                	<li id="goodscate" class="wst-goodscate {if($k==1)}wst-goodscate_selected{/if}" onclick="javascript:showRight(this,{$k-1});">{php}echo str_replace('、', '<br/>', $gc['catName']);{/php}</li>
+                {/volist}
+            </ul>
+        </div>
+        {volist name="$data['goodscats']" key="k" id="gc"}
+        <div class="wst-scrollerr goodscate1" {if($k!=1)}style="display:none;"{/if}>
+        {if(isset($gc['childList']))}
+        {volist name="gc['childList']" key="k" id="gc1"}
+            <ul>
+                <li class="wst-goodsca">
+                    <a href="javascript:void(0);" onclick="javascript:goodsCat({$gc1['catId']});"><span>&nbsp;{$gc1.catName}</span></a>
+                    <a href="javascript:void(0);" onclick="javascript:goodsCat({$gc1['catId']});"><i class="ui-icon-arrow"></i></a>
+                </li>
+                <li>
+                    <div class="wst-goodscat">
+                        {volist name="$gc1['childList']" id="gc2"}
+                        <span><a href="javascript:void(0);" onclick="javascript:goodsCat({$gc2['catId']});">{$gc2.catName}</a></span>
+                        {/volist}
+                    </div>
+                </li>
+            </ul>
+        {/volist}
+        {/if}
+        </div>
+        {/volist}
+        <div class="wst-clear"></div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/js/list.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/js/time.js?v={$v}'></script>
+{/block}

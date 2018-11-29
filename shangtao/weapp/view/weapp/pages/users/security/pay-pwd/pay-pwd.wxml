@@ -1,0 +1,19 @@
+<view class='container'>
+  <view class='login-model'>
+    <view class='form-model'>
+      <view class='login-item' wx:if="{{pwdType==1}}">
+            <input  placeholder='原密码' type="text" password maxlength="6"  bindinput='orpayPwd'/>
+      </view>
+      <view class='login-item'>
+            <input  placeholder='新密码' type="text" password maxlength="6" bindinput='payPwd'/>
+      </view>
+      <view class='login-item'>
+            <input  placeholder='确认密码' type="text" password maxlength="6" bindinput='copayPwd'/>
+      </view>
+      <view class='login-prompt' wx:if="{{pwdType==1}}"><text bindtap='back'>忘记支付密码?</text></view>
+    </view>
+  </view>
+</view>
+<view class='log-model'>
+    <button class='lo-button' bindtap='submit' disabled="{{disabled}}">确定</button>
+</view>

@@ -1,0 +1,137 @@
+{extend name="default/base" /}
+{block name="title"}找回密码 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/user.css?v={$v}">
+{/block}
+{block name="header"}
+       <header style="background:#ffffff;" class="ui-header ui-header-positive wst-header">
+       	   <i id="return" class="ui-icon-return" onclick="history.go(-1)"></i><h1 id="login-w">找回方式</h1>
+       </header>
+{/block}
+{block name="footer"}{/block}
+{block name="main"}
+      {/* 登录页面 */}
+      <section class="ui-container" id="login1">
+      	<input type="hidden" id="step" name="step" value="2" autocomplete="off">
+        <input type="hidden" id="modes" name="modes" class="ipt" value="1" autocomplete="off">
+      	 <div class="wst-lo-frame">
+      			<div class="frame" >
+              {if ($forgetInfo['userPhone'] == '1')}
+                您未绑定手机号码
+              {else /}
+                <ul class="ui-row" onclick="dataShow('phone')">
+                  <li class="ui-col ui-col-90">通过手机找回</li>
+                  <li class="ui-col ui-col-10"> > </li>
+                </ul>
+              {/if}
+            </div>
+            <!--<div class="frame" style="margin-top:5px;">
+              {if ($forgetInfo['userEmail'] == '' )}
+                没有预留邮箱，请尝试用手机号码找回
+              {else /}
+                <ul class="ui-row" onclick="dataShow('email')">
+                  <li class="ui-col ui-col-90">通过邮箱找回</li>
+                  <li class="ui-col ui-col-10"> > </li>
+                </ul>
+              {/if}
+            </div>-->
+    	     </div>
+
+      </section>
+      {/* 登录页面end */}
+<style>
+
+.content .ui-row li{
+  font-size: 0.15rem;
+  padding:5px 0;
+  padding-left:10px;
+}
+</style>
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 分类层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title"><span id="contentTitle">通过邮箱找回密码</span><i class="ui-icon-close-page" onclick="javascript:dataHide();"></i><div class="wst-clear"></div></div>
+    <div class="content" id="content">
+        <ul class="ui-row">
+          <div class="wst-lo-frame wst-mar">
+                <div class="verify">
+                       用户名&nbsp;&nbsp;&nbsp;&nbsp;：&nbsp;{$forgetInfo.loginName}
+                </div>
+              </div>
+          <div class='phoneBox'>
+            <div class="wst-lo-frame wst-mar">
+                <div class="verify">
+                       手机号码：&nbsp;{$forgetInfo.userPhone}
+                </div>
+              </div>
+            <li class="ui-col ui-col-100" style="padding:0;">
+              <div class="wst-lo-frame">
+                <div class="verify">
+                  <input id="smsVerify" type="text" placeholder="输入验证码" maxlength="10">
+                  <img id='verifyImg2' src="{:url('wechat/users/getVerify')}" onclick='javascript:WST.getVerify("#verifyImg2")'>
+                </div>
+              </div>
+            </li>
+            <li class="ui-col ui-col-100" style="padding:0;">
+	            {/* 获取验证码 prompt */}
+	            <div class="wst-lo-frame">
+				<div class="verify">
+					<input id="checkCode" type="text" placeholder="输入短信验证码" maxlength="8">
+					<button id="timeObtain" class="ui-btn ui-btn-primary" onclick="javascript:phoneVerify2()">获取验证码</button>
+				</div>
+				</div>
+            </li>
+           	<div class="wst-lo-button">
+				<button class="button" onclick="javascript:forgetPhone();" style="margin-top:20px;">下一步</button>
+			</div>
+
+
+          </div>
+
+
+
+     <!-- {/* 邮箱验证  */} 
+          <div class='emailBox'>
+            <li class="ui-col ui-col-25">邮箱：</li>
+            <li class="ui-col ui-col-75" id="email">{$forgetInfo.userEmail}</li>
+
+
+            <li class="ui-col ui-col-100" style="padding:0;">
+                <div class="wst-lo-frame">
+                  <div class="verify">
+                    <input id="loginVerfy" type="text" placeholder="输入验证码" maxlength="10">
+                    <img id='verifyImg1' src="{:url('wechat/users/getVerify')}" onclick='javascript:WST.getVerify("#verifyImg1")'>
+                  </div>
+                </div>
+            </li>
+
+            <li class="ui-col ui-col-50"><input type="text" id="emailCode" placeholder="邮箱校验码" style="height:36px;"></li>
+            <li class="ui-col ui-col-50">
+              <div class="ui-btn-wrap" style="padding:0px;">
+                <button class="ui-btn ui-btn-danger codebutton" id="emailBtn" onclick="forgetEmail()">
+                    获取校验码
+                </button>
+              </div>
+            </li>
+
+            <div class="wst-lo-button">
+				<button  class="button" onclick="javascript:resetByEmail();" style="margin-top:20px;">下一步</button>
+			</div>
+
+          </div>
+      {/* 邮箱验证end  */}-->
+
+        </ul>
+
+
+    </div>
+</div>
+
+
+
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/js/forget_pass.js?v={$v}'></script>
+{/block}

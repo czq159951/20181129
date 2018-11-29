@@ -1,0 +1,49 @@
+{extend name="default/base" /}
+{block name="title"}我的积分 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/userscores.css?v={$v}">
+{/block}
+{block name="header"}
+    {php}$Title = "我的积分"{/php}
+	{include file="default/header" /}
+{/block}
+{block name="main"}
+    <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+    <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+    <section class="ui-container">
+        <div class="ui-row-flex ui-whitespace ui-row-flex-ver head">
+	        <div class="user_scores">
+		        <p>我的积分</p>
+		        <p id="userMoney" >{$object['userScore']}<span> 个</span></p>
+	        </div>
+        </div>
+        <script type="text/html" id="scoreList">
+		<ul class="ui-row score-detail">
+        {{# for(var i=0;i<d.length;i++){ }}
+            <li class="ui-col ui-col-75 wst-re-info">
+                <p>{{d[i].dataRemarks}}</p>
+                <span class="score-time">{{d[i].createTime}}</span>
+            </li>
+            <li class="ui-col ui-col-25 {{(d[i].scoreType==1)?'score-plus':'score-reduce'}}">{{(d[i].scoreType==1)?'+':'-'}} {{d[i].score}}</li>
+            <div class="wst-clear"></div>
+            <div class="score-line"></div>
+        {{# } }}
+		</ul>
+        </script>
+        <li class="score-detail-title">积分明细</li>
+        <div id="score-list"></div>
+    </section>
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 分类层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title"><span>积分使用规则</span><i class="ui-icon-close-page" onclick="javascript:dataHide();"></i><div class="wst-clear"></div></div>
+    <div class="content" id="content">
+        积分使用规则
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/users/userscores/userscores.js?v={$v}'></script>
+{/block}

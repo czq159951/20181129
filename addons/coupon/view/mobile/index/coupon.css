@@ -1,0 +1,50 @@
+.ui-tab-nav li.tab-item{font-size: 0.14rem;height:35px;line-height: 35px;min-width: 50px;padding: 0px 5px;text-align: center;}
+.ui-tab-nav li.tab-curr{height: 34px;border-bottom:2px solid #d82a2e;color:#d82a2e;font-weight: bold;}
+.coupon-tab{width: 100%;height:35px;line-height: 35px;padding: 0px;background: #fff;overflow-x: scroll;}
+.coupon-tab::-webkit-scrollbar{width: 1px;height:1px;background-color: #ffffff;}
+.coupon-tab::-webkit-scrollbar-thumb{background-color: #ffffff;}
+.tit{text-align: center;font-size: 16px;width: 62%;position: fixed;left: 20%;top: 7px;z-index: 100;}
+.wst-in-icon{ position: absolute;right: 5px;}
+/*遮盖层*/
+.wst-cover{position:fixed;left:0px;top:0px;background-color:#000;width:100%;height:100%;filter:alpha(opacity=60);  /*设置透明度为60%*/opacity:0.6;  /*非IE浏览器下设置透明度为60%*/z-Index:9999;display:none;}
+/*分类弹框*/
+.wst-fr-box{position: fixed;z-index: 9999;right:-999px;bottom: 0px;width:100%;min-height:40%;background:#f2f2f2;font-size: 0.15rem;}
+.wst-fr-box .title,.wst-cart-box .title{position: relative;padding:6px 0px;border-bottom: 1px solid #f1f1f1;}
+.wst-fr-box .title span{float: left;width: 100%;height: 26px;line-height: 26px;text-align: center;font-size: 0.185rem;}
+.wst-fr-box .title i,.wst-cart-box .title i{position: absolute;right:5px;top:-2px;font-size: 27px;}
+.wst-fr-box .content{background:#f2f2f2;}
+.cat_item{border:1px solid #ddd;border-radius: 20px;padding:5px;color:#333;background: #ddd;font-size:0.15rem;margin-top: 10px;text-align: center;}
+.ui-row{padding:0 3%;}
+.ui-col-48{width: 48%}
+.cat_item:nth-child(even){margin-left:3%;}
+.cat_item_curr{border-color:#d82a2e;color:#d82a2e;background: #fff;}
+/* 优惠券 */
+.coupon_item{width: 93%;margin:10px 10px 0;height: 100px;margin-bottom: 10px;}
+.coupon_item_left{width: 35%;height: 100%;float:left;}
+.coupon_left{height: 100%;float:left;}
+.coupon_left i{display:block;font-style:normal;width:0;height:1px;border:2px solid rgba(0,0,0,0);border-right: 3px solid #ee3c3c;margin-left: -1px;}
+.coupon_left_main{position: relative;height: 89%;background: #ee3c3c;float: left;width: 91%;padding:5px 5px 5px 0px;}
+.coupon_left_main_inner{width: 100%;height: 100%;border:1px solid #fff;border-left-style: dashed;text-align: center;}
+.yan{font-weight: normal;font-size: 0.11rem!important;}
+.coupon_left_txt1{color: #fff;font-size: 0.35rem;font-weight: bold;}
+.coupon_left_txt2{font-size: 0.16rem;color:#fff;}
+.coupon_item_right{width: 65%;height: 100%;float:left;background: #fff;}
+.coupon_item_right_inner{height: 93%;padding-top: 3%;position: relative;}
+.c_item_r_left{float: left;width: 79%;height: 100%;overflow: hidden;}
+.c_item_txt1{font-size: 0.17rem;font-weight:bold;color:#333;}
+.c_item_txt2{font-size: 0.15rem;color:#555;}
+.c_item_txt3{font-size: 0.15rem;color:#000;margin: 1% 0;}
+.c_item_txt4{font-size: 0.13rem;color:#999;}
+.get_btn{font-size: 0.12rem;color: #d82a2e;background: #fff;border: 1px solid #d82a2e;border-radius: 15px;display: block;position: absolute;top: 35%;padding: 3px 5px;right: 3px;}
+.unuse_btn{color: #ccc;border: 1px solid #ccc;}
+/* 商品详情优惠券 */
+.gcl_tit{position: relative;color:#666;text-align:center;padding: 10px;background-color: #f5f5f5;font-size: 0.15rem}
+.gcl_content{height:350px;background-color: #fff;overflow: auto;}
+.gcl_close{position: absolute;right: 15px;top: 8px;color: #999;font-size: 0.16rem}
+.gc_itembox{float: left;width:80%;height:20px;}
+.gc_item{width:45%;height: 100%;float: left;}
+.gc_item:nth-child(2){margin-left:5%}
+.gc_item_left,.gc_item_main,.gc_item_right{float: left}
+.gc_item_left i{display: block;font-style: normal;width: 0;height: 1px;border: 2px solid rgba(0,0,0,0);border-right: 3px solid #d82a2e;margin-left: -1px;}
+.gc_item_right i{display: block;font-style: normal;width: 0;height: 1px;border: 2px solid rgba(0,0,0,0);border-left: 3px solid #d82a2e;margin-left: -1px;}
+.gc_item_main{width:91%;height: 100%;background-color: #d82a2e;color: #fff;font-size: 0.12rem;overflow: hidden;display: flex;justify-content: center;align-items: center;}

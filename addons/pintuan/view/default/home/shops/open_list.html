@@ -1,0 +1,62 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}拼团活动 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+<div class="wst-shop-head"><span>拼团参与者列表</span><a href="{:addon_url('pintuan://shops/pintuan')}">返回</a></div>
+<input id="tuanId" value="{$tuanId}" type="hidden" />
+<input id="tuanStatus" value="{$tuanStatus}" type="hidden" />
+<div class="wst-shop-content">  
+   <table class='wst-list'>
+   <thead>
+   <tr>
+     <th width='120'>团号</th>
+     <th colspan="2">用户</th>
+     <th width='180'>参团时间</th>
+     <th width='120'>拼团状态</th>
+   </tr>
+   </thead>
+   <tbody id='list'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="tblist" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr style="color:{{d[i]['isHead']==1?'red':''}}">
+      <td>{{d[i]['tuanNo']}}</td>
+      <td width='80'>
+        <div class="goods-img">
+          <a><img class='j-lazyGoodsImg'  data-original='__ROOT__/{{d[i].userPhoto}}'/></a>
+        </div>
+      </td>
+      <td>{{d[i]['userName']}}{{# if(d[i]['isHead']==1){ }}&nbsp;<span class='lbel lbel-warning' style='border-radius:10px;font-weight:normal'>拼主</span>{{# } }}</td>
+      <td>{{d[i]['createTime']}}</td>
+      <td>
+      {{#if(d[i]['tuanStatus']==1){}}
+        <span class='lbel lbel-warning'>待成团</span>
+      {{#}else if(d[i]['tuanStatus']==2){}}
+        <span class='lbel lbel-success'>已成团</span>
+      {{#}else if(d[i]['tuanStatus']==-1){}}
+       <span class='lbel lbel-danger'>已退款</span>
+      {{#}}}
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/pintuan/view/{$addonStyle}/home/shops/shop.js?v={$v}"></script>
+<script type="text/javascript">
+$(function(){
+	openPageQuery();
+});
+</script>
+{/block}

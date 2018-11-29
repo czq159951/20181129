@@ -1,0 +1,123 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}分销设置-卖家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/batchupload.css?v={$v}" />
+<link href="__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="shop_apply"}{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+
+<style>
+.filelist .btn-del,.webuploader-pick,.wst-batchupload .placeholder .webuploader-pick,.wst-batchupload .statusBar .btns .uploadBtn{background: #e45050;}
+.wst-batchupload .statusBar .btns .uploadBtn:hover {background: #e45525 none repeat scroll 0 0;}
+.shopbanner{position: relative;}
+.del-banner{position: absolute;top:0px;right:0px;background: #e45050 none repeat scroll 0 0;z-index: 55;color: #ffffff;cursor: pointer;height: 18px;line-height: 18px;padding: 0 5px;}
+#orderNum,#firstNum,#secondNum{margin:0;}
+.buy-btn{color:#666;background:#eeeeee;cursor: pointer;float:left;;display:block;height:26px;line-height:26px;padding:0px 10px;border:1px solid #ddd;}
+input[type="text"].buy-num{text-align:center;width:50px;float:left;border-left:0px;border-right:0px;border-top:1px solid #ddd;border-bottom:1px solid #ddd;}      
+.wst-form td{height:35px;}
+</style>
+<div class="wst-body"> 
+<div class="wst-shop-head"><span>分销设置</span></div>
+<div class="wst-clear"></div>
+   <div class="wst-shop-content">
+
+        <table class="wst-form">
+           <tr>
+             <th width='120' align='right'>分销开关<font color='red'>*</font>：</th>
+             <td>
+             	<div class="radio-box">
+			        <label><input type='radio' name='isDistribut' id="isDistribut-1" class='j-ipt wst-radio' value='1' {if condition="$object['isDistribut'] eq 1"}checked{/if}/><label for="isDistribut-1" class="mt-1"></label>开启</label>
+			        <label><input type='radio' name='isDistribut' id="isDistribut-0" class='j-ipt wst-radio' value='0' {if condition="$object['isDistribut'] eq 0"}checked{/if}/><label for="isDistribut-0" class="mt-1"></label>关闭</label>
+				</div>
+             </td>
+           </tr>
+           <tr>
+               <th width='120'>分销模式：</th>
+	           <td colspan='3'>
+	               <select id='distributType' class='j-ipt' onchange="setDistributType(this)">
+		             <option value='1' {if condition="$object['distributType'] eq 1"}selected{/if}>按商品设置提取佣金</option>
+		             <option value='2' {if condition="$object['distributType'] eq 2"}selected{/if}>按订单比例提取佣金</option>
+		           </select>
+		           <span style="color:red;">注：如果选择“按订单比例提取佣金”，则店铺内的所有商品将参与分销。</span>
+	           </td>
+           </tr>
+           <tr class="wst-order-rate" {if condition="$object['distributType'] eq 1"}style="display:none;"{/if}>
+               <th width='120'>订单佣金比例：</th>
+	           <td colspan='3'>
+	               <a href='#none' class='buy-btn' id='order-reduce' style='color:#ccc;' onclick='javascript:WST.changeIptNum(-1,"#orderNum","#order-reduce,#order-add")'>-</a>
+					<input type='text' id='orderNum' class='buy-num' value="{$object['distributOrderRate']}" data-min='1' data-max="99" autocomplete="off" onkeyup='WST.changeIptNum(0,"#orderNum","#order-reduce,#order-add")' onkeypress="return WST.isNumberKey(event);" maxlength="3"/>
+					<a href='#none' class='buy-btn' id='order-add' onclick='javascript:WST.changeIptNum(1,"#orderNum","#order-reduce,#order-add")'>+</a><span style="float:left;">%</span>
+	           </td>
+           </tr>
+         
+         <tr>
+             <td colspan='2' style='text-align:center;padding:20px;'>
+                 <a class='s-btn' onclick="saveCfg()">保&nbsp;存</a>&nbsp;&nbsp;
+                 <a class='s-btn' onclick='javascript:location.reload();'>重&nbsp;置</a>
+             </td>
+           </tr>
+        </table>
+   </div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__STATIC__/plugins/validator/jquery.validator.min.js?v={$v}"></script>
+<script type="text/javascript">
+$(function(){
+	setRate();
+})
+function setDistributType(obj){
+	var type = $(obj).val();
+	if(type==1){
+		$(".wst-order-rate").hide();
+	}else{
+		$(".wst-order-rate").show();
+	}
+}
+
+function setRate(){
+	var firstNum= $("#firstNum").val();
+	var secondNum= $("#secondNum").val();
+	$("#buyerRate").html(100-firstNum-secondNum);
+}
+
+function saveCfg(){
+	var params = {};
+	params.isDistribut = $("input[name='isDistribut']:checked").val();
+	params.distributType = $("#distributType").val();
+	
+	params.orderNum = $("#orderNum").val();
+	params.firstNum = $("#firstNum").val();
+	params.secondNum = $("#secondNum").val();
+	if(params.isDistribut==2){
+		if(params.orderNum<=0){
+			WST.msg('订单佣金比例必须大于0%');
+			return;
+		}else if(params.orderNum>=100){
+			WST.msg('订单佣金比例必须小于100%');
+		}
+	}
+	var ll = layer.load('数据处理中，请稍候...');
+	var url = "{:addon_url('distribut://distribut/saveCfg')}";
+    $.post(url,params,function(data){
+    	layer.close(ll);
+    	var json = WST.toJson(data);
+		if(json.status>0){
+			WST.msg('操作成功');
+		}else{
+			WST.msg(json.msg, {icon: 5});
+		}
+   });
+}
+</script>
+
+{/block}

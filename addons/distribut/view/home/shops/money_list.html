@@ -1,0 +1,111 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}分成记录-卖家中心{__block__}{/block}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/batchupload.css?v={$v}" />
+<link href="__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="shop_apply"}{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="content"}
+<div class="wst-shop-head"><span>分成记录</span></div>
+<div class="wst-shop-tbar">
+  <label>
+	 订单号：<input type="text" name="orderNo" id="orderNo" class="s-query" />
+   	 用户名称：<input type="text" name="userName" id="userName" class="s-query" />
+   	<a class="s-btn" onclick="moneyByPage()">查询</a>
+  </label>
+</div>
+<div class="wst-shop-content"> 
+   
+   <table class='wst-list'>
+   <thead>
+   <tr>
+     <th>订单编号</th>
+     <th>获佣用户</th>
+     <th>佣金描述</th>
+     <th>商品金额</th>
+     <th>佣金</th>
+     <th width="160">记录时间</th>
+   </tr>
+   </thead>
+   <tbody id='list'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="tblist" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr>
+      <td>
+         {{d[i]['orderNo']}}
+      </td>
+      <td>
+         {{d[i]['userName']?d[i]['userName']:d[i]['loginName']}}
+      </td>
+	  <td>
+         {{d[i]['remark']}}
+      </td>
+	  <td>
+         {{d[i]['money']}}
+      </td>
+	  <td>
+         {{d[i]['distributMoney']}}
+      </td>
+	  <td>
+         {{d[i]['createTime']}}
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+
+<script type="text/javascript">
+$(function(){
+	moneyByPage();
+});
+
+function moneyByPage(p){
+	$('#list').html('<tr><td colspan="11"><img src="'+WST.conf.ROOT+'/shangtao/home/view/default/img/loading.gif">正在加载数据...</td></tr>');
+	var params = {};
+	params = WST.getParams('.s-query');
+	params.page = p;
+	$.post("{:addon_url('distribut://distribut/queryDistributMoneys')}",params,function(data,textStatus){
+	    var json = WST.toJson(data);
+	    if(json.status==1 && json.data){
+	       	var gettpl = document.getElementById('tblist').innerHTML;
+	       	laytpl(gettpl).render(json.data, function(html){
+	       		$('#list').html(html);
+	       		$('.j-lazyGoodsImg').lazyload({ effect: "fadeIn",failurelimit : 10,skip_invisible : false,threshold: 200,placeholder:WST.conf.ROOT+'/'+WST.conf.GOODS_LOGO});//商品默认图片
+	       	});
+	       	if(json.last_page>1){
+	       		laypage({
+		        	 cont: 'pager', 
+		        	 pages:json.last_page, 
+		        	 curr: json.current_page,
+		        	 skin: '#e23e3d',
+		        	 groups: 3,
+		        	 jump: function(e, first){
+		        		if(!first){
+		       				moneyByPage(e.curr);
+		        		}
+		       		} 
+		        });
+	       	}else{
+	       		$('#pager').empty();
+	       	}
+       	}  
+	});
+}
+
+</script>
+{/block}

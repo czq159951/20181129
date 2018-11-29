@@ -1,0 +1,104 @@
+{extend name="$LAYOUT_HOME_BASE" /}
+{block name="title"}拍卖支付 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$seoAuctionDesc}">
+<meta name="Keywords" content="{$seoAuctionKeywords}">
+{/block}
+{block name="css"}
+<link href="__ROOT__/addons/auction/view/home/index/css/carts.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="header"}
+	{include file="$LAYOUT_HOME_HEADER" /}
+{/block}
+{block name="main"}
+<div class="wst-container">
+    <div class="pay-sbox-head">
+    	<a href='{$Request.root.true}'>首页</a>&nbsp;&gt;&nbsp;支付
+    </div>
+    <div>
+    	<div class="pay-tip1"></div>
+    </div>
+    <div class='pay-sbox'>
+    	<div>
+	    <div class="tips-box">
+	    	请及时付款，以便快速处理您的订单，在线实付金额<span class="wst-fred">&nbsp;¥{$object['auction']['cautionMoney']}&nbsp;</span><span id="wst-check-orders" class="wst-check-orders">查看订单详情</span>
+	    </div>
+	    <div>
+		    <div id="wst-orders-box" style="display:none;">
+			    <table class='wst-order-list'>
+				 	
+				 	<thead>
+					 	<tr class='head'>
+					         <td colspan="2" class="wst-left-noborder">商品</th>
+					         <th width="150">数量</th>
+					         <th width="150" class="wst-right-noborder">{$payObj=='bao'?'保证金':'拍卖成交金'}</th>
+					   	</tr>
+				   </thead>
+				   <tbody class="otbody">
+				 	<tr>
+				 		<td class="wst-left-noborder" width="64">
+				     		<div class="goods-img">
+					     		<a href="{:url('addon/auction-goods-detail',array('id'=>$object['auction']['auctionId']))}" target="_blank">
+					     			<img class='goodsImg' data-original="__ROOT__/{$object['auction']['goodsImg']}" title="{$object['auction']['goodsName']}" width='60'/>
+					     		</a>
+				     		</div>
+				     	</td>
+				     	<td class="wst-left-noborder" style="text-align: left;">
+				     		{$object['auction']['goodsName']}
+				     	</td>
+				        <td>1</td>
+				        <td>{$object['auction']['cautionMoney']}</td>
+				 	</tr>
+				 	
+			       </tbody>
+			    </table>
+		    </div>
+		    <div class="pay-type">选择支付方式</div>
+		    <div class="pay-list">
+		    	<input type="hidden" id="payObj" name="payObj" value="{$payObj}"/>
+		    	<input type="hidden" id="auctionId" name="auctionId" value="{$object['auction']['auctionId']}"/>
+		    	<input type="hidden" id="payCode" name="payCode" />
+		    	{volist name="$object['payments']" id="payment"}
+                 	{if condition="$payment['isOnline'] eq 1"}
+                    	<div class="wst-payCode-{$payment['payCode']}" data="{$payment['payCode']}"></div>
+                 	{/if}
+                 {/volist}
+		         <div class="wst-clear"></div>
+		    </div>
+		    <div class="bnt-box">
+		    	<div onclick='javascript:getPayUrl();' class="wst-pay-bnt"></div>
+		    </div>
+	    </div>
+        </div>
+    </div>
+</div>
+<div id="alipayform" style="display:none;"></div>
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_HOME_RIGHT_CART" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__ROOT__/addons/auction/view/home/index/js/carts.js?v={$v}'></script>
+<script>
+$(function(){
+	$("#wst-check-orders").click(function(){
+		$("#wst-orders-box").slideToggle(600);
+	});
+	$("div[class^=wst-payCode]").click(function(){
+		var payCode = $(this).attr("data");
+		$("div[class^=wst-payCode]").each(function(){
+			$(this).removeClass().addClass("wst-payCode-"+$(this).attr("data"));
+		});
+		$(this).removeClass().addClass("wst-payCode-"+payCode+"-curr");
+		$("#payCode").val(payCode);
+	});
+	if($("div[class^=wst-payCode]").length>0){
+		$("div[class^=wst-payCode]")[0].click();
+	}
+});
+
+</script>
+{/block}

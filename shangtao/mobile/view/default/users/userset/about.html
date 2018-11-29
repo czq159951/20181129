@@ -1,0 +1,41 @@
+{extend name="default/base" /}
+{block name="title"}关于我们 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/userset.css?v={$v}">
+{/block}
+{block name="header"}
+	{php}$Title = "关于我们"{/php}
+	{include file="default/header" /}
+{/block}
+{block name="footer"}{/block}
+{block name="main"}
+    <section class="ui-container">
+    	<div class="wst-about">
+    		<div class="wst-brand" ><img src="__ROOT__/{:WSTImg(WSTConf('CONF.mallLogo'),3)}"></div>
+    		<p>{:WSTConf('CONF.mallName')}</p>
+    		<div class="wst-version">
+    			<div class="wst-border">
+    			</div>
+    		</div>
+    	</div>
+    	<div class="wst-about" >
+    		<ul class="ui-list ui-list-text wst-contact" style="background: transparent;">
+    			<li class="line">
+    				<span class="phone"></span><h5>联系电话：{:WSTConf('CONF.serviceTel')}</h5>
+    			</li>
+    			<li class="line">
+    				<span class="qq"></span><h5>客服QQ：{:WSTConf('CONF.serviceQQ')}</h5>
+    			</li>
+    			<li class="line">
+    				<span class="email"></span><h5>联系邮箱：{:WSTConf('CONF.serviceEmail')}</h5>
+    			</li>
+    			<li class="line">
+    				<span class="belong"></span><h5>版权所有：{:WSTConf('CONF.copyRight')}</h5>
+    			</li>
+    		</ul>
+    	</div>
+    </section>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/users/userset/userset.js'></script>
+{/block}

@@ -1,0 +1,22 @@
+<view class='container'>
+  <view class='login-model'>
+    <view class='form-model'>
+      <view class='login-item'>
+            <input  placeholder='邮箱/用户名/手机号' bindinput='name'/>
+      </view>
+      <view class='login-item'>
+            <input  placeholder='密码' password='true' bindinput='pwd'/>
+      </view>
+      <view class='login-item'>
+            <input placeholder='验证码' bindinput='verify'/>
+            <image src="{{code}}" mode='aspectFill' class="verify" bindtap='code'/>
+      </view>
+    </view>
+    <view class='log-model'>
+        <button  class='lo-button' bindtap='login' disabled="{{loDisabled}}">登录</button>
+    </view>
+    <view class="log-forget">
+      <text bindtap='forget'>忘记密码？</text>
+    </view>
+  </view>
+</view>

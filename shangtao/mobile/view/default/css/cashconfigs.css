@@ -1,0 +1,41 @@
+@CHARSET 'UTF-8';
+body{background:#f2f2f2;font-size:.15rem}
+.ui-icon-return ~ h1{z-index:-1;position:relative}
+.add{position:absolute;right:0;top:0;display:block;color:black;padding-right:10px}
+.ui-row{border:1px solid #e2e2e2;border-radius:5px;margin:5px;padding:10px 5px;background:#fff}
+.wst-ca-accno{color: #de0202;font-size:.17rem;font-weight: 700;letter-spacing:2px;}
+.wst-ca-info{color: #999;font-size:.13rem;}
+.c-tr{float: right;line-height:30px;margin-top:26%;}
+.delete-icon{width:25px;height:30px;display:block;float:left;background:url(../img/icon_adds_users.png) no-repeat;background-position:-86px 0;background-size:cover}
+.wst-ad-form{margin-top:8px}
+.wst-ca-choice{float: right;width: 75%;padding: 2px 2px 2px 0px;margin-top: 4px;height: 36px;border-radius: 2px;font-size:.15rem;border: 0;background:#fff;}
+.ui-form-itemin{position:relative;font-size:16px;height:44px;line-height:44px;padding:1px 10px;font-size:.18rem;background:#fff}
+.ui-form-itemin .word{color:#232228;font-size:.15rem}
+.ui-form-itemin input{float:right;width:75%;height:35px;border:0;margin-top:4px;font-size:.15rem;}
+.ui-form-itemin label:not(.ui-switch):not(.ui-checkbox):not(.ui-checkbox-s):not(.ui-radio){position:absolute;text-align:left;box-sizing:border-box}
+.ui-form-itemin .address{float:right;width:75%;height:35px;line-height:35px;margin-top:4px;font-size:.15rem;}
+.ui-form-itemin .ui-select-group{margin-top:5px}
+.wst-selectin{float:left;position:relative;width:72%}
+.wst-address_set{width:100%;height:40px;position:fixed;z-index:100;left:0;bottom:0}
+.wst-ad-line{padding:0 10px}
+.wst-ad-line p{border-bottom:1px solid #edebeb}
+.wst-ad-submit{margin-top:20px}
+.wst-ad-submit .button{margin:0 auto;width:93%;font-size:.185rem;height:40px;line-height:40px;color:#fff;background:#e00102;border-bottom:1px solid #e00102}
+.wst-ad-submit .button:not(.disabled):not(:disabled):active{color:#fff0f0;background:#f52f30;background-clip:padding-box}
+.ui-form-itemin .operate{font-size:.158rem}
+.ui-form-itemin .operate i{float:left;width:22px;height:22px;margin-top:10px;margin-right:2px}
+.ui-form-itemin .operate span{margin-left:5px}
+.wst-cover{position:fixed;left:0;top:0;background-color:#000;width:100%;height:100%;filter:alpha(opacity=60);opacity:.6;z-Index:9999;display:none}
+.wst-fr-box{position:fixed;z-index:9999;left:0;bottom:-285px;width:100%;min-height:50%;background:#fff;font-size:.14rem}
+.wst-fr-box .title,.wst-cart-box .title{position:relative;padding:6px 0;border-bottom:1px solid #f1f1f1}
+.wst-fr-box .title span{float:left;width:100%;height:26px;line-height:26px;text-align:center;font-size: 15px;}
+.wst-fr-box .title i,.wst-cart-box .title i{position:absolute;right:5px;top:-2px;font-size:27px}
+.wst-fr-box .content{padding:10px 10px 20px 10px}
+.wst-fr-box .option{float:left;width:100%;border-bottom:1px solid #edebeb}
+.wst-fr-box .option p{float:left;width:50px;height:26px;line-height:26px;padding:0 5px;text-align:center}
+.wst-fr-box .option .active{border-bottom:1px solid #de0301}
+.wst-fr-box .list{padding-top:5px}
+.wst-fr-box .list.hide{display:none}
+.wst-fr-box .list p{padding:5px 0}
+.wst-fr-box .list .active{color:#de0301}
+.js-account2{display:none;}

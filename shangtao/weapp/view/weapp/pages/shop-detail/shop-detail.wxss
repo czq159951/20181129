@@ -1,0 +1,154 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #F6F6F8;
+}
+.container{
+  width: 100%;
+  height: 100%;
+}
+image{
+  width: 100%;
+  height: 100%;
+}
+.background{
+  width: 100%;
+  height: 380rpx;
+   border: 1rpx solid transparent;
+}
+.background .head{
+  width: 100rpx;
+  height: 100rpx;
+  margin: 0 auto;
+  margin-top: 30rpx;
+  border-radius: 50%;
+   border: 1rpx solid transparent;
+}
+.background .head image{
+  
+  border-radius: 50%;
+}
+.background .name{
+  width: 100%;
+  height: 60rpx;
+  margin-top: 30rpx;
+  text-align: center;
+   border: 1rpx solid transparent;
+  color: white;
+}
+.background .action{
+  width: 70%;
+  height: 60rpx;
+  margin: 0 auto;
+  display: flex;
+  font-size: 25rpx;
+  margin-top: 10rpx;
+   
+}
+.background .action .relation{
+  width: 240rpx;
+  height: 50rpx;
+  display: flex;
+  line-height: 55rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  margin-right: 15rpx;
+  color: white;
+  border: 2rpx solid white;
+}
+.background .action .relation .image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 30rpx;
+  margin-top: 6rpx;
+  margin-right:20rpx;
+}
+.background .action .qattension{
+  width: 240rpx;
+  height: 50rpx;
+  display: flex;
+  background: white;
+  line-height: 55rpx;
+  border-radius: 10rpx;
+  margin-left: 15rpx;
+  color: red;
+  border: 1rpx solid white;
+}
+.background .action .qattension .image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 30rpx;
+  margin-top: 6rpx;
+  margin-right: 15rpx;
+}
+.background .grade{
+  width: 100%;
+  height: 54rpx;
+  margin-top: 30rpx;
+  font-size: 30rpx;
+  line-height: 54rpx;
+  color: white;
+  justify-content: space-between;
+   
+}
+.background .grade .right{
+  width: 240rpx;
+  float: left;
+  text-align: left;
+}
+.background .grade .left{
+  width: 240rpx;
+  float: left;
+  text-align: left;
+  margin-left: 30rpx;
+}
+.background .grade .between{
+  width: 240rpx;
+  float: left;
+  text-align: left;
+}
+.wst-strip{
+  width: 100%;
+  height: 66rpx;
+  display: flex;
+  font-size: 30rpx;
+  padding-left: 10rpx;
+  justify-content: left;
+  line-height: 66rpx;
+  border-bottom: 2rpx solid #E7E7E7;
+}
+.wst-top{
+  margin-top:20rpx;
+}
+.wst-oq{
+  margin-top: 20rpx;
+  width: 100%;
+  height: auto;
+}
+.wst-sh-button{
+  position: fixed;
+  left:0;
+  bottom:20rpx;
+  width: 100%;
+}
+.wst-sh-button .button{
+  width: 65%;
+  height: 70rpx;
+  display: flex;
+  margin: 0 auto;
+  margin-top: 40rpx;
+  background: #E8121E;
+  color: white;
+  border-radius: 10rpx;
+  font-size: 35rpx;
+}
+.button .image{
+  width: 40rpx;
+  height: 40rpx;
+  margin: 10rpx 20rpx 0rpx 40rpx;
+   border: 1rpx solid transparent;
+}
+.button .content{
+  margin-left: 30rpx;
+  line-height: 70rpx;
+}

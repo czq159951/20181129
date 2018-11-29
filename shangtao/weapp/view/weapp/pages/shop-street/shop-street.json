@@ -1,0 +1,7 @@
+{
+  "navigationBarTextStyle": "#fff",
+  "navigationBarBackgroundColor": "#e50e0f",
+  "usingComponents": {
+    "screen": "../components/screen/screen"
+  }
+}

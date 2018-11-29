@@ -1,0 +1,1 @@
+alter table `wst_users` add ucUid int default 0;

@@ -1,0 +1,382 @@
+{extend name="$LAYOUT_WECHAT_BASE" /}
+{block name="title"}商品详情 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/css/tuan_detail.css?v={$v}">
+{/block}
+{block name="header"}
+
+{/block}
+{block name="footer"}
+
+{/block}
+{block name="main"}
+{if($tuan)}
+	 {/* 商品  */}
+	 <section class="group">
+	 	<input id="tuanId" type="hidden" value="{$tuan['tuanId']}"/>
+	 	<input id="currPuId" type="hidden" value="{$tuan['maxPuId']}"/>
+	 	<input id="maxPuId" type="hidden" value="{$tuan['maxPuId']}"/>
+	 	<input id="catId" type="hidden" value="{$tuan['goodsCatId']}"/>
+	 	
+	 	<div class="group-detail-goods-info-wrapper">
+		 	<img class="group-detail-goods-img" src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{$tuan['goodsImg']}" title="{$tuan['goodsName']}">
+		 	<div class="group-detail-goods-info">
+			 	<div class="group-detail-goods-title">
+			 		{$tuan["goodsName"]}
+			 		<div class="icon-bg"></div>
+			 	</div>
+			 	<div class="group-detail-goods-group-info"></div>
+			 	<div class="group-detail-goods-sales-info">
+				 	<span class="group-member-num">{$tuan["tuanNum"]}人拼单</span>
+				 	<span class="sales-num">· 已拼{$tuan["orderNum"]}件</span>
+			 	</div>
+			 	<div class="group-detail-goods-price-info">
+				 	<div class="price">
+				 		<span class="unit"></span><span class="num">￥{$tuan["tuanPrice"]}</span>
+				 		<span class="group-member-num group-price-gap">拼单省{$tuan["economizePrice"]}元</span>
+				 	</div>
+				 	
+			 	</div>
+		 	</div>
+	 	</div>
+	 	<div class="group-detail-buy"  id="wst-di-tuan" sc="{:date('Y-m-d H:i:s')}">
+	 		{if $tuan["tuanStatus"]==2}
+		 		{if $tuan["hasTuan"]==1}
+		 			<div class="group-detail-user-wrapper">
+				 		<div class="ui-tips ui-tips-success">
+						    <i></i><span class="green">拼单成功</span>
+						</div>
+					 	<ul class="group-detail-users">
+					 		{volist name="tuan['pusers']" id='vo'}
+						 	<li class="group-detail-user" style="background: url('{:WSTUserPhoto($vo['userPhoto'])}') 0% 0% / 100% 100%;">
+						 	{if $vo['isHead']==1}
+						 	<span class="leader">拼主</span>
+						 	{/if}
+						 	</li>
+						 	{/volist}
+						 	{for start="0" end="$tuan['needNum']"}
+								<li class="group-detail-user" style="background: url('') 0% 0% / 100% 100%;"></li>
+							{/for}
+					 	</ul>
+					 	<div class="group-user-pop-wrapper"></div>
+				 	</div>
+		 		{else}
+		 			<div class="group-detail-user-wrapper">
+					 	<ul class="group-detail-users">
+					 		{volist name="tuan['pusers']" id='vo'}
+						 	<li class="group-detail-user" style="background: url('{:WSTUserPhoto($vo['userPhoto'])}') 0% 0% / 100% 100%;">
+						 	{if $vo['isHead']==1}
+						 	<span class="leader">拼主</span>
+						 	{/if}
+						 	</li>
+						 	{/volist}
+						 	{for start="0" end="$tuan['needNum']"}
+								<li class="group-detail-user" style="background: url('') 0% 0% / 100% 100%;"></li>
+							{/for}
+					 	</ul>
+					 	<div class="group-user-pop-wrapper"></div>
+				 	</div>
+		 			<div class="group-detail-buy-tip">
+					 	<div class="tip-text">
+					 		<div class="ui-tips ui-tips-info">
+							    <i></i><span>团已满</span>
+							</div>
+					 	</div>
+				 	</div>
+				 	<div class="tuan-btnbox">
+				 		<button id="buyBtn" class="tuan-btn" type="button" onclick="javascript:cartShow(1,1);">一键开团</button>
+				 	</div>
+		 		{/if}
+		 	{else}
+		 		<div class="tuan-notice">
+				 	<div class="title">拼单须知</div>
+				 	<ul class="detail">
+					 	<li class="content gift">
+					 		<div class="icon gift">·人不满退款</div>
+					 	</li>
+					 	<li class="content logistics">
+					 		<div class="icon logistics">·人满发货</div>
+					 	</li>
+					 	<li class="content invite-user">
+					 		<div class="icon invite-user">·好友拼单</div>
+					 	</li>
+				 	</ul>
+				 	<div class="wst-clear"></div>
+			 	</div>
+			 	<div class="group-detail-user-wrapper">
+				 	<ul class="group-detail-users">
+				 		{volist name="tuan['pusers']" id='vo'}
+					 	<li class="group-detail-user" style="background: url('{:WSTUserPhoto($vo['userPhoto'])}') 0% 0% / 100% 100%;">
+					 	{if $vo['isHead']==1}
+					 	<span class="leader">拼主</span>
+					 	{/if}
+					 	</li>
+					 	{/volist}
+					 	{for start="0" end="$tuan['needNum']"}
+							<li class="group-detail-user" style="background: url('') 0% 0% / 100% 100%;"></li>
+						{/for}
+				 	</ul>
+				 	<div class="group-user-pop-wrapper"></div>
+			 	</div>
+			 	{if $tuan["tuanStatus"]==-1}
+			 		{if $tuan["hasTuan"]==1}
+		 			<div class="ui-tips ui-tips-warn">
+					    <i></i><span class="red">拼团不成功，款项将退回至您的钱包</span>
+					</div>
+					{else}
+					<div class="ui-tips ui-tips-warn">
+					    <i></i><span class="red">拼团不成功，拼团已结束</span>
+					</div>
+					{/if}
+				{else}
+					{if $tuan["needNum"]>0}
+			 		<div class="group-detail-buy-tip">
+					 	<div class="tip-text">
+					 		<div class="ui-tips ui-tips-info">
+							   {if $tuan["ptime"]>0}
+							   仅剩<span class="red">{$tuan["needNum"]}</span>个名额，
+							   <span class="timer" sv="{$tuan['createTime']}" ev="{$tuan['endTime']}">剩余<span class="countDown bold">{$tuan["remainderTime"]}</span></span>后结束
+							   {else}
+							   <span class="red">拼团已结束，拼团失败</span>
+							   {/if}
+							</div>
+					 	</div>
+				 	</div>
+				 	{/if}
+		 		{/if}
+		 		
+			 	{if $tuan["hasTuan"]==1}
+			 		{if $tuan["ptime"]>0}
+			 			<div class="tuan-btnbox">
+					 		<button id="buyBtn" class="tuan-btn" type="button" onclick='$("#wst-di-share").dialog("show");'>邀请好友参团</button>
+					 	
+					 		<button id="buyBtn" class="shao-btn" type="button" onclick='$("#wst-di-qrcod").dialog("show");'><img src="__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/img/shaoma.png" style="" />&nbsp;&nbsp;面对面扫码参团</button>
+					 	</div>
+					 	<script type="text/javascript" src="__STATIC__/js/qrcode.js?v={$v}"></script>
+					 	<!--二维码对话框-->
+						<div class="ui-dialog" id="wst-di-qrcod" onclick="WST.dialogHide('qrcod');">
+						    <div class="ui-dialog-cnt wst-dialog-cnt5">
+						        <div class="wst-dialog-bd">
+						            <div><div id="qrcodes" style="padding:10px;text-align:center;"></div></div>
+						            <div>用手机微信扫一扫二维码，参加我的团</div>
+						        </div>
+						    </div>        
+						</div>
+						<script type="text/javascript">
+							$(function(){
+							 	var url= "{$shareInfo['link']}";
+							 	//参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+							 	var qr = qrcode(10, 'H');
+							 		qr.addData(url);
+							 		qr.make();
+							 	$("#qrcodes").html(qr.createImgTag(4,4));
+							 	$("#qrcodes img").css({"width":"275px","height":"275px"});
+							});
+						</script>
+			 		{else}
+					 	<div class="tuan-btnbox">
+					 		<button id="buyBtn" class="tuan-btn" type="button" onclick="javascript:cartShow(1,1);">一键开团</button>
+					 	</div>
+				 	{/if}
+					
+			 	{else}
+			 		{if $tuan["ptime"]>0}
+			 			{if !empty($tuan['pself']) &&  $tuan['pself']["tuanStatus"]==0}
+			 			<div class="tuan-btnbox">
+					 		<button id="buyBtn" class="tuan-btn" type="button" onclick="javascript:choicePay({$tuan['orderNo']});">立即支付</button>
+					 	</div>
+			 			{else}
+				 		<div class="tuan-btnbox">
+					 		<button id="buyBtn" class="tuan-btn" type="button" onclick="javascript:cartShow(1,2);">参与拼单</button>
+					 	</div>
+					 	{/if}
+			 		{else}
+					 	<div class="tuan-btnbox">
+					 		<button id="buyBtn" class="tuan-btn" type="button" onclick="javascript:cartShow(1,1);">一键开团</button>
+					 	</div>
+				 	{/if}
+			 	{/if}
+		 	{/if}
+	 	</div>
+	 </section>
+ 		
+     <section class="ui-container">
+		<div class="wst-shl-ads">
+	     	<div class="title">猜你喜欢</div>
+	     		<input type="hidden" name="" value="" id="currPage" autocomplete="off">
+		     	<input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+		     	<section class="ui-container">
+					<ul class="ui-tab-content" id="pintuan-container">
+				        <li id="goods-list"></li>
+				    </ul>
+		     	</section>
+		    <div class="wst-clear"></div>
+	    </div>
+	    <div class="wst-go-top" style="display: none;">上拉查看图文详情</div>
+     </section>
+
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+{{# for(var i=0; i<d.length; i++){ }}
+<div class="wst-in-goods" onclick="goGoods({{ d[i].tuanId }})">
+    <div class="img j-imgAdapt">
+        <a href="javascript:void(0);" onclick="goGoods({{ d[i].tuanId }});">
+            <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d[i].goodsImg }}" title="{{ d[i].goodsName }}"/>
+        </a>
+    </div>
+<div class="name ui-nowrap-multi">{{ d[i].goodsName }}</div>
+<div class="tags ui-nowrap-multi">&nbsp;
+{{# if(d[i].isSelf==1){ }}<span class='tag'>自营</span>{{# } }}
+{{# if(d[i].isFreeShipping==1){ }}<span class='tag'>包邮</span>{{# } }}
+{{ d[i]['tags']!=undefined?d[i]['tags'].join(' '):'' }}
+</div>
+<div class="info">
+    <span class="price">¥{{ d[i].tuanPrice }}</span>
+    <span class="deal">已拼{{ (d[i].orderNum>=10000)?(new Number(d[i].orderNum/10000).toFixed(2)+"万"):d[i].orderNum }}件</span>
+</div>
+</div>
+{{# } }}
+<div class="wst-clear"></div>
+{{# }else{ }}
+    <ul class="ui-row-flex wst-flexslp">
+        <li class="ui-col ui-flex ui-flex-pack-center">
+        <p>对不起，没有相关商品。</p>
+        </li>
+    </ul>
+{{# } }}
+</script>
+
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{if $tuan["tuanStatus"]!=2}
+	{/*加入购物车框  */}
+	<div class="wst-cart-box" id="frame-cart">
+		<div class="title">
+	     	<div class="picture"><div class="img"><a href="javascript:void(0);"><img src="__ROOT__/{:WSTImg($info['goodsImg'],2)}" title="{$info['goodsName']}"></a></div></div>
+			<i class="ui-icon-close-page" onclick="javascript:cartHide();"></i>
+			<p class="ui-nowrap-multi">{$info['goodsName']}</p>
+			<p class="ui-nowrap-flex price"><span id="j-shop-price">¥{$info['tuanPrice']}</span><span id="j-market-price" class="price2">¥{$info['marketPrice']}</span></p>
+			<div class="wst-clear"></div>
+		</div>
+		<div class="standard" id="standard">
+		<div class="number">
+			<p>库存：<span id="goods-stock">{$info['goodsNum']-$info['saleNum']}</span>{$info['goodsUnit']}</p>
+			<div class="stock">数量</div>
+		  	<div class="wst-buy_l">
+		  		<input type="hidden" id="tuanType" value="1" />
+		  		<input type="hidden" id="tuanNo" value="{$tuan['tuanNo']}" />
+	           <input class="wst-buy_l1" type="button" value="-" onclick='javascript:WST.changeIptNum(-1,"#buyNum")'><input id="buyNum" class="wst-buy_l2" data-min='1' data-max='' type="number" value="1" autocomplete="off" onkeyup='WST.changeIptNum(0,"#buyNum")'><input class="wst-buy_l3" type="button" value="+" onclick='javascript:WST.changeIptNum(1,"#buyNum")'>
+	      	</div>
+			<div class="wst-clear"></div>
+		</div>
+		</div>
+		<button class="button" onclick="javascript:addCart({$info['goodsType']});">确定</button>
+	</div>
+{/if}
+{/block}
+{block name="include"}
+{/* 提示分享对话框 share */}
+<div class="ui-dialog" id="wst-di-share" onclick="WST.dialogHide('share');">
+     <div class="wst-prompt"></div>
+     <div class="tuan-share-info">
+	     <div>
+	     	<span class="timer" sv="{$tuan['createTime']}" ev="{$tuan['endTime']}">剩余<span class="countDown bold">{$tuan["remainderTime"]}</span></span>后结束
+	     </div>
+	     <div>
+	     	还差<span class="red bold">{$tuan["needNum"]}</span>人，赶快邀请好友来参团吧~
+	     </div>
+	     <div style="padding-top:0.2rem;">
+	     	拼单人满后立即发货
+	     </div>
+     </div>
+</div>
+
+
+<div class="ui-dialog" id="wst-di-shareresult" sc="{:date('Y-m-d H:i:s')}">
+    <div class="ui-dialog-cnt" style="background: #fff;">
+      	<header class="ui-dialog-hd ui-border-b">
+          <h3>分享成功</h3>
+    	</header>
+        <div class="ui-dialog-bd" style="padding:0 18px;font-size: 0.14rem;text-align: center;padding-top: 0.1rem;">
+		  	<div>分享3次以上，拼单成功率高达98%哦~</div>
+		    <div>
+				<button id="buyBtn" class="tuan-btn" type="button" onclick='continueShare();'>继续分享</button>
+			</div>
+			<div class="red" style="padding-top: 0.1rem;">
+				好货提示
+			</div>
+			<div>92%的人都在这里发现喜爱的商品哦~</div>
+			<div>
+				<button id="buyBtn" class="shao-btn" type="button" onclick='goTuanHome();'>前往拼团首页</button>
+			</div>
+        </div>
+        <div class="ui-dialog-ft"> </div>
+    </div>        
+</div>
+
+<div id="tuantip" class="ui-newstips-wrap" style="position:fixed;top:-0.1rem;display:none;">
+    <div class="ui-newstips">
+        <span class="ui-avatar-tiled">
+            <span id="tuanImg" style="background-image:url(http://placeholder.qiniudn.com/60x60)"></span>
+        </span>
+        <div id="tuanMsg"></div>
+        <span class="ui-reddot ui-reddot-static"></span>
+    </div>
+</div>
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/block}
+
+{block name="js"}
+<script>
+var goodsInfo = {
+	id:{$info['goodsId']},
+	tuanId:{$info['tuanId']},
+	isSpec:{$info['isSpec']},
+	goodsStock:{$info['goodsStock']},
+	marketPrice:{$info['marketPrice']},
+	goodsPrice:{$info['shopPrice']}
+	{if isset($info['saleSpec'])}
+	,sku:{:json_encode($info['saleSpec'])}
+	{/if}
+}
+</script>
+{/if}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/js/tuan_detail.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/pintuan/view/{$addonStyle}/wechat/index/js/time.js?v={$v}'></script>
+<script src="{:request()->scheme()}://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+    debug: false,
+    appId: '<?php echo WSTConf('CONF.wxAppId'); ?>', //公众号的唯一标识
+    timestamp: '<?php echo $datawx['timestamp'];?>', //生成签名的时间戳
+    nonceStr: '<?php echo $datawx['noncestr'];?>', //生成签名的随机串
+    signature: '<?php echo $datawx['signature'];?>',//签名
+    jsApiList: [ //需要使用的JS接口
+       	'onMenuShareTimeline',
+		'onMenuShareAppMessage',
+		'onMenuShareQQ',
+		'onMenuShareWeibo',
+		'onMenuShareQZone'
+    ]
+});
+
+wx.ready(function(){
+	var shareData = {
+			title: '{$shareInfo["title"]}',
+			desc: '{$shareInfo["desc"]}',
+			link: '{$shareInfo["link"]}',
+			imgUrl: '{$shareInfo["imgUrl"]}',
+			success: function () {
+				$("#wst-di-shareresult").dialog("show");
+	        }
+	};
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareTimeline(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
+	wx.onMenuShareQZone(shareData);
+});
+</script>
+{/block}

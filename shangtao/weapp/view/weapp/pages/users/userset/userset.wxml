@@ -1,0 +1,32 @@
+<view class='container'>
+ <view class='main-model' bindtap='personal'>
+  <view class='left'>
+   <image src='/image/icon_user_info.png'></image>
+  </view>
+  <view class='between'>个人中心</view>
+  <view class='right'>
+   <view class='arrow'></view>
+  </view>
+  <view class='wst-clear'></view>
+ </view>
+ <view class='main-model' bindtap='security'>
+  <view class='left'>
+   <image src='/image/icon_user_safety.png'></image>
+  </view>
+  <view class='between'>账户安全</view>
+  <view class='right'>
+   <view class='arrow'></view>
+  </view>
+  <view class='wst-clear'></view>
+ </view>
+ <view class='main-model' bindtap='about'>
+  <view class='left'>
+   <image src='/image/icon_user_about.png'></image>
+  </view>
+  <view class='between'>关于我们</view>
+  <view class='right'>
+   <view class='arrow'></view>
+  </view>
+  <view class='wst-clear'></view>
+ </view>
+</view>

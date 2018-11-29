@@ -1,0 +1,194 @@
+/* pages/user/userBalance/accountManage/addAccount/addAccount.wxss */
+page{
+  width: 100%;
+  height: 80%;
+  font-size: 34rpx;
+  background: #F6F6F8;
+}
+.container{
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+.type-set{
+  width: 100%;
+  height: 90rpx;
+  margin-top: 30rpx;
+  background: white;
+  display: flex;
+  line-height: 92rpx;
+  padding-left: 20rpx;
+  border-bottom: 1rpx solid #EDEBEB;
+}
+.type-set .input{
+  margin-left: -20rpx;
+  margin-top: 10rpx;
+}
+.address-set{
+  width: 100%;
+  height: 90rpx;
+  background: white;
+  display: flex;
+  align-items: center;
+  line-height: 102rpx;
+  padding-left: 20rpx;
+  border-bottom: 1rpx solid #EDEBEB;
+}
+.address-set .input{
+  margin-left: -20rpx;
+  margin-top: 10rpx;
+}
+input{
+  height: 75rpx;
+  margin-left: 18rpx;
+}
+.type-set .border{
+  width: 250rpx;
+  height: 48rpx;
+  border: 1rpx solid #7E7E7E;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  line-height: 48rpx;
+  padding-left: 10rpx;
+  display: flex;
+  position: relative;
+}
+.type-set .border .icon{
+  position: absolute;
+  top: 0rpx;
+  left: 220rpx;
+}
+.address-set .content{
+   width: 550rpx;
+   font-size: 34rpx;
+   margin-right: 50rpx;
+}
+.address-set image{
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 30rpx;
+  margin-right: 10rpx;
+}
+.address-set .address{
+  
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.address-set .set{
+  width: 540rpx;
+  display: flex;
+}
+/*按钮*/
+.button{
+  width: 90%;
+  height: 80rpx;
+  margin: 0rpx auto;
+  margin-top: 20rpx;
+}
+.button button{
+  width: 100%;
+  height: 100%;
+  line-height: 2.0;
+  border-radius: 10rpx;
+  background: #E00102;
+  color: white;
+}
+.button .button-hover {
+color:white;
+background-color:#dd1f20;
+
+}
+/*动画模块*/
+
+/*mask*/  
+.drawer_screen {  
+  width: 100%;  
+  height: 100%;  
+  position: fixed;  
+  top: 0;  
+  left: 0;  
+  z-index: 1000;  
+  background: #000;  
+  opacity: 0.4;  
+  overflow: hidden;  
+} 
+.animation{
+  width: 100%;
+  height: 600rpx;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  background: white;
+  z-index: 1001;
+}
+.animation .wst-top-title{
+  width: 100%;
+  height: 80rpx;
+  position: relative;
+  border-bottom: 1rpx solid #b1b1b1;
+}
+.animation .wst-top-title .title{
+  width: 100%;
+  height: 80%;
+  margin-top: 15rpx;
+  margin-bottom: 10rpx;
+  position: absolute;
+  z-index: -999;
+  text-align: center;
+}
+.animation .wst-top-title icon{
+  float: right;
+  margin: 10rpx 10rpx 0rpx 10rpx;
+}
+.animation .navigation{
+  width: 100%;
+  height: 42rpx;
+  margin-top: 15rpx;
+  border-bottom: 1rpx solid #b1b1b1;
+}
+.animation .list{
+  margin-left: 20rpx;
+}
+.animation .navigation .main{
+  width: 150rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+  text-align: center;
+  float: left;
+  font-size: 33rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  border-bottom: 1rpx solid red;
+}
+.animation .navigation .too{
+  margin-left: 0rpx;
+  
+}
+.animation .navigation .tooed{
+  border-bottom: 1rpx solid transparent;
+}
+.animation .list{
+  width: 100%;
+  height: 400rpx;
+  font-size: 33rpx;
+}
+.animation .list .main{
+  width: 100%;
+  height: 60rpx;
+  line-height: 65rpx;
+}
+.row{
+  display: flex;
+  flex-direction: row;
+}
+.strip{
+  width: 180rpx;
+}

@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+body{color:#333}
+.wst-info_delete{padding:0}
+.wst-info_delete button{height:49px;color:#333;line-height:49px}
+.wst-info_delete button:not(.disabled):not(:disabled):active,.wst-info_delete button.active{border-color:#e7530a;color:#504f4f;background-clip:padding-box}
+.wst-info_content input:before{font-size:22px;left:15px}
+.wst-info_content input:checked:before{color:#f24566}
+.wst-info_content span{float:left;width:20px;height:20px;margin-right:5px}
+.wst-info_content h5{font-size:.15rem}
+.wst-info_ico{background:url(../img/info_icon.png) 0 0 no-repeat}
+.wst-info_ico1{background:url(../img/info_icon.png) -22px 0 no-repeat}
+.msg-chk{margin-left:-13px;margin-right:10px}
+.favorite-tc{line-height:45px;text-align:left;font-size: .165rem;}
+.f-btn{min-width:85px}
+.f-btn button{background:#e00102;border-bottom:1px solid #e00102;font-size:.15rem}
+.ui-checkbox input:before,.ui-checkbox-s input:before{font-size:22px!important}
+.ui-checkbox input:checked:before,.ui-checkbox-s input:checked:before{color:#e32726!important}
+.sactive{margin-right:0!important}
+.detail-time{text-align:center}
+.del-btn{position:absolute;top:8px;right:10px}
+.wst-info_detime{font-size:.13rem}
+.wst-info_decontent{font-size:.15rem}
+.wst-line{border-bottom:1px solid #edebeb;margin:0 10px}

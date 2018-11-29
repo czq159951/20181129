@@ -1,0 +1,127 @@
+<!--pages/commoditySale/commoditySale.wxml-->
+<block wx:if="{{!interIm}}">
+<view class='container'>
+<!--顶部导航-->
+<block wx:if="{{!showModalStatus}}">
+  <view class="wst-se-header">
+    <view class="input">
+      <icon class="icon" type="search" size="13" color="{{select == 0 ? '#fff' : '#666'}}" bindtap="search"/>
+      <input placeholder='按关键字搜索商品' placeholder-class='wst-head-placeholder' bindinput="getText" value="{{keyword}}" bindtap='interPage'></input>
+      <view class='right' bindtap='powerDrawer'  data-statu="open">
+      <view class='image'><image src='/image/classify2.png' mode='aspectFit'></image></view>
+      </view>
+    </view>
+  </view>
+<view style='height:90rpx;'></view>
+<!--排序条-->
+ <view class='sortStrip'>
+  <block wx:for="{{sortArray}}">
+   <view class="main-case {{item.selected?'main-case1':''}}" bindtap='sortSelect' data-id="{{item.id}}">
+    <view class='border'>
+     <view class='left'>{{item.title}}</view>
+     <block wx:if="{{item.selected}}">
+      <view class='right'><image src="{{mdesc == 0?item.img1:item.img2}}" mode='aspectFill'></image></view>
+     </block>
+     <block wx:else>
+      <view class='right'><image src="{{item.img}}" mode='aspectFill'></image></view>
+     </block>
+    </view>
+   </view>
+  </block>
+ </view>
+<!--商品列表-->
+<block wx:if="{{hasArray}}" >
+ <block wx:for='{{assifycommodity}}'>
+ <navigator open-type='navigate' url='../goods-detail/goods-detail?goodsId={{item.goodsId}}'>
+     <view class='assify-commodity'>
+          <view class='image'>
+            <image src="{{(item.goodsImg != '' )?(domain+item.goodsImg):(domain+goodsLogo)}}" binderror='' mode='aspectFill'></image>
+          </view>
+         <view class='content'>
+             <text style='font-family:"Helvetica Neue";'>{{item.goodsName}}</text>
+         </view>
+         <view class='value'>
+            <text style='color:#E00102;margin-top:10rpx;margin-left:10rpx;'>¥ {{item.shopPrice}}</text>
+            <text style='color:#A0A0A0;font-size:30rpx;margin-top:10rpx;margin-bottom:20rpx;margin-right:10rpx;'>成交数: {{item.saleNum}}</text>
+         </view>
+     </view>
+ </navigator>
+ </block>
+</block>
+<block wx:if="{{!hasArray}}">
+ <view class='remind-model'>
+  <view class='image' ><image src='/image/nothing-cart.png' class="img"></image></view>
+  <view class='content' style='margin-top:-100rpx;' >{{remindContent}}</view>
+ </view>
+</block>
+</block>
+<!--动画模块-->
+<!--mask-->  
+  <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<!--content-->
+<!--top-->
+  <view class='max-model'  animation="{{animationData}}" wx:if="{{showModalStatus}}">
+   <view class='top'>
+    <view class='title'>商品分类</view>
+    <view class='icon'><icon type='cancel'  color='#a8a8a8' bindtap='powerDrawer' data-statu="close"></icon></view>
+   </view>
+<!--left-->
+   <view class='max-model1'>
+    <scroll-view  class='wst-scroll-left'  scroll-y >
+    <view class='model-left'>
+    <block wx:for="{{sortInfo}}" >
+     <view class="{{selectedId == item.catId?'mix-check-1':'mix-check'}}" data-mixId="{{item.catId}}" bindtap='switchover'>{{item.catName}}</view>
+    </block>
+    </view>
+   </scroll-view>
+<!--right-->
+   <scroll-view scroll-y="true">
+    <view class='model-right'>
+     <view class='title'>
+      <view class='content'>{{selectedTitle}}</view>
+      <view class='arrow'></view>
+     </view>
+     <view class='check-tatol'>
+     <block wx:for="{{sortInfo}}">
+     <block wx:if="{{item.catId == selectedId}}">
+      <block wx:for="{{item.children}}">
+       <view class='mix-check' bindtap='powerDrawer' data-statu="close" data-minId="{{item.catId}}" data-maxId="{{item.parentId}}">{{item.catName}}</view>
+      </block>
+     </block>
+     </block>
+     </view>
+    </view>
+   </scroll-view> 
+   </view>
+  </view>
+</view>
+</block>
+<!--搜索页面-->
+<block wx:if="{{interIm}}">
+  <view class='wst-search-interim'>
+    <view class="wst-se-header" style='position:relative;'>
+      <view class='wst-sh-close' bindtap='black'>
+        <icon color="#9A9A9A" data-statu="close" size="22" type="cancel"></icon>
+      </view>
+      <view class="input">
+        <icon class="icon" type="search" size="13" color="{{select == 0 ? '#fff' : '#666'}}" bindtap="search"/>
+        <input placeholder='按关键字搜索本店商品' placeholder-style='color:#666;' bindinput='getText'></input>
+      </view>
+      <view class="wst-sh-btn" bindtap="search">搜索</view>
+    </view>
+    <scroll-view scroll-y>
+    <view class='interim-box'>
+      <view class='search-script-top' bindtap="getAll">
+        <text>全部商品</text>
+        <view class='script-arrow'></view>
+      </view>
+    </view>
+    <view class='interim-box'bindtap='powerDrawer' data-page="2"  wx:for="{{sortInfo}}" wx:for-index="id" data-maxId="{{item.catId}}">
+      <view class='search-script' >
+        <text>{{item.catName}}</text>
+        <text>查看全部</text>
+      </view>
+    </view>
+    </scroll-view>
+  </view>
+</block>

@@ -1,0 +1,116 @@
+{extend name="default/base" /}
+{block name="title"}我的资金 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/logmoneys.css?v={$v}">
+{/block}
+{block name="header"}
+    <header style="background:#ffffff;" class="ui-header ui-header-positive wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>我的资金</h1>
+        <span class="record" onclick="location.href='{:url('wechat/cashdraws/index')}'">提现记录</span>
+    </header>
+{/block}
+{block name="main"}
+   	<input type="hidden" name="" value="{$rs['isSetPayPwd']}" id="isSet" autocomplete="off">
+    <section class="ui-container">
+        <div class="ui-row-flex ui-row-flex-ver head">
+            <div class="title">
+                <div class="money_number">
+                    <p id="userMoney" money="{$rs['userMoney']}" cash="{:WSTConf('CONF.drawCashUserLimit')}">可用资金：<span>¥ </span>{$rs['userMoney']}</p>
+                </div>
+                <div class="money_number2">
+                    <p money="{$rs['userMoney']}" cash="{:WSTConf('CONF.drawCashUserLimit')}">冻结资金：<span>¥ </span>{$rs['lockMoney']}</p>
+                </div>
+                <div class="money_number2">
+                    <p money="{$rs['userMoney']}" cash="{:WSTConf('CONF.drawCashUserLimit')}">可提现金额：<span>¥ </span>{:WSTBCMoney($rs['userMoney'],-$rs['rechargeMoney'])}</p>
+                </div>
+                <div class="wst-clear"></div>
+            </div>
+            <div class="ui-col head-btn-box"></div>
+        </div>
+         <ul class="ui-row recharge-box">
+            <li class="ui-col ui-col-50" onclick="location.href='{:url('wechat/logmoneys/toRecharge')}'">
+                <div class="wst_model">
+                   <div class="icon_add"><p>充值</p></div>
+                </div>
+            </li>
+            <li class="ui-col ui-col-50" onclick="getCash()">
+                <div class="wst_model">
+                   <div class="icon_out"><p>提现</p></div>
+                </div>
+            </li>
+        </ul>
+        <ul class="ui-row money-detail" onclick="check()">
+            <li class="ui-col ui-col-50 money-detail-title"><div class="icon_stript stript_1"></div><h5>&nbsp;我的提现账户</h5></li>
+            <li class="ui-col ui-col-50 money-detail-title m-tr"><h5>{$rs['num']}个 ></h5></li>
+        </ul>
+        <ul class="ui-row money-detail" onclick="javascript:toRecord()">
+            <li class="ui-col ui-col-50 money-detail-title"><div class="icon_stript stript_2"></div><h5>&nbsp;我的资金流水</h5></li>
+            <li class="ui-col ui-col-50 money-detail-title m-tr"><h5>></h5></li>
+        </ul>
+        <ul class="ui-row first-time">
+            <li class="ui-col ui-col-100 ft-title"><i></i><span>首次提现步骤：</span></li>
+            <li class="ui-col ui-col-100 ft-item">1.设置支付密码和绑定手机号码</li>
+            <li class="ui-col ui-col-100 ft-item">2.绑定您的微信钱包或银行卡</li>
+        </ul>
+    </section>
+{/block}
+{block name="include"}
+{include file="default/dialog" /}
+<input type="hidden" value="{:WSTConf('CONF.pwdModulusKey')}" id="key" autocomplete="off">
+{/* 对话框 prompt */}
+<div class="ui-dialog" id="payPwdBox">
+    <div class="ui-dialog-cnt">
+        <div class="ui-dialog-bd">
+            <p id="wst-dialog" class="wst-dialog-t">
+                请输入支付密码：<br />
+                <input type="password" id="payPwd" maxLength="6" class="wst-pay-inp" />
+            </p>
+            <p class="wst-dialog-l"></p>
+            <button id="wst-event1" type="button" class="ui-btn-s wst-dialog-b1" data-role="button">取消</button>&nbsp;&nbsp;
+            <button id="wst-event3" type="button" class="ui-btn-s wst-dialog-b2">确定</button>
+        </div>
+    </div>        
+</div>
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 分类层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title"><span>申请提现</span><i class="ui-icon-close-page" onclick="javascript:dataHide();"></i><div class="wst-clear"></div></div>
+    <div class="info">
+        <p>可提现金额</p>
+        <p class="money"><span>¥ </span>{:WSTBCMoney($rs['userMoney'],-$rs['rechargeMoney'])}</p>
+    </div>
+    <div class="content">
+        <ul class="ui-row">
+            <li class="ui-col ui-col-25">提现账号：</li>
+            <li class="ui-col ui-col-75">
+                <select name="accId" id="accId" class="wst-lo-choice">
+                    <option value="">请选择</option>
+                </select>
+            </li>
+            <li class="ui-col ui-col-25">提现金额：</li>
+            <li class="ui-col ui-col-75">
+                <input type="number" name="money" id="money" class="wst-lo-choice" onkeyup="javascript:WST.isChinese(this,1)" autocomplete="off" />
+            </li>
+            <li class="ui-col ui-col-25">支付密码：</li>
+            <li class="ui-col ui-col-75">
+                <input type="password"  id="cashPayPwd" class="wst-lo-choice" maxLength="6"  onkeyup="javascript:WST.isChinese(this,1)" autocomplete="off" />
+            </li>
+            <li class="ui-col wst-red">（至少¥ {:WSTConf('CONF.drawCashUserLimit')}以上可提现）</li>
+            <li class="ui-col ui-col-100">
+                <div class="ui-btn-wrap">
+                    <button class="ui-btn-lg ui-btn-danger wst-apply-button" id="submit" onclick="drawMoney()">
+                        确定
+                    </button>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</div>
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__STATIC__/js/rsa.js"></script>
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/users/logmoneys/logmoneys.js?v={$v}'></script>
+{/block}

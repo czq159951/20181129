@@ -1,0 +1,54 @@
+<view class='container'>
+<!--无数据提示栏-->
+ <view  class='remind-model' wx:if="{{!hascommodity}}">
+    <view class='image' ><image src='/image/nothing-follow-shps.png' class="img"></image></view>
+    <view class='content'>暂无关注店铺</view>
+    <view class="button" bindtap='toIndex' style='margin-top:40rpx;'><button>去逛逛</button></view>
+  </view>
+<!--商店列表-->
+<block wx:for="{{dataArray}}">
+ <view class='main-model'>
+  <view class='top' >
+   <view class='left' bindtap='selectList' data-id="{{item.favoriteId}}">
+    <view>
+      <icon  type='success' color='#E32726' wx:if="{{item.Status}}" size='18' ></icon>
+      <icon type='circle' size='18'  wx:else></icon>
+    </view>
+   </view>
+    <view class='image'  bindtap='toStroePage'  data-shopId="{{item.shopId}}">
+     <image src="{{domain}}{{item.shopImg}}" mode='aspectFit'></image>
+    </view>
+   <view class='between' bindtap='toStroePage'  data-shopId="{{item.shopId}}">
+    <view class='right'>
+     <view class='content'>
+     {{item.shopName}}
+     </view>
+    </view>
+   </view>
+   <view class='right1' bindtap='toStroePage'  data-shopId="{{item.shopId}}">进入店铺
+   </view>
+  </view>
+  <view class='bottom'>
+   <block wx:for="{{item.goods}}">
+    <view class='commodity-model' bindtap='toCommPage' data-goodsId="{{item.goodsId}}" >
+      <view class='image'>
+        <image src="{{domain+item.goodsImg}}" mode='aspectFit' lazy-load="true"></image>
+      </view>
+     <view class='content'>¥{{item.shopPrice}}</view>
+    </view>
+   </block>
+  </view>
+ </view>
+</block>
+<view style='height:120rpx;'></view>
+<!--底部导航条-->
+ <view class='navigation-bottom' wx:if="{{hascommodity}}">
+  <!--全选状态-->
+   <view class='icon'>
+    <icon wx:if="{{selectedAllStatus}}" type='success' size='20' color='#E32726'  bindtap='selectAll'></icon>
+    <icon wx:else type='circle' size='20'   bindtap='selectAll'></icon>
+   </view>
+   <view class='content'>全选</view>
+   <view class='botton'><button  type='warn' size='datail' style='background:#E00102;font-size:30rpx;' bindtap='cancelAttension'>取消关注</button></view>
+  </view>
+</view>

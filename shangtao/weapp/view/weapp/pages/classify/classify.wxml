@@ -1,0 +1,67 @@
+<block wx:if="{{!interIm}}">
+<view class="wst-se-header">
+  <view class="input">
+    <icon class="icon" type="search" size="13" color="{{select == 0 ? '#fff' : '#666'}}" bindtap="onSearch"/>
+    <input placeholder='按关键字搜索商品' placeholder-class='wst-head-placeholder' bindinput="nameInput" bindtap='interPage'></input>
+  </view>
+</view>
+<view  class='container'>
+ <scroll-view  scroll-y="true" bindscroll="scroll" scroll-top="{{scrollSite}}">
+   <view class='model-left'>
+     <block wx:for="{{mainArray}}">
+      <view class="{{select == item.catId ?'mix-model-hover':'mix-model'}}" data-catid="{{item.catId}}" id="{{index}}" bindtap='showAssify' >{{item.catName}}</view>
+     </block>
+   </view>
+ </scroll-view>
+ <scroll-view scroll-y="true">
+   <view class='model-right'>
+    <view class='assify-image' wx:if="{{hasImage}}">
+      <view class="ads">
+    <swiper indicator-dots="true" circular="true" indicator-active-color="#ff3535">
+     <swiper-item wx:for="{{ads}}" wx:for-item="ad">
+      <image src="{{domain}}{{ad.adFile}}" mode='scaleToFill' bindtap='jumpcenter' data-url='{{ad.adURL}}'/>
+     </swiper-item>
+   </swiper>
+        <view class="wst-clear"></view>
+      </view>
+    </view>
+   <block wx:for="{{viceArray}}">
+    <view class='assify-model'>
+     <view class='model-right-size' bindtap='goodsList' data-catid="{{item.catId}}">{{item.catName}}</view>
+     <block wx:for="{{item.childList}}">  
+      <view class='model-right-list' bindtap='goodsList' data-catid="{{item.catId}}">
+        <view class='model-right-image'>
+         <image  src="{{domain}}{{item.catImg}}" mode='aspectFit'></image>
+        </view>
+         <view class='model-right-title'>{{item.catName}}</view>
+      </view>
+     </block>
+    </view>
+   </block>
+   </view>
+ </scroll-view>
+</view>
+</block>
+<!--搜索页面-->
+<block wx:if="{{interIm}}">
+  <view class='wst-search-interim'>
+    <view class="wst-se-header2" style='position:relative;'>
+      <view class='arrow-bor' bindtap='black'>
+         <view class='arrow'></view>
+      </view>
+      <view class="input">
+        <icon class="icon" type="search" size="13" color="#666" bindtap="onSearch"/>
+        <input placeholder='按关键字搜索商品' placeholder-style='color:#666;' bindinput="nameInput"></input>
+      </view>
+    </view>
+    <view class='interim-box'>
+      <view class='wst-top'>
+        <image src='../../image/hot.png'></image>
+        <text>热门搜索</text>
+      </view>
+      <view class='mix-box' >
+        <text wx:for="{{hots}}" wx:for-index="id" bindtap="onSearch" data-key="{{item}}">{{item}}</text>
+      </view>
+    </view>
+  </view>
+</block>

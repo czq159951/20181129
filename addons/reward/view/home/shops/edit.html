@@ -1,0 +1,212 @@
+{extend name="$LAYOUT_HOME_SHOP_BASE" /}
+{block name="title"}满就送活动 - 卖家中心{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<link href="__STATIC__/plugins/validator/jquery.validator.css?v={$v}" rel="stylesheet">
+<link href="__ROOT__/addons/reward/view/home/shops/shops.css?v={$v}" rel="stylesheet">
+<style>
+input[type=text]{width:150px;}
+label{display: inline-block}
+</style>
+<div class="wst-body"> 
+<div class="wst-shop-head"><span>满就送活动</span></div>
+<div class="wst-clear"></div>
+   <div class="wst-shop-content">
+      <form id='rewardform' name='rewardform' autocomplete="off">
+        <input type='hidden' id='rewardId' class='ipt' value='{$object["rewardId"]}'/>
+        <table class="wst-form">  
+           <tr>
+             <td colspan="2">
+               <div class='wst-tips-box'>
+               <div class='icon'></div>
+               <div class='tips'>
+               1.虚拟商品不参与满就送活动。<br/>2.若赠送的商品是多规格商品则表示赠送的是默认规格的商品。</div>
+               <div style="clear:both"></div>
+               </div>
+             </td>
+           </tr>       
+           <tr>
+             <th width='120' align='right'>活动名称<font color='red'>*</font>：</th>
+             <td>
+             	<input type='text' id='rewardTitle' name='rewardTitle'class='ipt' maxLength='100' value='{$object["rewardTitle"]}' data-rule='活动名称:required;' style='width:350px;'/>
+             </td>
+           </tr>
+           <tr>
+               <th width='120'>活动时间<font color='red'>*</font>：</th>
+             <td colspan='3'>
+                 <input type='text' id='startDate' name='startDate' class='ipt laydate-icon' value='{$object["startDate"]}' onclick="laydate({format: 'YYYY-MM-DD',istime:false})"  data-rule="有效日期: required;date;" data-target="#msg_endDate"/>
+                 至
+                   <input type='text' id='endDate' name='endDate' class='ipt laydate-icon' value='{$object["endDate"]}' onclick="laydate({format: 'YYYY-MM-DD',istime:false})" data-rule="有效日期: required;date;match(gt, startDate, date)" data-target="#msg_endDate"/>
+                   <span class='msg-box' id='msg_endDate'></span>
+             </td>
+           </tr>
+           <tr>
+               <th width='120'>优惠方式<font color='red'>*</font>：</th>
+	             <td colspan='3'>
+	                 <label style='width:70px;'>
+                     <input type='radio' name='rewardType' class='ipt' value='0' {if $object['rewardType']==0}checked{/if} onclick='WST.showHide(0,"#addLayerBox");initRewardLayer()'>普通优惠
+                   </label>
+                   <label>
+                     <input type='radio' name='rewardType' class='ipt' value='1' {if $object['rewardType']==1}checked{/if} onclick='WST.showHide(1,"#addLayerBox")'>多级优惠
+                   </label>
+	             </td>
+           </tr>
+           <tr>
+             <th valign="top">优惠内容<font color='red'>*</font>：</th>
+             <td>
+               <table class='rewardTbl'>
+                  <tr><th width='80'>层级</th><th width='200'>优惠条件</th><th>优惠内容</th><th width='50'>操作</th></tr>
+                  <tbody id='rewardBox'></tbody>
+               </table>
+               <div id='addLayerBox' {if $object['rewardType']==0}style='display:none'{/if}>
+               <a href='javascript:addRewardLayer()' style='color:blue'>新增层级优惠</a>（最多新增五级）
+               </div>
+             </td>
+           </tr>
+           <tr>
+               <th width='120'>适用范围<font color='red'>*</font>：</th>
+	           <td colspan='3'>
+	               <label style='width:70px;'>
+                     <input type='radio' name='useObjects' class='ipt' value='0' {if $object['useObjects']==0}checked{/if} onclick='javascript:WST.showHide(0,"#goodsBox")'>全店通用
+                 </label>
+                 <label>
+                     <input type='radio' name='useObjects' class='ipt' value='1' {if $object['useObjects']==1}checked{/if} onclick='javascript:WST.showHide(1,"#goodsBox")'>指定商品
+                 </label>
+	           </td>
+           </tr>
+           <tr id='goodsBox'  {if $object['useObjects']==0}style='display:none'{/if}>
+             <th>选择商品<font color='red'>*</font>：</th>
+             <td>
+               <table>
+                 <tr>
+                   <td colspan="3">
+                     商品分类：<select id="shopCatId1" class='s-ipt' onchange="WST.shopsCats('shopCatId2',this.value,'');">
+                       <option value="">-请选择-</option>
+                       {volist name=":WSTShopCats(0)" id="vo"}
+                       <option value="{$vo['catId']}">{$vo['catName']}</option>
+                       {/volist}
+                    </select>
+                    <select id='shopCatId2' class='s-ipt'>
+                       <option value=''>请选择</option>
+                    </select>
+                    <input type='text' id='goodsName' class='s-ipt' placeholder='商品编号/商品名称'/>
+                    <a class='s-btn' onclick="searchGoods()">搜&nbsp;索</a>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td>
+                     <div class='goods-seach-tr'>
+                         <div class='head'>
+                             <div class='h-chk'><input type='checkbox' onclick='WST.checkChks(this,".lchk")'></div>
+                             <div class='h-name'>商品信息</div>
+                         </div>
+                         <div id='goodsSearchBox' class='body-tr'></div>
+                         <script id="tblist" type="text/html">
+                         {{#
+                          var ids = document.getElementById('useObjectIds').value;
+                          ids = (ids.length>0)?ids.split(','):[];
+                          for(var i = 0; i < d.length; i++){
+                              if($.inArray(String(d[i].goodsId),ids)>-1)continue;
+                          }}
+                         <div class='body'>
+                             <div class='b-chk'><input type='checkbox' class='lchk' value='{{d[i].goodsId}}'></div>
+                             <div class='b-img'><img width='30' src='{{WST.conf.ROOT+"/"+WST.replaceImg(d[i].goodsImg,"_thumb")}}'></div>
+                             <div class='b-name'>{{d[i].goodsName}}</div>
+                         </div>
+                         {{# } }}
+                         </script>
+                     </div>
+                   </td>
+                   <td>
+                       <a href='javascript:moveRight()' class='s-btn' style='margin-right:0px'>》》</a><br/><br/>
+                       <a href='javascript:moveLeft()' class='s-btn' style='margin-right:0px'>《《</a>
+                       <input type='hidden' id='useObjectIds' class='ipt' value='{$object["useObjectIds"]}'>
+                   </td>
+                   <td>
+                     <div class='goods-result-tr'>
+                       <div class='head'>
+                          <div class='h-chk'><input type='checkbox' onclick='WST.checkChks(this,".rchk")'></div>
+                          <div class='h-name'>已选商品</div>
+                      </div>
+                      <div id='goodsResultBox' class='body-tr'>
+                        {volist name="object['goods']" id='vo'}
+                        <div class='body'>
+                             <div class='b-chk'><input type='checkbox' class='rchk' value='{$vo.goodsId}'></div>
+                             <div class='b-img'><img width='30' src='__ROOT__/{:WSTImg($vo.goodsImg,"_thumb")}'></div>
+                             <div class='b-name'>{$vo.goodsName}</div>
+                         </div>
+                        {/volist}
+                      </div>
+                     </div>
+                   </td>
+                 </tr>
+               </table>
+             </td>
+           </tr>
+           <tr>
+             <td colspan='2' style='text-align:center;padding:20px;'>
+                 <a class='s-btn' onclick="save()">保&nbsp;存</a>&nbsp;&nbsp;
+                 <a class='s-btn' onclick='javascript:location.reload();'>重&nbsp;置</a>
+             </td>
+           </tr>
+        </table>
+        </form>
+   </div>
+   <table style='display:none'>
+     <tbody id='rewardTPLBox'>
+     <tr id='rewardContentTr_{NO}'>
+        <td>{C}</td>
+        <td>消费满<input type="text" id="money-{NO}" class='j-reward-money' dataval="{NO}" data-rule='消费金额:required;integer[+]' style='width:50px;' data-target="#msg_money_{NO}"/>元
+        <br/><div class='msg-box' id='msg_money_{NO}'></div>
+        </td>
+        <td>
+          <label style='display:block'>
+            <input type='checkbox' id="j-chk-0-{NO}" class='ipt' value='0' dataval='0' onclick='javascript:checkReward(this,{NO},0)'>
+            <span id='reward-0-0-{NO}'>减现金</span>
+            <span id='reward-0-1-{NO}' class='hide'>
+              减<input type='text' id='j-reward-c-0-{NO}' style='width:50px;' data-target="#msg_reward-c-0-{NO}" data-rule='所减金额:required(#j-chk-0-{NO}:checked);integer[+]'/>元
+            </span>
+            <div class='msg-box' id='msg_reward-c-0-{NO}'></div>
+          </label>
+          <label style='display:block'>
+            <input type='checkbox' id="j-chk-1-{NO}" class='ipt' value='1' dataval='0' onclick='javascript:checkReward(this,{NO},1)'>
+            <span id='reward-1-0-{NO}'>送赠品</span>
+            <span id='reward-1-1-{NO}' class='hide'>
+               送<select id='j-reward-c-1-{NO}' data-target="#msg_reward-c-1-{NO}" data-rule='赠品:required(#j-chk-1-{NO}:checked);'></select>
+            </span>
+            <div class='msg-box' id='msg_reward-c-1-{NO}'></div>
+          </label>
+          <label style='display:block'>
+            <input type='checkbox' id="j-chk-2-{NO}" class='ipt' value='2' dataval='0' onclick='javascript:checkReward(this,{NO},2)'><span id='reward-2-0-{NO}'>免邮费</span>
+          </label>
+          <label {if WSTConf('WST_ADDONS.coupon')}style='display:block'{else}style='display:none'{/if}>
+            <input type='checkbox' id="j-chk-3-{NO}" class='ipt' value='3' dataval='0' onclick='javascript:checkReward(this,{NO},3)'>
+            <span id='reward-3-0-{NO}'>送优惠券</span>
+            <span id='reward-3-1-{NO}' class='hide'>
+               送<select id='j-reward-c-3-{NO}' data-target="#msg_reward-c-3-{NO}" data-rule='优惠券:required(#j-chk-3-{NO}:checked);'></select>(允许优惠券超发)
+            </span>
+            <div class='msg-box' id='msg_reward-c-3-{NO}'></div>
+          </label>
+        </td>
+        <td>
+            <a href='javascript:delRewardContent({NO})'>删除</a>
+        </td>
+     </tr>
+     </tbody>
+   </table>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script src="__STATIC__/plugins/layer/laydate.js"></script>
+<script type="text/javascript" src="__STATIC__/plugins/validator/jquery.validator.min.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/addons/reward/view/home/shops/shop.js?v={$v}"></script>
+<script>
+var rewardObj = {:json_encode($object)};
+$(function(){initReward();})
+</script>
+{/block}

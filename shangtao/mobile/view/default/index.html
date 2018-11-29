@@ -1,0 +1,110 @@
+{extend name="default/base" /}
+{block name="title"}首页 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/swiper.min.css">
+<link rel="stylesheet"  href="__MOBILE__/css/index.css?v={$v}">
+{/block}
+{block name="header"}
+    <header class="ui-header ui-header-positive wst-in-header" id="j-header">
+    </header>
+    <div class="wst-in-search">
+    	<div class="classify"><a href="{:url('mobile/goodscats/index')}"><i></i></a></div>
+    	<div class="searchs" id="j-searchs">
+		    <i class="ui-icon-search" onclick="javascript:WST.searchPage('goods',1);"></i>
+		    <form action＝"" class="input-form" onclick="javascript:WST.searchPage('goods',1);">
+		    <input type="search" placeholder="按关键字搜索商品" onsearch="WST.search(0)" autocomplete="off" disabled="disabled">
+			</form>
+			<div class="wst-clear"></div>
+		</div>
+		<div class="user"><a href="{:url('mobile/messages/index')}">{if condition="session('WST_USER.userId') >0"}<i>{if($news['message']['num']>0)}<span class="number">{$news['message']['num']}</span>{/if}</i>{else}登录{/if}</a></div>
+	</div>
+{/block}
+{block name="main"}
+<input type="hidden" name="" value="-1" id="currPage" autocomplete="off">
+<section class="ui-container">
+        <div class="ui-slider" style="padding-top:50%;">
+		    <ul class="ui-slider-content" style="{if($ads['count']>0)}{$ads['width']}{/if}">
+		    	{wst:ads code="mo-ads-index" cache='86400'}
+		        <li class="advert1"><span><a href="{$vo.adURL}"><img style="width:100%; height:100%; display:block;" src="__ROOT__/{:WSTImg($vo.adFile,2)}"></a></span></li>
+		        {/wst:ads}
+		    </ul>
+		</div>
+		<div class="ui-row wst-in-choose" style="display: flex;flex-direction: row;align-items: center;flex-wrap: wrap;padding: 5px 20px 12px 0;">
+		    {volist name=':WSTMobileBtns(0)' id='btn'}
+		    <div class="ui-col ui-col-20">
+		    <a href="{:url($btn['btnUrl'])}">
+		    <p><img width='56' src="__ROOT__/{$btn['btnImg']}" style='margin-top:7px;width:56px;'/></p>
+		    <span>{$btn['btnName']}</span>
+		    </a></div>
+		    {/volist}
+		</div>
+		<div class="wst-in-activity">
+			{wst:ads code="mo-index-long" cache='86400' num='4'}<a class="advert4" href="{$vo.adURL}"><div class="img"><img src="__ROOT__/{:WSTImg($vo.adFile,2)}"/></div></a>{/wst:ads}
+			<div class="wst-in-news">
+			<span class="new">商城&nbsp;<p>快讯</p></span>
+			<div class="article">
+			<div class="swiper-container swiper-container1">
+	          <div class="swiper-wrapper">
+	          		{wst:article cat="new" num='6' cache='86400'}
+	                <div class="swiper-slide" style="width:100%;">
+	                	<a class="words" href="{:url('mobile/news/view',['articleId'=>$vo['articleId']])}"><p class="ui-nowrap-flex">{$vo['articleTitle']}</p></a>
+	                </div>
+	                {/wst:article}
+	          </div>
+	        </div>
+			</div>
+			<span class="more" onclick="location.href='{:url('mobile/news/view')}'">更多</span>
+			<div class="wst-clear"></div>
+			</div>
+		</div>
+		<div class="wst-in-adst">
+			{wst:ads code="mo-index-left" cache='86400' num='1'}
+			<a class="advert2" href="{$vo.adURL}"><img src="__ROOT__/{:WSTImg($vo.adFile,2)}" style="height:2rem;"/></a>
+			{/wst:ads}
+			{wst:ads code="mo-index-right" cache='86400' num='2'}
+			<a class="advert2" href="{$vo.adURL}"><img src="__ROOT__/{:WSTImg($vo.adFile,2)}" style="height:0.995rem;"/></a>
+			{/wst:ads}
+			<div class="wst-clear"></div>
+		</div>
+		<div class="wst-in-adsb">
+		<div class="swiper-container swiper-container2">
+          <div class="swiper-wrapper">
+          	{wst:ads code="mo-index-small" cache='86400' num='10'}
+                <div class="swiper-slide" style="width:33.333333%;">
+                  <div class="goodsinfo-container">
+                    <a class="advert3" href="{$vo.adURL}"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{:WSTImg($vo.adFile,2)}"></a>
+                  </div>
+                </div>
+            {/wst:ads}
+          </div>
+        </div>
+        </div>
+		<div id="goods-list"></div>
+</section>
+<script id="list" type="text/html">
+<div class="wst-in-title colour{{ d.currPage }}" onclick="javascript:getGoodsList({{ d.catId }});">
+	<div class="line"></div><div class="name"><p><span><i class="icon"></i>{{ d.catName }}</span></p></div>
+</div>
+	{{# if(d.ads && d.ads.length>0){ }}
+		<div class="wst-in-adscats"><a href="{{ d.ads[0].adURL }}"><img src="__ROOT__/{{ d.ads[0].adFile }}"/></a></div>
+	{{# } }}
+	{{# if(d.goods.length>0){ }}
+		{{# for(var i=0; i<d.goods.length; i++){ }}
+			<div class="wst-in-goods {{# if((i)%2==0){ }}left{{# }else{ }}right{{# } }}">
+				<div class="img j-imgAdapt"><a href="javascript:void(0);" onclick="javascript:WST.intoGoods({{ d.goods[i].goodsId }});"><img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{ d.goods[i].goodsImg }}" title="{{ d.goods[i].goodsName }}"/></a></div>
+				<div class="name ui-nowrap-multi" onclick="javascript:WST.intoGoods({{ d.goods[i].goodsId }});">{{ d.goods[i].goodsName }}</div>
+				<div class="info"><span class="price">¥ <span>{{ d.goods[i].shopPrice }}</span></span></div>
+				<div class="info2"><span class="price">好评率{{ d.goods[i].praiseRate }}</span><span class="deal">成交数:{{ d.goods[i].saleNum }}</span></div>
+			</div>
+		{{# } }}
+	{{# } }}
+<div class="wst-clear"></div>
+</script>
+{/block}
+{block name="include"}
+{include file="default/goods_search" /}
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/js/swiper.jquery.min.js'></script>
+<script type='text/javascript' src='__MOBILE__/js/index.js?v={$v}'></script>
+{/block}

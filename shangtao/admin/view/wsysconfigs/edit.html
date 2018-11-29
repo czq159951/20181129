@@ -1,0 +1,68 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+<style>
+body{overflow:hidden}
+</style>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__STATIC__/plugins/webuploader/webuploader.js?v={$v}' type="text/javascript"></script>
+<script src="__ADMIN__/wsysconfigs/wsysconfigs.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<style>
+input[type="text"]{width:70%}
+textarea{width:70%;height:100px;}
+#wst-tab-5 input[type="text"]{width:50%}
+</style>
+<div id='alertTips' class='alert alert-success alert-tips fade in'>
+	<div id='headTip' class='head'><i class='fa fa-lightbulb-o'></i>操作说明</div>
+	<ul class='body'>
+		<li>本功能主要用于设置与微信认证平台交互的认证信息。“微信验证代码”需与微信自定义菜单中的state参数值保持一致。</li>
+	</ul>
+</div>
+<form autocomplete='off'>
+<div class='wst-tab layui-form' style='margin-top:20px'>
+     <table class='wst-form wst-box-top'>
+      <tr>
+	     <th width='150'>是否开启微信端：</th>
+	     <td>
+	     <input type="checkbox" {if $object['wxenabled']==1}checked{/if} value='1' class="ipt" id="wxenabled" name="wxenabled" lay-skin="switch" lay-filter="wxenabled" lay-text="开启|关闭">
+	     </td>
+	  </tr>
+	  <tr>
+	     <th width='150'>微信 APP ID：</th>
+	     <td><input type="text" id='wxAppId' class='ipt' value="{$object['wxAppId']}" maxLength='100'/></td>
+	  </tr>
+	  <tr>
+	     <th>微信 APP SECRET：</th>
+	     <td><input type="text" id='wxAppKey' class='ipt' value="{$object['wxAppKey']}" maxLength='100'/></td>
+	  </tr>
+	  <tr>
+	     <th>微信验证代码：</th>
+	     <td><input type="text" id='wxAppCode' class='ipt' value="{$object['wxAppCode']}" maxLength='100'/></td>
+	  </tr>
+	  <tr>
+	     <th>微信公众号二维码：</th>
+	     <td>
+	     <div id='wxAppLogoPicker'>请上传微信公众号二维码</div><span id='wxAppLogoMsg'></span>
+	     <div id="wxAppLogoPrevw">
+	     {if($object["wxAppLogo"])}
+	     	<img src='__ROOT__/{$object["wxAppLogo"]}' width='120' hiegth='120'/>
+	     {/if}
+	     </div>
+	     <input type="hidden" id='wxAppLogo' class='ipt' value='{$object["wxAppLogo"]}'/>
+	     </td>
+	  </tr>
+	  {if WSTGrant('WX_GZHSZ_04')}
+	  <tr>
+	     <td colspan='2' style='padding-left:300px;padding-top:30px'>
+	     	<button type="button"  class='btn btn-primary btn-mright' onclick='javascript:edit()'><i class="fa fa-check"></i>保存</button>
+	     	<button type="reset"  class='btn'><i class="fa fa-refresh"></i>重置</button>
+	     </td>
+	  </tr>
+	  {/if}
+	 </table>
+</div>
+</form>
+{/block}

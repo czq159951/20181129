@@ -1,0 +1,762 @@
+{extend name="default/base" /}
+{block name="title"}{:WSTConf('CONF.mallName')} - {:WSTConf('CONF.mallSlogan')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{:WSTConf('CONF.seoMallDesc')}">
+<meta name="Keywords" content="{:WSTConf('CONF.seoMallKeywords')}">
+{/block}
+{block name="css"}
+<link href="__STYLE__/css/index.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="main"}
+{/* 横栏广告  */}
+<div class="wst-ads" style="position:relative;" >
+	<div class="wst-slide" id="wst-slide">
+		
+		<ul class="wst-slide-items">
+			{wst:ads code="ads-index" cache='86400'}
+				<a href="{$vo.adURL}" {if ($vo['isOpen'])}target='_blank'{/if} {if ($vo['adURL']!='')}onclick="WST.recordClick({$vo['adId']})"{/if}><li style="background: url(__ROOT__/{$vo.adFile}) no-repeat  scroll center top;background-size:cover;" ></li></a>
+			{/wst:ads}
+		</ul>
+		<div class="wst-slide-numbox">
+			<div style="position:absolute;right:0;top:-420px;">
+				<div class='wst-right-panel' {if !isset($hideCategory)}style="display:none;" {/if}>
+		      	{php}$signScore=explode(",",WSTConf('CONF.signScore'));{/php}
+		        {if(WSTConf('CONF.signScoreSwitch')==1 && $signScore[0]>0)}
+		    		<div class="ws-right-user">
+		    			<div class="top">
+		    				<img class="usersImg" data-original="{:WSTUserPhoto(session('WST_USER.userPhoto'))}">
+		    				<div class="name">
+		    					<a href="{:Url('home/users/index')}"><p class="uname">{if condition="session('WST_USER.userId') >0"}{:session('WST_USER.userName')?session('WST_USER.userName'):session('WST_USER.loginName')}{else}请先登录{/if}</p></a>
+		    					{if(session('WST_USER.signScoreTime')==date('Y-m-d'))}
+		    					<button id="j-sign" class="sign actives"><i class="plus">+</i>已签到</button>
+		    					{else}
+		    					<button id="j-sign" class="sign" onclick="javascript:inSign();"><i class="plus">+</i>签到领积分</button>
+		    					{/if}
+		    				</div>
+		    			</div>
+		    			<div class="bottom">
+		    				<p class="left">当前积分：<span id="currentScore">{if($object.userScore >0)}{$object.userScore}{else}0{/if}</span></p><p class="right"><a href="{:Url('home/userscores/index')}" onclick="WST.position(13,0)">积分明细</a></p>
+		    			</div>
+		    			<div class="wst-clear"></div>
+		    		</div>
+		    	    {/if}
+		    	    {/* 拍卖活动 */}
+		    		<div id="wst-right-ads">
+						{if(WSTConf('WST_ADDONS.auction')!='') && count(auction_list())>0}
+						{php}$auction=auction_list();{/php}
+		    			<div class="aution_out">
+		    				<p class="aution_tit">拍卖活动</p>
+		    				<div class="aution_list" sc="{:date('Y-m-d H:i:s')}">
+								{volist name="$auction" id="au"}
+			    				<div class="aution_main" sv="{$au['startTime']}" ev="{$au['endTime']}">
+		    						<a class="aution_item" target='_blank' href="{:addon_url('auction://goods/detail','id='.$au['auctionId'])}">
+		    							<img title="{$au['goodsName']}" alt="{$au['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($au['goodsImg'])}"/>
+										<div class="aution_time">
+											距离结束：
+											<span class="aution_h">12</span>
+											:
+											<span class="aution_i">23</span>
+											:
+											<span class="aution_s">55</span>
+										</div>	    						
+		    						</a>
+			    				</div>
+								{/volist}
+			    				<div class="wst-clear"></div>
+		    				</div>
+		    				<span class="au_l_btn"><</span>
+		    				<span class="au_r_btn">></span>
+		    			</div>
+						{else /}
+			    		{wst:ads code="index-art" num='1' cache='86400'}
+			              <a {if ($vo['isOpen'])}target='_blank'{/if} {if ($vo['adURL']!='')}onclick="WST.recordClick({$vo['adId']})"{/if} href="{$vo.adURL}" onfocus="this.blur()">
+			                <img data-original="__ROOT__/{$vo.adFile}" class="goodsImg" />
+			              </a>
+			    	   {/wst:ads}
+			    	   {/if}
+		            <div class="index-user-tab">
+		             <div id='index-tab' class="wst-tab-box">
+		    	          
+		    	          <div class="wst-tab-nav">
+		    	             	<div class="tab">招商入驻</div>
+		    	             	<div class="tab">商城快讯</div>
+		    	          	</div>
+		    	          <div class="wst-tab-content" style='width:99%;'>
+		    	          	<div class="wst-tab-item" style="position: relative;">
+		    	               <a class='apply-btn' target='_blank' href='{:Url("home/shops/join")}' onclick="WST.currentUrl('{:url("home/shops/join")}');"></a>
+		    	               <a class='shop-login' href='{:Url("home/shops/login")}' onclick="WST.currentUrl();">登录商家中心</a>
+		    	              </div>
+		    	              <div class="wst-tab-item" style="position: relative;display:none">
+		    	              <div id="wst-right-new-list"{if(!session('WST_USER.userId'))}class="visitor-new-list"{/if} >
+		    	                {wst:article cat="new" num='5' cache='86400'}
+		    	                <div><a href="{:url('home/news/view',['id'=>$vo['articleId']])}">{$vo['articleTitle']}</a></div>
+		    	                {/wst:article}
+		    	              </div>
+		    	              </div>
+		    	              
+		    	          </div>
+		    	      </div> 
+		    	    </div>
+		           
+		          <span class="wst-clear"></span>
+		        </div>
+		      </div>
+			</div>
+			<div class="wst-slide-controls">
+			  	{wst:ads code="ads-index" cache='86400' key='k'}
+				  	{if condition="$k+1 eq 1"}
+				  		 <span class="curr">{$k+1}</span>
+				  	{else/}
+				  		 <span class="">{$k+1}</span>
+				  	{/if}
+				{/wst:ads}
+			</div>
+		</div>
+	</div>
+</div>
+{/* 顶部广告位 */}
+<div class='wst-main'>
+   {/* 领券中心 */}
+	{if(WSTConf('WST_ADDONS.coupon')!='') && count(coupon_list())>0}
+	{php}$coupon=coupon_list('',['s.shopImg'],4);{/php}
+	<div class="coupon_out">
+		<a href="{:addon_url('coupon://coupons/index')}" class="fl coupon_bg">
+			<p class="coupon_tit">领券中心</p>
+			<p class="coupon_desc">为您汇总所有优惠券</p>
+			<p class="r_btn">立即查看</p>
+			<img src="__STYLE__/img/coupon_bg.png" alt="" />
+		</a>
+		<div style="float:right;width: 76%;height: 124px">
+			{volist name="$coupon" id="cn" length="4"}
+			<a href="{:addon_url('coupon://coupons/index')}" class="fl coupon_item">
+				<img src="__ROOT__/{$cn.shopImg}" alt="" style="
+				position: absolute;
+			    width: 70px;
+			    height: 70px;
+			    left:8px;
+			    top: 30px;" />
+				<p class="coupon_tit coupon_item_color">￥{$cn['couponValue']}</p>
+				<p class="coupon_desc coupon_item_color f16">
+					{if $cn['useCondition']==1}
+						满{$cn['useMoney']}减{$cn['couponValue']}
+					{else /}
+						无门槛券
+					{/if}
+				</p>
+				<p class="r_btn">立即领取</p>
+				<img src="__STYLE__/img/coupon_item_bg.png" alt="" />
+			</a>
+			{/volist}
+		</div>
+		<div class="wst-clear"></div>
+	</div>
+	{/if}
+   {/* 广告墙 */}
+   <div class="ads_wall">
+   		<div class="ads_wall_l fl">
+   			{/* 左上 */}
+   			{wst:ads code="wall-left-top" num='1' cache='86400' id="aw"}
+   			<a {if ($aw['isOpen'])}target='_blank'{/if} {if ($aw['adURL']!='')}onclick="WST.recordClick({$aw['adId']})"{/if} href="{$aw.adURL}" onfocus="this.blur()" class="ads_wall_item_top">
+   				<img data-original="__ROOT__/{$aw.adFile}" class="goodsImg" />
+   				<div class="ads_wall_more">
+   					<div class="ads_wall_line fl"></div>
+   					<p class="fl">查看更多 >></p>
+   					<div class="wst-clear"></div>
+   				</div>
+   			</a>
+   			{/wst:ads}
+   			{/* 左下 */}
+   			{wst:ads code="wall-left-bottom" num='1' cache='86400' id="aw"}
+   			<a {if ($aw['isOpen'])}target='_blank'{/if} {if ($aw['adURL']!='')}onclick="WST.recordClick({$aw['adId']})"{/if} href="{$aw.adURL}" onfocus="this.blur()" class="ads_wall_item_bottom">
+   				<img data-original="__ROOT__/{$aw.adFile}" class="goodsImg" />
+   				<div class="ads_wall_more">
+   					<div class="ads_wall_line fl"></div>
+   					<p class="fl">查看更多 >></p>
+   					<div class="wst-clear"></div>
+   				</div>
+   			</a>
+   			{/wst:ads}
+   		</div>
+   		<div class="ads_wall_c fl">
+   			{/* 中间 */}
+   			{wst:ads code="wall-center" num='1' cache='86400' id="aw"}
+   			<a {if ($aw['isOpen'])}target='_blank'{/if} {if ($aw['adURL']!='')}onclick="WST.recordClick({$aw['adId']})"{/if} href="{$aw.adURL}" onfocus="this.blur()">
+   				<img data-original="__ROOT__/{$aw.adFile}" class="goodsImg" />
+   				<div class="ads_wall_more" style="left:0;right:0;">
+   					<p>查看更多 >></p>
+				</div>
+   			</a>
+   			{/wst:ads}
+   		</div>
+   		<div class="ads_wall_r fr">
+   			{/* 右上 */}
+   			{wst:ads code="wall-right-top" num='1' cache='86400' id="aw"}
+   			<a {if ($aw['isOpen'])}target='_blank'{/if} {if ($aw['adURL']!='')}onclick="WST.recordClick({$aw['adId']})"{/if} href="{$aw.adURL}" onfocus="this.blur()" class="ads_wall_item_top">
+   				<img data-original="__ROOT__/{$aw.adFile}" class="goodsImg" />
+   				<div class="ads_wall_more">
+   					<div class="ads_wall_line wall_r_line fl"></div>
+   					<p class="fl">查看更多 >></p>
+   					<div class="wst-clear"></div>
+   				</div>
+   			</a>
+   			{/wst:ads}
+   			{/* 右下 */}
+   			{wst:ads code="wall-right-bottom" num='1' cache='86400' id="aw"}
+   			<a {if ($aw['isOpen'])}target='_blank'{/if} {if ($aw['adURL']!='')}onclick="WST.recordClick({$aw['adId']})"{/if} href="{$aw.adURL}" onfocus="this.blur()" class="ads_wall_item_bottom">
+   				<img data-original="__ROOT__/{$aw.adFile}" class="goodsImg" />
+   				<div class="ads_wall_more">
+   					<div class="ads_wall_line wall_r_line fl"></div>
+   					<p class="fl">查看更多 >></p>
+   					<div class="wst-clear"></div>
+   				</div>
+   			</a>
+   			{/wst:ads}
+   		</div>
+   		<div class="wst-clear"></div>
+   </div>
+   {/* 品牌街 */}
+   <div class="brand_street_out">
+   	   <p class="bs_tit">品牌街</p>
+	   <ul class="brand_street">
+	   		{wst:brand cat="0" num='20' id="brd"}
+		   	<li>
+		   		<a href="{:Url('home/goods/lists',['brand'=>$brd['brandId'],'cat'=>$brd['catId']])}">
+		   			<img data-original="__ROOT__/{$brd.brandImg}" class="goodsImg" />
+		   		</a>
+		   	</li>
+		   	{/wst:brand}
+		   	<div class="wst-clear"></div>
+	   </ul>
+	</div>
+	<div class="rec_area">
+		<div class="ral fl">
+			{if(WSTConf('WST_ADDONS.groupon')!='') && count(groupon_list())>0}
+			{php}$groupon=groupon_list();{/php}
+			<div class="ral_box">
+				<a href="{:addon_url('groupon://goods/lists')}">
+					<p class="ral_box_tit">爱上团购</p>
+					<div class="ral_line"></div>
+					<p class="ral_desc">尽享美好生活</p>
+				</a>
+			</div>
+			<img data-original="__STYLE__/img/groupon_bg.png" class="goodsImg" />
+			<div class="groupon_list_out">
+				<div class="groupon_view">
+					<ul class="groupon_list">
+						{volist name="$groupon" id="gn"}
+						<li>
+							<a href="{:addon_url('groupon://goods/detail','id='.$gn['grouponId'])}">
+								<img data-original="__ROOT__/{$gn.goodsImg}" class="goodsImg" />
+							</a>
+						</li>
+						{/volist}
+						<div class="wst-clear"></div>
+					</ul>
+				</div>
+				<div class="groupon_btns">
+					{volist name="$groupon" id="gn" key="gn_k"}
+					<span {if($gn_k==1)}class="curr"{/if}></span>
+					{/volist}
+					<div class="wst-clear"></div>
+				</div>
+			</div>
+			{else /}
+
+			{wst:ads code="rbnh-left-ads" num='1' cache='86400' id="rbnh"}
+			<a {if ($rbnh['isOpen'])}target='_blank'{/if} {if ($rbnh['adURL']!='')}onclick="WST.recordClick({$rbnh['adId']})"{/if} href="{$rbnh.adURL}" onfocus="this.blur()">
+				<img data-original="__ROOT__/{$rbnh.adFile}" class="goodsImg" />
+			</a>
+			{/wst:ads}
+
+			{/if}
+		</div>
+		<div class="rac fl">
+			<div class="rac_t">
+				<p class="rac_t_tit">最新上架</p>
+				<ul class="rac_t_main">
+					{wst:goods type="new" num='3' id="racb"}
+					<li>
+						<a class="rac_t_img" href="{:Url('home/goods/detail','goodsId='.$racb['goodsId'])}">
+							<img width="166" data-original="__ROOT__/{$racb.goodsImg}" class="goodsImg" />
+						</a>
+						<a href="{:Url('home/goods/detail','goodsId='.$racb['goodsId'])}">
+						<div class="rac_t_info">
+							<p class="c14_333 rac_gname">{$racb.goodsName}</p>
+							<p class="rac_price">
+								<span class="f16 rac_price_color">
+									<span class="f12">￥</span>{$racb.shopPrice}
+								</span>
+								&nbsp;
+								<span class="f14 c666 del_line">
+									<span class="f10">￥</span>{$racb.marketPrice}
+								</span>
+							</p>
+						</div>
+						</a>
+					</li>
+					{/wst:goods}
+					<div class="wst-clear"></div>
+				</ul>
+			</div>
+			<div class="rac_b">
+				<div class="rac_b_l fl">
+					<p class="rac_b_tit">精品促销</p>
+					{wst:goods type="best" num='1' id="racb"}
+					<div class="rac_b_main rac_bg">
+						<div class="rac_b_info">
+							<p class="c14_333 mb10 rac_gname">{:WSTMSubStr($racb.goodsName,0,10,'utf-8')}</p>
+							<p class="c14_333 rac_desc">{:WSTMSubStr($racb.goodsTips,0,20,'utf-8')}</p>
+						</div>
+						<a href="{:Url('home/goods/detail','goodsId='.$racb['goodsId'])}">
+							<img width="132" height="150" data-original="__ROOT__/{$racb.goodsImg}" class="goodsImg" />
+						</a>
+					</div>
+					{/wst:goods}
+				</div>
+				<div class="rac_b_r fr">
+					<p class="rac_b_tit">热销商品</p>
+					{wst:goods type="hot" num='1' id="racb"}
+					<div class="rac_b_main">
+						<div class="rac_b_info">
+							<p class="c14_333 mb10 rac_gname">{:WSTMSubStr($racb.goodsName,0,10,'utf-8')}</p>
+							<p class="c14_333 rac_desc">{:WSTMSubStr($racb.goodsTips,0,20,'utf-8')}
+							</p>
+						</div>
+						<a href="{:Url('home/goods/detail','goodsId='.$racb['goodsId'])}">
+							<img width="132" height="150" data-original="__ROOT__/{$racb.goodsImg}" class="goodsImg" />
+						</a>
+					</div>
+					{/wst:goods}
+				</div>
+				<div class="wst-clear"></div>
+			</div>
+		</div>
+		<div class="rar fr">
+			<p class="rar_tit">推荐商品</p>
+			<div class="rar_glist">
+				{wst:goods type="recom" num='2' id="racb"}
+				<a href="{:Url('home/goods/detail','goodsId='.$racb['goodsId'])}" class="rar_gitem">
+					<p class="rar_gname">{:WSTMSubStr($racb.goodsName,0,10,'utf-8')}</p>
+					<div class="rar_line"></div>
+					<p class="rar_gdesc">{:WSTMSubStr($racb.goodsTips,0,20,'utf-8')}</p>
+					<p class="rar_price">
+						<span class="f16 rac_price_color">
+							<span class="f12">￥</span>{$racb.shopPrice}
+						</span>
+					</p>
+					<div class="rar_img">
+						<img  data-original="__ROOT__/{$racb.goodsImg}" class="goodsImg" />
+					</div>
+				</a>
+				{/wst:goods}
+			</div>
+		</div>
+		<div class="wst-clear"></div>
+	</div>
+	{/* 积分商城 */}
+
+	{if(WSTConf('WST_ADDONS.integral')!='') && count(integral_list())>0}
+	{php}$integral=integral_list();{/php}
+	<div class="intergral_out">
+   	   <p class="itl_tit">积分商城</p>
+   	   <div class="itl_main">
+   	   	 <a href="{:addon_url('integral://goods/lists')}" class="itl_bg fl">
+   	   	 	<img src="__STYLE__/img/integral_bg.png" alt="" />
+   	   	 </a>
+   	   	 {volist name="$integral" id="itl" length="2"}
+   	   	 <a href="{:addon_url('integral://goods/detail','id='.$itl['id'])}" class="itl_item fl">
+   	   	 	<p class="itl_name">{$itl.goodsName}</p>
+   	   	 	<p class="itl_price_box">
+   	   	 		<span class="itl_price">￥{$itl.goodsPrice}</span> + <span class="itl_score">{$itl.integralNum}积分</span>
+   	   	 	</p>
+   	   	 	<span class="itl_btn">立即兑换</span>
+   	   	 	<img  data-original="__ROOT__/{$itl.goodsImg}" class="goodsImg" />
+   	   	 </a>
+   	   	 {/volist}
+
+   	   	 <div class="wst-clear"></div>
+   	   </div>
+	</div>
+	{/if}
+	{/* 分销商品 */}
+	{if(WSTConf('WST_ADDONS.distribut')!='') && count(distribut_list())>0}
+	{php}$distribut=distribut_list();{/php}
+	<p class="distribute_tit">分销商品</p>
+	<div class="distribute_out">
+		<div class="dis_left_bg fl">
+			<a href="{:addon_url('distribut://goods/glist')}">
+				<img src="__STYLE__/img/index_distribute_bg.png" />
+			</a>
+		</div>
+		<ul class="dis_list fl">
+			{volist name="$distribut" id="dis" length="4"}
+			<li>
+				<a href="{:Url("home/goods/detail","goodsId=".$dis["goodsId"])}">
+				<img class='goodsImg' data-original="__ROOT__/{:WSTImg($dis['goodsImg'])}"  title="{$dis['goodsName']}"/>
+				<div class="dis_gprice">
+					<div class="f16"><span class="f12">￥</span>{$dis['shopPrice']}</div>
+				</div>
+				</a>
+			</li>
+			{/volist}
+			<div class="wst-clear"></div>
+		</ul>
+		<div class="wst-clear"></div>
+	</div>
+	{/if}
+
+	{/* 店铺街 */}
+	<div class="shop_street_out">
+   	   <p class="ss_tit">店铺街</p>
+	   <ul class="shop_street">
+		   	<li>
+		   		<div class="ss_desc">
+		   			<a href="{:url('home/shops/shopStreet')}">
+		   				<p class="ssd_tit">店铺汇聚</p>
+		   				<p class="ssd_desc">更多店铺等你来<br>总有一家适合你</p>
+		   			</a>
+		   		</div>
+		   		<img src="__STYLE__/img/shop_street_bg.png" alt="" />
+		   	</li>
+		   {volist name="$shopStreet" id="st" length="4"}
+		   	<li>
+		   		<a href="{:url('home/shops/home',['shopId'=>$st.shopId])}" target="_blank" class="ss_entry">>>进入店铺</a>
+		   		<p class="ss_shopname">{$st.shopName}</p>
+		   		<p class="ss_shopaddr">{$st.shopAddress}</p>
+		   		<img src="__ROOT__/{$st.shopStreetImg}" alt="" />
+		   	</li>
+		   	{/volist}
+		   	<div class="wst-clear"></div>
+	   </ul>
+	</div>
+
+
+	{php}
+		$validate = [0,3,6,9];
+		$newArr = [];
+		foreach($floors as $_k=>$_v){
+			// echo "$_k";
+			if(in_array($_k,$validate)){
+				// echo "-1<hr />";
+				$newArr[] = $_v;
+				$_newArr = [];// 两个分类
+			}else{
+				// echo "-2<hr />";
+				$_newArr[] = $_v;
+				if(count($_newArr)==2){
+					$newArr[] = $_newArr;
+				}
+			}
+		}
+		$floors = $newArr;
+		// dump(count($floors));die;
+		$oneCatFloor = [1,3,5,7];
+		$floorCount = 1;// 楼层数
+	{/php}
+
+
+	<div class='wst-container'>
+		{volist name="$floors" id="vo" key="l" length="7"}
+		{if(in_array($l,$oneCatFloor))}
+
+		{/* 楼层顶部广告 */}
+		{php}$adsCode = "ads-".$l."-1";{/php}
+		{wst:ads code="$adsCode" num="1" cache='86400' id="tad"}
+			<div style="width:1200px;height:110px;margin:40px auto;overflow: hidden">
+				<a href="{$tad['adURL']}" {if ($tad['adURL']!='')}onclick="WST.recordClick({$tad['adId']})"{/if} >
+					<img class='goodsImg' data-original="__ROOT__/{$tad['adFile']}">
+				</a>
+			</div>
+		{/wst:ads}
+
+		{/* 一个分类 */}
+		<div class="floor_box">
+			<div class="floor-header fh1 c{$floorCount}" id="c{$floorCount}">
+				<div class="floor-header-f{$floorCount} fh1l_titbox">
+					<p class="floor-left-title"><a name="{$l}F"></a>{$l}F</p>
+					<p class="floor-right-title fh1_tit one_flimit" title="{$vo['catName']}">{$vo['catName']}</p>
+				</div>
+				<ul class="tab">
+					<li class="tab-item{$floorCount} j-tab-selected{$floorCount}" id="fl_{$floorCount}_0" onmouseover="gpanelOver(this);" c="{$floorCount}">
+						<a href="{:Url('home/goods/lists','cat='.$vo['catId'])}">热门</a>
+					</li>
+					{/* 楼层二级分类 */}
+					{volist name="vo['children']" id="vo1" key="l2" length="7"}
+					<li class="tab-item{$floorCount}" id="fl_{$floorCount}_{$l2}" onmouseover="gpanelOver(this);" c={$floorCount}>
+						<a href="{:Url('home/goods/lists','cat='.$vo1['catId'])}" title="{$vo1['catName']}">{:WSTMSubstr($vo1['catName'],0,4,"utf-8",true)}</a>
+					</li>
+					{/volist}
+				</ul>
+			</div>
+			<div class="floor_main">
+				<div class="fml fl">
+					{wst:ads code="index-floor-left-$l" cache='86400' id="floor_left"}
+						<a href="{$floor_left.adURL}" 
+							{if ($floor_left['isOpen'])}target='_blank'{/if} 
+							{if ($floor_left['adURL']!='')}onclick="WST.recordClick({$floor_left['adId']})"{/if}>
+								<img src="__ROOT__/{$floor_left.adFile}" alt="" />
+						</a>
+					{/wst:ads}
+				</div>
+				<div class="fmr fr">
+					<div class="fmr_glist" id="fl_{$floorCount}_0_pl">
+						{/* 楼层分类下的热门商品 */}
+				 {wst:goods type='hot' cat="vo['catId']" cache="86400" num='10' id='cs'}
+						<a target='_blank' href="{:Url('home/goods/detail','goodsId='.$cs['goodsId'])}" class="fmr_gitem fl" title="{$cs['goodsName']}">
+							<div class="fmr_img">
+								<img title="{$cs['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($cs['goodsImg'])}"/>
+							</div>
+							<p class="fmr_gname">{:WSTMSubstr($cs['goodsName'],0,33)}</p>
+							<p class="f16 rac_price_color tc">
+								<span class="f12">￥</span>{$cs['shopPrice']}
+							</p>
+						</a>
+						{/wst:goods}
+						<div class="wst-clear"></div>
+					</div>
+					{volist name="vo['children']" id="vo1" key="l2"}
+					<div class="fmr_glist" id="fl_{$floorCount}_{$l2}_pl" style="display:none">
+						{/* 楼层分类下的商品 */}
+				 {wst:goods type='recom' cat="vo1['catId']" cache="86400" num='10' id='vo2'}
+						<a target='_blank' href="{:Url('home/goods/detail','goodsId='.$vo2['goodsId'])}" class="fmr_gitem fl" title="{$vo2['goodsName']}">
+							<div class="fmr_img">
+								<img title="{$vo2['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($vo2['goodsImg'])}"/>
+							</div>
+							<p class="fmr_gname">{:WSTMSubstr($vo2['goodsName'],0,33)}</p>
+							<p class="f16 rac_price_color tc">
+								<span class="f12">￥</span>{$vo2['shopPrice']}
+							</p>
+						</a>
+						{/wst:goods}
+						<div class="wst-clear"></div>
+					</div>
+					{/volist}
+				</div>
+				<div class="wst-clear"></div>
+			</div>
+		</div>
+		{php}++$floorCount;{/php}
+		{else /}
+		{/* 两个分类 */}
+		<div class="floor_box floor_box2">
+			<div class="fb2_l fl">
+				<div class="floor-header fh2 c{$l}" id="c{$l}">
+					<div class="floor-header-f1 fh2l_titbox">
+						<p class="floor-left-title"><a name="{$l}F"></a>{$l}F</p>
+						<p class="floor-right-title fh2_tit two_fmilit" title="{$vo[0]['catName']}">{$vo[0]['catName']}</p>
+					</div>
+					<ul class="tab">
+						<li class="tab-item{$floorCount} j-tab-selected{$floorCount}" id="fl_{$floorCount}_0" onmouseover="gpanelOver(this);" c="{$floorCount}">
+							<a href="{:Url('home/goods/lists','cat='.$vo[0]['catId'])}">热门</a>
+						</li>
+						{/* 楼层二级分类 */}
+						{volist name="vo[0]['children']" id="vo1" key="l2" length="3"}
+						<li class="tab-item{$floorCount}" id="fl_{$floorCount}_{$l2}" onmouseover="gpanelOver(this);" c={$floorCount}>
+							<a href="{:Url('home/goods/lists','cat='.$vo1['catId'])}" title="{$vo1['catName']}">{:WSTMSubstr($vo1['catName'],0,4,"utf-8",true)}</a>
+						</li>
+						{/volist}
+						<li class="tab-item{$floorCount}">
+							<a class="fb2_more" href="{:Url('home/goods/lists','cat='.$vo[0]['catId'])}">>>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="fb2_l_l fl">
+					<div class="fh2l fh2l_{$floorCount}">
+				        <p class="fh2l_tit">{:WSTMSubstr($vo[0]['catName'],0,4,'utf-8')} ></p>
+				        <div class="fh2l_line"></div>
+				        <p class="fh2l_desc">{$vo[0]['subTitle']!=''??'&nbsp;'}</p>
+				        <div class="floor_silder">
+				            <ul>
+				                {wst:goods type='best' cat="vo[0]['catId']" cache="86400" key="gb_key" num='3' id='gb'}
+				            	<li class="{if($gb_key==0)}img_first{elseif($gb_key==1)}img_second{else /}img_third{/if}
+				            	">
+				                    <a title="{$gb.goodsName}" target="_blank" href="{:Url('home/goods/detail','goodsId='.$gb['goodsId'])}">
+				                        <p class="caption">{:WSTMSubstr($gb.goodsName,0,8,'utf-8')}</p>
+				                        <p class="sub_tit">{:WSTMSubstr($gb.goodsTips,0,20,'utf-8')}</p>
+				                        <img width="130" height="130" data-original="__ROOT__/{$gb.goodsImg}" class="goodsImg" />
+				                    </a>
+				                    <div class="color_mask"></div>
+				                </li>
+								{/wst:goods}
+				            </ul>
+				            <div class="turn_show clearfix">
+				                <div class="prev_btn index_iconfont"><</div>
+				                <div class="show_num">
+				                	{wst:goods type='best' cat="vo[0]['catId']" cache="86400" key="gb_key" num='3' id='gb'}
+				                    <span {if($gb_key==0)}class="curr"{/if}></span>
+				                    {/wst:goods}
+				                </div>
+				                <div class="next_btn index_iconfont">></div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="fb2_l_r fr">
+					<div class="fmr_glist" id="fl_{$floorCount}_0_pl">
+						{/* 楼层分类下的热门商品 */}
+				 {wst:goods type='hot' cat="vo[0]['catId']" cache="86400" num='4' id='cs'}
+						<a target='_blank' href="{:Url('home/goods/detail','goodsId='.$cs['goodsId'])}" title="{$cs['goodsName']}" class="fb2_gitem fl">
+							<div class="fb2_img">
+								<img title="{$cs['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($cs['goodsImg'])}"/>
+							</div>
+							<p class="fmr_gname">{:WSTMSubstr($cs['goodsName'],0,33)}</p>
+							<p class="f16 rac_price_color tc">
+								<span class="f12">￥</span>{$cs['shopPrice']}
+							</p>
+						</a>
+
+
+						{/wst:goods}
+						<div class="wst-clear"></div>
+					</div>
+					{volist name="vo[0]['children']" id="vo1" key="l2"}
+					<div class="fmr_glist" id="fl_{$floorCount}_{$l2}_pl" style="display:none">
+						{/* 楼层分类下的商品 */}
+				 {wst:goods type='recom' cat="vo1['catId']" cache="86400" num='4' id='vo2'}
+						<a  target='_blank' href="{:Url('home/goods/detail','goodsId='.$vo2['goodsId'])}"
+title="{$vo2['goodsName']}" class="fb2_gitem fl">
+							<div class="fb2_img">
+								<img title="{$vo2['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($vo2['goodsImg'])}"/>
+							</div>
+							<p class="fmr_gname">{:WSTMSubstr($vo2['goodsName'],0,33)}</p>
+							<p class="f16 rac_price_color tc">
+								<span class="f12">￥</span>{$vo2['shopPrice']}
+							</p>
+						</a>
+						{/wst:goods}
+						<div class="wst-clear"></div>
+					</div>
+					{/volist}
+				</div>
+				<div class="wst-clear"></div>
+		    </div>
+		    {php}++$floorCount;{/php}
+			{if(isset($vo[1]))}
+			<div class="fb2_r fl">
+				<div class="floor-header fh2 c{$l}" id="c{$l}">
+					<div class="floor-header-f3 fh2l_titbox">
+						<p class="floor-left-title"><a name="{$l}F"></a>{$l}F</p>
+						<p class="floor-right-title fh2_tit two_fmilit" title="{$vo[1]['catName']}">{$vo[1]['catName']}</p>
+					</div>
+					<ul class="tab">
+						<li class="tab-item{$floorCount} j-tab-selected{$floorCount}" id="fl_{$floorCount}_0" onmouseover="gpanelOver(this);" c="{$floorCount}">
+							<a href="{:Url('home/goods/lists','cat='.$vo[1]['catId'])}">热门</a>
+						</li>
+						{/* 楼层二级分类 */}
+						{volist name="vo[1]['children']" id="vo1" key="l2" length="3"}
+						<li class="tab-item{$floorCount}" id="fl_{$floorCount}_{$l2}" onmouseover="gpanelOver(this);" c={$floorCount}>
+							<a href="{:Url('home/goods/lists','cat='.$vo1['catId'])}" title="{$vo1['catName']}">{:WSTMSubstr($vo1['catName'],0,4,"utf-8",true)}</a>
+						</li>
+						{/volist}
+						<li class="tab-item{$floorCount}">
+							<a class="fb2_more" href="{:Url('home/goods/lists','cat='.$vo[1]['catId'])}">>>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<div class="fb2_r_l fl">
+					<div class="fh2l fh2l_{$floorCount}">
+				        <p class="fh2l_tit">{:WSTMSubstr($vo[1]['catName'],0,4,'utf-8')} ></p>
+				        <div class="fh2l_line"></div>
+				        <p class="fh2l_desc">{$vo[1]['subTitle']!=''??'&nbsp;'}</p>
+				        <div class="floor_silder">
+				            <ul>
+				            	{wst:goods type='best' cat="vo[1]['catId']" cache="86400" key="gb_key" num='3' id='gb'}
+				            	<li class="{if($gb_key==0)}img_first{elseif($gb_key==1)}img_second{else /}img_third{/if}
+				            	">
+				                    <a title="{$gb.goodsName}" target="_blank" href="{:Url('home/goods/detail','goodsId='.$gb['goodsId'])}">
+				                        <p class="caption">{:WSTMSubstr($gb.goodsName,0,8,'utf-8')}</p>
+				                        <p class="sub_tit">{:WSTMSubstr($gb.goodsTips,0,20,'utf-8')}</p>
+				                        <img width="130" height="130" data-original="__ROOT__/{$gb.goodsImg}" class="goodsImg" />
+				                    </a>
+				                    <div class="color_mask"></div>
+				                </li>
+								{/wst:goods}
+				                
+				            </ul>
+				            <div class="turn_show clearfix">
+				                <div class="prev_btn index_iconfont"><</div>
+				                <div class="show_num">
+				                	{wst:goods type='best' cat="vo[1]['catId']" cache="86400" key="gb_key" num='3' id='gb'}
+				                    <span {if($gb_key==0)}class="curr"{/if}></span>
+				                    {/wst:goods}
+				                </div>
+				                <div class="next_btn index_iconfont">></div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				<div class="fb2_r_r fr">
+					<div class="fmr_glist" id="fl_{$floorCount}_0_pl">
+						{/* 楼层分类下的热门商品 */}
+				 {wst:goods type='hot' cat="vo[1]['catId']" cache="86400" num='4' id='cs'}
+						<a target='_blank' href="{:Url('home/goods/detail','goodsId='.$cs['goodsId'])}" title="{$cs['goodsName']}" class="fb2_gitem fl">
+							<div class="fb2_img">
+								<img title="{$cs['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($cs['goodsImg'])}"/>
+							</div>
+							<p class="fmr_gname">{:WSTMSubstr($cs['goodsName'],0,33)}</p>
+							<p class="f16 rac_price_color tc">
+								<span class="f12">￥</span>{$cs['shopPrice']}
+							</p>
+						</a>
+
+
+						{/wst:goods}
+						<div class="wst-clear"></div>
+					</div>
+					{volist name="vo[1]['children']" id="vo1" key="l2"}
+					<div class="fmr_glist" id="fl_{$floorCount}_{$l2}_pl" style="display:none">
+						{/* 楼层分类下的商品 */}
+				 {wst:goods type='recom' cat="vo1['catId']" cache="86400" num='4' id='vo2'}
+						<a  target='_blank' href="{:Url('home/goods/detail','goodsId='.$vo2['goodsId'])}"
+title="{$vo2['goodsName']}" class="fb2_gitem fl">
+							<div class="fb2_img">
+								<img title="{$vo2['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($vo2['goodsImg'])}"/>
+							</div>
+							<p class="fmr_gname">{:WSTMSubstr($vo2['goodsName'],0,33)}</p>
+							<p class="f16 rac_price_color tc">
+								<span class="f12">￥</span>{$vo2['shopPrice']}
+							</p>
+						</a>
+						{/wst:goods}
+						<div class="wst-clear"></div>
+					</div>
+					{/volist}
+				</div>
+				<div class="wst-clear"></div>
+			</div>
+			{php}++$floorCount;{/php}
+			{/if}
+			<div class="wst-clear"></div>
+		</div>
+		{/if}
+		
+		{/volist}
+		{/* 猜你喜欢 */}
+		<div class="like_goods_list">
+			<div class="lg_tit">猜你喜欢</div>
+			<div class="lg_glist">
+		 	{wst:goods type='guess' cat="0" cache="86400" num='10' id='cs'}
+				<a target='_blank' href="{:Url('home/goods/detail','goodsId='.$cs['goodsId'])}" class="fmr_gitem fl" title="{$cs['goodsName']}">
+					<div class="fmr_img">
+						<img title="{$cs['goodsName']}" class='goodsImg' data-original="__ROOT__/{:WSTImg($cs['goodsImg'])}"/>
+					</div>
+					<p class="fmr_gname">{:WSTMSubstr($cs['goodsName'],0,33)}</p>
+					<p class="f16 rac_price_color tc">
+						<span class="f12">￥</span>{$cs['shopPrice']}
+					</p>
+				</a>
+			{/wst:goods}
+				<div class="wst-clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+{/* 右侧菜单栏  */}
+{include file="default/right_cart"/}
+{/block}
+{block name="js"}
+<script async="async" type='text/javascript' src='__STYLE__/js/index.js?v={$v}'></script>
+{/block}
+{/block}

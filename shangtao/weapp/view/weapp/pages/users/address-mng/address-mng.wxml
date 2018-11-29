@@ -1,0 +1,27 @@
+<view class='container'>
+<!--无地址时提醒-->
+  <view  class='remind-model' wx:if="{{!dataStatu}}" >
+    <view class='image' ><image src='/image/nothing-address.png' class="img"></image></view>
+    <view class='content'>没有收货地址 ~</view>
+    <view class='button' bindtap='addAddress'><button>点击添加</button></view>
+  </view>
+ <view class='wst-list' wx:if="{{dataList.length != 0}}" wx:for="{{dataList}}">
+  <view class='border'>
+   <view class='top' data-id="{{item.addressId}}" bindtap="switchAddress">
+    <view class='basics'>
+     <view class='userName'>{{item.userName}}</view>
+     <view class='number'>{{item.userPhone}}</view>
+    </view>
+    <view class='address'>{{item.areaName}}-{{item.userAddress}}</view>
+   </view>
+   <view class='buttom'>
+    <view class='statu' data-id="{{item.addressId}}" bindtap='setStatu' data-url="setDefault" wx:if="{{types==0}}"><image src="{{item.isDefault?'/image/statu_1.png':'/image/statu_2.png'}}" ></image>设为默认</view>
+    <view class='action'>
+     <view class='delete' data-id="{{item.addressId}}" bindtap='del' data-url="del"><image src='/image/icon_bucket.png'></image>删除</view>
+     <view class='edit' data-id="{{item.addressId}}" bindtap='addAddress' ><image src='/image/edit.png'></image>编辑</view>
+    </view>
+   </view>
+  </view>
+ </view>
+ <view class='button' bindtap='addAddress' wx:if="{{dataList.length != 0}}"><button>点击添加</button></view>
+</view>

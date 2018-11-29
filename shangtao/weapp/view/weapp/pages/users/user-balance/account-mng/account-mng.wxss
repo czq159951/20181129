@@ -1,0 +1,74 @@
+page{
+  width: 100%;
+  height: 80%;
+  background: #F2F2F2;
+}
+.container{
+  width: 100%;
+  height: auto;
+}
+.remind{
+  width: 100%;
+  height: 400rpx;
+}
+.remind .content{
+  width: 100%;
+  height: 300rpx;
+  text-align: center;
+  line-height: 500rpx;
+}
+.button{
+  width: 60%;
+  height: 60rpx;
+  text-align: center;
+  margin: 0rpx auto;
+  margin-top: 30rpx;
+}
+button{
+  width: 100%;
+  height:100%;
+  line-height: 1.8;
+  border-radius: 10rpx;
+  background: red;
+  color: white;
+  font-size: 30rpx;
+}
+/*数据列表*/
+.dataList{
+  width: 95%;
+  height: 156rpx;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+  border-radius: 10rpx;
+  display: flex;
+  background: white;
+  color: #59595C;
+}
+.dataList .left{
+  width: 530rpx;
+  height: 132rpx;
+  font-size: 30rpx;
+  overflow: hidden;
+  padding: 10rpx 10rpx;
+}
+.dataList .right{
+  width: 150rpx;
+  height: 60rpx;
+  float: right;
+  display: flex;
+  font-size: 30rpx;
+  margin-top: 45rpx;
+}
+.dataList .strip{
+  white-space: nowrap;
+  padding: 5rpx;
+}
+.dataList .right .image{
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 1rpx;
+}
+.dataList .right image{
+  width: 80%;
+  height: 75%;
+}

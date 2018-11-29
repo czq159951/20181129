@@ -1,0 +1,101 @@
+{extend name="../../../shangtao/admin/view/base" /}
+{block name="js"}
+<script src="__ROOT__/addons/integral/view/admin/edit.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<style>
+  input[type=text], input[type=password]{width:180px;}
+  .nice-validator select{display:inline-block;}
+</style>
+<form id="integralform">
+<table class='wst-form wst-box-top'>
+	  	<tr>
+         <td colspan="2">
+           <div id='alertTips' class='alert alert-success alert-tips fade in'>
+            <div id='headTip' class='head'><i class='fa fa-lightbulb-o'></i>操作说明</div>
+            <ul class='body'>
+              <li>积分商城商品来自自营店铺。</li>
+              <li>积分商城商品为实物商品时，积分商城商品数量和实物商品数量无关联；积分商城商品为虚拟商品时请确保虚拟商品有足够的库存。</li>
+              <li>若积分商城为多规格商品的话，则取推荐的规格为积分商城商品的规格。</li>
+              <li>积分商城商品价格由 “商品价格” 和 “积分” 两部分组成。</li>
+            </ul>
+           </div>
+         </td>
+       </tr>
+       <tr>
+          <th width='120'></th>
+          <td>
+          <select id="cat_0" class='ipt j-goodsCats' level="0" onchange="WST.ITGoodsCats({id:'cat_0',val:this.value,isRequire:false,className:'j-goodsCats'});">
+            <option value="">-请选择-</option>
+            {volist name=":WSTGoodsCats(0)" id="vo"}
+            <option value="{$vo['catId']}">{$vo['catName']}</option>
+            {/volist}
+         </select>
+          </td>
+       </tr>
+       <tr>
+          <th width='120'></th>
+          <td>
+              <input type='text' id='goodsName' placeholder="请输入要搜索的商品名称" />
+              <button type="button"  class='btn btn-primary btn-mright'  onclick="searchGoods()"><i class="fa fa-search"></i>查询</button>
+          </td>
+       </tr>
+       <tr>
+          <th>积分商城商品<font color='red'>*</font>：</th>
+          <td>
+              <select id='goodsId' class='ipt' onchange='changeGoods(this)'>
+                <option value="{$object['goodsId']}">{$object['goodsName']}</option>
+              </select><br/>
+          </td>
+       </tr>
+       <tr>
+           <th width='120'>市场价格：</th>
+             <td colspan='3' id='marketPrice'>￥{$object["marketPrice"]}</td>
+       </tr>
+   		<tr class="wst-order-rate" >
+           <th width='120'>商品价格<font color='red'>*</font>：</th>
+           <td colspan='3'>
+               <input type='text' id='goodsPrice' name='goodsPrice'class='ipt' maxLength='10' value='{$object["goodsPrice"]}' data-rule='积分商城价格:required;price' data-rule-price="[/^[0-9]\d*(\.\d+)?$/, '价格不能小于0']" />
+           </td>
+       </tr>
+       <tr class="wst-order-rate" >
+           <th width='120'>积分<font color='red'>*</font>：</th>
+           <td colspan='3'>
+               <input type='text' id='integralNum' name='integralNum'class='ipt' maxLength='10' value='{$object["integralNum"]}' data-rule='积分数:required;price' data-rule-price="[/^[1-9]\d*(\.\d+)?$/, '积分数必须大于0']" />
+           </td>
+       </tr>
+       <tr class="wst-order-rate" >
+           <th width='120'>商品数量<font color='red'>*</font>：</th>
+           <td colspan='3'>
+               <input type='text' id='totalNum' name='totalNum' class='ipt' maxLength='8' data-rule='团购数量:required;integer[+]' value='{$object["totalNum"]}'/>
+           </td>
+       </tr>
+       <tr class="wst-order-rate" >
+           <th width='120'>有效时间<font color='red'>*</font>：</th>
+           <td colspan='3'>
+               <input type='text' id='startTime' name='startTime' class='ipt laydate-icon' value='{$object["startTime"]}' onclick="laydate({format: 'YYYY-MM-DD hh:mm:ss',istime:true})"  data-rule="开始日期: required;datetime;"/>
+               至
+               <input type='text' id='endTime' name='endTime' class='ipt laydate-icon' value='{$object["endTime"]}' onclick="laydate({format: 'YYYY-MM-DD hh:mm:ss',istime:true})" data-rule="结束日期: required;datetime;match(gt, startTime, datetime)"/>
+	           </td>
+       </tr>
+       <tr class="wst-order-rate" >
+           <th width='120'>积分商品说明：</th>
+           <td colspan='3'>
+               <textarea id='integralDesc' class='ipt' style='width:70%;height:150px;'>{$object["integralDesc"]}</textarea>
+           </td>
+       </tr>
+    <tr>
+     <td colspan='2' align='center'>
+       <input type="hidden" id="id" class='ipt' value="{$object['id']+0}" />
+       <button type="submit"  class='btn btn-primary btn-mright'><i class="fa fa-check"></i>提交</button>
+       <button type="button"  class='btn' onclick="javascript:history.go(-1)"><i class="fa fa-angle-double-left"></i>返回</button>
+     </td>
+  </tr>
+</table>
+</form>
+
+<script>
+$(function(){editInit()});
+</script>
+{/block}
+

@@ -1,0 +1,23 @@
+<!--pages/browHistory/browHistory.wxml-->
+<view class='container'>
+<!--无商品显示列表-->
+  <view  class='remind-model' wx:if="{{!hascommodity}}" >
+    <view class='image' ><image src='/image/nothing-history.png' class="img"></image></view>
+    <view class='content'>您还没有浏览记录</view>
+    <view class="button" bindtap='toIndex' style='margin-top:40rpx;'><button>去逛逛</button></view>
+  </view>
+<!--有商品显示列表-->
+<scroll-view  scroll-y='true' style='height:100%;width:100%;' wx:if="{{hascommodity}}">
+  <view class='commodityList'>
+    <!--商品详情-->
+    <view class='commodity' wx:for="{{carts}}" data-goodsId = "{{item.goodsId}}" bindtap='toDetail'>
+      <view class="img">
+        <image src='{{domain}}{{item.goodsImg}}' mode='aspectFit' ></image>
+      </view>
+      <view class='details'>{{item.goodsName}}</view>
+      <view class='price'>¥ {{item.shopPrice}}</view>
+      <view class='number'>成交数 : {{item.saleNum}}</view>
+    </view>
+  </view>  
+</scroll-view>
+</view>

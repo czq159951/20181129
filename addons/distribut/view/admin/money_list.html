@@ -1,0 +1,46 @@
+{extend name="../../../shangtao/admin/view/base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="wst-toolbar">
+	<input type="text" name="orderNo" placeholder='订单号' id="orderNo" class="query" />
+	<input type="text" name="userName" placeholder='用户名称' id="userName" class="query" />
+<button class="btn btn-primary" onclick='javascript:moneyQuery()'><i class='fa fa-search'></i>查询</button>
+<div style='clear:both'></div>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<script>
+$(function(){
+	  initGrid();
+});
+ var mmg;
+function initGrid(){
+    var h = WST.pageHeight();
+    var cols = [
+            {title:'订单编号', name:'orderNo', width: 50},
+            {title:'获佣用户', name:'userName' ,width:100},
+            {title:'佣金描述', name:'remark' ,width:30},
+            {title:'佣金金额', name:'distributMoney' ,width:30},
+            {title:'记录时间', name:'createTime' ,width:30}
+            ];
+ 
+    mmg = $('.mmg').mmGrid({height: h-85,indexCol: true,indexColWidth:50,  cols: cols,method:'POST',
+        url: "{:addon_url('distribut://distribut/queryadmindistributmoneys')}", fullWidthRows: true, autoLoad: true,
+        plugins: [
+            $('#pg').mmPaginator({})
+        ]
+    });
+}
+function moneyQuery(){
+	var query = WST.getParams('.query');
+	mmg.load(query);
+}
+</script>
+{/block}

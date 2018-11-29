@@ -1,0 +1,8 @@
+.screen-mol2{height: auto;width: 90vw;}
+.screen-mol2 .title{height: 80rpx;line-height: 80rpx;padding-left: 10rpx;}
+.screen-mol2 .option-box{width:87vw;padding: 10rpx;display: flex; flex-direction: row;justify-content: flex-start;flex-wrap:wrap;height:70rpx;overflow: hidden;font-size: 30rpx;}
+.screen-mol2 .option-box2{height:auto;}
+.screen-mol2 .option-box .mix-box{height:46rpx;line-height: 46rpx; width: 27.75%;padding: 1.31%;margin: 1.12%; text-align: center;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;background-color: #f0f2f5;border-radius: 10rpx;}
+.arrow3{width: 26rpx; height: 26rpx; border-right: 4rpx solid #666; border-bottom: 4rpx solid #666; transform: rotate(45deg); margin-top: 10rpx;  margin-left: 10rpx;}
+.arrow3-1{transform: rotate(225deg);margin-top:20rpx; }
+.arrow-box{margin-top: 10rpx;justify-content: center;width:60rpx;float: right;height:80%;}

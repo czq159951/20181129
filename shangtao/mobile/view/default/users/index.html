@@ -1,0 +1,242 @@
+{extend name="default/base" /}
+{block name="title"}我的 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/user.css?v={$v}">
+{/block}
+{block name="header"}{/block}
+{block name="main"}
+    <section class="ui-container">
+    	<div class="wst-users_info">
+    		<a href="{:url('mobile/messages/index')}"><i class="wst-msg-icon">
+		   		{if ($data['message']['num']>0)}
+		    	<span class="number" id="msgNum">{$data['message']['num']}</span>
+		    	{/if}
+	   		</i></a>
+	   		<i class="ui-icon-set wst-info-icon" onclick="location.href='{:url('mobile/users/userset')}'" ></i>
+	     	<div class="ui-row-flex" style="height:0.7rem">
+	     		<div class="ui-col ui-col-2">
+	     			<div class="wst-users_infol" id="previewImages">
+	     			    <img src="{:WSTUserPhoto($user['userPhoto'])}" class="wst-useri_portrait" id="imgurl">
+	     			</div>
+	     			<p class="wst-users_infor wst-users_infortop">
+	     			{:$user['userName']?$user['userName']:$user['loginName']}
+	     			{if ($user['ranks']['rankName']!='')}<img src="__ROOT__/{:WSTImg($user['ranks']['userrankImg'],3)}">{/if}
+	     			</p>
+	     			{if ($user['ranks']['rankName']!='')}
+	     			<p class="wst-users_infor wst-users_inforbo">{$user['ranks']['rankName']}</p>
+	     			{/if}
+	     		</div>
+			   <div class="ui-col">
+			    	{php}$signScore=explode(",",WSTConf('CONF.signScore'));{/php}
+			    	{if(WSTConf('CONF.signScoreSwitch')==1 && $signScore[0]>0)}
+			    	<div class="wst-us-sign">
+			    		{if(session('WST_USER.signScoreTime')==date('Y-m-d'))}
+						<a id="j-sign" class="sign sign2" disabled="disabled"></a>
+						{else}
+						<a id="j-sign" class="sign" onclick="javascript:inSign();"></a>
+						{/if}
+			    	</div>
+			    	{/if}
+			   </div>
+			</div>
+		</div>
+
+		{:hook('mobileDocumentUserIndex')}
+
+		{/* 商家订单管理 */}
+		{if ($user['userType']==1)}
+			<?php $shopMenus = WSTShopOrderMenus();?>
+			{if (count($shopMenus)>0)}
+			<div class="user-order">
+				<ul class="ui-row order">
+		    		<li class="ui-col ui-col-50"><i class="order-icon"></i>商家订单管理</li>
+		    		<li class="ui-col ui-col-50 view-order" onclick="location.href='{:url('mobile/orders/sellerorder')}'">查看全部订单  ></li>
+		    	</ul>
+	    	</div>
+	    	{/if}
+		{/if}
+
+		{/*用户订单管理  */}
+		<div class="user-order">
+			<ul class="ui-row order">
+	    		<li class="ui-col ui-col-50"><i class="order-icon"></i>我的订单</li>
+	    		<li class="ui-col ui-col-50 view-order" onclick="location.href='{:url('mobile/orders/index')}'">查看全部订单  ></li>
+	    	</ul>
+    	</div>
+		<div class="ui-row-flex ui-whitespace wst-users_icon">
+			
+		    <div class="ui-col ui-col">
+		    <a href="{:url('mobile/orders/index',['type'=>'waitPay'])}">
+		    	<p class="ui-badge-wrap">
+		    		<i class="wst-users_icon1"></i>
+		    		{if ($data['order']['waitPay']>0)}
+		    		<span class="ui-badge-corner wait-payment ui-nowrap-flex ui-whitespace" id="waitPay">{$data['order']['waitPay']}</span>
+		    		{/if}
+		    	</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">待付款</span>
+		    </a>
+		    </div>
+		    <div class="ui-col ui-col">
+		    <a href="{:url('mobile/orders/index',['type'=>'waitDeliver'])}">
+		    	<p class="ui-badge-wrap">
+		    		<i class="wst-users_icon2"></i>
+		    		{if ($data['order']['waitSend']>0)}
+		    		<span class="ui-badge-corner wait-payment" id="waitSend">{$data['order']['waitSend']}</span>
+		    		{/if}
+		    	</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">待发货</span>
+		   	</a>
+		    </div>
+		    <div class="ui-col ui-col">
+		    <a href="{:url('mobile/orders/index',['type'=>'waitReceive'])}">
+		    	<p class="ui-badge-wrap">
+		    		<i class="wst-users_icon3"></i>
+		    		{if ($data['order']['waitReceive']>0)}
+		    		<span class="ui-badge-corner wait-payment" id="waitReceive">{$data['order']['waitReceive']}</span>
+		    		{/if}
+		    	</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">待收货</span>
+		    </a>
+		    </div>
+		    <div class="ui-col ui-col">
+		    <a href="{:url('mobile/orders/index',['type'=>'waitAppraise'])}">
+		    	<p class="ui-badge-wrap">
+		    		<i class="wst-users_icon4"></i>
+		    		{if ($data['order']['waitAppraise']>0)}
+		    		<span class="ui-badge-corner wait-payment" id="waitAppraise">{$data['order']['waitAppraise']}</span>
+		    		{/if}
+		    	</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">待评价</span>
+		    </a>
+		    </div>
+		    <div class="ui-col ui-col">
+		    <a href="{:url('mobile/orders/index',['type'=>'abnormal'])}">
+		    	<p  style="display:none;"><i class="wst-users_icon5"></i></p><p><i class="wst-users_icon5"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">取消拒收</span>
+		    </a>
+		    </div>
+		    
+		</div>
+		
+		<div class="user-order">
+			<ul class="ui-row order">
+	    		<li class="ui-col ui-col-50"><i class="wallet-icon"></i>我的财产</li>
+	    		<li class="ui-col ui-col-50 view-order" onclick="location.href='{:url('mobile/logmoneys/usermoneys')}'">资金管理  ></li>
+	    	</ul>
+    	</div>
+		<div class="ui-row-flex wst-users_capital">
+		    <div class="ui-col ui-col">
+		    <a href="{:url('mobile/logmoneys/usermoneys')}">
+		    	<p class="ui-badge-wrap ui-nowrap"><span>¥ </span>{$user['userMoney']}</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">余额</span>
+		    </a>
+		    </div>
+		    <div class="ui-col ui-col">
+		    <a href="{:url('mobile/userscores/index')}">
+		    	<p class="ui-badge-wrap ui-nowrap" id="currentScore">{$user['userScore']}</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">积分</span>
+		   	</a>
+		    </div>
+		    {:hook('mobileDocumentUserIndexTerm')}
+		</div>
+		
+		<div class="user-order">
+			<ul class="ui-row order">
+	    		<li class="ui-col ui-col-50"><i class="tool-icon"></i>必备工具</li>
+	    	</ul>
+    	</div>
+		<ul class="ui-row" style="background: #fff;">
+		    <li class="ui-col ui-col-25 user-icon-box">
+		    	<a href="{:url('mobile/favorites/goods')}">
+		    	<p><i class="user-icon1"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">关注商品</span>
+		    	</a>
+		    </li>
+
+		    <li class="ui-col ui-col-25 user-icon-box">
+		    	<a href="{:url('mobile/favorites/shops')}">
+		    	<p><i class="user-icon2"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">关注店铺</span>
+		    	</a>
+		    </li>
+
+		    <li class="ui-col ui-col-25 user-icon-box">
+		    	<a href="{:url('mobile/goods/history')}">
+		    	<p><i class="user-icon3"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">浏览记录</span>
+		    	</a>
+		    </li>
+
+		    <!-- <li class="ui-col ui-col-25 user-icon-box">
+		    	<a href="{:url('mobile/users/security')}">
+		    	<p><i class="user-icon4"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">账户安全</span>
+		    	</a>
+		    </li> -->
+
+		    <li class="ui-col ui-col-25 user-icon-box">
+		    	<a href="{:url('mobile/logmoneys/usermoneys')}">
+		    	<p><i class="user-icon5"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">资金管理</span>
+		    	</a>
+		    </li>
+
+		    <li class="ui-col ui-col-25 user-icon-box">
+		    	<a href="{:url('mobile/userscores/index')}">
+		    	<p><i class="user-icon6"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">我的积分</span>
+		    	</a>
+		    </li>
+
+		    <!-- <li class="ui-col ui-col-25 user-icon-box border-b">
+		    	<a href="#">
+		    	<i class="user-icon7"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">我的礼券</span>
+		    	</a>
+		    </li>
+
+		    <li class="ui-col ui-col-25 user-icon-box border-b">
+		    	<a href="#">
+		    	<i class="user-icon8"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">我的客服</span>
+		    	</a>
+		    </li> -->
+
+		    <li class="ui-col ui-col-25 user-icon-box">
+		    	<a href="{:url('mobile/useraddress/index')}">
+		    	<p><i class="user-icon9"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">地址管理</span>
+		    	</a>
+		    </li>
+
+		    <!-- <li class="ui-col ui-col-25 user-icon-box ui-center-hor">
+		    	<a href="{:url('mobile/messages/index')}">
+		    	<p class="ui-badge-wrap" style="width:33px;">
+		    		<i class="user-icon10"></i>
+		    		{if ($data['message']['num']>0)}
+		    		<span class="ui-badge-corner wait-payment" id="msgNum">{$data['message']['num']}</span>
+		    		{/if}
+		    	</p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">商城消息</span>
+		    	</a>
+		    </li> -->
+
+		    <li class="ui-col ui-col-25 user-icon-box ui-center-hor">
+		    	<a href="{:url('mobile/ordercomplains/index')}">
+		    	<p><i class="user-icon11"></i></p>
+		    	<span class="ui-flex ui-flex-align-end ui-flex-pack-center">订单投诉</span>
+		    	</a>
+		    </li>
+		    {:hook('mobileDocumentUserIndexTools')}
+		</ul>
+		<div class="ui-btn-wrap logout">
+		</div>
+
+     </section>
+{/block}
+{block name="include"}
+	{include file="default/dialog" /}<!-- 对话框模板 -->
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__MOBILE__/users/user.js?v={$v}'></script>
+{/block}

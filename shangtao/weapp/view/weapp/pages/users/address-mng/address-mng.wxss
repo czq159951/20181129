@@ -1,0 +1,121 @@
+/* pages/addressManage/addressManage.wxss */
+page{
+  width: 100%;
+  height: 90%;
+  background: #F2F2F2;
+}
+.container{
+  width: 100%;
+  height: auto;
+}
+.remind{
+  width: 100%;
+  height: 200rpx;
+}
+.remind .content{
+  width: 100%;
+  height: 200rpx;
+  text-align: center;
+  line-height: 350rpx;
+}
+.button{
+  width: 60%;
+  height: 60rpx;
+  text-align: center;
+  margin: 0rpx auto;
+  margin-top: 30rpx;
+}
+button{
+  width: 100%;
+  height:100%;
+  line-height: 1.8;
+  border-radius: 10rpx;
+  background: red;
+  color: white;
+  font-size: 30rpx;
+}
+.button-hover {
+color:white;
+background-color:#dd1f20;
+
+}
+.wst-list{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  font-size: 35rpx;
+  margin-top: 20rpx;
+  color: #59595c;
+  background: white;
+}
+.wst-list .border{
+  width: 93%;
+  height: auto;
+  margin-left: 30rpx;
+}
+.wst-list .border .top{
+  width: 100%;
+  height: auto;
+  margin-top: 20rpx;
+  border-bottom: 1px solid #ededed;
+  overflow: hidden;
+}
+.wst-list .border .top .basics{
+  display: flex;
+  margin-bottom: 15rpx;
+  color: #232228;
+}
+.wst-list .border .top .userName{
+  width: auto;
+  height: 100%;
+}
+.wst-list .border .top .number{
+  margin-left: 20rpx;
+  width: auto;
+  height: 100%;
+}
+.wst-list .border .address{
+  width: 100%;
+  height: auto;
+  font-size: 30rpx;
+  margin-bottom: 18rpx;
+  overflow: hidden;
+}
+.wst-list .border .buttom{
+  width: 100%;
+  height: 84rpx;
+  font-size: 30rpx;
+}
+.wst-list .border .buttom .statu{
+  width: auto;
+  height: 44rpx;
+  display: flex;
+  line-height: 50rpx;
+  margin-top: 20rpx;
+  float: left;
+}
+image{
+  width: 36rpx;
+  height: 36rpx;
+  margin-right:10rpx; 
+  margin-top: 5rpx;
+  display: inline-block;
+}
+.wst-list .border .buttom .edit{
+  width: auto;
+  height: 44rpx;
+   display: flex;
+  line-height: 50rpx;
+  margin-top: 20rpx;
+  margin-right: 10rpx;
+  float: right;
+}
+.wst-list .border .buttom .delete{
+  width: auto;
+  height: 44rpx;
+  float: right;
+  display: flex;
+  margin-right: 10rpx;
+  line-height: 50rpx;
+  margin-top: 20rpx;
+}

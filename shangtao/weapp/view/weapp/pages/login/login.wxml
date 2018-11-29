@@ -1,0 +1,8 @@
+<view class='wst-login'>
+  <view class="img"><image src="{{user.avatarUrl}}" mode='aspectFill'/></view>
+  <view class="name">{{user.nickName}}</view>
+  <view class="prompt">您尚未登录{{info}}账号</view>
+  <button type="primary" bindtap="primary" class="button" bindtap="register">注册新账号</button>
+  <button bindtap="setPlain" class="button" bindtap="login">登陆</button>
+  <button bindtap="setPlain" class="button" bindtap="index">返回首页</button>
+</view>

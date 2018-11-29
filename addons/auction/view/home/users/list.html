@@ -1,0 +1,86 @@
+{extend name="$LAYOUT_HOME_USER_BASE" /}
+{block name="title"}拍卖活动 - 买家中心{/block}
+{block name="shop_apply"}
+  {if condition="session('WST_USER.userType') eq 0"}
+    {include file="$LAYOUT_HOME_SHOP_APPLY" /}
+  {/if}
+{/block}
+
+{block name="top"}
+  {include file="$LAYOUT_HOME_TOP" /}
+{/block}
+{block name="content"}
+<div class="wst-user-head"><span>我参与的拍卖</span></div>
+<div class="wst-user-content">  
+   <table class='wst-order-list'>
+   <thead>
+        <tr class='head'>
+        <th>商品名称</th>
+        <th>拍卖时间</th>
+        <th>起拍价格</th>
+        <th>当前价格</th>
+        <th>我的出价</th>
+        <th>状态</th>
+        <th width="80">操作</th>
+   </tr>
+   </thead>
+   <tbody id='list'></tbody>
+   <tfoot>
+     <tr align="center"><td colspan='10' id='pager'></td></tr>
+   </tfoot>
+   <script id="tblist" type="text/html">
+   {{# for(var i = 0; i < d.length; i++){ }}
+   <tr>
+      <td>
+          <div class="goods-img">
+          <a href='{{WST.AU("auction://goods/detail","id="+d[i]["auctionId"])}}' target='_blank'>
+            <img class='j-lazyGoodsImg'  data-original='__ROOT__/{{d[i].goodsImg}}'/>
+          </a>
+        </div>
+        <p class="goodsName">
+          {{WST.cutStr(d[i]['goodsName'],43)}}
+        </p>
+      </td>
+   	  <td>{{d[i]['startTime']}}至{{d[i]['endTime']}}</td>
+      <td>￥{{d[i]['auctionPrice']}}</td>
+      <td>￥{{d[i]['currPrice']}}</td>
+      <td>￥{{d[i]['payPrice']}}</td>
+      <td>
+        {{#if(d[i]['status']==1){}}
+        <span class='lbel lbel-success'>进行中</span>
+        {{#}else{}}
+           {{#if(d[i]['isTop']==1){}}
+            {{# if(d[i]['isClose']==2 && d[i]['isPay']==0){}}
+            <span class='lbel lbel-danger'>逾期</span>
+            {{#}else{}}
+            <span class='lbel lbel-info'>胜出</span>
+            {{#}}}
+           {{#}else{}}
+           <span class='lbel lbel-gray'>出局</span>
+           {{#}}}
+        {{#}}}
+      </td>
+      <td width='100' style='text-align:center;'>
+        <a href='{{WST.AU("auction://goods/detail","id="+d[i]["auctionId"])}}' target='_blank'>查看</a>
+         {{#if(d[i]['isTop']==1 && d[i]['isClose']==1){}}
+         <a href='{{WST.AU("auction://users/checkPayStatus","id="+d[i]["auctionId"])}}'>完成竞拍</a>
+         {{#}}}
+      </td>
+   </tr>
+   {{# } }}
+   </script>
+  </table>
+  <div id='pager'></div>
+</div>
+{/block}  
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script type="text/javascript" src="__ROOT__/addons/auction/view/home/users/js/users.js?v={$v}"></script>
+<script type="text/javascript">
+$(function(){
+	queryByPage(0);
+});
+</script>
+{/block}

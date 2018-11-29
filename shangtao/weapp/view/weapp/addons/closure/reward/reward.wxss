@@ -1,0 +1,43 @@
+.wst-reward{
+    background: rgb(255, 244, 232);
+}
+.wst-rew-cart{
+    color: #666;
+    clear: both;
+    font-size: 26rpx;
+    line-height: 60rpx;
+    border-bottom: 1px solid #eee;
+}
+.wst-rew-cart .reduce{
+    padding: 4rpx 10rpx;
+    border: 1rpx solid #df3033;
+    background: #df3033;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 6rpx;
+}
+.comment .describe{
+    position: absolute;
+    top:25rpx;
+    left: 106rpx;
+    display: block;
+    width: 72%;
+    height:45rpx;
+    line-height: 45rpx; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.comment .describe .reduce{
+    padding: 4rpx 10rpx;
+    border: 1rpx solid #df3033;
+    background: #df3033;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 6rpx;
+}
+.wst-rew-info{
+    font-size:28rpx;
+    padding:5rpx 20rpx;
+    background: #fff;
+}

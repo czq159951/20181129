@@ -1,0 +1,27 @@
+{if !empty($goods['promotion']) && $goods['promotion']['type']=='reward'}
+{if isset($goods['rewardCartIds'])}
+<link href="__ROOT__/addons/reward/view/home/index/reward.css" rel="stylesheet">
+<div class='cart-reward-goods-box'>
+<div class='reward-txt'>
+<span class='tag'>满就送</span>
+{if !empty($goods['rewardResult'])}
+消费满￥{$goods['rewardResult']['orderMoney']} - {$goods['rewardText']}
+{else}
+{$goods['promotion']['data']['rewardTitle']}
+{/if}
+</span>
+</div>
+<div class='reward-promotion'>￥{$goods['rewardGoodsMoney']}<span class='red'>{if $goods['rewardMoney']>0}<br/>减￥{$goods['rewardMoney']}{/if}</span></div>
+<div class='wst-clear'></div>
+</div>
+<script>
+$(function(){
+	var cartIds = {:json_encode($goods['rewardCartIds'])};
+	for(var i=0;i<cartIds.length;i++){
+		//设置背景颜色
+        $('.j-g'+cartIds[i]).css('background','#fff4e8');
+	}
+});
+</script>
+{/if}
+{/if}

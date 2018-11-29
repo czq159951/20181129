@@ -1,0 +1,131 @@
+@CHARSET "UTF-8";
+body{
+	font-size: 0.14rem;
+}
+.order-tab{
+	height:30px;
+	line-height: 30px;
+	padding: 0px;
+	background: #fff;
+}
+.item-head{
+	padding:5px;
+}
+.tab-item{
+	text-align: center;
+}
+.tab-curr{
+	border-bottom:2px solid red;
+}
+.order-item{
+	background: #fff;
+	margin:10px auto;
+}
+.order-tr{
+	text-align: right;
+}
+.o-status{
+	color:red;
+}
+.o-Img{
+	max-width: 60px;
+	max-height: 60px;
+	width: 60px;
+	height: 60px;
+	padding-top: 5px;
+}
+.o-gInfo{
+	padding:5px;
+}
+.o-gName{
+	max-height: 40px;
+}
+.o-gSpec{
+	color:#ccc;
+}
+.border-b{
+	padding-bottom:5px;
+	border-bottom: 1px solid #ccc;
+}
+.o-btn-box{
+	padding-right: 0px;
+}
+.o-btn{
+	float:right;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	font-size: 0.15rem;
+	color:red;
+	border:1px solid red;
+	padding:0 9px;
+}
+.o-cancel-btn{
+	color:inherit;
+	border: 1px solid #000;
+}
+/*余额支付*/
+.wst-wa-info{
+	background: #fff;
+	padding:5px 0px;
+	margin-bottom:10px;
+}
+.wst-wa-info .info{
+	padding:5px 0px;
+	text-align: center;
+	border-bottom: 1px solid #ccc;
+}
+.wst-wa-info .info span{
+	color: red;
+}
+.wst-wa-info .pay-info{
+	text-align: center;
+	padding:10px;
+	color:#000;
+	font-weight:bold;
+}
+.wst-wa-info .pay{
+	padding:10px;
+}
+.wst-wa-info .pay input{
+	width: 70%;
+    padding: 2px 2px 2px 5px;
+    height: 36px;
+    border-radius: 2px;
+    border: 1px solid #a0a0a0;
+}
+.wst-wa-forget{
+	padding-bottom: 20px;
+}
+.wst-pa-l {
+    margin-top: 8px;
+}
+.wst-pa-l .line {
+    border-bottom: 1px solid #edebeb;
+}
+.wst-pa-l span {
+    width: 23px;
+    height: 23px;
+    display: block;
+    margin-right: 6px;
+}
+.wst-pa-l .weixinpays {
+    background: url(../img/icon_zhifu.png) 0px 1px no-repeat;
+    background-size: 97%;
+}
+.wst-pa-l .wallets {
+    background: url(../img/icon_zhifu.png) 0px -53px no-repeat;
+    background-size: 97%;
+}
+.wst-pa-l .wallets {
+    background: url(../img/icon_zhifu.png) 0px -53px no-repeat;
+    background-size: 97%;
+}
+.wst-pa-l .alipays {
+    background: url(../img/icon_zhifu.png) 0px -107px no-repeat;
+    background-size: 97%;
+}
+.wst-orders_prices{
+	color: red;
+	font-size: 0.16rem;
+}
+.wst-btn-dangerlo {color: #fff;font-size: .15rem;height: 38px;line-height: 38px;background: #e00102;border-radius: 3px;border-bottom: 1px solid #e00102;}

@@ -1,0 +1,33 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__ADMIN__/js/mmgrid/mmGrid.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/js/mmgrid/mmGrid.js?v={$v}" type="text/javascript"></script>
+<script src="__ADMIN__/apis/apis.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<div class="wst-toolbar">
+	<div id="query" style="float:left;">
+	    <select id='apiType'>
+	    	<option value='-1'>API接口类型</option>
+	    	<option value='0'>APP接口</option>
+	    	<option value='1'>小程序接口</option>
+	    </select>
+		<input type='text' id='key' placeholder='接口名称或函数名称' />
+		<button type="button"  class='btn btn-primary btn-mright' onclick="javascript:apiQuery()"><i class="fa fa-search"></i>查询</button>
+	</div>
+   {if WSTGrant('GGGL_01')} 
+   <button class="btn btn-success f-right btn-mright" onclick="javascript:location.href='<?=url("Apis/toEdit")?>'"><i class='fa fa-plus'></i>新增</button>
+   {/if}
+   <div style="clear:both"></div>
+</div>
+<div class='wst-grid'>
+ <div id="mmg" class="mmg"></div>
+ <div id="pg" style="text-align: right;"></div>
+</div>
+<script>
+$(function(){initGrid()});
+</script>
+
+{/block}

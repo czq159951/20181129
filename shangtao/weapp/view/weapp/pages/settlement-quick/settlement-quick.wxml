@@ -1,0 +1,99 @@
+<view class='container'>
+<!--商品-->
+<view class="list-model">
+  <view class="shop" data-shopid="{{data.carts.shopId}}" bindtap="toshops">{{data.carts.shopName}}</view>
+  <view class="goos">
+    <view class="img" style="background-image:url({{domain}}{{goodsLogo}});background-size:cover;">
+      <image src='{{domain}}{{data.carts.goods.goodsImg}}' mode='aspectFit' data-goodsid="{{data.carts.goods.goodsId}}" bindtap="togoods"></image>
+    </view>
+    <view class='details' data-goodsid="{{data.carts.goods.goodsId}}" bindtap="togoods">
+      <view class='title'>{{data.carts.goods.goodsName}}</view>
+      <view class='price'>
+        <view>¥{{data.carts.goods.shopPrice}}</view>
+        <view>×{{data.carts.goods.cartNum}}</view>
+      </view>
+    </view>
+    <view class='spec' wx:if="{{data.carts.goods.specNames!=''}}">
+      规格：<block wx:for="{{data.carts.goods.specNames}}" wx:for-item="sp">{{sp.catName}}:{{sp.itemName}} </block>
+    </view>
+    <view class="wst-clear"></view>
+  </view>
+  <!--快递详情-->
+  <view class='expressDetails'>
+      <view class='amount'>店铺合计(含运费)：<view class='number'>¥{{price.shops[data.carts.shopId].goodsMoney}}</view></view>
+  </view>
+  <!--备注信息-->
+  <view class="remarkInform">
+    <textarea bindinput="inRemarks" auto-height maxlength="300" data-shopid="{{data.carts.shopId}}" bindfocus="focus" bindblur="loseFocus">{{defaults}}</textarea>
+  </view>
+</view>
+<!--资料统计-->
+ <view class='infoAmount'>
+  <view class='term' bindtap="onChoice" data-mode="payment">
+   <view class='left'>支付方式</view>
+   <view class='right' bindtap='powerDrawer'>
+    <view class='arrow'></view>
+   </view>
+   <view class='between'>{{paymentWord}}</view>
+  </view>
+  <view class='term' data-invoice="1" bindtap="inInvoice">
+   <view class='left'>发票信息</view>
+   <view class='right'>
+    <view class='arrow'></view>
+   </view>
+   <view class='between'>{{invoiceWord}}</view>
+  </view>
+  <view class='term' bindtap="onChoice" data-mode="integral" wx:if="{{isOpenScorePay==1}}">
+   <view class='left'>积分支付</view>
+   <view class='describe'>（可用<text>{{price.maxScore}}</text>个积分，可抵<text>¥{{price.maxScoreMoney}}</text>)</view>
+   <view class='right'>
+    <view class='arrow'></view>
+   </view>
+   <view class='between' style="width:50rpx;">{{integralWord}}</view>
+  </view>
+ </view>
+<!--底部导航条-->
+ <view class='navigation'>
+  <view class='list'>
+    <view class='top'>
+    <view class='left'>应付总金额(含运费)：</view>
+    <view class='right'>¥{{price.realTotalMoney}}</view>
+    <view class="wst-clear"></view>
+    </view>
+    <view class='bottom'>
+      <button class='lo-button' bindtap='submit' disabled="{{disabled}}">确定</button>
+    </view>
+  </view>
+ </view>
+</view>
+<!--发票信息-->
+<view class='wst-se-invoice' wx:if="{{invoice}}">
+  <view class="head">发票信息<icon type='cancel' color='#B1B1B1' size='28' class="icon" data-invoice="0" bindtap="inInvoice"></icon></view>
+  <view class="invoice">
+    <view>发票抬头</view>
+    <radio-group name="radio" class="option" bindchange="ifInvoice">
+        <label><radio color="#e00102" value="0" checked="{{invoiceClient=='个人'?true:false}}"/>个人</label>
+        <label><radio color="#e00102" value="1" checked="{{invoiceClient!='个人'?true:false}}"/>单位</label>
+    </radio-group>
+    <view class='item' wx:if="{{invoiceCompany}}">
+      <input placeholder='请填写单位名称' bindinput='invoiceHead' bindfocus="invoiceHead2" bindblur="invoiceHead4" value="{{invoiceHead}}"/>
+      <view class="list" wx:if="{{isinvoicelist}}">
+        <view class="word" wx:for="{{invoicelist}}" wx:for-item="in" data-head="{{in.invoiceHead}}" data-code="{{in.invoiceCode}}" data-id="{{in.id}}" bindtap="invoiceHead3">
+        {{in.invoiceHead}}</view>
+      </view>
+    </view>
+    <view class='item' wx:if="{{invoiceCompany}}">
+      <input placeholder='请填写纳税人识别码' bindinput='invoiceCode' value="{{invoiceCode}}"/>
+    </view>
+    <view class="content">发票内容</view>
+    <radio-group name="radio" class="option" bindchange="ifInvoice2">
+        <label><radio color="#e00102" value="0" checked="{{isInvoice==0?true:false}}"/>不开发票</label>
+        <label><radio color="#e00102" value="1" checked="{{isInvoice==1?true:false}}"/>明细</label>
+    </radio-group>
+  </view>
+  <view class="prompt" style="margin-top:60rpx;">·发票金额不优惠券和积分支付部分</view>
+  <view class="prompt">·第三方卖家销售的商品发票由商家开具、寄出、发票内容由商家决定</view>
+  <view class='bottom'>
+    <button class='lo-button' bindtap='invoice'>确定</button>
+  </view>
+</view>

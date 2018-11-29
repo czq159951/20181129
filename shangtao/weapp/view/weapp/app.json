@@ -1,0 +1,114 @@
+{
+  "pages": [  
+    "pages/index/index",
+    "pages/news/news",
+    "pages/classify/classify",
+    "pages/goods-detail/goods-detail",
+    "pages/goods-list/goods-list",
+    "pages/goods-search/goods-search",
+    "pages/chatwindow/addinfo/addinfo",
+    "pages/chatwindow/chatwindow",
+    "pages/brands/brands",
+    "pages/shop-self/shop-self",
+    "pages/shop-home/shop-home",
+    "pages/shop-detail/shop-detail",
+    "pages/shop-street/shop-street",
+    "pages/shop-goodslist/shop-goodslist",
+    "pages/carts/carts",
+    "pages/settlement/settlement",
+    "pages/settlement-quick/settlement-quick",
+    "pages/login/login",
+    "pages/login/login/login",
+    "pages/login/register/register",
+    "pages/login/agreement/agreement",
+    "pages/login/loginpwd-forget/loginpwd-forget",
+    "pages/login/loginpwd-forget/loginpwd-back/loginpwd-back",
+    "pages/users/users",
+    "pages/users/edit/edit",
+    "pages/users/orders/orders",
+    "pages/users/orders/orders-detail/orders-detail",
+    "pages/users/orders/orders-appraises/orders-appraises",
+    "pages/users/orders/orders-complain/orders-complain",
+    "pages/users/payment/payment",
+    "pages/users/payment/wallets/wallets",
+    "pages/users/payment/weixinpays/weixinpays",
+    "pages/users/sellerorders/sellerorders",
+    "pages/users/address-mng/addaddress/addaddress",
+    "pages/users/attension/attension",
+    "pages/users/attension-shops/attension-shops",
+    "pages/users/address-mng/address-mng",
+    "pages/users/browhistory/browhistory",
+    "pages/users/security/security",
+    "pages/users/messages/messages",
+    "pages/users/security/login-pwd/login-pwd",
+    "pages/users/security/loginpwd-back/loginpwd-back",
+    "pages/users/security/pay-pwd/pay-pwd",
+    "pages/users/security/paypwd-back/paypwd-back",
+    "pages/users/security/phone-number/phone-number",
+    "pages/users/user-balance/account-mng/addaccount/addaccount",
+    "pages/users/user-balance/user-balance",
+    "pages/users/user-balance/dealrecord/dealrecord",
+    "pages/users/user-balance/fundrecord/fundrecord",
+    "pages/users/user-balance/drawmon/drawmon",
+    "pages/users/user-balance/recharge/recharge",
+    "pages/users/user-balance/account-mng/account-mng",
+    "pages/users/messages/messages-detail/messages-detail",
+    "pages/users/userIntegral/userIntegral",
+    "pages/users/complain-mng/complain-mng",
+    "pages/users/userset/userset",
+    "pages/users/userset/about/about",
+    "pages/components/screen/screen",
+    "pages/webview/webview"
+  ],
+  "subPackages": [
+    {
+      "root": "addons/package",
+      "pages": [
+        "pages/coupon/coupon",
+        "pages/coupon/user/user",
+        "pages/coupon/goods-list/goods-list"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#2c2c2c",
+    "selectedColor": "#df0202",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/footer-home.png",
+        "selectedIconPath": "image/footer-home2.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/classify/classify",
+        "iconPath": "image/footer-classify.png",
+        "selectedIconPath": "image/footer-classify2.png",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/carts/carts",
+        "iconPath": "image/footer-cart.png",
+        "selectedIconPath": "image/footer-cart2.png",
+        "text": "购物车"
+      },
+      {
+        "pagePath": "pages/users/attension/attension",
+        "iconPath": "image/footer-follow.png",
+        "selectedIconPath": "image/footer-follow2.png",
+        "text": "关注"
+      },
+      {
+        "pagePath": "pages/users/users",
+        "iconPath": "image/footer-user.png",
+        "selectedIconPath": "image/footer-user2.png",
+        "text": "个人中心"
+      }
+    ]
+  }
+}

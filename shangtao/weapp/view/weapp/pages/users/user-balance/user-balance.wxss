@@ -1,0 +1,181 @@
+page{
+  width: 100%;
+  height: 100%;
+  background: #F6F6F8;
+}
+.container{
+  width: 100%;
+  height: auto;
+}
+.balance-show{
+  width: 100%;
+  height: 140rpx;
+  text-align: center;
+  position: relative;
+}
+.balance-show image{
+  width: 100%;
+  height: 100%;
+}
+.balance-show .number{
+  position: absolute;
+  bottom: 10rpx;
+  right: 10rpx;
+  color: white;
+  font-size: 26rpx;
+}
+.balance-show .number1{
+  position: absolute;
+  bottom: 50rpx;
+  right: 10rpx;
+  color: white;
+  font-size: 30rpx;
+}
+.action{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color: black;
+  background: white;
+}
+.action image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.action .left text{
+  display: inline-block;
+  margin-top: 4rpx;
+  margin-left: 4rpx;
+}
+.action .left{
+  width: 50%;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2rpx solid #EDEBEB;
+}
+.action .right{
+  border: 1rpx solid transparent;
+}
+.manage-model{
+  width: 100%;
+  height: 84rpx;
+  font-size: 30rpx;
+  line-height: 60rpx;
+  border-bottom: 2rpx solid #EDEBEB;
+  background: white;
+}
+.manage-model image{
+  width: 40rpx;
+  height: 40rpx;
+  float: left;
+  padding: 23rpx  10rpx;
+}
+.manage-model .left{
+  width: 50%;
+  height: 60%;
+  border: 1rpx solid transpatent;
+  float: left;
+  padding: 15rpx  10rpx;
+}
+.manage-model .right{
+ margin-top: 30rpx;
+ margin-right: 20rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-right: 1rpx solid #ABAAAA;
+  border-bottom: 1rpx solid #ABAAAA;
+  float: right;
+  transform: rotate(-45deg);
+}
+.manage-model .between{
+  font-size: 28rpx;
+  width: auto;
+  height: 60%;
+  float: right;
+  line-height: 40rpx;
+  border: 1rpx solid transpatent;
+  margin-right: 20rpx;
+  margin-top: 20rpx;
+}
+/*提醒模块*/
+.remind1{
+  margin-top: 30rpx;
+  font-size: 30rpx;
+  display: flex;
+  color: #ABAAAA;
+}
+.text{
+  font-size: 26rpx;
+  margin-top: 5rpx;
+  color: #ABAAAA;
+}
+.bottom{
+  display: flex;
+  justify-content: flex-start;
+}
+.bottom .left{
+  margin-left: 10rpx;
+}
+/*密码框*/
+.wst-or-frame{
+  background: #fff;
+  width: 70%;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  pointer-events: auto;
+  position: relative;
+  font-size: 30rpx;
+  padding: 30rpx;
+  border-radius: 4rpx;
+  color:#202020;
+}
+.wst-or-frame .title{
+  color:#000000;
+  font-size: 35rpx;
+}
+.wst-or-frame .button{
+  text-align: right;
+}
+.wst-or-frame .button .cancel{
+  color:#000000;
+  background: #fff;
+}
+.wst-or-frame .button .confirm{
+  color:#3cc51f;
+  background: #fff;
+}
+.wst-or-frame .button button::after{
+  content:" ";
+  width:200%;
+  height:200%;
+  position:absolute;
+  top:0;
+  left:0;
+  border:1rpx solid #fff;
+  -webkit-transform:scale(0.5);
+  transform:scale(0.5);
+  -webkit-transform-origin:0 0;
+  transform-origin:0 0;
+  box-sizing:border-box;
+  border-radius: 0rpx;
+}
+.wst-or-frame .button button:active{
+  background:#efefef;
+  border-radius: 0rpx;
+}
+.wst-or-frame .text textarea{
+  width:100%;
+  border:1rpx solid #e9e8e8;
+  padding: 18rpx 5rpx;
+}
+.wst-or-frame .quota input{
+  width:100%;
+  margin: 20rpx 0;
+  padding: 8rpx 5rpx;
+  border:1rpx solid #a2a2a2;
+}

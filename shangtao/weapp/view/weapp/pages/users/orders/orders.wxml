@@ -1,0 +1,90 @@
+<view class="container">
+<!--顶部轮播-->
+  <scroll-view scroll-X='true' class="wst-or-head">
+    <block wx:for="{{termData}}">
+    <view class="term {{item.types == types? 'active':''}}" data-types="{{item.types}}" bindtap='selected'>{{item.title}}</view>
+    </block>
+  </scroll-view>
+  <view class="wst-or-list  {{isScroll?'':'stop'}}">
+    <view class="list" wx:for="{{orders}}" wx:for-item="or">
+      <view class="head"><test class="shop" data-shopid="{{or.shopId}}" bindtap="toshops"><i></i>{{or.shopName}}</test><test class="state">{{or.status}}</test>
+      <view class="wst-clear"></view>
+      </view>
+      <view class="goods" wx:for="{{or.list}}" wx:for-item="li" data-orderid="{{or.orderId}}" bindtap="todetail">
+        <view class="img">
+        <image mode="aspectFit" src="{{domain}}{{li.goodsImg}}"></image>
+        </view>
+        <view class="names">
+          <view class="name">{{li.goodsName}}</view>
+          <view class="spec" wx:if="{{li.goodsSpecNames}}">规格：{{li.goodsSpecNames}}</view>
+        </view>
+        <view class="price"><view>{{(li.goodsCode=='gift')?'【赠品】':'¥'+li.goodsPrice}}</view><view>x {{li.goodsNum}}</view></view>
+        <view class="wst-clear"></view>
+      </view>
+      <view class="info">订单总价：<text>¥{{or.realTotalMoney}}</text></view>
+      <view class="operate">
+        <button type="default" size="mini" bindtap="confirm" data-orderid="{{or.orderId}}" class="button" wx:if="{{or.orderStatus==1}}">确认收货</button>
+        <button type="default" size="mini" bindtap="reject" data-orderid="{{or.orderId}}" class="button" wx:if="{{or.orderStatus==1}}">拒收</button>
+        <button type="default" size="mini" bindtap="refund" data-orderid="{{or.orderId}}" class="button red" wx:if="{{(or.allowRefund==1) && (or.orderStatus==-1 || or.orderStatus==-3)}}">申请退款</button>
+        <button type="default" size="mini" bindtap="complaint" data-orderid="{{or.orderId}}" class="button" wx:if="{{(or.orderStatus!=-1 || or.orderStatus==1) && or.orderStatus!=-2 && or.isComplain==0}}">投诉</button>
+        <button type="default" size="mini" bindtap="cancel" data-orderid="{{or.orderId}}" class="button" wx:if="{{or.orderStatus==-2 || or.orderStatus==0}}">取消订单</button>
+        <button type="default" size="mini" bindtap="remind" data-orderid="{{or.orderId}}" class="button" wx:if="{{or.orderStatus==0 && or.noticeDeliver==0}}">提醒发货</button>
+        <button type="default" size="mini" bindtap="toevaluate" data-orderid="{{or.orderId}}" class="button red" wx:if="{{or.isAppraise==1}}">查看评价</button>
+        <button type="default" size="mini" bindtap="toevaluate" data-orderid="{{or.orderId}}" class="button" wx:if="{{or.orderStatus==2 && or.isAppraise==0}}">评价</button>
+        <button type="default" size="mini" bindtap="payment" data-orderno="{{or.orderNo}}" class="button red" wx:if="{{or.orderStatus==-2}}">立即付款</button>
+      </view>
+    </view>
+    <view  class='remind-model' wx:if="{{orders==''}}">
+      <view class='image' ><image src='/image/nothing-order.png' class="img"></image></view>
+      <view class='content'>暂无相关订单 ~</view>
+      <view class="button" bindtap='toIndex'><button>去逛逛</button></view>
+    </view>
+  </view>
+</view>
+<view class="wst-mask" wx:if="{{cancelFrame}}">
+  <view class="wst-or-frame">
+    <view class="title">取消订单</view>
+    <picker class="menu" bindchange="cancelMenu" value="0" range="{{cancelData}}">
+      <view class="weui-input">{{cancelWords}}</view>
+    </picker>
+    <view class="button">
+        <button type="default" size="mini" bindtap="hide" class="cancel">取消</button>
+        <button type="default" size="mini" bindtap="toCancel" class="confirm">确定</button>
+    </view>
+  </view>
+</view>
+<view class="wst-mask" wx:if="{{rejectFrame}}">
+  <view class="wst-or-frame">
+    <view class="title">拒收订单</view>
+    <picker class="menu" bindchange="rejectMenu" value="0" range="{{rejectData}}">
+      <view class="weui-input">{{rejectWords}}</view>
+    </picker>
+    <view class="text" wx:if="{{rejectId==10000}}">
+      <textarea bindinput="rejectText" maxlength="200" auto-height placeholder="请填写原因" />
+    </view>
+    <view class="button">
+        <button type="default" size="mini" bindtap="hide" class="cancel">取消</button>
+        <button type="default" size="mini" bindtap="toReject" class="confirm">确定</button>
+    </view>
+  </view>
+</view>
+<view class="wst-mask" wx:if="{{refundFrame}}">
+  <view class="wst-or-frame">
+    <view class="title">申请退款</view>
+    <picker class="menu" bindchange="refundMenu" value="0" range="{{refundData}}">
+      <view class="weui-input">{{refundWords}}</view>
+    </picker>
+    <view class="text" wx:if="{{refundId==10000}}">
+      <textarea bindinput="refundText" maxlength="200" auto-height placeholder="请填写原因" />
+    </view>
+    <view class="quota">
+      <input bindinput="refundQuota" type="digit" placeholder="退款金额" />
+    </view>
+    <view class="prompt">(金额不能超过<text class="red">¥{{realTotalMoney}}</text>)</view>
+    <view class="prompt">({{useScore}}个积分抵扣<text class="red">¥{{scoreMoney}}</text>)</view>
+    <view class="button">
+        <button type="default" size="mini" bindtap="hide" class="cancel">取消</button>
+        <button type="default" size="mini" bindtap="toRefund" class="confirm">确定</button>
+    </view>
+  </view>
+</view>

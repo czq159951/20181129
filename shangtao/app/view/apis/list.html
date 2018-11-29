@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>电子商务系统 App API列表</title>
+</head>
+<script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+<style>
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+td {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+  padding:2px;
+}
+</style>
+<script>
+function showHide(id){
+   var obj = $('#tr_'+id);
+   var datav = obj.attr('datav');
+   if(datav=='0'){
+        obj.show().attr('datav',1);
+   }else{
+        obj.hide().attr('datav',0);
+   }
+}
+function loadApis(t){
+    location.href = "{:Url('app/apis/index')}?apiType="+t;
+}
+</script>
+<body>
+<select onchange='javascript:loadApis(this.value)'>
+     <option value='0' {if $apiType==0}selected{/if}>APP接口</option>
+     <option value='1' {if $apiType==1}selected{/if}>小程序接口</option>
+</select>
+<table border="1" width='100%' style='margin-top:5px;'>
+  <thead>
+    <tr style='background:#eeeeee;'>
+     <th width='5'>&nbsp;</th>
+     <th width='120'>接口名</th>
+     <th width='120'>接口说明</th>
+     <th width='30'>&nbsp;</th>
+    </tr>
+  </thead>
+  {volist name='list' id='vo'}
+    <tr style="background-color:{$vo["apiColor"]};">
+      <td>{$key+1}</td>
+      <td>{$vo['apiName']}</td>
+      <td>{$vo['apiDesc']}</td>
+      <td><a href='javascript:showHide({$vo["id"]})'>查看</a></td>
+    </tr>
+    <tr id='tr_{$vo["id"]}' style='display:none' datav='0'>
+      <td colspan='4' style='margin:0px;padding:0px;'>
+        <table width="100%">
+          <tr width='50%'>
+            <td style='border-right:1px solid #808080'>输入参数</td>
+            <td>返回数据</td>
+          </tr>
+          <tr width='50%'>
+            <td style='border-right:1px solid #808080'>{$vo['apiParam']|htmlspecialchars_decode}</td>
+            <td>{$vo['apiReturn']|htmlspecialchars_decode}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  {/volist}
+</table>
+</table>

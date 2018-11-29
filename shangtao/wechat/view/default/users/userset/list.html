@@ -1,0 +1,28 @@
+{extend name="default/base" /}
+{block name="title"}用户设置 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/userset.css?v={$v}">
+{/block}
+{block name="header"}
+	{php}$Title = "用户设置"{/php}
+	{include file="default/header" /}
+{/block}
+{block name="footer"}{/block}
+{block name="main"}
+    <section class="ui-container">
+    	<ul class="ui-list ui-list-text ui-list-link wst-se-l">
+    	    <li class="line" onclick="location.href='{:url('wechat/users/edit')}'">
+		        <span class="pay"></span><h5 class="ui-nowrap">个人中心</h5></a>
+		    </li>
+		    <li class="line" onclick="location.href='{:url('wechat/users/security')}'">
+		        <span class="safety"></span><h5 class="ui-nowrap">账户安全</h5></a>
+		    </li>
+		    <li class="line" onclick="location.href='{:url('wechat/users/aboutus')}'">
+		        <span class="about"></span><h5 class="ui-nowrap">关于我们</h5>
+		    </li>
+		</ul>
+    </section>
+{/block}
+{block name="include"}
+	{include file="default/dialog" /}<!-- 对话框模板 -->
+{/block}

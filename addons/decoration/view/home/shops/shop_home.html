@@ -1,0 +1,417 @@
+<html><head>
+<meta charset="utf-8">
+<title>店铺装修-卖家中心</title>
+<meta name="description" content="{$seoDecorationDesc}">
+<meta name="Keywords" content="{$seoDecorationKeywords}">
+<link href="__STYLE__/css/common.css?v={$v}" rel="stylesheet">
+<link href="__STYLE__/css/shophome.css?v={$v}" rel="stylesheet">
+<link rel="stylesheet" href="__ROOT__/addons/decoration/view/home/shops/static/imgareaselect-animated.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="__ROOT__/addons/decoration/view/home/shops/static/shop_center.css?v={$v}" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/batchupload.css?v={$v}" />
+<script>
+//定义api常量
+var DECORATION_ID = "{$decorationId}";
+var LOADING_IMAGE = '__ROOT__/shangtao/home/view/default/img/loading.gif';
+window.conf = {
+	"ROOT"      : "__ROOT__", 
+	"APP"       : "__APP__", 
+	"STATIC"    : "__STATIC__", 
+	"SUFFIX"    : "{:config('url_html_suffix')}", 
+	"SMS_VERFY" : "{:WSTConf('CONF.smsVerfy')}",
+	"PHONE_VERFY" : "{:WSTConf('CONF.phoneVerfy')}",
+	"GOODS_LOGO"  : "{:WSTConf('CONF.goodsLogo')}",
+	"SHOP_LOGO"   : "{:WSTConf('CONF.shopLogo')}",
+	"MALL_LOGO"   : "{:WSTConf('CONF.mallLogo')}",
+	"USER_LOGO"   : "{:WSTConf('CONF.userLogo')}",
+	"IS_LOGIN"    : "{if (int)session('WST_USER.userId')>0 }1{else}0{/if}",
+	"TIME_TASK"   : "1",
+	"MESSAGE_BOX": "{:WSTShopMessageBox()}"
+}
+
+</script>
+<script type="text/javascript" src="__STATIC__/js/jquery.min.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/static/js/common.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/shangtao/home/view/default/js/common.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/static/plugins/lazyload/jquery.lazyload.min.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/addons/decoration/view/home/shops/static/jquery.ui.js?v={$v}"></script>
+<script type="text/javascript" src="__ROOT__/static/plugins/webuploader/webuploader.js??v={$v}"></script>
+<script type="text/javascript" src="__STATIC__/plugins/layer/layer.js?v={$v}"></script>
+
+<script src="__STATIC__/plugins/kindeditor/kindeditor.js?v={$v}" type="text/javascript" ></script>
+<script type="text/javascript" src="__ROOT__/addons/decoration/view/home/shops/static/template.min.js?v={$v}"></script>
+<script type="text/javascript" src="__STATIC__/plugins/slide/js/slide.js?v={$v}"></script>
+<style id="style_nav">{$decoration_nav['style']}</style>
+</head>
+<body style="cursor: auto;">
+{include file="$LAYOUT_HOME_TOP" /}
+<div class="wst-container">
+		<div class="wst-shop-h">
+		<div class="wst-shop-img"><a href="{:url('home/shops/home',array('shopId'=>$data['shop']['shopId']))}"><img class="shopsImg" data-original="__ROOT__/{$data['shop']['shopImg']}" title="{$data['shop']['shopName']}"></a></div>
+		<div class="wst-shop-info">
+			<p>{$data['shop']['shopName']}</p>
+			<div class="wst-shop-info2">
+			{volist name="$data['shop']['accreds']" id="ac"}
+			<img src="__ROOT__/{$ac['accredImg']}"><span>{$ac['accredName']}</span>
+			{/volist}
+			{if($data['shop']['shopQQ'])}
+			<a href="tencent://message/?uin={$data['shop']['shopQQ']}&Site=QQ交谈&Menu=yes">
+		        <img border="0" style="width:65px;height:24px;" src="http://wpa.qq.com/pa?p=1:{$data['shop']['shopQQ']}:7">
+		    </a>
+			{/if}
+			{if($data['shop']['shopWangWang'])}
+			<a href="http://www.taobao.com/webww/ww.php?ver=3&touid={$data['shop']['shopWangWang']}&siteid=cntaobao&status=1&charset=utf-8" target="_blank">
+			<img border="0" src="http://amos.alicdn.com/realonline.aw?v=2&uid={$data['shop']['shopWangWang']}&site=cntaobao&s=1&charset=utf-8" alt="和我联系" class='wangwang'/>
+			</a>
+			{/if}
+			</div>
+			<div class="wst-shop-info3">
+				<span class="wst-shop-eva">商品评价：<span class="wst-shop-red">{$data['shop']['scores']['goodsScore']}</span></span>
+				<span class="wst-shop-eva">时效评价：<span class="wst-shop-red">{$data['shop']['scores']['timeScore']}</span></span>
+				<span class="wst-shop-eva">服务评价：<span class="wst-shop-red">{$data['shop']['scores']['serviceScore']}</span></span>
+				{if($data['shop']['favShop']>0)}
+				<a href='javascript:void(0);' onclick='cancelFavorite(this,1,{$data['shop']['shopId']},{$data['shop']['favShop']})' class="wst-shop-evaa j-fav">已关注</a>
+				{else}
+				<a href='javascript:void(0);' onclick='addFavorite(this,1,{$data['shop']['shopId']},{$data['shop']['favShop']})' class="wst-shop-evaa j-fav2">关注店铺</a>
+				{/if}
+				<span class="wst-shop-eva">用手机逛本店  &nbsp;&nbsp;|</span>
+				<a class="wst-shop-code"><span class="wst-shop-codes hide"><div id='qrcode' style='width:142px;height:142px;'></div></span></a>
+			</div>
+		</div>
+		<div class="wst-shop-sea">
+			<input type="text" id="goodsName" value="" placeholder="输入商品名称">
+			<a class="search" href="javascript:void(0);" onclick="javascript:WST.goodsSearch($('#goodsName').val());">搜全站</a>
+			<a class="search" href="javascript:void(0);" onclick="javascript:searchShopsGoods(0);">搜本店</a>
+			<div class="wst-shop-word">
+			{volist name="data['shop']['shopHotWords']" id="shw"}
+			<a href='{:Url("home/shops/home",array('shopId'=>$data['shop']['shopId'],'goodsName'=>$shw))}'>{$shw}</a>{if $i< count($data['shop']['shopHotWords'])}&nbsp;|&nbsp;{/if}
+			{/volist}
+			</div>
+			{:hook('homeDocumentShopHomeHeader',['shop'=>$data['shop'],'getParams'=>input()])}
+			<div class="jiathis_style_24x24 wst-shop-share">
+				<a class="jiathis_button_qzone"></a>
+				<a class="jiathis_button_tsina"></a>
+				<a class="jiathis_button_tqq"></a>
+				<a class="jiathis_button_weixin"></a>
+				<a class="jiathis_button_cqq"></a>
+				<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>					
+			</div>
+			<div style="clear: both;"></div>
+			
+			<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+			
+		</div>
+		<div class="wst-clear"></div>
+		</div>
+	</div>
+<div class='wst-header'>
+		<div class="wst-shop-nav">
+			<div class="wst-nav-box">
+				<a href="{:url('home/shops/home',array('shopId'=>$data['shop']['shopId']))}"><li class="liselect wst-lfloat wst-nav-boxa">本店全部商品</li></a>
+				{volist name="$data['shopcats']" id="sc" offset="0" length='8'}
+					<a href="{:url('home/shops/cat',array('shopId'=>$sc['shopId'],'ct1'=>$sc['catId']))}"><li class="liselect wst-lfloat ">{$sc['catName']}</li></a>
+				{/volist}
+				<a class="homepage" href='{$Request.root.true}'>返回商城首页</a>
+				<div class="wst-clear"></div>
+			</div>
+		</div>
+		<div class="wst-clear"></div>
+	</div>
+<div class="wrapper">
+
+<div class="wst-decoration-layout">
+  <div class="wst-decoration-menu" id="waypoints">
+    <div class="title"><i style="float: left;margin-right: 5px;"><img src="__ROOT__/addons/decoration/view/home/shops/static/img/shop_decoration.png" width="50"/></i>
+      <h3 style="margin-top:5px;">店铺装修选项</h3>
+      <h5>店铺首页模板设计操作</h5>
+    </div>
+    <ul class="menu">
+      <li><a id="btn_edit_background" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/edit_bg.png" width="40"/></i>编辑背景</a></li>
+      <li><a id="btn_edit_head" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/edit_head.png" width="40"/></i>编辑头部</a></li>
+      <li><a id="btn_add_block" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/loyout.png" width="40"/></i>添加布局块</a></li>
+      <li><a id="btn_preview" href="{:addon_url('decoration://decoration/preview',array('id'=>$decorationId))}" target="_blank"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/priview.png" width="40"/></i>设计预览</a></li>
+      <li><a id="btn_close" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/exit.png" width="40"/></i>完成退出</a></li>
+    </ul>
+    <div class="faq">下方区域为1200像素宽度即时编辑区域；“添加布局块”后选择模块类型进行详细设置；“设计预览”可查看生成后效果；内容将实时保存，设置完成后直接选择“完成退出”。</div>
+  </div>
+  <div id="shop_decoration_content" style="{$decoration_background_style}">
+    <div id="decoration_banner" class="ncsl-nav" style="display: none;"><img src="" alt=""></div>
+    <div id="shop_decoration_area" class="store-decoration-page wst-shop-list ui-sortable">
+      <?php if(!empty($block_list) && is_array($block_list)) {?>
+      <?php foreach($block_list as $block) {?>
+      {include file='home/shops/shop_decoration_block'/}
+      <?php } ?>
+      <?php } ?>
+    </div>
+  </div>
+</div>
+<!-- 背景编辑对话框 -->
+
+<div id="dialog_edit_background" class="eject_con dialog-decoration-edit" style="display:none;">
+  <dl>
+    <dt>背景颜色：</dt>
+    <dd>
+      <input id="txt_background_color" class="text w80" type="text" name="" value="{$decoration_setting['background_color']}" maxlength="7">
+      <input class="wst-color" type="color" name="favcolor" style="height: 30px;padding:2px;" data='bg' value="{$decoration_setting['background_color']}"/>
+      <p class="hint">设置背景颜色请使用十六进制形式(#XXXXXX)，默认留空为白色背景。</p>
+    </dd>
+  </dl>
+  <dl>
+    <dt>背景图：</dt>
+    <dd>
+      <div id="div_background_image" style='{$decoration_setting['background_image_url']?"":"display:none;"}' class="background-image-thumb"> 
+      <img id="img_background_image" src="{$decoration_setting['background_image_url']}" alt="">
+        <input id="txt_background_image" type="hidden" name="" value="{$decoration_setting['background_image_url']}">
+        <a id="btn_del_background_image" class="del" href="javascript:void(0);" title="移除背景图">X</a>
+       </div>
+        
+    	<div class="wst-upload-btn"> 
+	        <div id='file_background_image'>图片上传</div>
+        </div>
+    </dd>
+  </dl>
+  <dl>
+    <dt>背景图定位：</dt>
+    <dd>
+      <input id="txt_background_position_x" class="text w40" type="text" value="{$decoration_setting['background_position_x']}"><label class="add-on">X</label>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <input id="txt_background_position_y" class="text w40" type="text" value="{$decoration_setting['background_position_y']}"><label class="add-on">Y</label>
+      <p class="hint">设置背景图像的起始位置。</p>
+    </dd>
+  </dl>
+  <dl>
+    <dt>背景图填充方式：</dt>
+    <dd>
+      <input id="input_no_repeat" type="radio" value="no-repeat" name="background_repeat" {$decoration_setting['background_image_repeat']=="no-repeat"?"checked":""}>
+      <label for="input_no_repeat">不重复</label>
+      <input id="input_repeat" type="radio" value="repeat" name="background_repeat" {$decoration_setting['background_image_repeat']=="repeat"?"checked":""}>
+      <label for="input_repeat">平铺</label>
+      <input id="input_repeat_x" type="radio" value="repeat-x" name="background_repeat" {$decoration_setting['background_image_repeat']=="repeat-x"?"checked":""}>
+      <label for="input_repeat_x">x轴平铺</label>
+      <input id="input_repeat_y" type="radio" value="repeat-y" name="background_repeat" {$decoration_setting['background_image_repeat']=="repeat-y"?"checked":""}>
+      <label for="input_repeat_y">y轴平铺</label>
+    </dd>
+  </dl>
+  <dl>
+    <dt>背景滚动模式：</dt>
+    <dd>
+      <input id="txt_background_attachment" class="text w80" type="text" value="{$decoration_setting['background_attachment']}">
+      <p class="hint">设置背景随屏幕滚动或固定，例如："scroll"或"fixed"。 </p>
+    </dd>
+  </dl>
+</div>
+
+
+
+<!-- 头部编辑对话框 -->
+<div id="dialog_edit_head" class="eject_con dialog-decoration-edit" style="display:none;">
+  <div id="dialog_edit_head_tabs">
+    
+    <div id="dialog_edit_head_tabs_1">
+      <dl>
+        <dt>颜色值参考：</dt>
+        <dd>
+          <input class="wst-color" type="color" name="favcolor" style="height: 30px;padding:2px;" data='hd'/><span id="showColor"></span>
+          <p class="hint">“导航样式”中的颜色值，可以选择对应的颜色进行参考。</p>
+        </dd>
+      </dl>
+      <dl>
+        <dt>导航样式：</dt>
+        <dd>
+          <textarea id="decoration_nav_style" style="width:450px;height:200px;">{$decoration_nav['style']}</textarea>
+          <p> <a id="btn_default_nav_style" class="wst-btn-mini" href="javascript:void(0);"><i class="icon-refresh"></i>恢复默认</a> </p>
+          <p class="hint">导航条对应CSS文件，如修改后显示效果不符可恢复默认值。</p>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<!-- 选择模块对话框 -->
+<div id="dialog_select_module" class="dialog-decoration-module" style="display:none;">
+  <ul>
+    <li><a nctype="btn_show_module_dialog" data-module-type="slide" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/silde.png" width="40"/></i>
+      <dl>
+        <dt>图片和幻灯</dt>
+        <dd>添加图片和可切换幻灯</dd>
+      </dl>
+      </a></li>
+    <li><a nctype="btn_show_module_dialog" data-module-type="hot_area" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/hot_area.png" width="40"/></i>
+      <dl>
+        <dt>图片热点</dt>
+        <dd>添加图片并设置热点区域链接</dd>
+      </dl>
+      </a></li>
+    <li> <a nctype="btn_show_module_dialog" data-module-type="goods" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/shop_goods.png" width="40"/></i>
+      <dl>
+        <dt>店铺商品</dt>
+        <dd>选择添加店铺内的在售商品</dd>
+      </dl>
+      </a> </li>
+    <li> <a nctype="btn_show_module_dialog" data-module-type="html" href="javascript:void(0);"><i><img src="__ROOT__/addons/decoration/view/home/shops/static/img/diy.png" width="40"/></i>
+      <dl>
+        <dt>自定义</dt>
+        <dd>使用编辑器子自定义编辑html</dd>
+      </dl>
+      </a> </li>
+  </ul>
+</div>
+<!-- 自定义模块编辑对话框 -->
+<div id="dialog_module_html" class="eject_con dialog-decoration-edit" style="display:none;">
+	<div class='wst-tips-box' style="margin-top:10px;margin-right:10px;">
+		<div class='icon'></div>
+		<div class='tips'>
+			1. 可将预先设置好的网页文件内容复制粘贴到文本编辑器内，或直接在工作窗口内进行编辑操作。<br/>
+			2. 默认为可视化编辑，选择第一个按钮切换到html代码编辑。css文件可以Style=“...”形式直接写在对应的html标签内。</div>
+			<div style="clear:both">
+		</div>
+	</div>
+  <div style="padding-left: 10px;">
+  <textarea id="module_html_editor" name="module_html_editor" style=" width:1016px; height:400px; visibility:hidden;"></textarea>
+  </div>
+</div>
+<!-- 幻灯模块编辑对话框 -->
+<div id="dialog_module_slide" class="eject_con dialog-decoration-edit" style="display:none;">
+  <div class='wst-tips-box' style="margin-top:10px;margin-right:10px; ">
+		<div class='icon'></div>
+		<div class='tips'>
+			1. 可选择图片以全屏或非全屏形式显示，<strong class="orange">且必须设定图片的高度</strong>，否则将无法正常浏览。<br/>
+			2. 上传单张图片时系统默认显示为<strong>“图片链接”</strong>形式显示，如一次上传多图将以<strong>“幻灯片”</strong>形式显示。
+		</div>
+		<div style="clear:both"></div>
+	</div>
+  <div id="module_slide_html" class="slide-upload-thumb">
+    <ul class="module-slide-content">
+    </ul>
+  </div>
+  <h4 class="mt10">相关设置：</h4>
+  <dl class="display-set">
+    <dt>显示高度<font color="red">*</font>:</dt>
+    <dd><span style="display: none;">全屏显示
+      <input id="txt_slide_full_width" type="checkbox" class="checkobx" name="">
+      </span><span>
+      <input id="txt_slide_height" type="text" class="text w40" value=""><em class="add-on">像素</em></span>
+    </dd>
+  </dl>
+  <div id="div_module_slide_upload">
+    <form action="">
+      <dl>
+        <dt>图片上传：</dt>
+        <dd>
+          <div id="div_module_slide_image" class="module-upload-image-preview"></div>
+          	<div class="wst-upload-btn">
+            	<div id='btn_module_slide_upload'>图片上传</div>
+   			</div>
+          	<p class="hint">请上传宽度为1200像素的jpg/gif/png格式图片。</p>
+        </dd>
+      </dl>
+      <dl>
+        <dt>图片链接：</dt>
+        <dd>
+          <input id="module_slide_url" class="text w400" type="text"><a id="btn_save_add_slide_image" class="wst-btn ml5" href="javascript:void(0);">添加</a> 
+          <p class="hint">请输入以http://为开头的图片链接地址，仅作为图片使用时请留空此选项</p>
+        </dd>
+      </dl>
+    </form>
+  </div>
+</div>
+<!-- 图片热点模块编辑对话框 -->
+<div id="dialog_module_hot_area" class="eject_con dialog-decoration-edit" style="display:none;">
+	<div class='wst-tips-box' style="margin-top:10px;margin-right:10px; ">
+		<div class='icon'></div>
+		<div class='tips'>
+			1. 在已上传的图片范围拖动鼠标形成选择区域，对该区域添加以http://格式开头的链接地址并点击“添加网址”按钮生效。<br/>
+			2. 对已添加的热点可做编辑链接地址修改，如需调整位置，请删除该热点区域并保存，之后重新选择添加。</div>
+			<div style="clear:both">
+		</div>
+	</div>
+  <div id="div_module_hot_area_image" class="hot-area-image" style="position: relative;"></div>
+  <ul id="module_hot_area_select_list" class="hot-area-select-list">
+  </ul>
+
+  
+  <h4 class="mt10">相关设置：</h4>
+  <form action="">
+    <dl>
+      <dt>图片上传：</dt>
+      <dd>
+        <div class="wst-upload-btn"> 
+          <div id='btn_module_hot_area_upload'>图片上传</div>
+        </div>
+        <p class="hint">选择上传jpg/gif/png格式图片，建议宽度不超过1200像素，如超出此范围，请先自行对图片进行裁切调整。</p>
+      </dd>
+    </dl>
+  </form>
+  <dl>
+    <dt>热点链接设置：</dt>
+    <dd>
+      <input id="module_hot_area_url" class="text w400" type="text" />
+      <a id="btn_module_hot_area_add" class="wst-btn ml5" href="javascript:void(0);"><i class="icon-anchor"></i>添加网址</a>
+      <p class="hint">在输入框中添加以“http://”格式开头的热点区域跳转网址。</p>
+    </dd>
+  </dl>
+</div>
+<!-- 商品模块编辑对话框 -->
+<div id="dialog_module_goods" class="eject_con dialog-decoration-edit" style="display:none;">
+	<div class='wst-tips-box' style="margin-top:10px;margin-right:10px; ">
+		<div class='icon'></div>
+		<div class='tips'>
+			1. 搜索店铺内在售商品并“选择添加”，设置窗口上部将出现已选择的商品列表，也可对其进行“取消选择”操作，点击保存设置后生效。<br/>
+			2. 当已选择的商品超过10个时，系统默认未全部显示，可通过在已选区域滚动鼠标或拉动侧边条进行查看及操作。
+		</div>
+		<div style="clear:both"></div>
+	</div>
+  <div id="decorationGoods">
+    <ul id="div_module_goods_list" class="wst-shop-listg">
+    </ul>
+  </div>
+  <h4 class="mt10">店铺在售商品选择</h4>
+  <div class="decoration-search-goods">
+    <div class="search-bar">
+    	<select id="shopCatId1" class='j-ipt' onchange="WST.shopsCats('shopCatId2',this.value,'');">
+   			<option value="">-请选择-</option>
+     		{volist name=":WSTShopCats(0)" id="vo"}
+      		<option value="{$vo['catId']}">{$vo['catName']}</option>
+        	{/volist}
+ 		</select>
+    	<select id='shopCatId2' class='j-ipt'>
+      		<option value=''>请选择</option>
+    	</select>
+    	<input type='text' id='goodsName' placeholder="请输入要搜索的商品名称" />
+     	<a id="btn_module_goods_search" type="button" class='s-btn'>查&nbsp;询</a>
+    	<span class="ml10 orange">小提示： 留空搜索显示店铺全部在售商品，每页显示10个。</span></div>
+    <div id="div_module_goods_search_list"></div>
+  </div>
+</div>
+<!-- 幻灯模板 --> 
+<script id="template_module_slide_image_list" type="text/html">
+<li data-image-name="<%=image_name%>" data-image-url="<%=image_url%>" data-image-link="<%=image_link%>">
+<span><img src="<%=image_url%>"></span>
+<a nctype="btn_del_slide_image" href="javascript:void(0);" title="删除">X</a>
+</li>
+</script> 
+<!-- 热点块控制模板 --> 
+<script id="template_module_hot_area_list" type="text/html">
+<li data-hot-area-link="<%=link%>" data-hot-area-position="<%=position%>">
+<i></i>
+<p>热点区域<%=index%></p>
+<p><a nctype="btn_module_hot_area_select" data-hot-area-position="<%=position%>" class="wst-btn-mini wst-btn-acidblue" href="javascript:void(0);">选择</a>
+<a data-index="<%=index%>" nctype="btn_module_hot_area_del" class="wst-btn-mini wst-btn-red" href="javascript:void(0);">删除</a></p>
+</li>
+</script> 
+<!-- 热点块标识模板 --> 
+<script id="template_module_hot_area_display" type="text/html">
+<div class="store-decoration-hot-area-display" style="width:<%=width%>px;height:<%=height%>px;position:absolute;left:<%=left%>px;top:<%=top%>px;border:1px solid #cccccc;" id="hot_area_display_<%=index%>">热点区域<%=index%></div>
+</li>
+</script> 
+
+<script type="text/javascript" src="__ROOT__/addons/decoration/view/home/shops/static/jquery.imgareaselect.min.js?v={$v}"></script> 
+<script type="text/javascript" src="__ROOT__/addons/decoration/view/home/shops/static/shop_decoration.js?v={$v}" charset="utf-8"></script> 
+
+</div>
+{include file="$LAYOUT_HOME_FOOTER" /}
+<script type="text/javascript">
+$(function(){
+	WST.dropDownLayer(".j-dorpdown",".j-dorpdown-layer");
+});
+</script>
+</body></html>

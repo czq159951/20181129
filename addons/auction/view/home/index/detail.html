@@ -1,0 +1,291 @@
+{extend name="$LAYOUT_HOME_BASE" /}
+{block name="title"}{$goods['goodsName']} - 拍卖活动 - {:WSTConf('CONF.mallName')}{__block__}{/block}
+{block name="meta"}
+<meta name="description" content="{$goods['goodsName']},拍卖活动">
+<meta name="Keywords" content="{$goods['goodsSeoKeywords']},{$seoAuctionKeywords}">
+{/block}
+{block name="css"}
+<link href="__ROOT__/addons/auction/view/home/index/css/goods.css?v={$v}" rel="stylesheet">
+{/block}
+{block name="top"}
+	{include file="$LAYOUT_HOME_TOP" /}
+{/block}
+
+{block name="header"}
+	{include file="$LAYOUT_HOME_HEADER" /}
+{/block}
+{block name="main"}
+<div class='wst-w'>
+<div class='wst-filters'>
+   <div class='item' style="border:1px solid transparent;border-left:2px solid #df2003;padding-left: 8px">
+      <a class='link' href="{:url('home/index/index')}">首页</a>
+      <i class="arrow"></i>
+   </div>
+   {volist name=":WSTPathGoodsCat($goods['goodsCatId'])" id='vo' length='1'}
+   <div class='wst-lfloat'>
+   	<div class='item dorpdown'>
+     <div class='drop-down'>
+        <a class='link' href='{:Url("/addon/auction-goods-lists",["catId="=>$vo["catId"]])}'>{$vo['catName']}</a>
+     </div>
+     <div class="dorp-down-layer">
+         {volist name=":WSTGoodsCats($vo['parentId'])" id='vo2'}
+         <div class="{$vo['parentId']>0?'cat2':'cat1'}"><a href='{:Url("/addon/auction-goods-lists","catId=".$vo2["catId"])}'>{$vo2['catName']}</a></div>
+         {/volist}
+	</div>
+	</div>
+   </div>
+   {/volist}
+   <div class='wst-clear'></div>
+</div>
+</div>
+<div class='wst-w'>
+   <div class='goods-intro-container'>
+      <div class='goods-img-box'>
+          <div class="goods-img spec-preview" id="preview">
+          	<img title="{$goods['goodsName']}" alt="{$goods['goodsName']}" src="__ROOT__/{:WSTImg($goods['goodsImg'])}" class="cloudzoom" data-cloudzoom="zoomImage:'__ROOT__/{$goods['goodsImg']}'" height="350" width="350">
+          </div>
+          <div class="goods-pics">
+            <a class="prev">&lt;</a>
+            <a class="next">&gt;</a>
+            <div class="items">
+               <ul>
+               {volist name="$goods['gallery']" id='vo'}
+                   <li><img title="{$goods['goodsName']}" alt="{$goods['goodsName']}" class='cloudzoom-gallery' src="__ROOT__/{:WSTImg($vo)}" data-cloudzoom="useZoom: '.cloudzoom', image:'__ROOT__/{:WSTImg($vo)}', zoomImage:'__ROOT__/{$vo}' " width="60" height="60"></li>
+               {/volist}
+			   </ul>	
+			</div>
+         </div>
+      </div>
+
+      <div class='intro'>
+          <div class="goods-intro">
+          		<input type="hidden" id="auctionId" value="{$goods['auctionId']}"/>
+                <h2>{$goods['goodsName']}</h2>
+                <div class='status-box'>
+                   {if $goods['status']==-1}
+                   <div class='status out'>拍卖<br/>结束</div>
+                   {/if} 
+                   {if $goods['status']==0}
+                   <div class='status'>尚未<br/>开始</div>
+                    {/if} 
+                   {if $goods['status']==1}
+                   <div class='status'>正在<br/>拍卖</div>
+                   {/if}              
+                   <div class='status-txt'>
+                   <div id='auction-time' sc='{:date("Y-m-d H:i:s")}' sv='{$goods["startTime"]}' ev='{$goods["endTime"]}'>
+               距离结束时间仅剩：<span class='countDown'>{$goods["startTime"]}</span>
+                    </div>
+                    <div><span style='margin-right:10px;'>{$goods["auctionNum"]}人出价</span><span style=''>{$goods["visitNum"]}次围观</span></div>
+                   </div>
+                </div>
+                <div class='auction-item'>
+                    <div class='dt'>当&nbsp;前&nbsp;价：</div>
+                    <div class='dd'>￥<span class='font'>{$goods['currPrice']}</span></div>
+                    <div class='wst-clear'></div>
+                </div>
+                <div class='auction-item'>
+                    <div class='dt'>保&nbsp;证&nbsp;金：</div>
+                    <div class='dd'>￥<span class='font-g'>{$goods['cautionMoney']}</span><span class='font-tips'>拍卖结束后退回</span></div>
+                    <div class='wst-clear'></div>
+                </div>
+          </div>
+          <div class='spec'>
+             {if !empty($goods['spec'])}
+             {volist name="$goods['spec']" id='vo'}
+             <div class='item'>
+               <div class='dt'>{$vo['name']}：</div>
+               <div class='dd'>
+               {volist name="$vo['list']" id='vo2'}
+                  {if $vo2['itemImg']!=''}
+                  <div class='j-option img j-selected' data-val="{$vo2['itemId']}" style='height:28px;padding:0px;'><img class="cloudzoom-gallery" width="28" height="28" src="__ROOT__/{:WSTImg($vo2['itemImg'])}" data-cloudzoom="useZoom: '.cloudzoom', image:'__ROOT__/{:WSTImg($vo2['itemImg'])}', zoomImage:'__ROOT__/{$vo2['itemImg']}' "  title="{$vo2['itemName']}" alt="{$vo2['itemName']}"/><i></i></div>
+                  {else}
+                  <div class='j-option j-selected' data-val="{$vo2['itemId']}">{$vo2['itemName']}<i></i></div>
+                  {/if}
+               {/volist}
+               </div>
+               <div class='wst-clear'></div>
+             </div>
+             {/volist}
+             {/if}
+          </div>
+          <div class='buy'>
+            <div id='timeOutBox' class='time-out' {if $goods['status']!=-1}style='display:none'{/if}>
+              <i></i><span class='text'>拍卖结束</span>
+            </div>
+            {if $goods['status']!=-1}
+              {/*支付保证金才显示代码*/}
+              {if $goods['payMoney']==0}
+              <div id='payBox' class='item'>
+                <a href='javascript:payCaution({$goods['auctionId']})' class='caution {if $goods['status']!=1}out{/if}'>
+                  <span class="icon"></span>
+                  <span class='text'>交保证金报名</span>
+                </a>
+              </div>
+              {else}
+              <div class='item'>
+                <div class='dt'>竞拍价：</div>
+                <div class='dd'>
+	                <a href='#none' class='buy-btn' id='buy-reduce' style='color:#ccc;' onclick='javascript:WST.changeIptNum(-10,"#payPrice","#buy-reduce,#buy-add")'>-</a>
+	                <input type='text' data-min="{$goods['currPrice']}" data-max='100000000000' id='payPrice' class='buy-num' value='{$goods['currPrice']+$goods['fareInc']}' data-min='1' autocomplete="off" onkeyup='WST.changeIptNum({$goods['fareInc']},"#payPrice","#buy-reduce,#buy-add")' onkeypress="return WST.isNumberKey(event);" maxlength="3"/>
+	                <a href='#none' class='buy-btn' id='buy-add' onclick='javascript:WST.changeIptNum({$goods['fareInc']},"#payPrice","#buy-reduce,#buy-add")'>+</a>
+                    &nbsp; &nbsp;（每次加价幅度：￥{$goods['fareInc']}）
+                </div>
+              </div>
+              <div class='item' style='padding-left:75px;margin-top:20px;'>
+               {if $goods['read'] || $goods['status']==-1 || $goods['status']==0 }
+                 <a id='buyBtn' href='javascript:void(0);' class='buyBtn un-buy'>我要出价</a>
+               {else}
+                 <a id='buyBtn' href='javascript:addAcution()' class='buyBtn'>我要出价</a>
+               {/if}
+              </div>
+              {/if}
+              <div class='item' style='padding-top:15px;padding-left:70px;color:red'>
+              （*拍卖结束后请在{$endPayDate}日内支付货款）
+              </div>
+             <div style="clear: both;"></div>
+            {/if}
+          </div>
+   </div>
+   <div class='shop-intro'>
+      <div class='title'>{$shop['shopName']}</div>
+      <div class='body'>
+            <div class='totalScore'><img class="shopsImg" data-original="__ROOT__/{$shop['shopImg']}" title="{$shop['shopName']}" style="width:75px;height:75px;"></div>
+            <div class='itemScore'>商品评价：{if ($shop['goodsScore']!=0)}{$shop['goodsScore']}{else /}5{/if}</div>
+            <div class='itemScore'>服务评分：{if ($shop['serviceScore']!=0)}{$shop['goodsScore']}{else /}5{/if}</div>
+            <div class='itemScore'>物流速度：{if ($shop['timeScore']!=0)}{$shop['goodsScore']}{else /}5{/if}</div>
+      </div>
+      <div class='footer'>
+             <a class="home" href='{:Url("home/shops/home","shopId=".$shop["shopId"])}' target='_blank'>进店逛逛</a>
+                   {if ($goods['favShop']>0)}
+             <a class="j-fav" href='javascript:void(0);' onclick='WST.cancelFavorite(this,1,{$shop["shopId"]},{$goods['favShop']})'>已关注</a>
+                   {else}
+             <a class="j-fav2" href='javascript:void(0);' onclick='WST.addFavorite(this,1,{$shop["shopId"]},{$goods['favShop']})'>关注店铺</a>
+                   {/if}
+             <div class='wst-clear'></div>
+      </div>
+      <div style='width:195px;height:150px;float:right;margin-top:10px'>
+        <div id='qrcode' style='width:125px;height:125px;padding-left:30px'></div>
+        <div style='text-align: center;width:195px;'>微信端扫购有惊喜</div>
+      </div>
+      <div style="margin-top:10px;float: right;">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_tqq"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_cqq"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>      
+        </div>
+        <div style="clear: both;"></div>
+        </div>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <script type="text/javascript">
+		var jiathis_config = {
+				url:  '{$shareInfo["link"]}',
+				title:'{$shareInfo["title"]}',
+				summary:'{$shareInfo["desc"]}',
+				imageUrl:'{$shareInfo["imgUrl"]}',
+				slide:{
+					divid:'jiathis_main',
+					pos:'left'
+				}
+		};
+	</script>
+    <div style="clear: both;"></div>
+</div>
+<div class='wst-w'>
+   <div class='wst-container'>
+       <div class='wst-side'>
+           
+		   <div class="goods-side">
+				<div class="guess-like">
+					<div class="title">热门拍卖</div>
+					{volist name='hot_auctions' id='ha'}
+					<div class="item">
+						<div class="img"><a target='_blank' href="{:addon_url('auction://goods/detail','id='.$ha['auctionId'])}"><img title="{$ha['goodsName']}" alt="{$ha['goodsName']}" src="__ROOT__/{:WSTImg($ha['goodsImg'])}"></a></div>
+						<div class="p-name"><a class="wst-hide wst-redlink">{$ha['goodsName']}</a></div>
+						<div class="p-price">￥{$ha['currPrice']}</span></div>
+					</div>
+					{/volist}
+				</div>
+			</div>
+		</div>
+		<div class='goods-desc'>
+        <div class='auction-img'>
+        <img src='__ROOT__/addons/auction/view/home/index/img/pm-flow.png'/>
+        </div>
+		    <div id='auctionTab' class="wst-tab-box">
+				<ul class="wst-tab-nav">
+				   <li>拍品介绍</li>
+				   <li>出价记录</li>
+           <li>拍卖须知</li>
+				</ul>
+			    <div class="wst-tab-content" style='width:99%;margin-bottom: 10px;min-height:800px;'>
+			       <div class="wst-tab-item" style="position: relative;">
+			       {$goods['auctionDesc']|htmlspecialchars_decode}
+			       </div>
+             <script id="tblist" type="text/html">
+               {{# for(var i = 0; i < d.length; i++){ }}
+                 <tr>
+                   <td>{{i+1}}</td>
+                   <td>{{d[i]['loginName']}}</td>
+                   <td>{{d[i]['payPrice']}}</td>
+                   <td>{{d[i]['createTime']}}</td>
+                   <td>{{#if(d[i]['isTop']==1){}}<span class="lbel lbel-success">最高价</span>{{#}else{}}<span class="lbel lbel-gray">出局</span>{{#}}}</td>
+                 </tr>
+               {{# } }}
+               </script>
+			       <div class="wst-tab-item" style="position: relative;display:none;">
+               <table width='100%' class='auction-logs' cellspacing='0'>
+                 <tr>
+                   <th width='50'>&nbsp;</th><th width='250'>竞拍人</th><th width='250'>竞拍价</th><th>竞拍时间</th><th width='150'>&nbsp;</th>
+                 </tr>
+                 <tbody id='auction-log-box'></tbody>
+                 <tr><tr><td colspan="4" align="center" style='padding-top:5px;'><div id='pager'></div></td></tr></tr>
+               </table>
+			       </div>
+             <div class="wst-tab-item" style="position: relative;display:none;">
+               {$goods['article']|htmlspecialchars_decode}
+             </div>
+		    </div>
+		</div>	
+		<div class='wst-clear'></div>
+	</div>
+	<div class='wst-clear'></div>
+</div>
+<div id="aaa" style="display: none;">
+	<a id="blank" href="#" target="_blank" style="display: none;"></a>
+	<div style="padding: 50px;">
+		<div style="float: left;width: 80px; "><img src="__ROOT__/addons/auction/view/home/index/img/payloading.gif"/></div>
+		<div style="float: left;width: 400px; line-height: 30px;">
+			<div>支付完成前，请不要关闭此支付验证窗口。</div>
+			<div>支付完成后，请根据您支付的情况点击下面按钮。</div>
+		</div>
+		<div class="wst-clear"></div>
+	</div>
+</div>
+{include file="$LAYOUT_HOME_RIGHT_CART"/}
+{/block}
+{block name="footer"}
+	{include file="$LAYOUT_HOME_FOOTER" /}
+{/block}
+{block name="js"}
+<script>
+var goodsInfo = {auctionId:{$goods['auctionId']},id:{$goods['goodsId']}}
+</script>
+<script type='text/javascript' src='__STYLE__/js/cloudzoom.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/auction/view/home/index/js/time.js?v={$v}'></script>
+<script type='text/javascript' src='__ROOT__/addons/auction/view/home/index/js/goods.js?v={$v}'></script>
+<script type='text/javascript' src='__STYLE__/js/qrcode.js?v={$v}'></script>
+<script>
+$(function(){
+	var qr = qrcode(10, 'M');
+	var url = '{:addon_url("auction://goods/wxdetail","","html",true)}?id={$goods["auctionId"]}';
+	qr.addData(url);
+	qr.make();
+	$('#qrcode').html(qr.createImgTag());
+});
+</script>
+{/block}

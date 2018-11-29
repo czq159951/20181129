@@ -1,0 +1,131 @@
+#wst-slide .wst-slide-itemswrap,#wst-slide .wst-slide-items,#wst-slide .wst-slide-items li{height:320px;overflow:hidden}
+.wst-slide-controls{position:absolute;width:200px;text-align:right;top:-40px;right:50%}
+.wst-slide-controls span{width:24px;height:4px;text-align:center;display:inline-block;line-height:24px;background-color:#333;color:white;cursor:pointer}
+.wst-slide-controls .curr{background-color:#e13335;color:white;cursor:pointer}
+.wst-slide{position:relative;top:2px}
+.wst-slide-numbox{width:1200px;margin:0 auto;height:0;position:relative;z-index:3}
+.wst-slide-items{min-width:1200px}
+
+.wst-tab-box{overflow:hidden;border-right:1px solid #eee;height:auto;margin:0 auto;background:#fff}
+.wst-tab-nav{overflow-y:hidden;margin:0;padding:0;height:35px;top:0;z-index:30;background:#fff;width:100%;border-bottom:1px solid #eee;border-left:1px solid #eee}
+.wst-tab-nav li{width:83px;cursor:pointer;float:left;margin:0;list-style:none;border:1px solid #eee;border-bottom:0;border-left:none;line-height:34px;text-align:center;color:#000;padding-left:10px;padding-right:10px}
+.wst-tab-nav .on{border-top:2px solid #ff2704;border-bottom:1px solid #fff;color:#ff2704;font-weight:bold}
+.wst-tab-content{padding:5px;width:99%;height:252px;border:1px solid #eee;border-top:0;background:#FFF}
+#wst-right-news{width:100%;height:30px;background:#df2002;line-height:25px;color:#fff}
+#wst-right-news>p{float:left;margin-left:12px;font-weight:bold}
+#wst-right-news>a{display:block;float:right;color:#fff;margin-right:5px}
+#wst-right-new-list{height:252px;background-color:#fff}
+#wst-right-new-list>div{width:190px;height:23px;line-height:25px;padding-left:10px;white-space:nowrap;text-overflow:ellipsis;-o-text-overflow:ellipsis;overflow:hidden;list-style-type:disc}
+#wst-right-new-list>div>a{color:#605e5e}
+#wst-right-new-list>div>a:hover{color:#df2002}
+.apply-btn{background:url(../img/apply.png) no-repeat 0 0;background-size:cover;display:block;width:180px;height:60px;margin:20px auto 10px}
+.shop-login{margin-left:60px;height:28px;display:block;color:#999}
+.loginbnt{width:65px;display:inline-block;line-height: 25px;border:1px solid #333; }
+.registbnt{width:65px;display:inline-block;line-height: 25px;border:1px solid #333; }
+.hello{line-height: 50px;}
+
+.ws-left-user{text-align:center;}
+
+.ws-left-user .top img{width:100px;height:100px;border-radius:1000px;border-radius: 1000px;}
+.ws-left-user .top .userphoto{
+  margin: 0 auto;
+  margin-top:25px;text-align:center;
+  width:100px;height:100px;border-radius:1000px;border-radius: 1000px;  border: 5px solid transparent;
+  background-clip: padding-box,border-box;
+  background-origin: padding-box,border-box;
+  background-image: linear-gradient(45deg,#fff,#fff),linear-gradient(0deg,#660719,#F71741);
+}
+.ws-left-user .top .uname{height:23px;line-height:25px;width:100px;margin:0 auto;margin-top:15px;text-align:center;color:#ff2704;font-size:14px;font-family:"microsoft yahei";text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.ws-left-user .top .sign{display:block;width:165px;height:30px;line-height:30px;margin:0 auto;margin-top:10px;color:#fff;background-color:#e23c3d;border:1px solid #d63300;cursor:pointer;border-radius:5px;box-shadow:0 2px 0 #a91d00;position:relative;-webkit-transition:all .2s linear;transition:all .2s linear}
+.ws-left-user .top .sign:hover{background-color:#ee4419}
+.ws-left-user .top .sign:focus{outline:0}
+.ws-left-user .top .sign .plus{position:absolute;top:0;width:100%;left:0;font-size:18px;color:#f4cf00;font-style:normal;opacity:0;text-align:center;-webkit-transition:all .5s linear;transition:all .5s linear}
+.ws-left-user .top .active .plus{top:-36px;opacity:1}
+.ws-left-user .top .actives .plus{top:-36px;opacity:0}
+.ws-left-user .top .actives,.ws-left-user .top .actives:hover{color:#747171;background-color:#eee;border:1px solid #ddd;box-shadow:0 2px 0 #ddd}
+.ws-left-user .bottom .left{float:left;width:104px;margin-top:10px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;line-height: 20px;border-right:1px solid #ddd;}
+.ws-left-user .bottom .right{float:right;width:104px;margin-top:10px;line-height: 20px;}
+.currentscore{font-size: 18px;color:#ff2704; }
+
+.wst-lbox{position:absolute;top:-310px;width:210px;height:300px;background:#fff;}
+.wst-rbox{position:absolute;top:-310px;right:0;width:210px;height:300px;background:#fff;}
+
+.integral-head{width:1200px;margin-left: auto;margin-right: auto;margin-top:10px;color:#999;}
+.integral-head div.item{float:left;margin-right:6px;position:relative;}
+.integral-head .arrow{float:left;position: relative;top:5px;padding-right:12px;font-style: normal;}
+.integral-head .item .link{color:#666;float:left;border:0px;margin-right:5px;height:22px;line-height: 22px;}
+.integral-catbox{background-color:#F8F8F8;}
+.integral-selector{padding-top:20px;padding-bottom:10px;width:1200px;margin-left: auto;margin-right: auto;margin-top:10px; }
+.selector-head{width:100px;float:left;text-align: right;}
+.selector-item{float:left;}
+.selector-item li{float:left;margin-right:10px;margin-bottom:10px;width:140px;}
+.selector-item .curr{border-radius: 0.25em;color: #DF2003;}
+.goods-main, .goods-list{width:100%;}
+.goods-list .goods{width:287px;margin:5px 4px 5px 6px;border:1px solid #e5e5e5;float:left;height:430px;}
+.goods-list .goods .img{overflow: hidden;width:287px;margin:0 auto;text-align:center;vertical-align:middle;display:block;position:relative; display:table-cell;}
+.goods-list .goods .img a{display:table-cell;vertical-align:middle;width:287px; height:287px;} 
+.goods-list .goods .img a img{max-width:287px;max-height:287px;cursor: pointer;transition: all 0.6s;} 
+.goods-list .goods .img a img:hover{transform: scale(1.4);} 
+.goods-list .goods .goods-txt,.goods-list .goods .goods-txt2{height:115px;}
+.goods-list .goods .p-price{padding:0px 10px;font-weight: bold;width:190px;overflow: hidden;}
+.goods-list .goods .saleNum{float:left;padding-left:10px;width:80px;}
+.goods-list .goods .integral-showTime{float:right;width:150;padding-right:10px;text-align: right;}
+.p-price .integral-price{color:#ff3c3c;font-size:24px;line-height: 36px;}
+.p-price .integral-price em{font-size: 16px;}
+.p-price .integral-price2{color:#ff3c3c;font-size:18px;line-height: 36px;font-weight: normal;}
+.p-price .market-price{text-decoration:line-through;color:#ccc;font-size:12px;}
+.goods-list .goods .p-hsale{padding:5px 12px 5px 0;width:73px;float:right;text-align: right;line-height: 30px}
+.goods-list .goods .p-hsale span{font-weight: bold;color:#df2003;}
+.goods-list .goods .p-hsale .p-add-cart{
+    line-height: 24px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    display: block;
+    width: 75px;
+    height: 24px;
+    text-align: center;
+    background: #ff6a53;
+    color: #ff6a53;
+    float: right;
+}
+.goods-list .goods .p-hsale .p-add-cart:hover{background: #ff6a53;color: white;}
+.goods-list .goods .p-name{height: 40px;line-height: 20px;overflow: hidden;width:277px;padding-left:10px;}
+
+.p-add-cart {
+  background: #df2003;
+  display: block;
+  width: 188px;
+  height: 28px;
+  margin: 0 auto;
+  border-radius: 28px;
+  color: #fff;
+  font-family: "microsoft yahei";
+  font-size: 14px;
+  text-align: center;
+  line-height: 28px;
+}
+.p-add-cart:hover {
+  background: #ff3c3c;
+  display: block;
+  width: 188px;
+  height: 28px;
+  margin: 0 auto;
+  border-radius: 28px;
+  color: #fff;
+  font-family: "microsoft yahei";
+  font-size: 14px;
+  text-align: center;
+  line-height: 28px;
+}
+
+.p-goods-over{
+	background: #BEBBB5;
+  display: block;
+  width: 188px;
+  height: 28px;
+  margin: 0 auto;
+  border-radius: 28px;
+  color: #fff;
+  font-family: "microsoft yahei";
+  font-size: 14px;
+  text-align: center;
+  line-height: 28px;
+}

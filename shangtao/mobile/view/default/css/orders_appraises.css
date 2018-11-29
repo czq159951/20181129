@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+.item-head{margin-top:5px;padding:5px 10px;background:#fff;border-bottom:1px solid #eaeaea}
+.item-head .shop{position: relative;padding-left:20px;font-size:.15rem;}
+.item-head .shop i{position: absolute;display: block;top: 2px;left: 0;width: 19px;height: 19px;background: url(../img/icon_dp.png) 0px 1px no-repeat;background-size: 87%;}
+.border-b{padding:5px 10px 10px 10px;border-bottom:1px solid #eaeaea}
+.g-Img{max-width:60px;max-height:60px;padding-top:5px}
+.g-Img img{max-width:60px;max-height:60px;}
+.g-gInfo{padding:5px}
+.g-gName{max-height:40px;line-height: 20px;font-size:.14rem;}
+.g-gSpec{color:#ccc;font-size:.13rem;}
+.order-tr{text-align:right;line-height:60px}
+.order-tr .appraise{float: right;margin-top:20px;font-size:.13rem;color: #f19325;width:30px;height:25px;background: url(../img/evaluate.png) 0px 0px no-repeat;background-size: 72%;}
+.g-item{background:#fff}
+.appraise-title{padding-left:10px}
+.appraise-name{padding-right:10px;height: 0.42rem;line-height:0.21rem;}
+.appraise-box{margin-bottom:10px;padding-top:10px;background:#fff;margin-top:5px;font-size:.14rem;border-bottom:1px solid #eaeaea}
+.score{color: #f19325;}
+.start-on,.start-not{display:inline-block;width:20px;height:25px;background:url(../img/img_dpjpj.png) no-repeat}
+.start-on{background-position:1px 4px;background-size:265%}
+.start-not{background-position:-34px 4px;background-size:265%}
+.appraisesContent{width:100%;min-height:100px;resize:none}
+.post-btn button{height: 38px;line-height: 38px;font-size: 0.15rem;color: #fff;background: #e00102;border-radius: 3px;border-bottom: 1px solid #e00102;}
+.post-btn{margin:0;background:#fff}#appraisesBox{margin-top:15px}
+.complainFileBox{margin-left:10px;min-height:65px}
+.complainFileBox li{float:left;margin-right:5px;max-height:60px}
+.complainFileBox img{max-width:50px;max-height:50px}
+.edit_charts{position:relative}
+.del-btn{position:relative;top:-43px;left:0}
+.ui-icon,[class^="ui-icon-de"]{font-size:20px;position:absolute;left:32px;top:-1px;color:red;line-height:17px}
+.webuploader-pick {padding: 5px 6px!important;}

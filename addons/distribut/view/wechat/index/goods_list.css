@@ -1,0 +1,124 @@
+@CHARSET "UTF-8";
+.wst-gol-adsb{
+	padding:10px;
+	height: 110px;
+	background:#ffffff;
+}
+.wst-gol-adsb p{
+	float: left;
+    width: 100%;
+	font-size:0.15rem;
+	color:#de0301;
+	text-align: center;
+}
+.wst-gol-img{
+	float: left;
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    position: relative;
+}
+.wst-gol-img a{
+	width: 100%;
+    height: 100px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.wst-gol-img a img{
+	max-width: 100px;
+    max-height: 100px;
+}
+.wst-shl-head{
+	background:#ffffff;
+	font-size:0.158rem;
+	color:#6a6b6d;
+}
+.wst-shl-head .sorts{
+	position: relative;
+}
+.wst-shl-head .sorts p{
+	height: 22px;
+	line-height: 22px;
+	padding:10px 15px 10px 0px;
+	text-align:center;
+}
+.wst-shl-head .active{
+	color:#de0202;
+	border-bottom: 2px solid #de0202;
+}
+.wst-shl-head .sorts i{
+	width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 5px;
+    top: 13px;
+}
+.wst-shl-head .sorts .up{
+	background: url(../../images/img_jgsx.png) 0px -19px no-repeat;
+	background-size: 285%;
+}
+.wst-shl-head .sorts .up2{
+	background: url(../../images/img_jgsx.png) -28px -19px no-repeat;
+	background-size: 285%;
+}
+.wst-shl-head .sorts .down{
+	background: url(../../images/img_jgsx.png) 0px 2px no-repeat;
+    background-size: 285%;
+}
+.wst-shl-head .sorts .down2{
+	background: url(../../images/img_jgsx.png) -28px 2px no-repeat;
+	background-size: 285%;
+}
+.wst-in-goods{
+	float:left;
+	width: 44.666666%;
+	padding:5px;
+	margin:5px 0px 5px 5px;
+	font-size:0.158rem;
+	background:#ffffff;
+	box-shadow: 0 1px 2px #e0e0e0;
+}
+.wst-in-goods .img{
+	float: left;
+    width: 100%;
+    height: 150px;
+    text-align: center;
+    vertical-align: middle;
+    display: block;
+    position: relative;
+}
+.wst-in-goods .img a{
+	width: 100%;
+    height: 150px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.wst-in-goods .img a img{
+	max-width: 150px;
+    max-height: 150px;
+}
+.wst-in-goods .name{
+	float: left;
+	width: 100%;
+	height: 42px;
+	margin-top:5px;
+}
+.wst-in-goods .info{
+	float: left;
+	width: 100%;
+	margin-top:6px;
+}
+.wst-in-goods .info .price{
+	float: left;
+	font-size:0.175rem;
+	color:#e00102;
+}
+.wst-in-goods .info .deal{
+	float:right;
+	color:#a0a0a0;
+}
+.pd0{
+	padding-right:6px !important;
+}

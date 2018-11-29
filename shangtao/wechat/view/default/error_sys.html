@@ -1,0 +1,21 @@
+{extend name="default/base" /}
+{block name="title"}系统出错了 - {__block__}{/block}
+{block name="header"}
+    {php}$Title = "系统出错了"{/php}
+	{include file="default/header" /}
+{/block}
+{block name="main"}
+<section class="ui-container" id="errorBg" style="height:69%;position:relative;">
+	<div class="ui-btn-wrap">
+	    <button class="ui-btn-s" id="errorBtn" onclick="history.back()">
+	        返回上一页
+	    </button>
+	</div>
+</section>
+
+{/block}
+{block name="js"}
+<script>
+$(function(){WST.initFooter();})
+</script>
+{/block}

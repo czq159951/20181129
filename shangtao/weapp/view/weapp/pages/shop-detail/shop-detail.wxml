@@ -1,0 +1,54 @@
+<view class='container'>
+ <view class='wst-border'>
+  <view class='background' style="background:url({{shop.shopMoveBanner?domain+shop.shopMoveBanner:domain+'shangtao/weapp/view/weapp/image/img_dpbg.png'}});background-size:cover;">
+   <view class='head'><image src='{{domain}}{{shop.shopImg}}'></image></view>
+   <view class='name'>{{shop.shopName}}</view>
+   <view class='action'>
+    <view class='relation'  bindtap='toCall'>
+     <view class='image' ><image src='/image/icon_kf.png' mode='aspectFit'></image></view>联系卖家</view>
+    <view class='qattension' bindtap="selectStatus">
+      <block  wx:if="{{isFavor<=0}}" >
+      <view class='image' ><image src='/image/icon_gz.png'></image></view>
+      <view class='text3'>关注店铺</view>
+     </block>
+     <block wx:else >
+      <view class='image' ><image src='/image/icon_gz.png'></image></view>
+     <view class='text3' style='color:red;'>已关注</view>
+     </block>
+    </view>
+    
+   </view>
+   <view class='grade'>
+    <view class='left'>商品评分：{{shop.scores.goodsScore}}</view>
+    <view class='between'>时效评分：{{shop.scores.timeScore}}</view>
+    <view class='right'>服务评分：{{shop.scores.serviceScore}}</view>
+   </view>
+  </view>
+  <view class='wst-strip wst-top'>
+   <view class='title'>商家地址:{{shop.shopAddress}}</view>
+  </view>
+  <view class='wst-strip'>
+   <view class='title'>商家电话:{{shop.shopTel}}</view>
+  </view>
+  <view class='wst-strip'>
+   <view class='title'>服务时间:{{shop.serviceStartTime}}-{{shop.serviceEndTime}}</view>
+  </view>
+  <view class='wst-strip'>
+   <view class='title' wx:if="{{shop.isInvoice == 0}}">发票说明:不支持发票</view>
+   <view class='title' wx:else>发票说明:可开发票</view>
+  </view>
+  <view class='wst-oq' style="display:none;">
+   <view class="container-box">
+    <view class="img-box">
+        <canvas bindtap="previewImg" hidden="{{canvasHidden}}" style="width: 386rpx;height: 386rpx;background:#F6F6F8;margin:0 auto;" canvas-id="mycanvas"/>
+    </view>
+   </view>
+  </view>
+  <view class="wst-sh-button">
+  <view class='button' bindtap='toAllgoods'>
+   <view class='image'><image src='/image/icon_dpsp.png'></image></view>
+   <view class='content'>查看店铺所有商品</view>
+  </view>
+  </view>
+ </view>
+</view>

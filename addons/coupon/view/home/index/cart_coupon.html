@@ -1,0 +1,37 @@
+<link href="__ROOT__/addons/coupon/view/home/index/coupon.css" rel="stylesheet">
+<script type='text/javascript' src='__ROOT__/addons/coupon/view/home/index/index.js'></script>
+{if count($coupons)>0}
+<div class='shop-coupon'>
+	<a href='javascript:showShowCoupons({$shopId})' class='coupon-btn'></a>
+	<div class='promotion' id='promotion_{$shopId}' show='0'>
+		<div class='promotion-tit'></div>
+		<div class='promotion-cont'>
+			<div class='shop-coupon-title'>已领取 <span id='shopCouponNum_{$shopId}'>0</span> 张优惠券</div>
+			<ul id='shopCouponPanel_{$shopId}' class='cart-coupon'></ul>
+		</div>
+	</div>
+</div>
+<script id="couponlist_{$shopId}" type="text/html">
+{{# for(var i=0;i<d.length;++i){}} 
+<div class='cart-coupon'>
+    <div class='left'>
+       <s class='border'></s>
+       <span class='price'>￥{{d[i].couponValue}}</span>
+       <b class='border'></b>
+    </div>
+    <div class='middle'>
+       <div class='row'>
+       {{#if(d[i].useCondition==0){}}
+           无限制
+	   {{#}else{}}
+	       满{{d[i].useMoney}}减{{d[i].couponValue}}
+	   {{#}}}
+       </div>
+       <div>{{d[i].startDate}}至{{d[i].endDate}}</div>
+    </div>
+    <div class='right'><a href='javascript:receive({{d[i].couponId}},{$shopId})'>&nbsp;领&nbsp;取&nbsp;</a></div>
+</div>
+{{#}}}
+</script>
+{/if}
+

@@ -1,0 +1,71 @@
+{extend name="$LAYOUT_MOBILE_BASE" /}
+{block name="title"}我的 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__MOBILE__/css/user.css?v={$v}">
+<link rel="stylesheet"  href="__ROOT__/addons/distribut/view/mobile/users/distribut.css?v={$v}">
+{/block}
+{block name="header"}
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>用户列表</h1>
+    </header>
+{/block}
+{block name="main"}
+    <input type="hidden" name="" value="10" id="pageSize" autocomplete="off">
+	    <input type="hidden" name="" value="0" id="currPage" autocomplete="off">
+	    <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+	    <input type="hidden" name="" value="0" id="type" autocomplete="off">
+        <section class="ui-container">
+			<p class="wst-sha-u">推广用户数：{$user["userCnt"]}</p>
+        	<ul class="ui-tab-content">
+		        <li id="data-list"></li>
+		    </ul>
+        </section>
+{/block}
+{block name="footer"}
+
+{/block}
+{block name="js"}
+<script src='__ROOT__/addons/distribut/view/mobile/users/distribut.js?v={$v}'></script>
+
+<script id="list" type="text/html">
+{{# if(d && d.length>0){ }}
+{{# for(var i=0; i<d.length; i++){ }}
+	<div class="ui-row-flex wst-sha-user">
+		<div class="ui-col"><img src="{{d[i]['userPhoto']}}"></div>
+		<div class="ui-col ui-col-3">
+			<p class="name">
+				{{d[i]['userName']?d[i]['userName']:d[i]['loginName']}}
+				<span style='float:right;font-weight:normal;'>用户数：{{d[i]['userCnt']}}</span>
+			</p>
+			<p class="time">{{d[i]['createTime']}}</p>
+		</div>
+	</div>
+{{# } }}
+{{# }else{ }}
+	<div class="wst-prompt-icon"><img src="__MOBILE__/img/nothing-relevant.png"></div>
+	<div class="wst-prompt-info">
+	<p>对不起，没有相关记录。</p>
+	</div>
+{{# } }}
+</script>
+
+<script>
+
+$(function(){
+	getusersList();
+    var currPage = totalPage = 0;
+    var loading = false;
+    $(window).scroll(function(){
+        if (loading) return;
+        if ((5 + $(window).scrollTop()) >= ($(document).height() - $(window).height())){
+            currPage = Number( $('#currPage').val() );
+            totalPage = Number( $('#totalPage').val() );
+            if( totalPage > 0 && currPage < totalPage ){
+            	getusersList();
+            }
+        }
+    });
+	
+});
+</script>
+{/block}

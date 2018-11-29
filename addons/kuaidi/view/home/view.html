@@ -1,0 +1,27 @@
+<link href="__ROOT__/addons/kuaidi/view/home/express.css" rel="stylesheet">
+<div class='order-box'>
+	<div class='box-head'>物流信息</div>
+	<table class='wst-form' id="wst-express">
+		<tr>
+			<th width='200' class="title">时间</th>
+			<th class="title">地点和跟踪进度</th>
+		</tr>
+		<?php if(isset($expressLogs['data'])){ ?>
+		{volist name="expressLogs['data']" id="vo"}
+		<tr>
+			<th width='200'>{$vo['time']}  {:WSTgetWeek($vo['time'])}</th>
+			<td>{$vo['context']}</td>
+		</tr>
+		{/volist}
+		{empty name="$expressLogs['data']"}
+		<tr>
+			<th colspan="2">物流单暂无结果！</th>
+		</tr>
+		{/empty}
+		<?php }else{ ?>
+		<tr>
+			<th colspan="2">物流单暂无结果！</th>
+		</tr>
+		<?php } ?>
+	</table>
+</div>

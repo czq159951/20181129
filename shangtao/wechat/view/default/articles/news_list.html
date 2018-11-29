@@ -1,0 +1,184 @@
+{extend name="default/base" /}
+{block name="title"}商城快讯 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/articles.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>商城快讯</h1>
+    </header>
+{/block}
+{block name="main"}
+<input type="hidden" name="" value="" id="currPage" autocomplete="off">
+<input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+<input type="hidden" name="" value="{$catId}" id="catId" autocomplete="off">
+    
+    <section class="ui-container" id="shopBox">
+      <div class="ui-tab">
+          <ul class="ui-tab-nav order-tab">
+            {volist name="catInfo" id="vo"}
+                <li class="tab-item {if $catId==$vo.catId}tab-curr{/if}" catId="{$vo['catId']}">{$vo['catName']}</li>
+            {/volist}
+          </ul>
+    </div>
+
+        <section class="ui-container" id="newsListBox">
+        
+        </section>
+         
+    <div style="height:50px;"></div>
+    </section>
+
+    <script id="newsList" type="text/html">
+	{{# var imgSuffix = "{:WSTConf('CONF.wstMobileImgSuffix')}";}}
+    {{# for(var i=0;i<d.length;i++){ }}
+      {{# if(d[i].TypeStatus==1){ }}
+             <div class="news-item wst-model" onclick="viewNews({{d[i].articleId}})" >
+              <div class="ui-row-flex">
+                  <div class="ui-col">
+                    <div class="img j-imgAdapt wst-bor-mix-img" >
+                      <a href="javascript:void(0);" >
+                         {{# if(d[i].coverImg) { }}
+                         <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{WST.replaceImg(d[i].coverImg,imgSuffix)}}">
+                         {{# } else { }}
+                         <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" >
+                         {{#   } }}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="ui-col ui-col-3" >
+                    <div class="ui-row-flex ui-row-flex-ver wst-info" >
+                        <div class="ui-nowrap-multi" style="-webkit-line-clamp: 1;">{{d[i].articleTitle}}</div>
+                        <div class="ui-nowrap-multi wst-mix-cont">{{d[i].articleContent}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-row-flex ui-whitespace wst-model wst-mix-info ">
+                  <div class="ui-col ui-col ui-flex-pack-center ui-flex-align-start">• 已有{{d[i].visitorNum}}人浏览</div>
+                  <div class="ui-col ui-col ui-flex-pack-center ui-flex-align-end wst-right-align">• {{d[i].createTime}}</div>
+                </div>
+              </div>
+        {{# } }}
+        {{# if(d[i].TypeStatus==2){ }}
+             <div class="news-item wst-model" onclick="viewNews({{d[i].articleId}})">
+              <div class="ui-row-flex">
+               <div class="ui-col ui-col-3">
+                 <div class="ui-row-flex ui-row-flex-ver wst-info" >
+                     <div class="ui-nowrap-multi" style="-webkit-line-clamp: 1;">{{d[i].articleTitle}}{{d[i].TypeStatus}}</div>
+                     <div class="ui-nowrap-multi wst-mix-cont">{{d[i].articleContent}}</div>
+                 </div>
+               </div>
+               <div class="ui-col">
+                <div class="img j-imgAdapt wst-bor-mix-img">
+                  <a href="javascript:void(0);" >
+                       {{# if(d[i].coverImg) { }}
+                       <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{WST.replaceImg(d[i].coverImg,imgSuffix)}}">
+                       {{# } else { }}
+                       <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}">
+                       {{#   } }}
+                  </a>
+                </div>
+               </div>
+              </div>
+              <div class="ui-row-flex ui-whitespace wst-model wst-mix-info ">
+                  <div class="ui-col ui-col ui-flex-pack-center ui-flex-align-start">• 已有{{d[i].visitorNum}}人浏览</div>
+                  <div class="ui-col ui-col ui-flex-pack-center ui-flex-align-end wst-right-align">• {{d[i].createTime}}</div>
+              </div>
+            </div>
+        {{# } }}
+        {{# if(d[i].TypeStatus==3){ }}
+             <div class="ui-row-flex ui-whitespace ui-row-flex-ver wst-model"  style="height:auto;overflow:hidden;" onclick="viewNews({{d[i].articleId}})">
+              <div class="wst-max-info">
+                    <div class="ui-nowrap-multi" style="-webkit-line-clamp: 1;" style="-webkit-line-clamp: 1;">{{d[i].articleTitle}}</div>
+              </div>
+              <div class="wst-max-info">
+                    <div class="ui-nowrap-multi wst-mix-cont" style="-webkit-line-clamp: 1;padding-top: 0px;" >{{d[i].articleContent}}</div>
+              </div>
+              <div class="max-img">
+                  <a href="javascript:void(0);">
+                     {{# if(d[i].coverImg) { }}
+                     <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{WST.replaceImg(d[i].coverImg,imgSuffix)}}">
+                     {{# } else { }}
+                     <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}">
+                     {{#   } }}
+                  </a>
+             </div>
+             <div class="max-remind wst-mix-info ui-row">
+                <div class="ui-col ui-col-50 ui-flex ui-flex-ver ui-flex-pack-center ui-flex-align-start">• 已有{{d[i].visitorNum}}人浏览</div>
+                <div class="ui-col ui-col-50 ui-flex ui-flex-ver ui-flex-pack-center ui-flex-align-end">• {{d[i].createTime}}</div>
+             </div>
+            </div>  
+        {{# } }}
+        {{# if(d[i].TypeStatus==4){ }}
+             <div class="news-item wst-model" onclick="viewNews({{d[i].articleId}})">
+              <div class="ui-row-flex" style="height:100px;">
+               <div class="ui-col">
+                 <div class="ui-row-flex ui-row-flex-ver wst-info" >
+                     <div class="ui-nowrap-multi" style="-webkit-line-clamp: 1;">{{d[i].articleTitle}}</div>
+                     <div class="ui-nowrap-multi wst-mix-cont" style="-webkit-line-clamp: 3;">{{d[i].articleContent}}</div>
+                 </div>
+               </div>
+               
+              </div>
+              <div class="ui-row-flex ui-whitespace wst-model wst-mix-info ">
+                  <div class="ui-col ui-col ui-flex-pack-center ui-flex-align-start">• 已有{{d[i].visitorNum}}人浏览</div>
+                  <div class="ui-col ui-col ui-flex-pack-center ui-flex-align-end wst-right-align">• {{d[i].createTime}}</div>
+              </div>
+            </div>
+        {{# } }}
+    {{# } }}
+    </script>
+    </div>
+
+
+
+
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 分类层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title"><span>商城快讯</span><i class="ui-icon-close-page" onclick="javascript:dataHide();"></i><div class="wst-clear"></div></div>
+    <div class="content" id="content">
+
+        <div class="ui-whitespace news-content-box">
+           <div class="ui-nowrap ui-whitespace news-title" id="articleTitle"></div>
+           <div class="ui-whitespace news-time" id="createTime"></div>
+           <div class="ui-whitespace view-content" id="articleContent">
+            
+           </div>
+        </div>
+         <div class="wst-like ui-whitespace ui-flex ui-flex-pack-center"  id="like1"  onclick="javascript:like();">
+          <input type="hidden" name="" id="articleId" value=""  >
+          <span class="icon-like1"><p class="like_num" id="likeNum"></p></span>
+        </div>
+        <div class="wst-like ui-whitespace ui-flex ui-flex-pack-center"  id="like" >
+          <input type="hidden" name="" id="articleId" value=""  >
+          <span class="icon-like2"><p class="like_num" id="likeNum2"></p></span>
+        </div>
+
+    </div>
+</div>
+
+{/block}
+{block name="include"}
+{include file="default/dialog" /}<!-- 对话框模板 -->
+{/block}
+{block name="js"}
+<script>
+$(function(){
+  // Tab切换卡
+  $('.tab-item').click(function(){
+      $(this).addClass('tab-curr').siblings().removeClass('tab-curr');
+      var catId = $(this).attr('catId');
+      $('#catId').val(catId);
+      reFlashList();
+  });
+  {{if !empty($articleId) }}
+  viewNews({$articleId})
+  {{/if}}
+})
+</script>
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/articles/news_list.js?v={$v}'></script>
+{/block}

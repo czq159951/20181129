@@ -1,0 +1,33 @@
+<view class="container">
+<!--顶部轮播-->
+  <scroll-view class="wst-co-head">
+    <block wx:for="{{termData}}">
+    <view class="term {{item.types == types? 'active':''}}" data-types="{{item.types}}" bindtap='selected'>{{item.name}}</view>
+    </block>
+  </scroll-view>
+  <view class="wst-co-list">
+    <view class="list" wx:for="{{coupon}}" wx:for-item="co">
+        <view class="left">
+          <view class="coupon_left"></view>
+          <view class="coupon_left_main">
+              <view class="coupon_left_main_inner">
+                  <p class="coupon_left_txt1"><span class="yan">￥</span>{{co.couponValue}}</p>
+                  <p class="coupon_left_txt2">{{co.useCondition == 0? '无金额门槛':'满'+co.useMoney+'可用'}}</p>
+              </view>
+          </view>
+        </view>
+        <view class="right">
+          <p class="c_item_txt1">{{co.couponValue}}元优惠券</p>
+          <p class="c_item_txt2">{{co.useCondition == 0? '无金额门槛':'消费满'+co.useMoney+'立减'+co.couponValue+''}}</p>
+          <p class="c_item_txt3">{{co.shopName}}</p>
+          <p class="c_item_txt4">{{co.startDate}}~{{co.endDate}}</p>
+              <button class="c_item_button" bindtap='collar' data-couponid="{{co.couponId}}">{{(types == 1)? '已过期':(types == 2)? '已使用':'立即使用'}}</button>
+        </view>
+        <view class="wst-clear"></view>
+    </view>
+    <view  class='remind-model' wx:if="{{coupon==''}}">
+      <view class='image' ><image src='/addons/closure/coupon/image/nothing-coupon.png' class="img"></image></view>
+      <view class='content'>暂无相关优惠券 ~</view>
+    </view>
+  </view>
+</view>

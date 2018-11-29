@@ -1,0 +1,148 @@
+{extend name="default/base" /}
+{block name="title"}我的投诉 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/list_complains.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>我的投诉</h1>
+    </header>
+{/block}
+{block name="main"}
+    <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+    <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+    <section class="ui-container">
+    <script type="text/html" id="complainList">
+	<ul class="ui-row">
+    {{# for(var i=0;i<d.length;i++){ }}
+        <div class="complain-box">
+            <li class="ui-col ui-col-50" onclick="javascript:WST.intoShops({{d[i].shopId}});">{{d[i].shopName}}</li>
+            <li class="ui-col ui-col-50 c-tr">{{d[i].complainTime}}</li>
+            <div class="c-item" onclick="complainDetail({{d[i].complainId}})">
+                <li class="ui-col ui-col-75">订单号：{{d[i].orderNo}}</li>
+                <li class="ui-col ui-col-25 c-tr wst-co-status">{{d[i].complainStatus}}</li>
+            </div>
+            <div class="wst-clear"></div>
+        </div>
+        <div class="c-line"></div>
+    {{# } }}
+	</ul>
+    </script>
+	<div id="complain-list"></div>
+    </section>
+<script type="text/html" id="complainDetail">
+<ul class="ui-row com-detail-box">
+            <li class="ui-col ui-col-100 com-detail-big-title">投诉信息</li>
+            <li class="ui-col ui-col-25 com-detail-title">订单编号：</li>
+            <li class="ui-col ui-col-75">{{d.orderNo}}</li>
+
+            <li class="ui-col ui-col-25 com-detail-title">投诉内容：</li>
+            <li class="ui-col ui-col-75">{{d.complainContent}}</li>
+
+            <li class="ui-col ui-col-25 com-detail-title">投诉类型：</li>
+            <li class="ui-col ui-col-75">
+            {{# if (d.complainType==1){ }}
+                   承诺的没有做到
+            {{# } else if (d.complainType==2) { }}
+                   未按约定时间发货
+            {{# } else if (d.complainType==3) { }}
+                   未按成交价格进行交易
+            {{# } else if (d.complainType==4) { }}
+                   恶意骚扰                           
+            {{# } }}
+            </li>
+
+            <li class="ui-col ui-col-25 com-detail-title">附件：</li>
+            <li class="ui-col ui-col-75">
+            {{# if(d.complainAnnex){ }}
+                {{#  for(var c=0;c<d.complainAnnex.length;c++){  }}
+                    <img src="__ROOT__/{{d.complainAnnex[c]}}" style="width:60px;height:60px;" class="imgurl" onclick="javascript:getImg(this);">
+                {{# } }}
+            {{# }else{ }}
+                无
+            {{# } }}
+            </li>
+
+            <li class="ui-col ui-col-25 com-detail-title">投诉时间：</li>
+            <li class="ui-col ui-col-75">{{d.complainTime}}</li>
+        </ul>
+
+
+        {{# if (d.needRespond==1 && WST.blank(d.respondContent)!=''){  }}
+
+        <ul class="ui-row com-detail-box">
+            <li class="ui-col ui-col-100 com-detail-big-title">应诉信息</li>
+
+
+            <li class="ui-col ui-col-25 com-detail-title">应诉内容：</li>
+            <li class="ui-col ui-col-75">{{d.respondContent}}</li>
+
+
+            <li class="ui-col ui-col-25 com-detail-title">附件：</li>
+            <li class="ui-col ui-col-75">
+                {{# if(d.respondAnnex){ }}
+                    {{# for(var r=0;r<d.respondAnnex.length;r++){ }}
+                     <img src="__ROOT__/{{d.respondAnnex[r]}}" class="annex">
+                    {{# } }}
+                {{# }else{ }}
+                    无
+                {{# } }}
+            </li>
+            <li class="ui-col ui-col-25 com-detail-title">应诉时间：</li>
+            <li class="ui-col ui-col-75">{{d.respondTime}}</li>
+        </ul>
+        {{# } }}
+
+
+        <ul class="ui-row com-detail-box">
+            <li class="ui-col ui-col-100 com-detail-big-title">仲裁信息【
+              {{# if(d.complainStatus==0){ }}
+                    等待处理
+              {{# }else if(d.complainStatus==1){ }}
+                    等待应诉人回应
+              {{# }else if(d.complainStatus==2 || d.complainStatus==3){ }}
+                    等待仲裁
+              {{# }else if(d.complainStatus==4){ }}
+                     已仲裁                        
+              {{# } }}
+              】</li>
+
+            {{# if(d.complainStatus==4){ }}
+            <li class="ui-col ui-col-25 com-detail-title">仲裁结果：</li>
+            <li class="ui-col ui-col-75">{{d.finalResult}}</li>
+
+            <li class="ui-col ui-col-25 com-detail-title">仲裁时间：</li>
+            <li class="ui-col ui-col-75">{{d.finalResultTime}}</li>
+            {{# } }}
+        </ul>
+</script>
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 分类层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title"><span>投诉详情</span><i class="ui-icon-close-page" onclick="javascript:dataHide();"></i><div class="wst-clear"></div></div>
+    <div class="content" id="complainDetailBox">
+    </div>
+</div>
+
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/users/orders/list_complains.js?v={$v}'></script>
+{if(!empty($datawx))}
+<script src="{:request()->scheme()}://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+wx.config({
+    debug: false,
+    appId: '<?php echo WSTConf('CONF.wxAppId'); ?>', //公众号的唯一标识
+    timestamp: '<?php echo $datawx['timestamp'];?>', //生成签名的时间戳
+    nonceStr: '<?php echo $datawx['noncestr'];?>', //生成签名的随机串
+    signature: '<?php echo $datawx['signature'];?>',//签名
+    jsApiList: [ //需要使用的JS接口
+        'previewImage',
+    ]
+});
+</script>
+{/if}
+{/block}

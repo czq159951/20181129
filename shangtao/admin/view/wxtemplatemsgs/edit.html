@@ -1,0 +1,81 @@
+{extend name="base" /}
+{block name="js"}
+<script src="__ADMIN__/wxtemplatemsgs/wxtemplatemsgs.js?v={$v}" type="text/javascript"></script>
+{/block}
+{block name="main"}
+<form autocomplete='off'>
+<input type='hidden' id='id' class='ipt' value="{$object['id']}"/>
+<input type='hidden' id='tplCode' class='ipt' value="{$object['tplCode']}"/>
+<table class='wst-form wst-box-top layui-form'>
+  <tr>
+     <th width='120'>发送时机：</th>
+     <td>
+         {volist name=':WSTDatas("TEMPLATE_WX")' id='vo'}
+         {if $vo['dataVal']==$object['tplCode']}{$vo['dataName']}{/if}
+         {/volist}
+     </td>
+  </tr>
+  <tr>
+     <th>模板ID：</th>
+     <td>
+     <input type='text' id='tplExternaId' class='ipt' style='width:70%' maxLength='200' value='{$object['tplExternaId']}'>
+     </td>
+  </tr>
+  <tr>
+     <th>内容：</th>
+     <td>
+     <textarea id='tplContent' style='width:70%;height:100px;' class='ipt' maxLength='150'>{$object['tplContent']}</textarea>
+     </td>
+  </tr>
+   <tr>
+	     <th>是否开启：</th>
+	     <td>
+	     <input type="checkbox" {if $object['status']==1}checked{/if} value='1' class="ipt" id="isShow" name="seoMallSwitch" lay-skin="switch" lay-filter="isShow" lay-text="开启|关闭">
+	     </td>
+	  </tr>
+  <tr>
+     <th>参数设置：</th>
+     <td>
+     <div class='wst-toolbar'> 
+         <font color='red'>（双击表格修改参数及内容）</font>
+         <button type="button"  class='btn btn-success f-right' onclick='javascript:addNewRow()'><i class="fa fa-plus"></i>新增</button>
+         <div style='clear:both;'></div>
+     </div>
+     <div id='paramGrid'>
+       <table border='1' width='100%'>
+          <tr>
+            <td width='20%'>变量名</td>
+            <td width='73%'>内容</td>
+            <td width='50'>操作</td>
+          </tr>
+          <tbody id='paramlist'>
+          </tbody>
+       </table>
+       <script id="paramjs" type="text/html">
+       {{# for(var i = 0; i < d.length; i++){ }}
+       <tr id='tr_{{i}}'>
+         <td><input type="text" style="width:92%" id="fiedlCode_{{i}}" value='{{d[i].fieldCode}}'/></td>
+         <td><input type="text" style="width:98%" id="fiedlVal_{{i}}" value='{{d[i].fieldVal}}'/></td>
+         <td>
+         <input type="button" value="删除" class="btn btn-danger" onclick="javascript:deleteRow({{i}})">
+         </td>
+       </tr>
+       {{# } }}
+       </script>
+     </div>
+     </td>
+  </tr>
+  <tr>
+     <th valign="top">说明：</th>
+     <td id='tplDesc'>{$object['tplDesc']}</td>
+  </tr>
+  <tr>
+     <td colspan='2' align='center' class='wst-bottombar'>
+     	<button type="button"  class='btn btn-primary btn-mright' onclick='javascript:save(0)'><i class="fa fa-check"></i>保存</button>
+     	<button type="button"  class='btn' onclick='javascript:history.go(-1)'><i class="fa fa-angle-double-left"></i>返回</button>
+     </td>
+  </tr>
+</table>
+</form>
+<script>$(function(){initParamGrid();})</script>
+{/block}

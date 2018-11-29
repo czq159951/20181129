@@ -1,0 +1,111 @@
+
+<view class='container'>
+   <view  class='remind-model' wx:if="{{!dataStatus}}" >
+    <view class='image' ><image src='/image/nothing-complaint.png' class="img"></image></view>
+    <view class='content'>暂无投诉信息 ~</view>
+  </view>
+ <block wx:if="{{!animationStatus}}">
+ <view class='wst-list' wx:for="{{list}}">
+  <view class='wst-bor'>
+   <view class='top'>
+    <view class='storeName' data-shopid="{{item.shopId}}" bindtap='toShop'>{{item.shopName}}</view>
+    <view class='time'>{{item.complainTime}}</view>
+   </view>
+   <block>
+   <view class='bottom' data-id="{{item.complainId}}" bindtap='toDetail' >
+    <view class='number'>{{item.orderNo}}</view>
+    <view class='status'>{{item.complainStatus}}</view>
+   </view>
+   </block>
+  </view>
+ </view>
+ </block>
+ <!--mask-->  
+ <view class="drawer_screen"  wx:if="{{animationStatus}}"></view>
+ <view class='wst-animationModel' animation="{{animationData}}"  wx:if="{{animationStatus}}">
+ <scroll-view scroll-y style='height:99%;'>
+ <view class='wst-detail'>
+  <view class='wst-main'>
+   <view class='wst-bor'>
+    <view class='remind'>投诉信息</view>
+    <view class='strip'>
+     <view class='title1'>订单编号：</view>
+     <view class='content'>{{orderNo}}</view>
+    </view>
+    <view class='strip'>
+     <view class='title1'>投诉内容：</view>
+     <view class='content'>{{complainContent}}</view>
+    </view>
+    <view class='strip'>
+     <view class='title1'>投诉类型：</view>
+     <view class='content' wx:if="{{complainType == 0}}">承诺的没有做到</view>
+     <view class='content' wx:if="{{complainType == 1}}">未按约定时间发货</view>
+     <view class='content' wx:if="{{complainType == 2}}">未按成交价格进行交易</view>
+     <view class='content' wx:if="{{complainType == 3}}">恶意骚扰</view>
+    </view>
+    <view class='photo'>
+     <view class='title1'>附件：　</view>
+     <view class='model'>
+     <block wx:if="{{complainAnnex}}">
+      <image wx:for="{{complainAnnex}}" src="{{domain}}{{item}}" mode='aspectFit'></image>
+     </block>
+     <block wx:else>
+      <view >无</view>
+     </block>
+     </view>
+    </view>
+    <view class='strip'>
+     <view class='title1'>投诉时间：</view>
+     <view class='content'>{{complainTime}}</view>
+    </view>
+   </view>
+  </view>
+ </view>
+  <view class='wst-detail' wx:if="{{needRespond == 1 && str != ''}}">
+  <view class='wst-main'>
+   <view class='wst-bor'>
+    <view class='remind'>应诉信息</view>
+    <view class='strip'>
+     <view class='title1'>应诉内容：</view>
+     <view class='content'>{{respondContent}}</view>
+    </view>
+    <view class='photo'>
+     <view class='title1'>附件：　</view>
+     <view class='model'>
+     <block wx:if="{{respondAnnex}}">
+      <image wx:for="{{respondAnnex}}" src="{{domain}}{{item}}" mode='aspectFit'></image>
+     </block>
+     <block wx:else>
+      <view >无</view>
+     </block>
+     </view>
+    </view>
+    <view class='strip'>
+     <view class='title1'>应诉时间：</view>
+     <view class='content'>{{respondTime}}</view>
+    </view>
+   </view>
+  </view>
+ </view>
+ <view class='wst-result'>
+  <view class='status' wx:if="{{complainStatus == 0}}">仲裁信息【等待处理】</view>
+  <view class='status' wx:if="{{complainStatus == 1}}">仲裁信息【等待应诉人回应】</view>
+  <view class='status' wx:if="{{complainStatus == 2}}">仲裁信息【等待仲裁】</view>
+  <view class='status' wx:if="{{complainStatus == 4}}">仲裁信息【已仲裁】</view>
+  <block wx:if="{{complainStatus == 4}}">
+  <view class='info'>
+   <view class='title1'>仲裁结果：</view>
+   <view class='content'>{{finalResult}}</view>
+  </view>
+  <view class='strip'>
+     <view class='title1'>仲裁时间：</view>
+     <view class='content'>{{finalResultTime}}</view>
+  </view>
+  </block>
+ </view>
+ <view class='wst-button' bindtap="powerDrawer" data-statu='close'>
+  <button>＜返回</button>
+ </view>
+ </scroll-view>
+ </view>
+</view>

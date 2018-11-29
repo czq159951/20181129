@@ -1,0 +1,12 @@
+<view class='container'>
+ <view class='main-model' wx:for="{{data[1]}}" wx:for-item="da" data-code="{{da.payCode}}"  bindtap="toPayment">
+  <view class='left'>
+   <image src='/image/{{da.payCode}}.png'></image>
+  </view>
+  <view class='between'>{{da.payName}}</view>
+  <view class='right'>
+   <view class='arrow'></view>
+  </view>
+  <view class='wst-clear'></view>
+ </view>
+</view>

@@ -1,0 +1,74 @@
+{extend name="default/base" /}
+{block name="title"}我的关注 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/favorites.css?v={$v}">
+{/block}
+{block name="header"}
+	<div id="info_list">
+    <header style="background:#ffffff;" class="ui-header ui-header-positive ui-border-b wst-header">
+        <i class="ui-icon-return" onclick="history.back()"></i><h1>关注商品</h1>
+    </header>
+{/block}
+{block name="footer"}
+	<div class="ui-loading-wrap wst-Load" id="Load">
+	    <i class="ui-loading"></i>
+	</div>
+	<footer class="ui-footer wst-footer-btns" style="height:42px; border-top: 1px solid #e8e8e8;" id="footer">
+        <div class="wst-toTop" id="toTop">
+              <i class="wst-toTopimg"><span>顶部</span></i>
+            </div>
+	
+    <div class="ui-row-flex ui-whitespace">
+        <div class="ui-col ui-col-2 favorite-tc">
+            <label class="ui-checkbox">
+                <input class="sactive" type="checkbox"  onclick="javascript:checkAll(this);">
+            </label>
+            全选
+        </div>
+
+        <div class="ui-col">
+            <div class="ui-btn-wrap f-btn">
+            <button class="ui-btn ui-btn-danger" onclick="WST.dialog('确认要取消关注吗','cancelFavorite()');">
+                取消关注
+            </button>
+            </div>
+        </div>
+    </div>
+	</footer>
+{/block}
+{block name="main"}
+    <input type="hidden" name="" value="" id="currPage" autocomplete="off">
+    <input type="hidden" name="" value="" id="totalPage" autocomplete="off">
+    <script id="fGoods" type="text/html">
+        {{# for(var i=0; i<d.length; i++){ }}
+              <div class="ui-row-flex wst-shl-list" >
+              <label class="ui-checkbox">
+              <input class="active" type="checkbox" gId="{{d[i].favoriteId}}" onclick="javascript:WST.changeIconStatus($(this), 1);">
+              </label>
+
+              <div class="ui-col">
+              <div class="img j-imgAdapt">
+              <a href="javascript:void(0);" onclick="javascript:WST.intoGoods({{d[i].goodsId}});">
+              <img src="__ROOT__/{{WST.conf.GOODS_LOGO}}" data-echo="__ROOT__/{{d[i].goodsImg}}" title="{{d[i].shopName}}"></a></div>
+              </div>
+              <div class="ui-col ui-col-2 info">
+              <div class="title ui-nowrap-multi" onclick="javascript:WST.intoGoods({{d[i].goodsId}});">{{d[i].goodsName}}</div>
+              <p class="price"><span>¥ </span>{{d[i].shopPrice}}</p>
+              <p class="deal">成交数：{{d[i].saleNum}}</p><span class="add-cart" onclick="addCart({{d[i].goodsId}})"></span>
+              </div>
+              </div>
+         {{# } }}
+    </script>
+    <section class="ui-container info-prompt">
+		<ul class="ui-tab-content">
+            <li id="goods-list"></li>
+        </ul>
+    </section>
+    </div>
+{/block}
+{block name="include"}
+{include file="default/dialog" /}<!-- 对话框模板 -->
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/users/favorites/favorites.js?v={$v}'></script>
+{/block}

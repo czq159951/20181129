@@ -1,0 +1,76 @@
+<block wx:if="{{!interIm}}">
+<view class="wst-se-header">
+  <view class="input">
+    <icon class="icon" type="search" size="13" color="{{select == 0 ? '#fff' : '#666'}}" bindtap="search"/>
+    <input placeholder='按关键字搜索商品' placeholder-class='wst-head-placeholder' bindinput="getText" value="{{keyword}}" bindtap='interPage'></input>
+  </view>
+  <view class="wst-gl-icon {{switchcss==1?'vertical':'transverse'}}" bindtap="inSwitch"></view>
+</view>
+<view class='container'>
+<!--排序条-->
+ <view class='sortStrip'>
+  <block wx:for="{{sortArray}}">
+   <view class="main-case {{item.selected?'main-case1':''}}" bindtap='sortSelect' data-id="{{item.id}}">
+    <view class='border'>
+     <view class='left'>{{item.title}}</view>
+     <block wx:if="{{item.selected}}">
+      <view class='right'><image src="{{desc == 0?item.img1:item.img2}}" mode='aspectFill'></image></view>
+     </block>
+     <block wx:else>
+      <view class='right'><image src="{{item.img}}" mode='aspectFill'></image></view>
+     </block>
+    </view>
+   </view>
+  </block>
+ </view>
+<!--商品列表-->
+<block wx:if="{{hasArray}}">
+ <block wx:for='{{assifycommodity}}'>
+ <navigator open-type='navigate' url='/pages/goods-detail/goods-detail?goodsId={{item.goodsId}}'>
+     <view class='assify-commodity {{(key2)%2==0 ? "left" : "right"}} {{switchcss==1?"vertical":"transverse"}}'>
+          <view class='image'>
+            <image src='{{domain+item.goodsImg}}' mode='aspectFill'></image>
+          </view>
+         <view class='content'>{{item.goodsName}}</view>
+         <view class='wst-label'>
+          <view class='lab' wx:if="{{item.isSelf == 1}}">自营</view>
+         </view>
+         <view class='price'>¥ <text>{{item.shopPrice}}</text></view>
+          <view class='info'>
+            <text class="praise">好评率{{item.praiseRate}}</text>
+            <text class="deal">成交数: {{item.saleNum}}</text>
+          </view>
+     </view>
+ </navigator>
+ </block>
+</block>
+ <view style='float:left;height:100rpx;width:100%;'></view>
+<block wx:if="{{!hasArray}}">
+ <view class='remind-model'>
+  <view class='content'>{{remindContent}}</view>
+ </view>
+</block>
+</view>
+</block>
+<!--搜索页面-->
+<block wx:if="{{interIm}}">
+  <view class='wst-search-interim'>
+    <view class="wst-se-header2" style='position:relative;'>
+      <view class='arrow' bindtap='black'>
+      </view>
+      <view class="input">
+        <icon class="icon" type="search" size="13" color="#666" bindtap="search"/>
+        <input placeholder='按关键字搜索商品' placeholder-style='color:#666;' bindinput="nameInput"></input>
+      </view>
+    </view>
+    <view class='interim-box'>
+      <view class='wst-top'>
+        <image src='../../image/hot.png'></image>
+        <text>热门搜索</text>
+      </view>
+      <view class='mix-box' >
+        <text wx:for="{{hots}}" wx:for-index="id" bindtap="search" data-key="{{item}}">{{item}}</text>
+      </view>
+    </view>
+  </view>
+</block>

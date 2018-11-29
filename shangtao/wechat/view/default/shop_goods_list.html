@@ -1,0 +1,144 @@
+{extend name="default/base" /}
+{block name="title"}店铺商品列表 - {__block__}{/block}
+{block name="css"}
+<link rel="stylesheet"  href="__WECHAT__/css/swiper.min.css">
+<link rel="stylesheet"  href="__WECHAT__/css/shop_home.css?v={$v}">
+<style>body {background-color: #f6f6f8;}</style>
+{/block}
+{block name="header"}
+    <header class="ui-header ui-header-positive wst-se-header2" style="padding-left: 0;border-bottom: 1px solid #f6f6f8;">
+		<i class="ui-icon-return" onclick="history.back()"></i>
+		<div class="wst-se-search" onclick="javascript:WST.searchPage('shops',1);" style="width: 76%;">
+		    <i class="ui-icon-search" onclick="javascript:WST.searchPage('shops',1);"></i>
+		    <form action＝"" class="input-form">
+			<input type="search" value="{$goodsName}" placeholder="按关键字搜索本店商品" onsearch="WST.search(2)" autocomplete="off" disabled="disabled">
+			</form>
+		</div>
+       	<span class="wst-se-icon" onclick="javascript:dataShow();"></span>
+	</header>
+{/block}
+
+{block name="main"}
+<input type="hidden" name="" value="" id="condition" autocomplete="off">
+<input type="hidden" name="" value="" id="desc" autocomplete="off">
+<input type="hidden" name="" value="{$shopId}" id="shopId" autocomplete="off">
+<input type="hidden" name="" value="{$goodsName}" id="keyword" autocomplete="off">
+<input type="hidden" name="" value="{$ct1}" id="ct1" autocomplete="off">
+<input type="hidden" name="" value="{$ct2}" id="ct2" autocomplete="off">
+<input type="hidden" name="" value="0" id="currPage" autocomplete="off">
+<input type="hidden" name="" value="0" id="totalPage" autocomplete="off">
+
+     <section class="ui-container">
+        <div class="ui-row-flex wst-shl-head">
+            <div class="ui-col ui-col sorts active" status="down" onclick="javascript:orderCondition(this,2);">
+                 <p class="pd0">销量</p><i class="down2"></i>
+            </div>
+            <div class="ui-col ui-col sorts" status="down" onclick="javascript:orderCondition(this,3);">
+                 <p class="pd0">价格</p><i class="down"></i>
+            </div>
+            <div class="ui-col ui-col sorts" status="down" onclick="javascript:orderCondition(this,1);">
+                 <p class="pd0">人气</p><i class="down"></i>
+            </div>
+            <div class="ui-col ui-col sorts" status="down" onclick="javascript:orderCondition(this,6);">
+                 <p>上架时间</p><i class="down"></i>
+            </div>
+        </div>
+
+
+
+        <script id="shopList" type="text/html">
+         {{# for(var i=0; i<d.length; i++){ }}
+             <div class="wst-in-goods {{# if((i)%2==0){ }}left{{# }else{ }}right{{# } }}" onclick="WST.intoGoods({{d[i].goodsId}})">
+             <div class="img j-imgAdapt" onclick="WST.intoGoods({{d[i].goodsId}})">
+             <a href="javascript:void(0)" onclick="WST.intoGoods({{d[i].goodsId}})">
+             <img src="__ROOT__/{:WSTConf('CONF.goodsLogo')}" data-echo="__ROOT__/{{d[i].goodsImg }}" title="{{d[i].goodsName}}"/>
+             </a>
+             </div>
+             <div class="name ui-nowrap-multi">{{ d[i].goodsName}}</div>
+			 <div class="info"><span class="price">¥ <span>{{ d[i].shopPrice }}</span></span></div>
+             </div>
+          {{# } }}
+        </script>
+
+        <ul class="ui-tab-content">
+            <li id="shops-list">
+
+            </li>
+        </ul>
+
+
+     </section>
+{/block}
+
+
+{block name="footer"}
+{/* 遮盖层  */}
+<div class="wst-cover" id="cover"></div>
+{/* 分类层  */}
+<div class="wst-fr-box" id="frame">
+    <div class="title">商品分类<i class="ui-icon-close-page" onclick="javascript:dataHide();"></i><div class="wst-clear"></div></div>
+    <div class="content" id="content">
+
+
+       <div class="ui-scrollerl" id="ui-scrollerl">
+            <ul>
+                {volist name="$data['shopcats']" key="k" id="go"}
+                <li id="goodscate" class="wst-goodscate {if($k==1)}wst-goodscate_selected{/if}" onclick="javascript:showRight(this,{$k-1});">{$go['catName']}</li>
+                {/volist}
+            </ul>
+        </div>
+        {volist name="$data['shopcats']" key="k" id="go"}
+        <div class="wst-scrollerr goodscate1" {if($k!=1)}style="display:none;"{/if}>
+
+            <ul>
+                <li class="wst-goodsca">
+                    <a href="javascript:void(0);" onclick="javascript:getGoodsList({$go['catId']});"><span>&nbsp;{$go.catName}</span></a>
+                    <a href="javascript:void(0);" onclick="javascript:getGoodsList({$go['catId']});"><i class="ui-icon-arrow"></i></a>
+                </li>
+                <li>
+                    <div class="wst-goodscat">
+                        {volist name="$go['children']" id="go1"}
+                        <span><a href="javascript:void(0);" onclick="javascript:getGoodsList({$go['catId']},{$go1['catId']});">{$go1.catName}</a></span>
+                        {/volist}
+                    </div>
+                </li>
+            </ul>
+			<div class="wst-clear"></div>
+        </div>
+        {/volist}
+    </div>
+</div>
+{/block}
+{block name="include"}
+    <div class="wst-co-search" id="wst-shops-search" style="background-color: #f6f6f8;">
+    <header class="ui-header ui-header-positive wst-se-header2" style="border-bottom: 1px solid #f6f6f8;">
+		<i class="ui-icon-return" onclick="javascript:WST.searchPage('shops',0);"></i>
+		<div class="wst-se-search">
+		    <i class="ui-icon-search" onclick="javascript:WST.search(2);"></i>
+		    <form action＝"" class="input-form">
+			<input type="search" value="" placeholder="按关键字搜索本店商品" onsearch="WST.search(2)" autocomplete="off" id="wst-search">
+			</form>
+		</div>
+	</header>
+	<div class="classify">
+		<ul class="ui-list ui-list-text ui-list-link ui-list-active shops">
+		    <li onclick="javascript:getGoodsList(0);">
+		        <h4 class="ui-nowrap">全部商品</h4>
+		    </li>
+		</ul>
+		<ul class="ui-list ui-list-text ui-list-active shops2">
+            {volist name="$data['shopcats']" key="k" id="g"}
+		    <li onclick="javascript:getGoodsList({$g['catId']});">
+		        <h4 class="ui-nowrap">{$g['catName']}</h4>
+		        <div class="ui-txt-info">查看全部</div>
+		    </li>
+		    {/volist}
+		</ul>
+	</div>
+	</div>
+{/block}
+{block name="js"}
+<script type='text/javascript' src='__WECHAT__/js/jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/js/swiper.jquery.min.js'></script>
+<script type='text/javascript' src='__WECHAT__/js/shop_goods_list.js'></script>
+{/block}

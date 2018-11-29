@@ -1,0 +1,85 @@
+{extend name="base" /}
+{block name="css"}
+<link rel="stylesheet" type="text/css" href="__STATIC__/plugins/webuploader/webuploader.css?v={$v}" />
+{/block}
+{block name="js"}
+<script src="__ADMIN__/wxpassivereplys/news.js?v={$v}" type="text/javascript"></script>
+<script type='text/javascript' src='__STATIC__/plugins/webuploader/webuploader.js?v={$v}'></script>
+{/block}
+{block name="main"}
+<style>
+#replyForm input[type="text"]{
+  width: 200px;
+}
+</style>
+<div class="l-loading" style="display: block" id="wst-loading"></div>
+<form id="replyForm" autocomplete="off">
+<table class='wst-form wst-box-top'>
+      <tr>
+      <th width='150'>关键字<font color='red'>*</font>：</th>
+          <td>
+            <input type="text" class="ipt" id="keyword" name="keyword" value="{$data['keyword']}" />
+          </td>
+      </tr>
+      <tr>
+      <th width='150'>标题<font color='red'>*</font>：</th>
+          <td>
+            <input type="text" class="ipt" id="title" name="title" value="{$data['title']}" />
+          </td>
+      </tr>
+
+      <th width='150'>描述<font color='red'>*</font>：</th>
+          <td>
+            <input type="text" class="ipt" id="description" name="description" value="{$data['description']}" />
+          </td>
+      </tr>
+
+
+
+      <th width='150'>封面图片<font color='red'>*</font>：</th>
+          <td>
+            <div id='adFilePicker'>上传图标</div><span id='uploadMsg'></span>
+            <input type='hidden' id='picUrl' class='ipt' {if ($data['picUrl']!='')}value="{$data['picUrl']}"{/if}/>
+          </td>
+      </tr>
+      <th width='150'>封面图片预览<font color='red'> </font>：</th>
+          <td>
+            <div style="max-width:360px;max-height:200px;min-height:70px;" id="preview">
+                {if ($data['picUrl']!='')}
+                  <img src="{$data['picUrl']}" style="max-width:360px;max-height:200px;" />
+                {/if}
+            </div>
+          </td>
+      </tr>
+
+
+       <tr>
+        <th>回复内容<font color='red'>*</font>：</th>
+        <td>
+            <textarea  id="content" name="content" class="ipt" style="width:300px;height:150px;">{$data['content']}</textarea>
+        </td>
+       </tr>
+
+       <th width='150'>图文链接<font color='red'>*</font>：</th>
+          <td>
+            <input type="text" class="ipt" id="url" name="url" value="{$data['url']}" />
+          </td>
+      </tr>
+
+  <tr>
+     <td colspan='2' align='center' class='wst-bottombar'>
+       <input type="hidden" name="id" id="id" class="ipt" value="{$data['id']}" />
+       <input type="hidden" name="msgType" id="msgType" class="ipt" value="news" />
+       <button type="submit"  class='btn btn-primary btn-mright'><i class="fa fa-check"></i>提交</button>
+       <button type="button"  class='btn' onclick="javascript:history.go(-1)"><i class="fa fa-angle-double-left"></i>返回</button>
+     </td>
+  </tr>
+
+</table>
+</form>
+<script>
+$(function(){newsEditInit()});
+</script>
+
+{/block}
+

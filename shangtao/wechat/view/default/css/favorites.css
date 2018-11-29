@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+.ui-checkbox-s input:before{font-size:18px;color:#e32726}
+.ui-checkbox input:before,.ui-checkbox-s input:before{top:20px;left:-2px;font-size:22px!important}
+.ui-checkbox input:checked:before,.ui-checkbox-s input:checked:before{color:#e32726!important}
+.sactive{top:-43px!important;margin-right:-5px!important}
+.add-cart{display:inline-block;width:23px;height:25px;right:7px;bottom:5px;position:absolute;background:url(../img/icon_gzspcart.png) no-repeat;background-size:100%}
+.favorite-tc{line-height:45px;text-align:left}
+.f-btn button{position:absolute;top:0.06rem;right:10px;font-size:.15rem;background:#e00102;border-bottom:1px solid #e00102}
+.f-btn{min-width:85px}
+.wst-shl-list{position:relative;padding:5px 10px;margin-top:5px;background:#fff}
+.wst-shl-list .img{float:left;width:100%;height:100px;text-align:center;vertical-align:middle;display:block;position:relative}
+.wst-shl-list .img a{width:100%;height:100px;display:table-cell;vertical-align:middle}
+.wst-shl-list .img a img{max-width:100px;max-height:100px}
+.wst-shl-list .info{padding-left:5px}
+.wst-shl-list .title{margin-bottom:5px;padding-left:10px;font-size:.15rem;color:#363638}
+.wst-shl-list p{padding-left:10px}
+.wst-shl-list .deal{font-size:0.11rem;color: #999;}
+.wst-shl-list .price{color:#ff0e00;font-size:.16rem;}
+.wst-shl-list .price span{font-size:.13rem;}
+.shopImg{float:left;width:100%;height:100px;text-align:center;vertical-align:middle;display:block;position:relative}
+.shopImg a{width:100%;height:100px;display:table-cell;vertical-align:middle}
+.shopImg a img{max-width:100px;max-height:100px}
+.shop-box{margin:10px 0;background:#fff}
+.f-chk{position:absolute;top:85px;left:0}
+.s-active{top:-90px;left:-10px}
+.f-shop-header{position:relative;padding:10px 0;min-height:75px!important}
+.ui-row-flex-ver .ui-col{width:100%;height:initial}
+.f-shopname{float:left;line-height:25px;font-size:.16rem}
+.f-goshops{float:right;text-align:right;color:#ccc;font-size:.15rem;}
+.goods-box{padding:0!important;margin-bottom: 5px;}
+.goodsImg{margin-right: 5px;width:23.5%; position: relative;float:left;text-align:center;vertical-align:middle;display:block;position:relative;font-size:0.15rem;}
+.goodsImg a{width:100%;height:70px;display:table-cell;vertical-align:middle}
+.goods-item{width:24%;margin-right:5px;position: relative;}
+.goodsPrice{color: red;}
+.shop-box{margin:10px 0;background:#fff}
+.f-chk{position:absolute;top:85px;left:0}
+.s-active{top:-90px;left:-10px}
+.f-shop-header{position:relative;padding:10px 0;min-height:75px!important}
+.ui-row-flex-ver .ui-col{width:100%;height:initial}
+.f-shopname{float:left;line-height:25px;font-size:.16rem}
+.f-goshops{float:right;text-align:right;color:#ccc;font-size:.15rem;height: 20px;}
+.wst-action{margin-top: 5px;  ;display: inline-block;height: 25px;width: 90%;float: right; font-size: 0.14rem;color: red; line-height: 25px;text-align: center;border-radius: 10px;border: 1px solid red;}

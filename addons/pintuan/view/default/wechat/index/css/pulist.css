@@ -1,0 +1,4 @@
+@CHARSET "UTF-8";
+.user-info {margin-top: 0.4rem; height: 1.23rem;text-align: center; background-color: #e02e24;  background-position: 0 0;background-size: 100% auto;background-repeat: no-repeat;}
+.user-info .user-img { width: 0.55rem; height: 0.55rem; border-radius: 50%; margin-top: 0.22rem; border: 1px solid #ef7a73; box-sizing: content-box;}
+.user-info .user-name {color: #fff; font-size: 0.15rem;margin-top: 0.05rem;}

@@ -1,0 +1,78 @@
+<scroll-view scroll-y="{{allStatus}}" style='height:100%;'>
+<view class='container'>
+ <view class='wst-bor-all'>
+  <view class='strip mar-t'>
+   <view class='title'>订单号： {{orderNo}}</view>
+   <view class='status val'>{{orderStatus}}</view>
+  </view>
+  <view class='strip'>
+   <view class='title'>{{shopName}}</view>
+  </view>
+  <view class='comm-detail mar-t' wx:for="{{goods}}">
+    <view class='image'>
+      <image src='{{domain}}{{item.goodsImg}}' mode='aspectFIt'></image>
+    </view>
+   <view class='name'>{{item.goodsName}}</view>
+   <view class='info'>¥{{item.goodsPrice}}×{{item.goodsNum}}</view>
+  </view>
+  <view class='strip'>
+   <view class='title'>下单时间</view>
+   <view class='time-val'>{{createTime}}</view>
+  </view>
+  <view class='order-val'>
+   <view class='title'>商品总额</view>
+   <view class='value'>
+    <view class='total val'>¥ {{goodsMoney}}</view> 
+    <view class='express-val'>运费： <view class='val'>¥{{deliverMoney}}</view></view>
+    <view class='real-val'>实付款： <view class='val'>¥{{realTotalMoney}}</view></view>
+   </view>
+  </view>
+  <view class='strip mar-t'>
+   <view class='title'>投诉类型</view>
+   <view class='status exart' bindtap="powerDrawer" data-statu="open">{{cmpnContent}}<view class='arr'> </view></view>
+  </view>
+  <view class='cmpn-content'>
+   <view class='wst-bor'>
+    <view class='strip'>
+     <view class='title'>投诉内容</view>
+    </view>
+    <view class='content'><textarea wx:if="{{!modelStatus}}" bindinput="getText"></textarea></view>
+   </view>
+  </view>
+  <view class="imgs">
+    <view  class="img" wx:for="{{imgList}}" wx:for-item="img">
+      <image mode="aspectFit" src="{{img}}"></image>
+      <i class="delete" data-index="{{index}}" bindtap="deleteImg"></i>
+    </view>
+  </view>
+  <view class="upload">
+    <button class="button" type="warn" size="mini" bindtap="upload">上传附件(最多5张)</button>
+  </view>
+  <view class="submit">
+    <button type="default" class="button" data-goodsid="{{go.goodsId}}" data-goodsspecid="{{go.goodsSpecId}}" data-ordergoodsid="{{go.id}}" bindtap="submit">提交</button>
+  </view>
+ </view>
+ <!--动画模块-->
+<!--mask-->  
+ <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{modelStatus}}"></view>
+ <view animation="{{animationData}}" class='model-1'  wx:if="{{modelStatus}}">
+  <view class='top'>
+   <view style='width:20px;'></view>
+   <view class='title'>投诉类型</view>
+   <icon type='cancel' color='#918991' bindtap='powerDrawer' data-statu="close"></icon>
+  </view>
+  <view class='border'>
+  <scroll-view class='content' scroll-y="{{true}}" >
+   <view class='list2' wx:for="{{cmpnType}}" bindtap='selectId' data-id="{{item.id}}" style="{{index == 0 ? 'border-top:2rpx solid #EAEAEA':''}}">
+     <view class='title' >{{item.text}}</view>
+     <icon type='success' color='red' wx:if="{{selectId == item.id}}"  size='20'></icon>
+     <icon type='circle' color='#918991' wx:else size='20' ></icon>
+   </view>
+  </scroll-view>
+  </view>
+  <view class="submit" bindtap="selectIded" style='margin-top:0;padding:0;border-bottom:0;'>
+    <button type="default" class="button"  bindtap='powerDrawer' data-statu="close">确定</button>
+  </view>
+  </view>
+</view>
+</scroll-view>
